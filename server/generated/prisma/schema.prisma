@@ -1,0 +1,68 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  username  String   @unique
+  password  String
+  role      Role     @default(USER)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Word {
+  id        Int      @id @default(autoincrement())
+  text      String
+  meaning   String
+  example   String?
+  createdAt DateTime @default(now())
+}
+
+model Video {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String?
+  url         String   @unique
+  level       String?
+  createdAt   DateTime @default(now())
+
+  tasks Task[]
+}
+
+model Task {
+  id        Int      @id @default(autoincrement())
+  question  String
+  answer    String
+  options   String[]
+  type      TaskType @default(MULTIPLE_CHOICE)
+  createdAt DateTime @default(now())
+
+  video   Video? @relation(fields: [videoId], references: [id])
+  videoId Int?
+}
+
+enum Role {
+  OWNER
+  USER
+  ADMIN
+}
+
+enum TaskType {
+  MULTIPLE_CHOICE
+  FILL_IN_THE_BLANK
+  TRUE_FALSE
+}
