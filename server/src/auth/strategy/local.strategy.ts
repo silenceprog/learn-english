@@ -7,7 +7,7 @@ import { Prisma } from 'generated/prisma';
 @Injectable()
 export class LocalStrategy extends PassportStrategy(Strategy) {
   constructor(private authService: AuthService) {
-    super({ usernameField: 'email' }); // тепер перший аргумент — це email
+    super({ usernameField: 'email' }); 
   }
 
   async validate(email: string, password: string): Promise<Prisma.UserCreateInput> {

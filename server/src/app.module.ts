@@ -7,6 +7,7 @@ import { DatabaseModule } from './database/database.module';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtGuard } from './auth/jwt.guard';
+import { RolesGuard } from './roles/roles.guard';
 
 @Module({
   imports: [UsersModule, AuthModule, DatabaseModule,
@@ -26,7 +27,11 @@ import { JwtGuard } from './auth/jwt.guard';
     limit: 100,
   }]),],
   controllers: [AppController],
-  providers: [AppService, {
+  providers: [AppService,
+    {
+      provide:APP_GUARD,
+      useClass: RolesGuard
+    }, {
     provide: APP_GUARD,
     useClass: JwtGuard,
   },{
