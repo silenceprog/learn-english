@@ -24,7 +24,7 @@ export class AuthService {
       async registration( createUserDto: Prisma.UserCreateInput){
         const candidate = await this.usersService.findByEmail(createUserDto.email);
         if(candidate){
-          throw new HttpException('Пользователь с таким емейлом уже существует',HttpStatus.BAD_REQUEST);
+          throw new HttpException('A user with this email already exists',HttpStatus.BAD_REQUEST);
         }
         const hashPassword = await bcrypt.hash(createUserDto.password, 10);
         const user = await this.usersService.createUser({...createUserDto, password: hashPassword})
@@ -38,15 +38,13 @@ export class AuthService {
         }
       }
 
-      async validateUser(user: Prisma.UserCreateInput): Promise<any> {
-        const candidate = await this.usersService.findByEmail(user.email);
-        if (!user) {
-          throw new BadRequestException('User not found');
-        }
-        const isMatch: boolean = bcrypt.compareSync(user.password, candidate!.password);
-        if (!isMatch) {
-          throw new BadRequestException('Password does not match');
-        }
+      async validateUser(email: string, password: string): Promise<Prisma.UserCreateInput | null> {
+        const user = await this.usersService.findByEmail(email);
+        if (!user)  throw new BadRequestException('User not found');
+      
+        const passwordValid = await bcrypt.compare(password, user.password);
+        if (!passwordValid) throw new BadRequestException('Password does not match');
+      
         return user;
       }
 }
