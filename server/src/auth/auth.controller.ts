@@ -1,16 +1,22 @@
-import { Body, Controller, Get,Request, HttpCode, HttpStatus, Post, UseGuards } from '@nestjs/common';
-import { Prisma } from 'generated/prisma/client';
+import { Body, Controller, Get,Request, HttpCode, HttpStatus, Post, UseGuards, BadRequestException } from '@nestjs/common';
+import { Prisma, User } from 'generated/prisma/client';
 import { AuthService } from './auth.service';
-import { AuthGuard } from './auth.guard';
 
+import { UserEntity } from 'src/users/dto/user.entity';
+import { Public } from './public.decorator';
+import { AuthGuard } from '@nestjs/passport';
+import { AccessToken } from './types/AccessToken';
+
+@Public()
 @Controller('auth')
 export class AuthController {
 constructor(private authService: AuthService) {}
 
+  @UseGuards(AuthGuard('local'))
   @HttpCode(HttpStatus.OK)
   @Post('/login')
-  signIn(@Body() signInDto: Record<string, any>) {
-    return this.authService.signIn(signInDto.email, signInDto.password);
+  signIn(@Request() req): Promise<AccessToken | BadRequestException> {
+    return this.authService.signIn(req);
   }
 
   @Post('/registration')
@@ -18,7 +24,6 @@ constructor(private authService: AuthService) {}
     return this.authService.registration(regDto);
   }
 
-  @UseGuards(AuthGuard)
   @Get('/profile')
   getProfile(@Request() req) { 
     return req.user;

@@ -1,9 +1,10 @@
-import { HttpException, HttpStatus, Injectable, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, HttpException, HttpStatus, Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcryptjs'
 import { Prisma } from 'generated/prisma/client';
 import { UserEntity } from 'src/users/dto/user.entity';
 import { UsersService } from 'src/users/users.service';
+import { AccessToken } from './types/AccessToken';
 
 @Injectable()
 export class AuthService {
@@ -14,20 +15,10 @@ export class AuthService {
       ) {}
     
       async signIn(
-        email: string,
-        pass: string,
-      ) {
-        const user = await this.usersService.findByEmail(email);
-        if (!user || !user.password) {
-          throw new UnauthorizedException('Пользователь не найден или отсутствует пароль');
-        }
-      
-        const passwordEquals = await bcrypt.compare(pass, user.password);
-      
-        if (!passwordEquals) {
-          throw new UnauthorizedException('Неверный пароль');
-        }
-        return this.generateToken(user);
+        user: UserEntity
+      ) : Promise<AccessToken> {
+        const payload = {email: user.email, id: user.id, roles: user.role}
+        return { access_token: this.jwtService.sign(payload) };
       }
     
       async registration( createUserDto: Prisma.UserCreateInput){
@@ -35,9 +26,9 @@ export class AuthService {
         if(candidate){
           throw new HttpException('Пользователь с таким емейлом уже существует',HttpStatus.BAD_REQUEST);
         }
-        const hashPassword = await bcrypt.hash(createUserDto.password, 5);
+        const hashPassword = await bcrypt.hash(createUserDto.password, 10);
         const user = await this.usersService.createUser({...createUserDto, password: hashPassword})
-        return this.generateToken(user)
+        return this.signIn(user)
       }
     
       async generateToken(user: UserEntity){
@@ -45,5 +36,17 @@ export class AuthService {
         return {
           token: this.jwtService.sign(payload)
         }
+      }
+
+      async validateUser(user: Prisma.UserCreateInput): Promise<any> {
+        const candidate = await this.usersService.findByEmail(user.email);
+        if (!user) {
+          throw new BadRequestException('User not found');
+        }
+        const isMatch: boolean = bcrypt.compareSync(user.password, candidate!.password);
+        if (!isMatch) {
+          throw new BadRequestException('Password does not match');
+        }
+        return user;
       }
 }

@@ -39,6 +39,13 @@ export class UsersController {
     return this.usersService.findByEmail(email);
   }
 
+  @ApiOperation({ summary: 'Отримання користувача по емейлу' })
+  @ApiResponse({ status: 200, type: UserEntity })
+  @Get(':id')
+  findById(@Param('id') id: string) {
+    return this.usersService.findById(+id);
+  }
+
   @ApiOperation({ summary: 'Оновлення інформації користувача' })
   @ApiResponse({ status: 200, type: UserEntity })
   @Patch(':id')

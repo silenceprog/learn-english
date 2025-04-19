@@ -12,6 +12,9 @@ export class UserEntity {
   @ApiProperty()
   username: string;
 
+  @ApiProperty()
+  password: string;
+
   @ApiProperty({ enum: Role })
   role: Role;
 

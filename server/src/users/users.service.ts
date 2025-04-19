@@ -28,6 +28,14 @@ export class UsersService {
         })
     }
 
+    async findById(id: number){
+        return this.databaseService.user.findUnique({
+            where: {
+                id,
+            }
+        })
+    }
+
     async updateUser(id: number, updateUserDto: Prisma.UserUpdateInput) {
         return this.databaseService.user.update({
           where: {
