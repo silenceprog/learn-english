@@ -8,9 +8,15 @@ import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtGuard } from './auth/jwt.guard';
 import { RolesGuard } from './roles/roles.guard';
+import { VideosModule } from './videos/videos.module';
+import { TasksModule } from './tasks/tasks.module';
+import { WordsModule } from './words/words.module';
+import { JwtStrategy } from './auth/strategy/jwt.strategy';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [UsersModule, AuthModule, DatabaseModule,
+  imports: [ConfigModule.forRoot({ isGlobal: true }),
+    UsersModule, AuthModule, DatabaseModule,
     ThrottlerModule.forRoot([{
     name: 'short',
     ttl: 1000,
@@ -25,18 +31,24 @@ import { RolesGuard } from './roles/roles.guard';
     name: 'long',
     ttl: 60000,
     limit: 100,
-  }]),],
+  }]),
+    VideosModule,
+    TasksModule,
+    WordsModule,],
   controllers: [AppController],
   providers: [AppService,
-    {
-      provide:APP_GUARD,
-      useClass: RolesGuard
-    }, {
+     {
     provide: APP_GUARD,
     useClass: JwtGuard,
   },{
     provide: APP_GUARD,
     useClass: ThrottlerGuard
-  }],
+  },
+  {
+    provide: APP_GUARD,
+    useClass: RolesGuard,
+    
+  },
+  JwtStrategy],
 })
 export class AppModule {}

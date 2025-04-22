@@ -1,11 +1,13 @@
 import { Injectable } from '@nestjs/common';
-import { Prisma, Role } from 'generated/prisma/client';
+import { Role } from 'generated/prisma/client';
 import { DatabaseService } from 'src/database/database.service';
+import { UpdateUserDto } from './dto/update-user.dto';
+import { CreateUserDto } from './dto/create-user.dto';
 
 @Injectable()
 export class UsersService {
     constructor(private readonly databaseService: DatabaseService) { }
-    async createUser(createUserDto: Prisma.UserCreateInput){
+    async createUser(createUserDto: CreateUserDto){
         return this.databaseService.user.create({
             data: createUserDto
         })
@@ -21,11 +23,20 @@ export class UsersService {
     }
 
     async findByEmail(email: string){
+        if (!email) {
+            throw new Error('Email must be provided');
+        }
         return this.databaseService.user.findUnique({
             where: {
                 email,
-            }
-        })
+            },
+            select: {
+                id: true,
+                email: true,
+                password: true,
+                role: true,  
+              },
+        });
     }
 
     async findById(id: number){
@@ -36,7 +47,7 @@ export class UsersService {
         })
     }
 
-    async updateUser(id: number, updateUserDto: Prisma.UserUpdateInput) {
+    async updateUser(id: number, updateUserDto: UpdateUserDto) {
         return this.databaseService.user.update({
           where: {
             id,
