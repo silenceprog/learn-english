@@ -123,6 +123,7 @@ exports.Prisma.UserScalarFieldEnum = {
   username: 'username',
   password: 'password',
   role: 'role',
+  level: 'level',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -133,6 +134,15 @@ exports.Prisma.WordScalarFieldEnum = {
   meaning: 'meaning',
   example: 'example',
   createdAt: 'createdAt'
+};
+
+exports.Prisma.WordProgressScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  wordId: 'wordId',
+  learnedAt: 'learnedAt',
+  correct: 'correct',
+  incorrect: 'incorrect'
 };
 
 exports.Prisma.VideoScalarFieldEnum = {
@@ -151,7 +161,27 @@ exports.Prisma.TaskScalarFieldEnum = {
   options: 'options',
   type: 'type',
   createdAt: 'createdAt',
-  videoId: 'videoId'
+  videoId: 'videoId',
+  courseId: 'courseId'
+};
+
+exports.Prisma.CourseScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  imageUrl: 'imageUrl',
+  level: 'level',
+  isPublished: 'isPublished',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.EnrollmentScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  courseId: 'courseId',
+  progress: 'progress',
+  enrolledAt: 'enrolledAt'
 };
 
 exports.Prisma.SortOrder = {
@@ -183,8 +213,11 @@ exports.TaskType = exports.$Enums.TaskType = {
 exports.Prisma.ModelName = {
   User: 'User',
   Word: 'Word',
+  WordProgress: 'WordProgress',
   Video: 'Video',
-  Task: 'Task'
+  Task: 'Task',
+  Course: 'Course',
+  Enrollment: 'Enrollment'
 };
 
 /**

@@ -13,6 +13,9 @@ import { TasksModule } from './tasks/tasks.module';
 import { WordsModule } from './words/words.module';
 import { JwtStrategy } from './auth/strategy/jwt.strategy';
 import { ConfigModule } from '@nestjs/config';
+import { AdminModule } from './admin/admin.module';
+import { EmailModule } from './email/email.module';
+import { CoursesModule } from './courses/courses.module';
 
 @Module({
   imports: [ConfigModule.forRoot({ isGlobal: true }),
@@ -34,7 +37,10 @@ import { ConfigModule } from '@nestjs/config';
   }]),
     VideosModule,
     TasksModule,
-    WordsModule,],
+    WordsModule,
+    AdminModule,
+    EmailModule,
+    CoursesModule,],
   controllers: [AppController],
   providers: [AppService,
      {
