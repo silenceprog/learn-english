@@ -1,6 +1,7 @@
-import { LoginUserDto } from "../dto/login-user.dto";
+import { Role } from "generated/prisma";
+import { SafeUser } from "src/users/dto/safe-user";
 
 export type AccessToken = {
     access_token: string;
-    user: LoginUserDto
+    user_role:Role;
   };
