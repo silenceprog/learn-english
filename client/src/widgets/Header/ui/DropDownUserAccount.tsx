@@ -1,18 +1,14 @@
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import { Button } from "@/shared/ui/Button";
-import { FaEarthAfrica } from "react-icons/fa6";
+import { CiUser } from "react-icons/ci";
 
-export function DropDownLanguageSwitcher() {
-  const LANGUAGES = [
-    { code: "ua", label: "Український" },
-    { code: "en", label: "English" },
-    { code: "es", label: "Español" },
-  ];
+export function DropDownUserAccount() {
+  const LANGUAGES = [{ title: "Settings" }];
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
         <Button color="white">
-          <FaEarthAfrica className="h-5 w-5" />
+          <CiUser className="h-5 w-5" />
         </Button>
       </DropdownMenu.Trigger>
 
@@ -22,11 +18,11 @@ export function DropDownLanguageSwitcher() {
       >
         {LANGUAGES.map((lang) => (
           <DropdownMenu.Item
-            key={lang.code}
-            className="text-sm px-2 py-1.5 cursor-pointer hover:bg-gray-100 text-gray-700"
+            key={lang.title}
+            className="text-sm px-2 py-1.5 rounded-md cursor-pointer hover:bg-gray-100 text-gray-700"
             // onSelect={() => {}}
           >
-            {lang.label}
+            {lang.title}
           </DropdownMenu.Item>
         ))}
       </DropdownMenu.Content>
