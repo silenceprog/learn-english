@@ -15,16 +15,17 @@ datasource db {
 }
 
 model User {
-  id           Int            @id @default(autoincrement())
-  email        String         @unique
-  username     String         @unique
-  password     String
-  role         Role           @default(USER)
-  level        String         @default("None")
-  createdAt    DateTime       @default(now())
-  updatedAt    DateTime       @updatedAt
-  wordsLearned WordProgress[]
-  enrollments  Enrollment[]
+  id              Int            @id @default(autoincrement())
+  email           String         @unique
+  username        String         @unique
+  password        String
+  role            Role           @default(USER)
+  level           String         @default("None")
+  isEmailVerified Boolean        @default(false)
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+  wordsLearned    WordProgress[]
+  enrollments     Enrollment[]
 }
 
 model Word {

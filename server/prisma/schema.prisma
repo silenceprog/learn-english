@@ -21,6 +21,7 @@ model User{
   password  String  
   role      Role  @default(USER)
   level     String @default("None")
+  isEmailVerified Boolean @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   wordsLearned   WordProgress[]
