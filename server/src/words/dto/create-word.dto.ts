@@ -1,16 +1,22 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsNotEmpty, IsOptional } from "class-validator";
+import { IsEnum, IsNotEmpty, IsOptional, IsString } from "class-validator";
+import { Language } from "generated/prisma";
 
 export class CreateWordDto {
-    @ApiProperty({ example: 'apple' })
-    @IsNotEmpty()
-    text: string;
-  
-    @ApiProperty({ example: 'яблуко' })
-    @IsNotEmpty()
-    meaning: string;
-  
-    @ApiProperty({ example: 'He ate an apple every morning.', required: false })
-    @IsOptional()
-    example?: string;
+  @ApiProperty({ example: 'apple', description: 'Слово англійською або іншою мовою' })
+  @IsString()
+  text: string;
+
+  @ApiProperty({ enum: Language, example: Language.EN, description: 'Мова слова' })
+  @IsEnum(Language)
+  language: Language;
+
+  @ApiProperty({ example: 'яблуко', description: 'Значення слова' })
+  @IsString()
+  meaning: string;
+
+  @ApiProperty({ example: 'I ate an apple in the morning.', description: 'Приклад використання', required: false })
+  @IsOptional()
+  @IsString()
+  example?: string;
   }

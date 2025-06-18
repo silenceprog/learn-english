@@ -123,7 +123,6 @@ exports.Prisma.UserScalarFieldEnum = {
   username: 'username',
   password: 'password',
   role: 'role',
-  level: 'level',
   isEmailVerified: 'isEmailVerified',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -132,18 +131,10 @@ exports.Prisma.UserScalarFieldEnum = {
 exports.Prisma.WordScalarFieldEnum = {
   id: 'id',
   text: 'text',
+  language: 'language',
   meaning: 'meaning',
   example: 'example',
   createdAt: 'createdAt'
-};
-
-exports.Prisma.WordProgressScalarFieldEnum = {
-  id: 'id',
-  userId: 'userId',
-  wordId: 'wordId',
-  learnedAt: 'learnedAt',
-  correct: 'correct',
-  incorrect: 'incorrect'
 };
 
 exports.Prisma.VideoScalarFieldEnum = {
@@ -162,6 +153,7 @@ exports.Prisma.TaskScalarFieldEnum = {
   options: 'options',
   type: 'type',
   createdAt: 'createdAt',
+  language: 'language',
   videoId: 'videoId',
   courseId: 'courseId'
 };
@@ -185,6 +177,23 @@ exports.Prisma.EnrollmentScalarFieldEnum = {
   enrolledAt: 'enrolledAt'
 };
 
+exports.Prisma.SettingScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  global_language: 'global_language',
+  curent_language: 'curent_language',
+  purposes: 'purposes',
+  current_level: 'current_level'
+};
+
+exports.Prisma.WordProgressScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  wordId: 'wordId',
+  progress: 'progress',
+  isLearned: 'isLearned'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -205,6 +214,12 @@ exports.Role = exports.$Enums.Role = {
   ADMIN: 'ADMIN'
 };
 
+exports.Language = exports.$Enums.Language = {
+  EN: 'EN',
+  UA: 'UA',
+  DE: 'DE'
+};
+
 exports.TaskType = exports.$Enums.TaskType = {
   MULTIPLE_CHOICE: 'MULTIPLE_CHOICE',
   FILL_IN_THE_BLANK: 'FILL_IN_THE_BLANK',
@@ -214,11 +229,12 @@ exports.TaskType = exports.$Enums.TaskType = {
 exports.Prisma.ModelName = {
   User: 'User',
   Word: 'Word',
-  WordProgress: 'WordProgress',
   Video: 'Video',
   Task: 'Task',
   Course: 'Course',
-  Enrollment: 'Enrollment'
+  Enrollment: 'Enrollment',
+  Setting: 'Setting',
+  WordProgress: 'WordProgress'
 };
 
 /**

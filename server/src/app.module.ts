@@ -17,6 +17,7 @@ import { AdminModule } from './admin/admin.module';
 import { EmailModule } from './auth/email/email.module';
 import { CoursesModule } from './courses/courses.module';
 import { EmailController } from './auth/email/email.controller';
+import { SettingsModule } from './settings/settings.module';
 
 @Module({
   imports: [ConfigModule.forRoot({ isGlobal: true }),
@@ -41,7 +42,8 @@ import { EmailController } from './auth/email/email.controller';
     WordsModule,
     AdminModule,
     EmailModule,
-    CoursesModule,],
+    CoursesModule,
+    SettingsModule,],
   controllers: [AppController, EmailController],
   providers: [AppService,
      {
