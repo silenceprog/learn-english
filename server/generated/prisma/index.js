@@ -231,6 +231,14 @@ const config = {
         "fromEnvVar": null,
         "value": "windows",
         "native": true
+      },
+      {
+        "fromEnvVar": null,
+        "value": "windows"
+      },
+      {
+        "fromEnvVar": null,
+        "value": "debian-openssl-3.0.x"
       }
     ],
     "previewFeatures": [],
@@ -248,16 +256,17 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
         "fromEnvVar": "DATABASE_URL",
-        "value": "postgresql://silence:npg_DyE2PdBqjI3u@ep-twilight-flower-a9lmgefm-pooler.gwc.azure.neon.tech/english_bd?sslmode=require"
+        "value": null
       }
     }
   },
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  id              Int            @id @default(autoincrement())\n  email           String         @unique\n  username        String         @unique\n  password        String\n  role            Role           @default(USER)\n  isEmailVerified Boolean        @default(false)\n  createdAt       DateTime       @default(now())\n  updatedAt       DateTime       @updatedAt\n  enrollments     Enrollment[]\n  wordProgresses  WordProgress[]\n  setting         Setting?\n}\n\nmodel Word {\n  id         Int            @id @default(autoincrement())\n  text       String\n  language   Language\n  meaning    String\n  example    String?\n  createdAt  DateTime       @default(now())\n  progresses WordProgress[]\n}\n\nmodel Video {\n  id          Int      @id @default(autoincrement())\n  title       String\n  description String?\n  url         String   @unique\n  level       String?\n  createdAt   DateTime @default(now())\n\n  tasks Task[]\n}\n\nmodel Task {\n  id        Int      @id @default(autoincrement())\n  question  String\n  answer    String\n  options   String[]\n  type      TaskType @default(MULTIPLE_CHOICE)\n  createdAt DateTime @default(now())\n  language  Language @default(EN)\n\n  video   Video? @relation(fields: [videoId], references: [id])\n  videoId Int?\n\n  courseId Int?\n  course   Course? @relation(fields: [courseId], references: [id])\n}\n\nmodel Course {\n  id          Int      @id @default(autoincrement())\n  title       String\n  description String?\n  imageUrl    String?\n  level       String   @default(\"None\")\n  isPublished Boolean  @default(false)\n  createdAt   DateTime @default(now())\n  updatedAt   DateTime @updatedAt\n\n  tasks Task[]\n\n  enrollments Enrollment[]\n}\n\nmodel Enrollment {\n  id         Int      @id @default(autoincrement())\n  userId     Int\n  courseId   Int\n  progress   Float    @default(0.0)\n  user       User     @relation(fields: [userId], references: [id])\n  course     Course   @relation(fields: [courseId], references: [id])\n  enrolledAt DateTime @default(now())\n\n  @@unique([userId, courseId])\n}\n\nmodel Setting {\n  id              Int      @id @default(autoincrement())\n  userId          Int      @unique\n  user            User     @relation(fields: [userId], references: [id])\n  global_language Language @default(UA)\n  curent_language Language @default(EN)\n  purposes        String[] @default([\"none\"])\n  current_level   String   @default(\"none\")\n}\n\nmodel WordProgress {\n  id     Int  @id @default(autoincrement())\n  user   User @relation(fields: [userId], references: [id])\n  userId Int\n\n  word   Word @relation(fields: [wordId], references: [id])\n  wordId Int\n\n  progress  Int     @default(0)\n  isLearned Boolean @default(false)\n\n  @@unique([userId, wordId])\n}\n\nenum Role {\n  OWNER\n  USER\n  ADMIN\n}\n\nenum TaskType {\n  MULTIPLE_CHOICE\n  FILL_IN_THE_BLANK\n  TRUE_FALSE\n}\n\nenum Language {\n  EN\n  UA\n  DE\n}\n",
-  "inlineSchemaHash": "752c19b0f8ee8792e7f8b6367277fc541affbc547c2fdd5829330a5838a330e3",
+  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider      = \"prisma-client-js\"\n  binaryTargets = [\"native\", \"windows\", \"debian-openssl-3.0.x\"]\n  output        = \"../generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  id              Int            @id @default(autoincrement())\n  email           String         @unique\n  username        String         @unique\n  password        String\n  role            Role           @default(USER)\n  isEmailVerified Boolean        @default(false)\n  createdAt       DateTime       @default(now())\n  updatedAt       DateTime       @updatedAt\n  enrollments     Enrollment[]\n  wordProgresses  WordProgress[]\n  setting         Setting?\n}\n\nmodel Word {\n  id         Int            @id @default(autoincrement())\n  text       String\n  language   Language\n  meaning    String\n  example    String?\n  createdAt  DateTime       @default(now())\n  progresses WordProgress[]\n}\n\nmodel Video {\n  id          Int      @id @default(autoincrement())\n  title       String\n  description String?\n  url         String   @unique\n  level       String?\n  createdAt   DateTime @default(now())\n\n  tasks Task[]\n}\n\nmodel Task {\n  id        Int      @id @default(autoincrement())\n  question  String\n  answer    String\n  options   String[]\n  type      TaskType @default(MULTIPLE_CHOICE)\n  createdAt DateTime @default(now())\n  language  Language @default(EN)\n\n  video   Video? @relation(fields: [videoId], references: [id])\n  videoId Int?\n\n  courseId Int?\n  course   Course? @relation(fields: [courseId], references: [id])\n}\n\nmodel Course {\n  id          Int      @id @default(autoincrement())\n  title       String\n  description String?\n  imageUrl    String?\n  level       String   @default(\"None\")\n  isPublished Boolean  @default(false)\n  createdAt   DateTime @default(now())\n  updatedAt   DateTime @updatedAt\n\n  tasks Task[]\n\n  enrollments Enrollment[]\n}\n\nmodel Enrollment {\n  id         Int      @id @default(autoincrement())\n  userId     Int\n  courseId   Int\n  progress   Float    @default(0.0)\n  user       User     @relation(fields: [userId], references: [id])\n  course     Course   @relation(fields: [courseId], references: [id])\n  enrolledAt DateTime @default(now())\n\n  @@unique([userId, courseId])\n}\n\nmodel Setting {\n  id              Int      @id @default(autoincrement())\n  userId          Int      @unique\n  user            User     @relation(fields: [userId], references: [id])\n  global_language Language @default(UA)\n  curent_language Language @default(EN)\n  purposes        String[] @default([\"none\"])\n  current_level   String   @default(\"none\")\n}\n\nmodel WordProgress {\n  id     Int  @id @default(autoincrement())\n  user   User @relation(fields: [userId], references: [id])\n  userId Int\n\n  word   Word @relation(fields: [wordId], references: [id])\n  wordId Int\n\n  progress  Int     @default(0)\n  isLearned Boolean @default(false)\n\n  @@unique([userId, wordId])\n}\n\nenum Role {\n  OWNER\n  USER\n  ADMIN\n}\n\nenum TaskType {\n  MULTIPLE_CHOICE\n  FILL_IN_THE_BLANK\n  TRUE_FALSE\n}\n\nenum Language {\n  EN\n  UA\n  DE\n}\n",
+  "inlineSchemaHash": "88b9c8ef088ac18fab3f0a4ac70627f9dcd56ba8482f644417fb34bcc9812b59",
   "copyEngine": true
 }
 
@@ -298,6 +307,10 @@ Object.assign(exports, Prisma)
 // file annotations for bundling tools to include these files
 path.join(__dirname, "query_engine-windows.dll.node");
 path.join(process.cwd(), "generated/prisma/query_engine-windows.dll.node")
+
+// file annotations for bundling tools to include these files
+path.join(__dirname, "libquery_engine-debian-openssl-3.0.x.so.node");
+path.join(process.cwd(), "generated/prisma/libquery_engine-debian-openssl-3.0.x.so.node")
 // file annotations for bundling tools to include these files
 path.join(__dirname, "schema.prisma");
 path.join(process.cwd(), "generated/prisma/schema.prisma")
