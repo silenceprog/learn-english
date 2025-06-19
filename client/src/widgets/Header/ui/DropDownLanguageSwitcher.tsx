@@ -1,13 +1,17 @@
+"use client";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import { Button } from "@/shared/ui/Button";
 import { FaEarthAfrica } from "react-icons/fa6";
+import { useTranslation } from "react-i18next";
+import "@/lib/i18n.client";
 
 export function DropDownLanguageSwitcher() {
   const LANGUAGES = [
     { code: "ua", label: "Український" },
     { code: "en", label: "English" },
-    { code: "es", label: "Español" },
+    { code: "de", label: "Deutsch" },
   ];
+  const { i18n } = useTranslation();
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
@@ -24,7 +28,9 @@ export function DropDownLanguageSwitcher() {
           <DropdownMenu.Item
             key={lang.code}
             className="text-sm px-2 py-1.5 cursor-pointer hover:bg-gray-100 text-gray-700"
-            // onSelect={() => {}}
+            onSelect={() => {
+              i18n.changeLanguage(lang.code);
+            }}
           >
             {lang.label}
           </DropdownMenu.Item>

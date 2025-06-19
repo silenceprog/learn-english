@@ -8,6 +8,7 @@ import { Button } from "@/shared/ui/Button";
 import { useEffect, useState } from "react";
 import { DropDownUserAccount } from "@/widgets/Header/ui/DropDownUserAccount";
 import { DropDownUserMenu } from "@/widgets/Header/ui/DropDownUserMenu";
+import { useTranslation } from "react-i18next";
 
 export function Header() {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
@@ -34,6 +35,8 @@ export function Header() {
     }
   }, []);
 
+  const { t } = useTranslation();
+
   return (
     <Section className="border-b border-gray-200 sticky top-0 z-50 w-full bg-white">
       <div className="flex justify-between h-16 items-center px-4">
@@ -47,38 +50,43 @@ export function Header() {
             href="#"
             className="text-sm font-semibold hover:text-blue-600 transition-colors"
           >
-            Курси
+            {t("courses")}
           </Link>
           <Link
             href="#"
             className="text-sm font-semibold hover:text-blue-600 transition-colors"
           >
-            Practice
+            {t("practice")}
           </Link>
           <Link
             href="#"
             className="text-sm font-semibold hover:text-blue-600 transition-colors"
           >
-            Dictionary
+            {t("dictionary")}
           </Link>
           <Link
             href="#"
             className="text-sm font-semibold hover:text-blue-600 transition-colors"
           >
-            Community
+            {t("community")}
           </Link>
         </nav>
+
         {isLoggedIn ? (
           <div>
-            <DropDownLanguageSwitcher />
             <DropDownUserAccount />
             <DropDownUserMenu />
           </div>
         ) : (
           <div className="hidden md:flex items-center gap-4">
+            <DropDownLanguageSwitcher />
             <Link href="/login">
-              <Button color="white">
-                <IoEnterOutline className="w-5 h-5" />
+              <Button
+                color="outline"
+                className="flex justify-center items-center border cursor-pointer"
+              >
+                <IoEnterOutline className="w-5 h-5 mr-1" />
+                {t("login")}
               </Button>
             </Link>
             <Link href="/registration">
@@ -87,7 +95,7 @@ export function Header() {
                 color="outline"
               >
                 <CiUser className="h-5 w-5 mr-1" />
-                Registration
+                {t("registration")}
               </Button>
             </Link>
           </div>
