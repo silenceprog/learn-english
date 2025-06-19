@@ -1,22 +1,52 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Req,
+} from '@nestjs/common';
 import { SettingsService } from './settings.service';
 import { CreateSettingDto } from './dto/create-setting.dto';
 import { UpdateSettingDto } from './dto/update-setting.dto';
+import { ApiBearerAuth, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { Roles } from 'src/roles/roles.decorator';
+import { Role } from 'generated/prisma';
 
+@ApiBearerAuth('access-token')
 @Controller('settings')
 export class SettingsController {
   constructor(private readonly settingsService: SettingsService) {}
 
+  @ApiOperation({ summary: 'Отримання налаштувань користувача по айді' })
+  @ApiResponse({ status: 200, type: CreateSettingDto })
+  @Get()
+  findById(@Req() req) {
+    const userId = req.user.id;
+    console.log(req.user.id);
+    return this.settingsService.findById(userId);
+  }
+
+  @ApiOperation({ summary: 'Створення налаштувань користувача' })
+  @ApiResponse({ status: 201, type: CreateSettingDto })
   @Post()
   create(@Body() createSettingDto: CreateSettingDto) {
     return this.settingsService.create(createSettingDto);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateSettingDto: UpdateSettingDto) {
-    return this.settingsService.update(+id, updateSettingDto);
+  @ApiOperation({ summary: 'Оновлення налашувань користувача' })
+  @ApiResponse({ status: 200, type: UpdateSettingDto })
+  @Patch()
+  update(@Req() req, @Body() updateSettingDto: UpdateSettingDto) {
+    const userId = req.user.id;
+    return this.settingsService.update(userId, updateSettingDto);
   }
 
+  @ApiOperation({ summary: 'Видалення налаштувань користувача' })
+  @ApiResponse({ status: 200 })
+  @Roles(Role.OWNER)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.settingsService.remove(+id);

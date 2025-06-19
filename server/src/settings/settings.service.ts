@@ -6,16 +6,23 @@ import { DatabaseService } from 'src/database/database.service';
 @Injectable()
 export class SettingsService {
   constructor(private readonly databaseService: DatabaseService) { }
+
+   async findById(userId: number) {
+    return await this.databaseService.setting.findUnique({
+      where: { userId },
+    });
+  }
+
   create(createSettingDto: CreateSettingDto) {
      return this.databaseService.setting.create({
             data: createSettingDto
         })
   }
 
-  update(id: number, updateSettingDto: UpdateSettingDto) {
+  update(userId: number, updateSettingDto: UpdateSettingDto) {
      return this.databaseService.setting.update({
           where: {
-            id,
+            userId,
           },
           data: updateSettingDto,
         })
