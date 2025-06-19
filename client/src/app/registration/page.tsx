@@ -25,7 +25,7 @@ export default function Registration() {
 
     try {
       const response = await fetch(
-        "https://learn-english-production-d030.up.railway.app/api/auth/registration",
+        "https://learn-english-6ufl.onrender.com/api/auth/registration",
         {
           method: "POST",
           headers: {

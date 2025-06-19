@@ -24,7 +24,7 @@ export default function Login() {
 
     try {
       const response = await fetch(
-        "https://learn-english-production-d030.up.railway.app/api/auth/login",
+        "https://learn-english-6ufl.onrender.com/api/auth/login",
         {
           method: "POST",
           headers: {
@@ -47,6 +47,7 @@ export default function Login() {
       setSuccess("Login successful!");
       // Save token
       localStorage.setItem("access_token", data.access_token);
+      localStorage.setItem("role", data.user_role);
       // Redirect to main page
       router.push("/");
     } catch (error) {
