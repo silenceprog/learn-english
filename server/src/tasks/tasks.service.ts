@@ -42,7 +42,7 @@ export class TasksService {
 
     return this.databaseService.word.findMany({
       where: {
-        language: setting?.curent_language,
+        language: setting?.current_language,
       },
     });
   }

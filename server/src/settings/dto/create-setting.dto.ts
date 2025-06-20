@@ -1,6 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsArray, IsEnum, IsInt, IsString } from "class-validator";
-import { Language } from "generated/prisma";
+import { Language, Level, Purpose } from "generated/prisma";
 
 
 export class CreateSettingDto {
@@ -16,12 +16,12 @@ export class CreateSettingDto {
   @IsEnum(Language)
   curent_language: Language;
 
-  @ApiProperty({ example: ['travel', 'work'], description: 'Цілі навчання', type: [String] })
+  @ApiProperty({ example: ['travel', 'work'], description: 'Цілі навчання' })
   @IsArray()
-  @IsString({ each: true })
-  purposes: string[];
+  @IsEnum(Purpose)
+  purposes: Purpose;
 
   @ApiProperty({ example: 'A2', description: 'Поточний рівень володіння мовою' })
-  @IsString()
-  current_level: string;
+  @IsEnum(Level)
+  current_level: Level;
 }

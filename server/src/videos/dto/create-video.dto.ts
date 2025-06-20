@@ -1,5 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsNotEmpty, IsOptional, IsUrl } from "class-validator";
+import { IsEnum, IsNotEmpty, IsOptional, IsUrl } from "class-validator";
+import { Level } from "generated/prisma";
 
 export class CreateVideoDto {
     @ApiProperty({ example: 'Introduction to Phrasal Verbs' })
@@ -17,5 +18,6 @@ export class CreateVideoDto {
   
     @ApiProperty({ example: 'Beginner', required: false })
     @IsOptional()
-    level?: string;
+    @IsEnum(Level)
+    level?: Level;
   }

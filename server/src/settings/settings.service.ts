@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { CreateSettingDto } from './dto/create-setting.dto';
 import { UpdateSettingDto } from './dto/update-setting.dto';
 import { DatabaseService } from 'src/database/database.service';
 
@@ -13,26 +12,12 @@ export class SettingsService {
     });
   }
 
-  create(createSettingDto: CreateSettingDto) {
-     return this.databaseService.setting.create({
-            data: createSettingDto
-        })
-  }
-
   update(userId: number, updateSettingDto: UpdateSettingDto) {
      return this.databaseService.setting.update({
           where: {
             userId,
           },
           data: updateSettingDto,
-        })
-  }
-
-  remove(id: number) {
-    return this.databaseService.setting.delete({
-            where:{
-                id,
-            }
         })
   }
 }

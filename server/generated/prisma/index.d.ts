@@ -84,6 +84,29 @@ export const Language: {
 
 export type Language = (typeof Language)[keyof typeof Language]
 
+
+export const Purpose: {
+  NONE: 'NONE',
+  EXAM: 'EXAM',
+  TRAVEL: 'TRAVEL',
+  WORK: 'WORK'
+};
+
+export type Purpose = (typeof Purpose)[keyof typeof Purpose]
+
+
+export const Level: {
+  NONE: 'NONE',
+  A1: 'A1',
+  A2: 'A2',
+  B1: 'B1',
+  B2: 'B2',
+  C1: 'C1',
+  C2: 'C2'
+};
+
+export type Level = (typeof Level)[keyof typeof Level]
+
 }
 
 export type Role = $Enums.Role
@@ -97,6 +120,14 @@ export const TaskType: typeof $Enums.TaskType
 export type Language = $Enums.Language
 
 export const Language: typeof $Enums.Language
+
+export type Purpose = $Enums.Purpose
+
+export const Purpose: typeof $Enums.Purpose
+
+export type Level = $Enums.Level
+
+export const Level: typeof $Enums.Level
 
 /**
  * ##  Prisma Client ʲˢ
@@ -1654,11 +1685,13 @@ export namespace Prisma {
   export type CourseCountOutputType = {
     tasks: number
     enrollments: number
+    videos: number
   }
 
   export type CourseCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     tasks?: boolean | CourseCountOutputTypeCountTasksArgs
     enrollments?: boolean | CourseCountOutputTypeCountEnrollmentsArgs
+    videos?: boolean | CourseCountOutputTypeCountVideosArgs
   }
 
   // Custom InputTypes
@@ -1684,6 +1717,13 @@ export namespace Prisma {
    */
   export type CourseCountOutputTypeCountEnrollmentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: EnrollmentWhereInput
+  }
+
+  /**
+   * CourseCountOutputType without action
+   */
+  export type CourseCountOutputTypeCountVideosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: VideoWhereInput
   }
 
 
@@ -2911,6 +2951,7 @@ export namespace Prisma {
     language: $Enums.Language | null
     meaning: string | null
     example: string | null
+    partOfSpeech: string | null
     createdAt: Date | null
   }
 
@@ -2920,6 +2961,7 @@ export namespace Prisma {
     language: $Enums.Language | null
     meaning: string | null
     example: string | null
+    partOfSpeech: string | null
     createdAt: Date | null
   }
 
@@ -2929,6 +2971,7 @@ export namespace Prisma {
     language: number
     meaning: number
     example: number
+    partOfSpeech: number
     createdAt: number
     _all: number
   }
@@ -2948,6 +2991,7 @@ export namespace Prisma {
     language?: true
     meaning?: true
     example?: true
+    partOfSpeech?: true
     createdAt?: true
   }
 
@@ -2957,6 +3001,7 @@ export namespace Prisma {
     language?: true
     meaning?: true
     example?: true
+    partOfSpeech?: true
     createdAt?: true
   }
 
@@ -2966,6 +3011,7 @@ export namespace Prisma {
     language?: true
     meaning?: true
     example?: true
+    partOfSpeech?: true
     createdAt?: true
     _all?: true
   }
@@ -3062,6 +3108,7 @@ export namespace Prisma {
     language: $Enums.Language
     meaning: string
     example: string | null
+    partOfSpeech: string | null
     createdAt: Date
     _count: WordCountAggregateOutputType | null
     _avg: WordAvgAggregateOutputType | null
@@ -3090,6 +3137,7 @@ export namespace Prisma {
     language?: boolean
     meaning?: boolean
     example?: boolean
+    partOfSpeech?: boolean
     createdAt?: boolean
     progresses?: boolean | Word$progressesArgs<ExtArgs>
     _count?: boolean | WordCountOutputTypeDefaultArgs<ExtArgs>
@@ -3101,6 +3149,7 @@ export namespace Prisma {
     language?: boolean
     meaning?: boolean
     example?: boolean
+    partOfSpeech?: boolean
     createdAt?: boolean
   }, ExtArgs["result"]["word"]>
 
@@ -3110,6 +3159,7 @@ export namespace Prisma {
     language?: boolean
     meaning?: boolean
     example?: boolean
+    partOfSpeech?: boolean
     createdAt?: boolean
   }, ExtArgs["result"]["word"]>
 
@@ -3119,10 +3169,11 @@ export namespace Prisma {
     language?: boolean
     meaning?: boolean
     example?: boolean
+    partOfSpeech?: boolean
     createdAt?: boolean
   }
 
-  export type WordOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "text" | "language" | "meaning" | "example" | "createdAt", ExtArgs["result"]["word"]>
+  export type WordOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "text" | "language" | "meaning" | "example" | "partOfSpeech" | "createdAt", ExtArgs["result"]["word"]>
   export type WordInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     progresses?: boolean | Word$progressesArgs<ExtArgs>
     _count?: boolean | WordCountOutputTypeDefaultArgs<ExtArgs>
@@ -3141,6 +3192,7 @@ export namespace Prisma {
       language: $Enums.Language
       meaning: string
       example: string | null
+      partOfSpeech: string | null
       createdAt: Date
     }, ExtArgs["result"]["word"]>
     composites: {}
@@ -3571,6 +3623,7 @@ export namespace Prisma {
     readonly language: FieldRef<"Word", 'Language'>
     readonly meaning: FieldRef<"Word", 'String'>
     readonly example: FieldRef<"Word", 'String'>
+    readonly partOfSpeech: FieldRef<"Word", 'String'>
     readonly createdAt: FieldRef<"Word", 'DateTime'>
   }
     
@@ -4016,10 +4069,12 @@ export namespace Prisma {
 
   export type VideoAvgAggregateOutputType = {
     id: number | null
+    courseId: number | null
   }
 
   export type VideoSumAggregateOutputType = {
     id: number | null
+    courseId: number | null
   }
 
   export type VideoMinAggregateOutputType = {
@@ -4027,8 +4082,9 @@ export namespace Prisma {
     title: string | null
     description: string | null
     url: string | null
-    level: string | null
+    level: $Enums.Level | null
     createdAt: Date | null
+    courseId: number | null
   }
 
   export type VideoMaxAggregateOutputType = {
@@ -4036,8 +4092,9 @@ export namespace Prisma {
     title: string | null
     description: string | null
     url: string | null
-    level: string | null
+    level: $Enums.Level | null
     createdAt: Date | null
+    courseId: number | null
   }
 
   export type VideoCountAggregateOutputType = {
@@ -4047,16 +4104,20 @@ export namespace Prisma {
     url: number
     level: number
     createdAt: number
+    tags: number
+    courseId: number
     _all: number
   }
 
 
   export type VideoAvgAggregateInputType = {
     id?: true
+    courseId?: true
   }
 
   export type VideoSumAggregateInputType = {
     id?: true
+    courseId?: true
   }
 
   export type VideoMinAggregateInputType = {
@@ -4066,6 +4127,7 @@ export namespace Prisma {
     url?: true
     level?: true
     createdAt?: true
+    courseId?: true
   }
 
   export type VideoMaxAggregateInputType = {
@@ -4075,6 +4137,7 @@ export namespace Prisma {
     url?: true
     level?: true
     createdAt?: true
+    courseId?: true
   }
 
   export type VideoCountAggregateInputType = {
@@ -4084,6 +4147,8 @@ export namespace Prisma {
     url?: true
     level?: true
     createdAt?: true
+    tags?: true
+    courseId?: true
     _all?: true
   }
 
@@ -4178,8 +4243,10 @@ export namespace Prisma {
     title: string
     description: string | null
     url: string
-    level: string | null
+    level: $Enums.Level | null
     createdAt: Date
+    tags: string[]
+    courseId: number | null
     _count: VideoCountAggregateOutputType | null
     _avg: VideoAvgAggregateOutputType | null
     _sum: VideoSumAggregateOutputType | null
@@ -4208,7 +4275,10 @@ export namespace Prisma {
     url?: boolean
     level?: boolean
     createdAt?: boolean
+    tags?: boolean
+    courseId?: boolean
     tasks?: boolean | Video$tasksArgs<ExtArgs>
+    course?: boolean | Video$courseArgs<ExtArgs>
     _count?: boolean | VideoCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["video"]>
 
@@ -4219,6 +4289,9 @@ export namespace Prisma {
     url?: boolean
     level?: boolean
     createdAt?: boolean
+    tags?: boolean
+    courseId?: boolean
+    course?: boolean | Video$courseArgs<ExtArgs>
   }, ExtArgs["result"]["video"]>
 
   export type VideoSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -4228,6 +4301,9 @@ export namespace Prisma {
     url?: boolean
     level?: boolean
     createdAt?: boolean
+    tags?: boolean
+    courseId?: boolean
+    course?: boolean | Video$courseArgs<ExtArgs>
   }, ExtArgs["result"]["video"]>
 
   export type VideoSelectScalar = {
@@ -4237,28 +4313,38 @@ export namespace Prisma {
     url?: boolean
     level?: boolean
     createdAt?: boolean
+    tags?: boolean
+    courseId?: boolean
   }
 
-  export type VideoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "url" | "level" | "createdAt", ExtArgs["result"]["video"]>
+  export type VideoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "url" | "level" | "createdAt" | "tags" | "courseId", ExtArgs["result"]["video"]>
   export type VideoInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     tasks?: boolean | Video$tasksArgs<ExtArgs>
+    course?: boolean | Video$courseArgs<ExtArgs>
     _count?: boolean | VideoCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type VideoIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type VideoIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type VideoIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    course?: boolean | Video$courseArgs<ExtArgs>
+  }
+  export type VideoIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    course?: boolean | Video$courseArgs<ExtArgs>
+  }
 
   export type $VideoPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Video"
     objects: {
       tasks: Prisma.$TaskPayload<ExtArgs>[]
+      course: Prisma.$CoursePayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
       title: string
       description: string | null
       url: string
-      level: string | null
+      level: $Enums.Level | null
       createdAt: Date
+      tags: string[]
+      courseId: number | null
     }, ExtArgs["result"]["video"]>
     composites: {}
   }
@@ -4654,6 +4740,7 @@ export namespace Prisma {
   export interface Prisma__VideoClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     tasks<T extends Video$tasksArgs<ExtArgs> = {}>(args?: Subset<T, Video$tasksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    course<T extends Video$courseArgs<ExtArgs> = {}>(args?: Subset<T, Video$courseArgs<ExtArgs>>): Prisma__CourseClient<$Result.GetResult<Prisma.$CoursePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4687,8 +4774,10 @@ export namespace Prisma {
     readonly title: FieldRef<"Video", 'String'>
     readonly description: FieldRef<"Video", 'String'>
     readonly url: FieldRef<"Video", 'String'>
-    readonly level: FieldRef<"Video", 'String'>
+    readonly level: FieldRef<"Video", 'Level'>
     readonly createdAt: FieldRef<"Video", 'DateTime'>
+    readonly tags: FieldRef<"Video", 'String[]'>
+    readonly courseId: FieldRef<"Video", 'Int'>
   }
     
 
@@ -4938,6 +5027,10 @@ export namespace Prisma {
      */
     data: VideoCreateManyInput | VideoCreateManyInput[]
     skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VideoIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -5008,6 +5101,10 @@ export namespace Prisma {
      * Limit how many Videos to update.
      */
     limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VideoIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -5101,6 +5198,25 @@ export namespace Prisma {
   }
 
   /**
+   * Video.course
+   */
+  export type Video$courseArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Course
+     */
+    select?: CourseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Course
+     */
+    omit?: CourseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CourseInclude<ExtArgs> | null
+    where?: CourseWhereInput
+  }
+
+  /**
    * Video without action
    */
   export type VideoDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5133,12 +5249,14 @@ export namespace Prisma {
 
   export type TaskAvgAggregateOutputType = {
     id: number | null
+    score: number | null
     videoId: number | null
     courseId: number | null
   }
 
   export type TaskSumAggregateOutputType = {
     id: number | null
+    score: number | null
     videoId: number | null
     courseId: number | null
   }
@@ -5148,6 +5266,7 @@ export namespace Prisma {
     question: string | null
     answer: string | null
     type: $Enums.TaskType | null
+    score: number | null
     createdAt: Date | null
     language: $Enums.Language | null
     videoId: number | null
@@ -5159,6 +5278,7 @@ export namespace Prisma {
     question: string | null
     answer: string | null
     type: $Enums.TaskType | null
+    score: number | null
     createdAt: Date | null
     language: $Enums.Language | null
     videoId: number | null
@@ -5171,6 +5291,7 @@ export namespace Prisma {
     answer: number
     options: number
     type: number
+    score: number
     createdAt: number
     language: number
     videoId: number
@@ -5181,12 +5302,14 @@ export namespace Prisma {
 
   export type TaskAvgAggregateInputType = {
     id?: true
+    score?: true
     videoId?: true
     courseId?: true
   }
 
   export type TaskSumAggregateInputType = {
     id?: true
+    score?: true
     videoId?: true
     courseId?: true
   }
@@ -5196,6 +5319,7 @@ export namespace Prisma {
     question?: true
     answer?: true
     type?: true
+    score?: true
     createdAt?: true
     language?: true
     videoId?: true
@@ -5207,6 +5331,7 @@ export namespace Prisma {
     question?: true
     answer?: true
     type?: true
+    score?: true
     createdAt?: true
     language?: true
     videoId?: true
@@ -5219,6 +5344,7 @@ export namespace Prisma {
     answer?: true
     options?: true
     type?: true
+    score?: true
     createdAt?: true
     language?: true
     videoId?: true
@@ -5318,6 +5444,7 @@ export namespace Prisma {
     answer: string
     options: string[]
     type: $Enums.TaskType
+    score: number | null
     createdAt: Date
     language: $Enums.Language
     videoId: number | null
@@ -5349,6 +5476,7 @@ export namespace Prisma {
     answer?: boolean
     options?: boolean
     type?: boolean
+    score?: boolean
     createdAt?: boolean
     language?: boolean
     videoId?: boolean
@@ -5363,6 +5491,7 @@ export namespace Prisma {
     answer?: boolean
     options?: boolean
     type?: boolean
+    score?: boolean
     createdAt?: boolean
     language?: boolean
     videoId?: boolean
@@ -5377,6 +5506,7 @@ export namespace Prisma {
     answer?: boolean
     options?: boolean
     type?: boolean
+    score?: boolean
     createdAt?: boolean
     language?: boolean
     videoId?: boolean
@@ -5391,13 +5521,14 @@ export namespace Prisma {
     answer?: boolean
     options?: boolean
     type?: boolean
+    score?: boolean
     createdAt?: boolean
     language?: boolean
     videoId?: boolean
     courseId?: boolean
   }
 
-  export type TaskOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "question" | "answer" | "options" | "type" | "createdAt" | "language" | "videoId" | "courseId", ExtArgs["result"]["task"]>
+  export type TaskOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "question" | "answer" | "options" | "type" | "score" | "createdAt" | "language" | "videoId" | "courseId", ExtArgs["result"]["task"]>
   export type TaskInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     video?: boolean | Task$videoArgs<ExtArgs>
     course?: boolean | Task$courseArgs<ExtArgs>
@@ -5423,6 +5554,7 @@ export namespace Prisma {
       answer: string
       options: string[]
       type: $Enums.TaskType
+      score: number | null
       createdAt: Date
       language: $Enums.Language
       videoId: number | null
@@ -5857,6 +5989,7 @@ export namespace Prisma {
     readonly answer: FieldRef<"Task", 'String'>
     readonly options: FieldRef<"Task", 'String[]'>
     readonly type: FieldRef<"Task", 'TaskType'>
+    readonly score: FieldRef<"Task", 'Int'>
     readonly createdAt: FieldRef<"Task", 'DateTime'>
     readonly language: FieldRef<"Task", 'Language'>
     readonly videoId: FieldRef<"Task", 'Int'>
@@ -6338,7 +6471,7 @@ export namespace Prisma {
     title: string | null
     description: string | null
     imageUrl: string | null
-    level: string | null
+    level: $Enums.Level | null
     isPublished: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -6349,7 +6482,7 @@ export namespace Prisma {
     title: string | null
     description: string | null
     imageUrl: string | null
-    level: string | null
+    level: $Enums.Level | null
     isPublished: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -6364,6 +6497,7 @@ export namespace Prisma {
     isPublished: number
     createdAt: number
     updatedAt: number
+    tags: number
     _all: number
   }
 
@@ -6407,6 +6541,7 @@ export namespace Prisma {
     isPublished?: true
     createdAt?: true
     updatedAt?: true
+    tags?: true
     _all?: true
   }
 
@@ -6501,10 +6636,11 @@ export namespace Prisma {
     title: string
     description: string | null
     imageUrl: string | null
-    level: string
+    level: $Enums.Level
     isPublished: boolean
     createdAt: Date
     updatedAt: Date
+    tags: string[]
     _count: CourseCountAggregateOutputType | null
     _avg: CourseAvgAggregateOutputType | null
     _sum: CourseSumAggregateOutputType | null
@@ -6535,8 +6671,10 @@ export namespace Prisma {
     isPublished?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    tags?: boolean
     tasks?: boolean | Course$tasksArgs<ExtArgs>
     enrollments?: boolean | Course$enrollmentsArgs<ExtArgs>
+    videos?: boolean | Course$videosArgs<ExtArgs>
     _count?: boolean | CourseCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["course"]>
 
@@ -6549,6 +6687,7 @@ export namespace Prisma {
     isPublished?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    tags?: boolean
   }, ExtArgs["result"]["course"]>
 
   export type CourseSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -6560,6 +6699,7 @@ export namespace Prisma {
     isPublished?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    tags?: boolean
   }, ExtArgs["result"]["course"]>
 
   export type CourseSelectScalar = {
@@ -6571,12 +6711,14 @@ export namespace Prisma {
     isPublished?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    tags?: boolean
   }
 
-  export type CourseOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "imageUrl" | "level" | "isPublished" | "createdAt" | "updatedAt", ExtArgs["result"]["course"]>
+  export type CourseOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "imageUrl" | "level" | "isPublished" | "createdAt" | "updatedAt" | "tags", ExtArgs["result"]["course"]>
   export type CourseInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     tasks?: boolean | Course$tasksArgs<ExtArgs>
     enrollments?: boolean | Course$enrollmentsArgs<ExtArgs>
+    videos?: boolean | Course$videosArgs<ExtArgs>
     _count?: boolean | CourseCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type CourseIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -6587,16 +6729,18 @@ export namespace Prisma {
     objects: {
       tasks: Prisma.$TaskPayload<ExtArgs>[]
       enrollments: Prisma.$EnrollmentPayload<ExtArgs>[]
+      videos: Prisma.$VideoPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
       title: string
       description: string | null
       imageUrl: string | null
-      level: string
+      level: $Enums.Level
       isPublished: boolean
       createdAt: Date
       updatedAt: Date
+      tags: string[]
     }, ExtArgs["result"]["course"]>
     composites: {}
   }
@@ -6993,6 +7137,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     tasks<T extends Course$tasksArgs<ExtArgs> = {}>(args?: Subset<T, Course$tasksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     enrollments<T extends Course$enrollmentsArgs<ExtArgs> = {}>(args?: Subset<T, Course$enrollmentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EnrollmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    videos<T extends Course$videosArgs<ExtArgs> = {}>(args?: Subset<T, Course$videosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VideoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7026,10 +7171,11 @@ export namespace Prisma {
     readonly title: FieldRef<"Course", 'String'>
     readonly description: FieldRef<"Course", 'String'>
     readonly imageUrl: FieldRef<"Course", 'String'>
-    readonly level: FieldRef<"Course", 'String'>
+    readonly level: FieldRef<"Course", 'Level'>
     readonly isPublished: FieldRef<"Course", 'Boolean'>
     readonly createdAt: FieldRef<"Course", 'DateTime'>
     readonly updatedAt: FieldRef<"Course", 'DateTime'>
+    readonly tags: FieldRef<"Course", 'String[]'>
   }
     
 
@@ -7463,6 +7609,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: EnrollmentScalarFieldEnum | EnrollmentScalarFieldEnum[]
+  }
+
+  /**
+   * Course.videos
+   */
+  export type Course$videosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Video
+     */
+    select?: VideoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Video
+     */
+    omit?: VideoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VideoInclude<ExtArgs> | null
+    where?: VideoWhereInput
+    orderBy?: VideoOrderByWithRelationInput | VideoOrderByWithRelationInput[]
+    cursor?: VideoWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: VideoScalarFieldEnum | VideoScalarFieldEnum[]
   }
 
   /**
@@ -8622,23 +8792,23 @@ export namespace Prisma {
     id: number | null
     userId: number | null
     global_language: $Enums.Language | null
-    curent_language: $Enums.Language | null
-    current_level: string | null
+    current_language: $Enums.Language | null
+    current_level: $Enums.Level | null
   }
 
   export type SettingMaxAggregateOutputType = {
     id: number | null
     userId: number | null
     global_language: $Enums.Language | null
-    curent_language: $Enums.Language | null
-    current_level: string | null
+    current_language: $Enums.Language | null
+    current_level: $Enums.Level | null
   }
 
   export type SettingCountAggregateOutputType = {
     id: number
     userId: number
     global_language: number
-    curent_language: number
+    current_language: number
     purposes: number
     current_level: number
     _all: number
@@ -8659,7 +8829,7 @@ export namespace Prisma {
     id?: true
     userId?: true
     global_language?: true
-    curent_language?: true
+    current_language?: true
     current_level?: true
   }
 
@@ -8667,7 +8837,7 @@ export namespace Prisma {
     id?: true
     userId?: true
     global_language?: true
-    curent_language?: true
+    current_language?: true
     current_level?: true
   }
 
@@ -8675,7 +8845,7 @@ export namespace Prisma {
     id?: true
     userId?: true
     global_language?: true
-    curent_language?: true
+    current_language?: true
     purposes?: true
     current_level?: true
     _all?: true
@@ -8771,9 +8941,9 @@ export namespace Prisma {
     id: number
     userId: number
     global_language: $Enums.Language
-    curent_language: $Enums.Language
-    purposes: string[]
-    current_level: string
+    current_language: $Enums.Language
+    purposes: $Enums.Purpose[]
+    current_level: $Enums.Level
     _count: SettingCountAggregateOutputType | null
     _avg: SettingAvgAggregateOutputType | null
     _sum: SettingSumAggregateOutputType | null
@@ -8799,7 +8969,7 @@ export namespace Prisma {
     id?: boolean
     userId?: boolean
     global_language?: boolean
-    curent_language?: boolean
+    current_language?: boolean
     purposes?: boolean
     current_level?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -8809,7 +8979,7 @@ export namespace Prisma {
     id?: boolean
     userId?: boolean
     global_language?: boolean
-    curent_language?: boolean
+    current_language?: boolean
     purposes?: boolean
     current_level?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -8819,7 +8989,7 @@ export namespace Prisma {
     id?: boolean
     userId?: boolean
     global_language?: boolean
-    curent_language?: boolean
+    current_language?: boolean
     purposes?: boolean
     current_level?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -8829,12 +8999,12 @@ export namespace Prisma {
     id?: boolean
     userId?: boolean
     global_language?: boolean
-    curent_language?: boolean
+    current_language?: boolean
     purposes?: boolean
     current_level?: boolean
   }
 
-  export type SettingOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "global_language" | "curent_language" | "purposes" | "current_level", ExtArgs["result"]["setting"]>
+  export type SettingOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "global_language" | "current_language" | "purposes" | "current_level", ExtArgs["result"]["setting"]>
   export type SettingInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
   }
@@ -8854,9 +9024,9 @@ export namespace Prisma {
       id: number
       userId: number
       global_language: $Enums.Language
-      curent_language: $Enums.Language
-      purposes: string[]
-      current_level: string
+      current_language: $Enums.Language
+      purposes: $Enums.Purpose[]
+      current_level: $Enums.Level
     }, ExtArgs["result"]["setting"]>
     composites: {}
   }
@@ -9284,9 +9454,9 @@ export namespace Prisma {
     readonly id: FieldRef<"Setting", 'Int'>
     readonly userId: FieldRef<"Setting", 'Int'>
     readonly global_language: FieldRef<"Setting", 'Language'>
-    readonly curent_language: FieldRef<"Setting", 'Language'>
-    readonly purposes: FieldRef<"Setting", 'String[]'>
-    readonly current_level: FieldRef<"Setting", 'String'>
+    readonly current_language: FieldRef<"Setting", 'Language'>
+    readonly purposes: FieldRef<"Setting", 'Purpose[]'>
+    readonly current_level: FieldRef<"Setting", 'Level'>
   }
     
 
@@ -10847,6 +11017,7 @@ export namespace Prisma {
     language: 'language',
     meaning: 'meaning',
     example: 'example',
+    partOfSpeech: 'partOfSpeech',
     createdAt: 'createdAt'
   };
 
@@ -10859,7 +11030,9 @@ export namespace Prisma {
     description: 'description',
     url: 'url',
     level: 'level',
-    createdAt: 'createdAt'
+    createdAt: 'createdAt',
+    tags: 'tags',
+    courseId: 'courseId'
   };
 
   export type VideoScalarFieldEnum = (typeof VideoScalarFieldEnum)[keyof typeof VideoScalarFieldEnum]
@@ -10871,6 +11044,7 @@ export namespace Prisma {
     answer: 'answer',
     options: 'options',
     type: 'type',
+    score: 'score',
     createdAt: 'createdAt',
     language: 'language',
     videoId: 'videoId',
@@ -10888,7 +11062,8 @@ export namespace Prisma {
     level: 'level',
     isPublished: 'isPublished',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    updatedAt: 'updatedAt',
+    tags: 'tags'
   };
 
   export type CourseScalarFieldEnum = (typeof CourseScalarFieldEnum)[keyof typeof CourseScalarFieldEnum]
@@ -10909,7 +11084,7 @@ export namespace Prisma {
     id: 'id',
     userId: 'userId',
     global_language: 'global_language',
-    curent_language: 'curent_language',
+    current_language: 'current_language',
     purposes: 'purposes',
     current_level: 'current_level'
   };
@@ -11035,6 +11210,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Level'
+   */
+  export type EnumLevelFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Level'>
+    
+
+
+  /**
+   * Reference to a field of type 'Level[]'
+   */
+  export type ListEnumLevelFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Level[]'>
+    
+
+
+  /**
    * Reference to a field of type 'TaskType'
    */
   export type EnumTaskTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TaskType'>
@@ -11059,6 +11248,20 @@ export namespace Prisma {
    * Reference to a field of type 'Float[]'
    */
   export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Purpose[]'
+   */
+  export type ListEnumPurposeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Purpose[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Purpose'
+   */
+  export type EnumPurposeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Purpose'>
     
   /**
    * Deep Input Types
@@ -11152,6 +11355,7 @@ export namespace Prisma {
     language?: EnumLanguageFilter<"Word"> | $Enums.Language
     meaning?: StringFilter<"Word"> | string
     example?: StringNullableFilter<"Word"> | string | null
+    partOfSpeech?: StringNullableFilter<"Word"> | string | null
     createdAt?: DateTimeFilter<"Word"> | Date | string
     progresses?: WordProgressListRelationFilter
   }
@@ -11162,6 +11366,7 @@ export namespace Prisma {
     language?: SortOrder
     meaning?: SortOrder
     example?: SortOrderInput | SortOrder
+    partOfSpeech?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     progresses?: WordProgressOrderByRelationAggregateInput
   }
@@ -11175,6 +11380,7 @@ export namespace Prisma {
     language?: EnumLanguageFilter<"Word"> | $Enums.Language
     meaning?: StringFilter<"Word"> | string
     example?: StringNullableFilter<"Word"> | string | null
+    partOfSpeech?: StringNullableFilter<"Word"> | string | null
     createdAt?: DateTimeFilter<"Word"> | Date | string
     progresses?: WordProgressListRelationFilter
   }, "id">
@@ -11185,6 +11391,7 @@ export namespace Prisma {
     language?: SortOrder
     meaning?: SortOrder
     example?: SortOrderInput | SortOrder
+    partOfSpeech?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     _count?: WordCountOrderByAggregateInput
     _avg?: WordAvgOrderByAggregateInput
@@ -11202,6 +11409,7 @@ export namespace Prisma {
     language?: EnumLanguageWithAggregatesFilter<"Word"> | $Enums.Language
     meaning?: StringWithAggregatesFilter<"Word"> | string
     example?: StringNullableWithAggregatesFilter<"Word"> | string | null
+    partOfSpeech?: StringNullableWithAggregatesFilter<"Word"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Word"> | Date | string
   }
 
@@ -11213,9 +11421,12 @@ export namespace Prisma {
     title?: StringFilter<"Video"> | string
     description?: StringNullableFilter<"Video"> | string | null
     url?: StringFilter<"Video"> | string
-    level?: StringNullableFilter<"Video"> | string | null
+    level?: EnumLevelNullableFilter<"Video"> | $Enums.Level | null
     createdAt?: DateTimeFilter<"Video"> | Date | string
+    tags?: StringNullableListFilter<"Video">
+    courseId?: IntNullableFilter<"Video"> | number | null
     tasks?: TaskListRelationFilter
+    course?: XOR<CourseNullableScalarRelationFilter, CourseWhereInput> | null
   }
 
   export type VideoOrderByWithRelationInput = {
@@ -11225,7 +11436,10 @@ export namespace Prisma {
     url?: SortOrder
     level?: SortOrderInput | SortOrder
     createdAt?: SortOrder
+    tags?: SortOrder
+    courseId?: SortOrderInput | SortOrder
     tasks?: TaskOrderByRelationAggregateInput
+    course?: CourseOrderByWithRelationInput
   }
 
   export type VideoWhereUniqueInput = Prisma.AtLeast<{
@@ -11236,9 +11450,12 @@ export namespace Prisma {
     NOT?: VideoWhereInput | VideoWhereInput[]
     title?: StringFilter<"Video"> | string
     description?: StringNullableFilter<"Video"> | string | null
-    level?: StringNullableFilter<"Video"> | string | null
+    level?: EnumLevelNullableFilter<"Video"> | $Enums.Level | null
     createdAt?: DateTimeFilter<"Video"> | Date | string
+    tags?: StringNullableListFilter<"Video">
+    courseId?: IntNullableFilter<"Video"> | number | null
     tasks?: TaskListRelationFilter
+    course?: XOR<CourseNullableScalarRelationFilter, CourseWhereInput> | null
   }, "id" | "url">
 
   export type VideoOrderByWithAggregationInput = {
@@ -11248,6 +11465,8 @@ export namespace Prisma {
     url?: SortOrder
     level?: SortOrderInput | SortOrder
     createdAt?: SortOrder
+    tags?: SortOrder
+    courseId?: SortOrderInput | SortOrder
     _count?: VideoCountOrderByAggregateInput
     _avg?: VideoAvgOrderByAggregateInput
     _max?: VideoMaxOrderByAggregateInput
@@ -11263,8 +11482,10 @@ export namespace Prisma {
     title?: StringWithAggregatesFilter<"Video"> | string
     description?: StringNullableWithAggregatesFilter<"Video"> | string | null
     url?: StringWithAggregatesFilter<"Video"> | string
-    level?: StringNullableWithAggregatesFilter<"Video"> | string | null
+    level?: EnumLevelNullableWithAggregatesFilter<"Video"> | $Enums.Level | null
     createdAt?: DateTimeWithAggregatesFilter<"Video"> | Date | string
+    tags?: StringNullableListFilter<"Video">
+    courseId?: IntNullableWithAggregatesFilter<"Video"> | number | null
   }
 
   export type TaskWhereInput = {
@@ -11276,6 +11497,7 @@ export namespace Prisma {
     answer?: StringFilter<"Task"> | string
     options?: StringNullableListFilter<"Task">
     type?: EnumTaskTypeFilter<"Task"> | $Enums.TaskType
+    score?: IntNullableFilter<"Task"> | number | null
     createdAt?: DateTimeFilter<"Task"> | Date | string
     language?: EnumLanguageFilter<"Task"> | $Enums.Language
     videoId?: IntNullableFilter<"Task"> | number | null
@@ -11290,6 +11512,7 @@ export namespace Prisma {
     answer?: SortOrder
     options?: SortOrder
     type?: SortOrder
+    score?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     language?: SortOrder
     videoId?: SortOrderInput | SortOrder
@@ -11307,6 +11530,7 @@ export namespace Prisma {
     answer?: StringFilter<"Task"> | string
     options?: StringNullableListFilter<"Task">
     type?: EnumTaskTypeFilter<"Task"> | $Enums.TaskType
+    score?: IntNullableFilter<"Task"> | number | null
     createdAt?: DateTimeFilter<"Task"> | Date | string
     language?: EnumLanguageFilter<"Task"> | $Enums.Language
     videoId?: IntNullableFilter<"Task"> | number | null
@@ -11321,6 +11545,7 @@ export namespace Prisma {
     answer?: SortOrder
     options?: SortOrder
     type?: SortOrder
+    score?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     language?: SortOrder
     videoId?: SortOrderInput | SortOrder
@@ -11341,6 +11566,7 @@ export namespace Prisma {
     answer?: StringWithAggregatesFilter<"Task"> | string
     options?: StringNullableListFilter<"Task">
     type?: EnumTaskTypeWithAggregatesFilter<"Task"> | $Enums.TaskType
+    score?: IntNullableWithAggregatesFilter<"Task"> | number | null
     createdAt?: DateTimeWithAggregatesFilter<"Task"> | Date | string
     language?: EnumLanguageWithAggregatesFilter<"Task"> | $Enums.Language
     videoId?: IntNullableWithAggregatesFilter<"Task"> | number | null
@@ -11355,12 +11581,14 @@ export namespace Prisma {
     title?: StringFilter<"Course"> | string
     description?: StringNullableFilter<"Course"> | string | null
     imageUrl?: StringNullableFilter<"Course"> | string | null
-    level?: StringFilter<"Course"> | string
+    level?: EnumLevelFilter<"Course"> | $Enums.Level
     isPublished?: BoolFilter<"Course"> | boolean
     createdAt?: DateTimeFilter<"Course"> | Date | string
     updatedAt?: DateTimeFilter<"Course"> | Date | string
+    tags?: StringNullableListFilter<"Course">
     tasks?: TaskListRelationFilter
     enrollments?: EnrollmentListRelationFilter
+    videos?: VideoListRelationFilter
   }
 
   export type CourseOrderByWithRelationInput = {
@@ -11372,8 +11600,10 @@ export namespace Prisma {
     isPublished?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    tags?: SortOrder
     tasks?: TaskOrderByRelationAggregateInput
     enrollments?: EnrollmentOrderByRelationAggregateInput
+    videos?: VideoOrderByRelationAggregateInput
   }
 
   export type CourseWhereUniqueInput = Prisma.AtLeast<{
@@ -11384,12 +11614,14 @@ export namespace Prisma {
     title?: StringFilter<"Course"> | string
     description?: StringNullableFilter<"Course"> | string | null
     imageUrl?: StringNullableFilter<"Course"> | string | null
-    level?: StringFilter<"Course"> | string
+    level?: EnumLevelFilter<"Course"> | $Enums.Level
     isPublished?: BoolFilter<"Course"> | boolean
     createdAt?: DateTimeFilter<"Course"> | Date | string
     updatedAt?: DateTimeFilter<"Course"> | Date | string
+    tags?: StringNullableListFilter<"Course">
     tasks?: TaskListRelationFilter
     enrollments?: EnrollmentListRelationFilter
+    videos?: VideoListRelationFilter
   }, "id">
 
   export type CourseOrderByWithAggregationInput = {
@@ -11401,6 +11633,7 @@ export namespace Prisma {
     isPublished?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    tags?: SortOrder
     _count?: CourseCountOrderByAggregateInput
     _avg?: CourseAvgOrderByAggregateInput
     _max?: CourseMaxOrderByAggregateInput
@@ -11416,10 +11649,11 @@ export namespace Prisma {
     title?: StringWithAggregatesFilter<"Course"> | string
     description?: StringNullableWithAggregatesFilter<"Course"> | string | null
     imageUrl?: StringNullableWithAggregatesFilter<"Course"> | string | null
-    level?: StringWithAggregatesFilter<"Course"> | string
+    level?: EnumLevelWithAggregatesFilter<"Course"> | $Enums.Level
     isPublished?: BoolWithAggregatesFilter<"Course"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"Course"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Course"> | Date | string
+    tags?: StringNullableListFilter<"Course">
   }
 
   export type EnrollmentWhereInput = {
@@ -11490,9 +11724,9 @@ export namespace Prisma {
     id?: IntFilter<"Setting"> | number
     userId?: IntFilter<"Setting"> | number
     global_language?: EnumLanguageFilter<"Setting"> | $Enums.Language
-    curent_language?: EnumLanguageFilter<"Setting"> | $Enums.Language
-    purposes?: StringNullableListFilter<"Setting">
-    current_level?: StringFilter<"Setting"> | string
+    current_language?: EnumLanguageFilter<"Setting"> | $Enums.Language
+    purposes?: EnumPurposeNullableListFilter<"Setting">
+    current_level?: EnumLevelFilter<"Setting"> | $Enums.Level
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
 
@@ -11500,7 +11734,7 @@ export namespace Prisma {
     id?: SortOrder
     userId?: SortOrder
     global_language?: SortOrder
-    curent_language?: SortOrder
+    current_language?: SortOrder
     purposes?: SortOrder
     current_level?: SortOrder
     user?: UserOrderByWithRelationInput
@@ -11513,9 +11747,9 @@ export namespace Prisma {
     OR?: SettingWhereInput[]
     NOT?: SettingWhereInput | SettingWhereInput[]
     global_language?: EnumLanguageFilter<"Setting"> | $Enums.Language
-    curent_language?: EnumLanguageFilter<"Setting"> | $Enums.Language
-    purposes?: StringNullableListFilter<"Setting">
-    current_level?: StringFilter<"Setting"> | string
+    current_language?: EnumLanguageFilter<"Setting"> | $Enums.Language
+    purposes?: EnumPurposeNullableListFilter<"Setting">
+    current_level?: EnumLevelFilter<"Setting"> | $Enums.Level
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "id" | "userId">
 
@@ -11523,7 +11757,7 @@ export namespace Prisma {
     id?: SortOrder
     userId?: SortOrder
     global_language?: SortOrder
-    curent_language?: SortOrder
+    current_language?: SortOrder
     purposes?: SortOrder
     current_level?: SortOrder
     _count?: SettingCountOrderByAggregateInput
@@ -11540,9 +11774,9 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"Setting"> | number
     userId?: IntWithAggregatesFilter<"Setting"> | number
     global_language?: EnumLanguageWithAggregatesFilter<"Setting"> | $Enums.Language
-    curent_language?: EnumLanguageWithAggregatesFilter<"Setting"> | $Enums.Language
-    purposes?: StringNullableListFilter<"Setting">
-    current_level?: StringWithAggregatesFilter<"Setting"> | string
+    current_language?: EnumLanguageWithAggregatesFilter<"Setting"> | $Enums.Language
+    purposes?: EnumPurposeNullableListFilter<"Setting">
+    current_level?: EnumLevelWithAggregatesFilter<"Setting"> | $Enums.Level
   }
 
   export type WordProgressWhereInput = {
@@ -11697,6 +11931,7 @@ export namespace Prisma {
     language: $Enums.Language
     meaning: string
     example?: string | null
+    partOfSpeech?: string | null
     createdAt?: Date | string
     progresses?: WordProgressCreateNestedManyWithoutWordInput
   }
@@ -11707,6 +11942,7 @@ export namespace Prisma {
     language: $Enums.Language
     meaning: string
     example?: string | null
+    partOfSpeech?: string | null
     createdAt?: Date | string
     progresses?: WordProgressUncheckedCreateNestedManyWithoutWordInput
   }
@@ -11716,6 +11952,7 @@ export namespace Prisma {
     language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
     meaning?: StringFieldUpdateOperationsInput | string
     example?: NullableStringFieldUpdateOperationsInput | string | null
+    partOfSpeech?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     progresses?: WordProgressUpdateManyWithoutWordNestedInput
   }
@@ -11726,6 +11963,7 @@ export namespace Prisma {
     language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
     meaning?: StringFieldUpdateOperationsInput | string
     example?: NullableStringFieldUpdateOperationsInput | string | null
+    partOfSpeech?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     progresses?: WordProgressUncheckedUpdateManyWithoutWordNestedInput
   }
@@ -11736,6 +11974,7 @@ export namespace Prisma {
     language: $Enums.Language
     meaning: string
     example?: string | null
+    partOfSpeech?: string | null
     createdAt?: Date | string
   }
 
@@ -11744,6 +11983,7 @@ export namespace Prisma {
     language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
     meaning?: StringFieldUpdateOperationsInput | string
     example?: NullableStringFieldUpdateOperationsInput | string | null
+    partOfSpeech?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -11753,6 +11993,7 @@ export namespace Prisma {
     language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
     meaning?: StringFieldUpdateOperationsInput | string
     example?: NullableStringFieldUpdateOperationsInput | string | null
+    partOfSpeech?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -11760,9 +12001,11 @@ export namespace Prisma {
     title: string
     description?: string | null
     url: string
-    level?: string | null
+    level?: $Enums.Level | null
     createdAt?: Date | string
+    tags?: VideoCreatetagsInput | string[]
     tasks?: TaskCreateNestedManyWithoutVideoInput
+    course?: CourseCreateNestedOneWithoutVideosInput
   }
 
   export type VideoUncheckedCreateInput = {
@@ -11770,8 +12013,10 @@ export namespace Prisma {
     title: string
     description?: string | null
     url: string
-    level?: string | null
+    level?: $Enums.Level | null
     createdAt?: Date | string
+    tags?: VideoCreatetagsInput | string[]
+    courseId?: number | null
     tasks?: TaskUncheckedCreateNestedManyWithoutVideoInput
   }
 
@@ -11779,9 +12024,11 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     url?: StringFieldUpdateOperationsInput | string
-    level?: NullableStringFieldUpdateOperationsInput | string | null
+    level?: NullableEnumLevelFieldUpdateOperationsInput | $Enums.Level | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tags?: VideoUpdatetagsInput | string[]
     tasks?: TaskUpdateManyWithoutVideoNestedInput
+    course?: CourseUpdateOneWithoutVideosNestedInput
   }
 
   export type VideoUncheckedUpdateInput = {
@@ -11789,8 +12036,10 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     url?: StringFieldUpdateOperationsInput | string
-    level?: NullableStringFieldUpdateOperationsInput | string | null
+    level?: NullableEnumLevelFieldUpdateOperationsInput | $Enums.Level | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tags?: VideoUpdatetagsInput | string[]
+    courseId?: NullableIntFieldUpdateOperationsInput | number | null
     tasks?: TaskUncheckedUpdateManyWithoutVideoNestedInput
   }
 
@@ -11799,16 +12048,19 @@ export namespace Prisma {
     title: string
     description?: string | null
     url: string
-    level?: string | null
+    level?: $Enums.Level | null
     createdAt?: Date | string
+    tags?: VideoCreatetagsInput | string[]
+    courseId?: number | null
   }
 
   export type VideoUpdateManyMutationInput = {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     url?: StringFieldUpdateOperationsInput | string
-    level?: NullableStringFieldUpdateOperationsInput | string | null
+    level?: NullableEnumLevelFieldUpdateOperationsInput | $Enums.Level | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tags?: VideoUpdatetagsInput | string[]
   }
 
   export type VideoUncheckedUpdateManyInput = {
@@ -11816,8 +12068,10 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     url?: StringFieldUpdateOperationsInput | string
-    level?: NullableStringFieldUpdateOperationsInput | string | null
+    level?: NullableEnumLevelFieldUpdateOperationsInput | $Enums.Level | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tags?: VideoUpdatetagsInput | string[]
+    courseId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type TaskCreateInput = {
@@ -11825,6 +12079,7 @@ export namespace Prisma {
     answer: string
     options?: TaskCreateoptionsInput | string[]
     type?: $Enums.TaskType
+    score?: number | null
     createdAt?: Date | string
     language?: $Enums.Language
     video?: VideoCreateNestedOneWithoutTasksInput
@@ -11837,6 +12092,7 @@ export namespace Prisma {
     answer: string
     options?: TaskCreateoptionsInput | string[]
     type?: $Enums.TaskType
+    score?: number | null
     createdAt?: Date | string
     language?: $Enums.Language
     videoId?: number | null
@@ -11848,6 +12104,7 @@ export namespace Prisma {
     answer?: StringFieldUpdateOperationsInput | string
     options?: TaskUpdateoptionsInput | string[]
     type?: EnumTaskTypeFieldUpdateOperationsInput | $Enums.TaskType
+    score?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
     video?: VideoUpdateOneWithoutTasksNestedInput
@@ -11860,6 +12117,7 @@ export namespace Prisma {
     answer?: StringFieldUpdateOperationsInput | string
     options?: TaskUpdateoptionsInput | string[]
     type?: EnumTaskTypeFieldUpdateOperationsInput | $Enums.TaskType
+    score?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
     videoId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -11872,6 +12130,7 @@ export namespace Prisma {
     answer: string
     options?: TaskCreateoptionsInput | string[]
     type?: $Enums.TaskType
+    score?: number | null
     createdAt?: Date | string
     language?: $Enums.Language
     videoId?: number | null
@@ -11883,6 +12142,7 @@ export namespace Prisma {
     answer?: StringFieldUpdateOperationsInput | string
     options?: TaskUpdateoptionsInput | string[]
     type?: EnumTaskTypeFieldUpdateOperationsInput | $Enums.TaskType
+    score?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
   }
@@ -11893,6 +12153,7 @@ export namespace Prisma {
     answer?: StringFieldUpdateOperationsInput | string
     options?: TaskUpdateoptionsInput | string[]
     type?: EnumTaskTypeFieldUpdateOperationsInput | $Enums.TaskType
+    score?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
     videoId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -11903,12 +12164,14 @@ export namespace Prisma {
     title: string
     description?: string | null
     imageUrl?: string | null
-    level?: string
+    level?: $Enums.Level
     isPublished?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    tags?: CourseCreatetagsInput | string[]
     tasks?: TaskCreateNestedManyWithoutCourseInput
     enrollments?: EnrollmentCreateNestedManyWithoutCourseInput
+    videos?: VideoCreateNestedManyWithoutCourseInput
   }
 
   export type CourseUncheckedCreateInput = {
@@ -11916,24 +12179,28 @@ export namespace Prisma {
     title: string
     description?: string | null
     imageUrl?: string | null
-    level?: string
+    level?: $Enums.Level
     isPublished?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    tags?: CourseCreatetagsInput | string[]
     tasks?: TaskUncheckedCreateNestedManyWithoutCourseInput
     enrollments?: EnrollmentUncheckedCreateNestedManyWithoutCourseInput
+    videos?: VideoUncheckedCreateNestedManyWithoutCourseInput
   }
 
   export type CourseUpdateInput = {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    level?: StringFieldUpdateOperationsInput | string
+    level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
     isPublished?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tags?: CourseUpdatetagsInput | string[]
     tasks?: TaskUpdateManyWithoutCourseNestedInput
     enrollments?: EnrollmentUpdateManyWithoutCourseNestedInput
+    videos?: VideoUpdateManyWithoutCourseNestedInput
   }
 
   export type CourseUncheckedUpdateInput = {
@@ -11941,12 +12208,14 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    level?: StringFieldUpdateOperationsInput | string
+    level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
     isPublished?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tags?: CourseUpdatetagsInput | string[]
     tasks?: TaskUncheckedUpdateManyWithoutCourseNestedInput
     enrollments?: EnrollmentUncheckedUpdateManyWithoutCourseNestedInput
+    videos?: VideoUncheckedUpdateManyWithoutCourseNestedInput
   }
 
   export type CourseCreateManyInput = {
@@ -11954,20 +12223,22 @@ export namespace Prisma {
     title: string
     description?: string | null
     imageUrl?: string | null
-    level?: string
+    level?: $Enums.Level
     isPublished?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    tags?: CourseCreatetagsInput | string[]
   }
 
   export type CourseUpdateManyMutationInput = {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    level?: StringFieldUpdateOperationsInput | string
+    level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
     isPublished?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tags?: CourseUpdatetagsInput | string[]
   }
 
   export type CourseUncheckedUpdateManyInput = {
@@ -11975,10 +12246,11 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    level?: StringFieldUpdateOperationsInput | string
+    level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
     isPublished?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tags?: CourseUpdatetagsInput | string[]
   }
 
   export type EnrollmentCreateInput = {
@@ -12034,9 +12306,9 @@ export namespace Prisma {
 
   export type SettingCreateInput = {
     global_language?: $Enums.Language
-    curent_language?: $Enums.Language
-    purposes?: SettingCreatepurposesInput | string[]
-    current_level?: string
+    current_language?: $Enums.Language
+    purposes?: SettingCreatepurposesInput | $Enums.Purpose[]
+    current_level?: $Enums.Level
     user: UserCreateNestedOneWithoutSettingInput
   }
 
@@ -12044,16 +12316,16 @@ export namespace Prisma {
     id?: number
     userId: number
     global_language?: $Enums.Language
-    curent_language?: $Enums.Language
-    purposes?: SettingCreatepurposesInput | string[]
-    current_level?: string
+    current_language?: $Enums.Language
+    purposes?: SettingCreatepurposesInput | $Enums.Purpose[]
+    current_level?: $Enums.Level
   }
 
   export type SettingUpdateInput = {
     global_language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
-    curent_language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
-    purposes?: SettingUpdatepurposesInput | string[]
-    current_level?: StringFieldUpdateOperationsInput | string
+    current_language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    purposes?: SettingUpdatepurposesInput | $Enums.Purpose[]
+    current_level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
     user?: UserUpdateOneRequiredWithoutSettingNestedInput
   }
 
@@ -12061,34 +12333,34 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     userId?: IntFieldUpdateOperationsInput | number
     global_language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
-    curent_language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
-    purposes?: SettingUpdatepurposesInput | string[]
-    current_level?: StringFieldUpdateOperationsInput | string
+    current_language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    purposes?: SettingUpdatepurposesInput | $Enums.Purpose[]
+    current_level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
   }
 
   export type SettingCreateManyInput = {
     id?: number
     userId: number
     global_language?: $Enums.Language
-    curent_language?: $Enums.Language
-    purposes?: SettingCreatepurposesInput | string[]
-    current_level?: string
+    current_language?: $Enums.Language
+    purposes?: SettingCreatepurposesInput | $Enums.Purpose[]
+    current_level?: $Enums.Level
   }
 
   export type SettingUpdateManyMutationInput = {
     global_language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
-    curent_language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
-    purposes?: SettingUpdatepurposesInput | string[]
-    current_level?: StringFieldUpdateOperationsInput | string
+    current_language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    purposes?: SettingUpdatepurposesInput | $Enums.Purpose[]
+    current_level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
   }
 
   export type SettingUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     userId?: IntFieldUpdateOperationsInput | number
     global_language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
-    curent_language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
-    purposes?: SettingUpdatepurposesInput | string[]
-    current_level?: StringFieldUpdateOperationsInput | string
+    current_language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    purposes?: SettingUpdatepurposesInput | $Enums.Purpose[]
+    current_level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
   }
 
   export type WordProgressCreateInput = {
@@ -12356,6 +12628,7 @@ export namespace Prisma {
     language?: SortOrder
     meaning?: SortOrder
     example?: SortOrder
+    partOfSpeech?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -12369,6 +12642,7 @@ export namespace Prisma {
     language?: SortOrder
     meaning?: SortOrder
     example?: SortOrder
+    partOfSpeech?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -12378,6 +12652,7 @@ export namespace Prisma {
     language?: SortOrder
     meaning?: SortOrder
     example?: SortOrder
+    partOfSpeech?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -12413,49 +12688,11 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
-  export type TaskListRelationFilter = {
-    every?: TaskWhereInput
-    some?: TaskWhereInput
-    none?: TaskWhereInput
-  }
-
-  export type TaskOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type VideoCountOrderByAggregateInput = {
-    id?: SortOrder
-    title?: SortOrder
-    description?: SortOrder
-    url?: SortOrder
-    level?: SortOrder
-    createdAt?: SortOrder
-  }
-
-  export type VideoAvgOrderByAggregateInput = {
-    id?: SortOrder
-  }
-
-  export type VideoMaxOrderByAggregateInput = {
-    id?: SortOrder
-    title?: SortOrder
-    description?: SortOrder
-    url?: SortOrder
-    level?: SortOrder
-    createdAt?: SortOrder
-  }
-
-  export type VideoMinOrderByAggregateInput = {
-    id?: SortOrder
-    title?: SortOrder
-    description?: SortOrder
-    url?: SortOrder
-    level?: SortOrder
-    createdAt?: SortOrder
-  }
-
-  export type VideoSumOrderByAggregateInput = {
-    id?: SortOrder
+  export type EnumLevelNullableFilter<$PrismaModel = never> = {
+    equals?: $Enums.Level | EnumLevelFieldRefInput<$PrismaModel> | null
+    in?: $Enums.Level[] | ListEnumLevelFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.Level[] | ListEnumLevelFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumLevelNullableFilter<$PrismaModel> | $Enums.Level | null
   }
 
   export type StringNullableListFilter<$PrismaModel = never> = {
@@ -12464,13 +12701,6 @@ export namespace Prisma {
     hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
     hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
     isEmpty?: boolean
-  }
-
-  export type EnumTaskTypeFilter<$PrismaModel = never> = {
-    equals?: $Enums.TaskType | EnumTaskTypeFieldRefInput<$PrismaModel>
-    in?: $Enums.TaskType[] | ListEnumTaskTypeFieldRefInput<$PrismaModel>
-    notIn?: $Enums.TaskType[] | ListEnumTaskTypeFieldRefInput<$PrismaModel>
-    not?: NestedEnumTaskTypeFilter<$PrismaModel> | $Enums.TaskType
   }
 
   export type IntNullableFilter<$PrismaModel = never> = {
@@ -12484,9 +12714,10 @@ export namespace Prisma {
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
-  export type VideoNullableScalarRelationFilter = {
-    is?: VideoWhereInput | null
-    isNot?: VideoWhereInput | null
+  export type TaskListRelationFilter = {
+    every?: TaskWhereInput
+    some?: TaskWhereInput
+    none?: TaskWhereInput
   }
 
   export type CourseNullableScalarRelationFilter = {
@@ -12494,60 +12725,59 @@ export namespace Prisma {
     isNot?: CourseWhereInput | null
   }
 
-  export type TaskCountOrderByAggregateInput = {
+  export type TaskOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type VideoCountOrderByAggregateInput = {
     id?: SortOrder
-    question?: SortOrder
-    answer?: SortOrder
-    options?: SortOrder
-    type?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    url?: SortOrder
+    level?: SortOrder
     createdAt?: SortOrder
-    language?: SortOrder
-    videoId?: SortOrder
+    tags?: SortOrder
     courseId?: SortOrder
   }
 
-  export type TaskAvgOrderByAggregateInput = {
+  export type VideoAvgOrderByAggregateInput = {
     id?: SortOrder
-    videoId?: SortOrder
     courseId?: SortOrder
   }
 
-  export type TaskMaxOrderByAggregateInput = {
+  export type VideoMaxOrderByAggregateInput = {
     id?: SortOrder
-    question?: SortOrder
-    answer?: SortOrder
-    type?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    url?: SortOrder
+    level?: SortOrder
     createdAt?: SortOrder
-    language?: SortOrder
-    videoId?: SortOrder
     courseId?: SortOrder
   }
 
-  export type TaskMinOrderByAggregateInput = {
+  export type VideoMinOrderByAggregateInput = {
     id?: SortOrder
-    question?: SortOrder
-    answer?: SortOrder
-    type?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    url?: SortOrder
+    level?: SortOrder
     createdAt?: SortOrder
-    language?: SortOrder
-    videoId?: SortOrder
     courseId?: SortOrder
   }
 
-  export type TaskSumOrderByAggregateInput = {
+  export type VideoSumOrderByAggregateInput = {
     id?: SortOrder
-    videoId?: SortOrder
     courseId?: SortOrder
   }
 
-  export type EnumTaskTypeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.TaskType | EnumTaskTypeFieldRefInput<$PrismaModel>
-    in?: $Enums.TaskType[] | ListEnumTaskTypeFieldRefInput<$PrismaModel>
-    notIn?: $Enums.TaskType[] | ListEnumTaskTypeFieldRefInput<$PrismaModel>
-    not?: NestedEnumTaskTypeWithAggregatesFilter<$PrismaModel> | $Enums.TaskType
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumTaskTypeFilter<$PrismaModel>
-    _max?: NestedEnumTaskTypeFilter<$PrismaModel>
+  export type EnumLevelNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Level | EnumLevelFieldRefInput<$PrismaModel> | null
+    in?: $Enums.Level[] | ListEnumLevelFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.Level[] | ListEnumLevelFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumLevelNullableWithAggregatesFilter<$PrismaModel> | $Enums.Level | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedEnumLevelNullableFilter<$PrismaModel>
+    _max?: NestedEnumLevelNullableFilter<$PrismaModel>
   }
 
   export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -12566,6 +12796,96 @@ export namespace Prisma {
     _max?: NestedIntNullableFilter<$PrismaModel>
   }
 
+  export type EnumTaskTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.TaskType | EnumTaskTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.TaskType[] | ListEnumTaskTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.TaskType[] | ListEnumTaskTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumTaskTypeFilter<$PrismaModel> | $Enums.TaskType
+  }
+
+  export type VideoNullableScalarRelationFilter = {
+    is?: VideoWhereInput | null
+    isNot?: VideoWhereInput | null
+  }
+
+  export type TaskCountOrderByAggregateInput = {
+    id?: SortOrder
+    question?: SortOrder
+    answer?: SortOrder
+    options?: SortOrder
+    type?: SortOrder
+    score?: SortOrder
+    createdAt?: SortOrder
+    language?: SortOrder
+    videoId?: SortOrder
+    courseId?: SortOrder
+  }
+
+  export type TaskAvgOrderByAggregateInput = {
+    id?: SortOrder
+    score?: SortOrder
+    videoId?: SortOrder
+    courseId?: SortOrder
+  }
+
+  export type TaskMaxOrderByAggregateInput = {
+    id?: SortOrder
+    question?: SortOrder
+    answer?: SortOrder
+    type?: SortOrder
+    score?: SortOrder
+    createdAt?: SortOrder
+    language?: SortOrder
+    videoId?: SortOrder
+    courseId?: SortOrder
+  }
+
+  export type TaskMinOrderByAggregateInput = {
+    id?: SortOrder
+    question?: SortOrder
+    answer?: SortOrder
+    type?: SortOrder
+    score?: SortOrder
+    createdAt?: SortOrder
+    language?: SortOrder
+    videoId?: SortOrder
+    courseId?: SortOrder
+  }
+
+  export type TaskSumOrderByAggregateInput = {
+    id?: SortOrder
+    score?: SortOrder
+    videoId?: SortOrder
+    courseId?: SortOrder
+  }
+
+  export type EnumTaskTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.TaskType | EnumTaskTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.TaskType[] | ListEnumTaskTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.TaskType[] | ListEnumTaskTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumTaskTypeWithAggregatesFilter<$PrismaModel> | $Enums.TaskType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumTaskTypeFilter<$PrismaModel>
+    _max?: NestedEnumTaskTypeFilter<$PrismaModel>
+  }
+
+  export type EnumLevelFilter<$PrismaModel = never> = {
+    equals?: $Enums.Level | EnumLevelFieldRefInput<$PrismaModel>
+    in?: $Enums.Level[] | ListEnumLevelFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Level[] | ListEnumLevelFieldRefInput<$PrismaModel>
+    not?: NestedEnumLevelFilter<$PrismaModel> | $Enums.Level
+  }
+
+  export type VideoListRelationFilter = {
+    every?: VideoWhereInput
+    some?: VideoWhereInput
+    none?: VideoWhereInput
+  }
+
+  export type VideoOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type CourseCountOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
@@ -12575,6 +12895,7 @@ export namespace Prisma {
     isPublished?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    tags?: SortOrder
   }
 
   export type CourseAvgOrderByAggregateInput = {
@@ -12605,6 +12926,16 @@ export namespace Prisma {
 
   export type CourseSumOrderByAggregateInput = {
     id?: SortOrder
+  }
+
+  export type EnumLevelWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Level | EnumLevelFieldRefInput<$PrismaModel>
+    in?: $Enums.Level[] | ListEnumLevelFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Level[] | ListEnumLevelFieldRefInput<$PrismaModel>
+    not?: NestedEnumLevelWithAggregatesFilter<$PrismaModel> | $Enums.Level
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumLevelFilter<$PrismaModel>
+    _max?: NestedEnumLevelFilter<$PrismaModel>
   }
 
   export type FloatFilter<$PrismaModel = never> = {
@@ -12687,11 +13018,19 @@ export namespace Prisma {
     _max?: NestedFloatFilter<$PrismaModel>
   }
 
+  export type EnumPurposeNullableListFilter<$PrismaModel = never> = {
+    equals?: $Enums.Purpose[] | ListEnumPurposeFieldRefInput<$PrismaModel> | null
+    has?: $Enums.Purpose | EnumPurposeFieldRefInput<$PrismaModel> | null
+    hasEvery?: $Enums.Purpose[] | ListEnumPurposeFieldRefInput<$PrismaModel>
+    hasSome?: $Enums.Purpose[] | ListEnumPurposeFieldRefInput<$PrismaModel>
+    isEmpty?: boolean
+  }
+
   export type SettingCountOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
     global_language?: SortOrder
-    curent_language?: SortOrder
+    current_language?: SortOrder
     purposes?: SortOrder
     current_level?: SortOrder
   }
@@ -12705,7 +13044,7 @@ export namespace Prisma {
     id?: SortOrder
     userId?: SortOrder
     global_language?: SortOrder
-    curent_language?: SortOrder
+    current_language?: SortOrder
     current_level?: SortOrder
   }
 
@@ -12713,7 +13052,7 @@ export namespace Prisma {
     id?: SortOrder
     userId?: SortOrder
     global_language?: SortOrder
-    curent_language?: SortOrder
+    current_language?: SortOrder
     current_level?: SortOrder
   }
 
@@ -12960,6 +13299,10 @@ export namespace Prisma {
     deleteMany?: WordProgressScalarWhereInput | WordProgressScalarWhereInput[]
   }
 
+  export type VideoCreatetagsInput = {
+    set: string[]
+  }
+
   export type TaskCreateNestedManyWithoutVideoInput = {
     create?: XOR<TaskCreateWithoutVideoInput, TaskUncheckedCreateWithoutVideoInput> | TaskCreateWithoutVideoInput[] | TaskUncheckedCreateWithoutVideoInput[]
     connectOrCreate?: TaskCreateOrConnectWithoutVideoInput | TaskCreateOrConnectWithoutVideoInput[]
@@ -12967,11 +13310,26 @@ export namespace Prisma {
     connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
   }
 
+  export type CourseCreateNestedOneWithoutVideosInput = {
+    create?: XOR<CourseCreateWithoutVideosInput, CourseUncheckedCreateWithoutVideosInput>
+    connectOrCreate?: CourseCreateOrConnectWithoutVideosInput
+    connect?: CourseWhereUniqueInput
+  }
+
   export type TaskUncheckedCreateNestedManyWithoutVideoInput = {
     create?: XOR<TaskCreateWithoutVideoInput, TaskUncheckedCreateWithoutVideoInput> | TaskCreateWithoutVideoInput[] | TaskUncheckedCreateWithoutVideoInput[]
     connectOrCreate?: TaskCreateOrConnectWithoutVideoInput | TaskCreateOrConnectWithoutVideoInput[]
     createMany?: TaskCreateManyVideoInputEnvelope
     connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+  }
+
+  export type NullableEnumLevelFieldUpdateOperationsInput = {
+    set?: $Enums.Level | null
+  }
+
+  export type VideoUpdatetagsInput = {
+    set?: string[]
+    push?: string | string[]
   }
 
   export type TaskUpdateManyWithoutVideoNestedInput = {
@@ -12986,6 +13344,24 @@ export namespace Prisma {
     update?: TaskUpdateWithWhereUniqueWithoutVideoInput | TaskUpdateWithWhereUniqueWithoutVideoInput[]
     updateMany?: TaskUpdateManyWithWhereWithoutVideoInput | TaskUpdateManyWithWhereWithoutVideoInput[]
     deleteMany?: TaskScalarWhereInput | TaskScalarWhereInput[]
+  }
+
+  export type CourseUpdateOneWithoutVideosNestedInput = {
+    create?: XOR<CourseCreateWithoutVideosInput, CourseUncheckedCreateWithoutVideosInput>
+    connectOrCreate?: CourseCreateOrConnectWithoutVideosInput
+    upsert?: CourseUpsertWithoutVideosInput
+    disconnect?: CourseWhereInput | boolean
+    delete?: CourseWhereInput | boolean
+    connect?: CourseWhereUniqueInput
+    update?: XOR<XOR<CourseUpdateToOneWithWhereWithoutVideosInput, CourseUpdateWithoutVideosInput>, CourseUncheckedUpdateWithoutVideosInput>
+  }
+
+  export type NullableIntFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
   }
 
   export type TaskUncheckedUpdateManyWithoutVideoNestedInput = {
@@ -13047,12 +13423,8 @@ export namespace Prisma {
     update?: XOR<XOR<CourseUpdateToOneWithWhereWithoutTasksInput, CourseUpdateWithoutTasksInput>, CourseUncheckedUpdateWithoutTasksInput>
   }
 
-  export type NullableIntFieldUpdateOperationsInput = {
-    set?: number | null
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
+  export type CourseCreatetagsInput = {
+    set: string[]
   }
 
   export type TaskCreateNestedManyWithoutCourseInput = {
@@ -13069,6 +13441,13 @@ export namespace Prisma {
     connect?: EnrollmentWhereUniqueInput | EnrollmentWhereUniqueInput[]
   }
 
+  export type VideoCreateNestedManyWithoutCourseInput = {
+    create?: XOR<VideoCreateWithoutCourseInput, VideoUncheckedCreateWithoutCourseInput> | VideoCreateWithoutCourseInput[] | VideoUncheckedCreateWithoutCourseInput[]
+    connectOrCreate?: VideoCreateOrConnectWithoutCourseInput | VideoCreateOrConnectWithoutCourseInput[]
+    createMany?: VideoCreateManyCourseInputEnvelope
+    connect?: VideoWhereUniqueInput | VideoWhereUniqueInput[]
+  }
+
   export type TaskUncheckedCreateNestedManyWithoutCourseInput = {
     create?: XOR<TaskCreateWithoutCourseInput, TaskUncheckedCreateWithoutCourseInput> | TaskCreateWithoutCourseInput[] | TaskUncheckedCreateWithoutCourseInput[]
     connectOrCreate?: TaskCreateOrConnectWithoutCourseInput | TaskCreateOrConnectWithoutCourseInput[]
@@ -13081,6 +13460,22 @@ export namespace Prisma {
     connectOrCreate?: EnrollmentCreateOrConnectWithoutCourseInput | EnrollmentCreateOrConnectWithoutCourseInput[]
     createMany?: EnrollmentCreateManyCourseInputEnvelope
     connect?: EnrollmentWhereUniqueInput | EnrollmentWhereUniqueInput[]
+  }
+
+  export type VideoUncheckedCreateNestedManyWithoutCourseInput = {
+    create?: XOR<VideoCreateWithoutCourseInput, VideoUncheckedCreateWithoutCourseInput> | VideoCreateWithoutCourseInput[] | VideoUncheckedCreateWithoutCourseInput[]
+    connectOrCreate?: VideoCreateOrConnectWithoutCourseInput | VideoCreateOrConnectWithoutCourseInput[]
+    createMany?: VideoCreateManyCourseInputEnvelope
+    connect?: VideoWhereUniqueInput | VideoWhereUniqueInput[]
+  }
+
+  export type EnumLevelFieldUpdateOperationsInput = {
+    set?: $Enums.Level
+  }
+
+  export type CourseUpdatetagsInput = {
+    set?: string[]
+    push?: string | string[]
   }
 
   export type TaskUpdateManyWithoutCourseNestedInput = {
@@ -13111,6 +13506,20 @@ export namespace Prisma {
     deleteMany?: EnrollmentScalarWhereInput | EnrollmentScalarWhereInput[]
   }
 
+  export type VideoUpdateManyWithoutCourseNestedInput = {
+    create?: XOR<VideoCreateWithoutCourseInput, VideoUncheckedCreateWithoutCourseInput> | VideoCreateWithoutCourseInput[] | VideoUncheckedCreateWithoutCourseInput[]
+    connectOrCreate?: VideoCreateOrConnectWithoutCourseInput | VideoCreateOrConnectWithoutCourseInput[]
+    upsert?: VideoUpsertWithWhereUniqueWithoutCourseInput | VideoUpsertWithWhereUniqueWithoutCourseInput[]
+    createMany?: VideoCreateManyCourseInputEnvelope
+    set?: VideoWhereUniqueInput | VideoWhereUniqueInput[]
+    disconnect?: VideoWhereUniqueInput | VideoWhereUniqueInput[]
+    delete?: VideoWhereUniqueInput | VideoWhereUniqueInput[]
+    connect?: VideoWhereUniqueInput | VideoWhereUniqueInput[]
+    update?: VideoUpdateWithWhereUniqueWithoutCourseInput | VideoUpdateWithWhereUniqueWithoutCourseInput[]
+    updateMany?: VideoUpdateManyWithWhereWithoutCourseInput | VideoUpdateManyWithWhereWithoutCourseInput[]
+    deleteMany?: VideoScalarWhereInput | VideoScalarWhereInput[]
+  }
+
   export type TaskUncheckedUpdateManyWithoutCourseNestedInput = {
     create?: XOR<TaskCreateWithoutCourseInput, TaskUncheckedCreateWithoutCourseInput> | TaskCreateWithoutCourseInput[] | TaskUncheckedCreateWithoutCourseInput[]
     connectOrCreate?: TaskCreateOrConnectWithoutCourseInput | TaskCreateOrConnectWithoutCourseInput[]
@@ -13137,6 +13546,20 @@ export namespace Prisma {
     update?: EnrollmentUpdateWithWhereUniqueWithoutCourseInput | EnrollmentUpdateWithWhereUniqueWithoutCourseInput[]
     updateMany?: EnrollmentUpdateManyWithWhereWithoutCourseInput | EnrollmentUpdateManyWithWhereWithoutCourseInput[]
     deleteMany?: EnrollmentScalarWhereInput | EnrollmentScalarWhereInput[]
+  }
+
+  export type VideoUncheckedUpdateManyWithoutCourseNestedInput = {
+    create?: XOR<VideoCreateWithoutCourseInput, VideoUncheckedCreateWithoutCourseInput> | VideoCreateWithoutCourseInput[] | VideoUncheckedCreateWithoutCourseInput[]
+    connectOrCreate?: VideoCreateOrConnectWithoutCourseInput | VideoCreateOrConnectWithoutCourseInput[]
+    upsert?: VideoUpsertWithWhereUniqueWithoutCourseInput | VideoUpsertWithWhereUniqueWithoutCourseInput[]
+    createMany?: VideoCreateManyCourseInputEnvelope
+    set?: VideoWhereUniqueInput | VideoWhereUniqueInput[]
+    disconnect?: VideoWhereUniqueInput | VideoWhereUniqueInput[]
+    delete?: VideoWhereUniqueInput | VideoWhereUniqueInput[]
+    connect?: VideoWhereUniqueInput | VideoWhereUniqueInput[]
+    update?: VideoUpdateWithWhereUniqueWithoutCourseInput | VideoUpdateWithWhereUniqueWithoutCourseInput[]
+    updateMany?: VideoUpdateManyWithWhereWithoutCourseInput | VideoUpdateManyWithWhereWithoutCourseInput[]
+    deleteMany?: VideoScalarWhereInput | VideoScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutEnrollmentsInput = {
@@ -13176,7 +13599,7 @@ export namespace Prisma {
   }
 
   export type SettingCreatepurposesInput = {
-    set: string[]
+    set: $Enums.Purpose[]
   }
 
   export type UserCreateNestedOneWithoutSettingInput = {
@@ -13186,8 +13609,8 @@ export namespace Prisma {
   }
 
   export type SettingUpdatepurposesInput = {
-    set?: string[]
-    push?: string | string[]
+    set?: $Enums.Purpose[]
+    push?: $Enums.Purpose | $Enums.Purpose[]
   }
 
   export type UserUpdateOneRequiredWithoutSettingNestedInput = {
@@ -13409,21 +13832,21 @@ export namespace Prisma {
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
-  export type NestedEnumTaskTypeFilter<$PrismaModel = never> = {
-    equals?: $Enums.TaskType | EnumTaskTypeFieldRefInput<$PrismaModel>
-    in?: $Enums.TaskType[] | ListEnumTaskTypeFieldRefInput<$PrismaModel>
-    notIn?: $Enums.TaskType[] | ListEnumTaskTypeFieldRefInput<$PrismaModel>
-    not?: NestedEnumTaskTypeFilter<$PrismaModel> | $Enums.TaskType
+  export type NestedEnumLevelNullableFilter<$PrismaModel = never> = {
+    equals?: $Enums.Level | EnumLevelFieldRefInput<$PrismaModel> | null
+    in?: $Enums.Level[] | ListEnumLevelFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.Level[] | ListEnumLevelFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumLevelNullableFilter<$PrismaModel> | $Enums.Level | null
   }
 
-  export type NestedEnumTaskTypeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.TaskType | EnumTaskTypeFieldRefInput<$PrismaModel>
-    in?: $Enums.TaskType[] | ListEnumTaskTypeFieldRefInput<$PrismaModel>
-    notIn?: $Enums.TaskType[] | ListEnumTaskTypeFieldRefInput<$PrismaModel>
-    not?: NestedEnumTaskTypeWithAggregatesFilter<$PrismaModel> | $Enums.TaskType
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumTaskTypeFilter<$PrismaModel>
-    _max?: NestedEnumTaskTypeFilter<$PrismaModel>
+  export type NestedEnumLevelNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Level | EnumLevelFieldRefInput<$PrismaModel> | null
+    in?: $Enums.Level[] | ListEnumLevelFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.Level[] | ListEnumLevelFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumLevelNullableWithAggregatesFilter<$PrismaModel> | $Enums.Level | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedEnumLevelNullableFilter<$PrismaModel>
+    _max?: NestedEnumLevelNullableFilter<$PrismaModel>
   }
 
   export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -13451,6 +13874,40 @@ export namespace Prisma {
     gt?: number | FloatFieldRefInput<$PrismaModel>
     gte?: number | FloatFieldRefInput<$PrismaModel>
     not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedEnumTaskTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.TaskType | EnumTaskTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.TaskType[] | ListEnumTaskTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.TaskType[] | ListEnumTaskTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumTaskTypeFilter<$PrismaModel> | $Enums.TaskType
+  }
+
+  export type NestedEnumTaskTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.TaskType | EnumTaskTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.TaskType[] | ListEnumTaskTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.TaskType[] | ListEnumTaskTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumTaskTypeWithAggregatesFilter<$PrismaModel> | $Enums.TaskType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumTaskTypeFilter<$PrismaModel>
+    _max?: NestedEnumTaskTypeFilter<$PrismaModel>
+  }
+
+  export type NestedEnumLevelFilter<$PrismaModel = never> = {
+    equals?: $Enums.Level | EnumLevelFieldRefInput<$PrismaModel>
+    in?: $Enums.Level[] | ListEnumLevelFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Level[] | ListEnumLevelFieldRefInput<$PrismaModel>
+    not?: NestedEnumLevelFilter<$PrismaModel> | $Enums.Level
+  }
+
+  export type NestedEnumLevelWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Level | EnumLevelFieldRefInput<$PrismaModel>
+    in?: $Enums.Level[] | ListEnumLevelFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Level[] | ListEnumLevelFieldRefInput<$PrismaModel>
+    not?: NestedEnumLevelWithAggregatesFilter<$PrismaModel> | $Enums.Level
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumLevelFilter<$PrismaModel>
+    _max?: NestedEnumLevelFilter<$PrismaModel>
   }
 
   export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
@@ -13517,17 +13974,17 @@ export namespace Prisma {
 
   export type SettingCreateWithoutUserInput = {
     global_language?: $Enums.Language
-    curent_language?: $Enums.Language
-    purposes?: SettingCreatepurposesInput | string[]
-    current_level?: string
+    current_language?: $Enums.Language
+    purposes?: SettingCreatepurposesInput | $Enums.Purpose[]
+    current_level?: $Enums.Level
   }
 
   export type SettingUncheckedCreateWithoutUserInput = {
     id?: number
     global_language?: $Enums.Language
-    curent_language?: $Enums.Language
-    purposes?: SettingCreatepurposesInput | string[]
-    current_level?: string
+    current_language?: $Enums.Language
+    purposes?: SettingCreatepurposesInput | $Enums.Purpose[]
+    current_level?: $Enums.Level
   }
 
   export type SettingCreateOrConnectWithoutUserInput = {
@@ -13602,17 +14059,17 @@ export namespace Prisma {
 
   export type SettingUpdateWithoutUserInput = {
     global_language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
-    curent_language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
-    purposes?: SettingUpdatepurposesInput | string[]
-    current_level?: StringFieldUpdateOperationsInput | string
+    current_language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    purposes?: SettingUpdatepurposesInput | $Enums.Purpose[]
+    current_level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
   }
 
   export type SettingUncheckedUpdateWithoutUserInput = {
     id?: IntFieldUpdateOperationsInput | number
     global_language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
-    curent_language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
-    purposes?: SettingUpdatepurposesInput | string[]
-    current_level?: StringFieldUpdateOperationsInput | string
+    current_language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    purposes?: SettingUpdatepurposesInput | $Enums.Purpose[]
+    current_level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
   }
 
   export type WordProgressCreateWithoutWordInput = {
@@ -13659,6 +14116,7 @@ export namespace Prisma {
     answer: string
     options?: TaskCreateoptionsInput | string[]
     type?: $Enums.TaskType
+    score?: number | null
     createdAt?: Date | string
     language?: $Enums.Language
     course?: CourseCreateNestedOneWithoutTasksInput
@@ -13670,6 +14128,7 @@ export namespace Prisma {
     answer: string
     options?: TaskCreateoptionsInput | string[]
     type?: $Enums.TaskType
+    score?: number | null
     createdAt?: Date | string
     language?: $Enums.Language
     courseId?: number | null
@@ -13683,6 +14142,38 @@ export namespace Prisma {
   export type TaskCreateManyVideoInputEnvelope = {
     data: TaskCreateManyVideoInput | TaskCreateManyVideoInput[]
     skipDuplicates?: boolean
+  }
+
+  export type CourseCreateWithoutVideosInput = {
+    title: string
+    description?: string | null
+    imageUrl?: string | null
+    level?: $Enums.Level
+    isPublished?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    tags?: CourseCreatetagsInput | string[]
+    tasks?: TaskCreateNestedManyWithoutCourseInput
+    enrollments?: EnrollmentCreateNestedManyWithoutCourseInput
+  }
+
+  export type CourseUncheckedCreateWithoutVideosInput = {
+    id?: number
+    title: string
+    description?: string | null
+    imageUrl?: string | null
+    level?: $Enums.Level
+    isPublished?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    tags?: CourseCreatetagsInput | string[]
+    tasks?: TaskUncheckedCreateNestedManyWithoutCourseInput
+    enrollments?: EnrollmentUncheckedCreateNestedManyWithoutCourseInput
+  }
+
+  export type CourseCreateOrConnectWithoutVideosInput = {
+    where: CourseWhereUniqueInput
+    create: XOR<CourseCreateWithoutVideosInput, CourseUncheckedCreateWithoutVideosInput>
   }
 
   export type TaskUpsertWithWhereUniqueWithoutVideoInput = {
@@ -13710,18 +14201,59 @@ export namespace Prisma {
     answer?: StringFilter<"Task"> | string
     options?: StringNullableListFilter<"Task">
     type?: EnumTaskTypeFilter<"Task"> | $Enums.TaskType
+    score?: IntNullableFilter<"Task"> | number | null
     createdAt?: DateTimeFilter<"Task"> | Date | string
     language?: EnumLanguageFilter<"Task"> | $Enums.Language
     videoId?: IntNullableFilter<"Task"> | number | null
     courseId?: IntNullableFilter<"Task"> | number | null
   }
 
+  export type CourseUpsertWithoutVideosInput = {
+    update: XOR<CourseUpdateWithoutVideosInput, CourseUncheckedUpdateWithoutVideosInput>
+    create: XOR<CourseCreateWithoutVideosInput, CourseUncheckedCreateWithoutVideosInput>
+    where?: CourseWhereInput
+  }
+
+  export type CourseUpdateToOneWithWhereWithoutVideosInput = {
+    where?: CourseWhereInput
+    data: XOR<CourseUpdateWithoutVideosInput, CourseUncheckedUpdateWithoutVideosInput>
+  }
+
+  export type CourseUpdateWithoutVideosInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
+    isPublished?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tags?: CourseUpdatetagsInput | string[]
+    tasks?: TaskUpdateManyWithoutCourseNestedInput
+    enrollments?: EnrollmentUpdateManyWithoutCourseNestedInput
+  }
+
+  export type CourseUncheckedUpdateWithoutVideosInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
+    isPublished?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tags?: CourseUpdatetagsInput | string[]
+    tasks?: TaskUncheckedUpdateManyWithoutCourseNestedInput
+    enrollments?: EnrollmentUncheckedUpdateManyWithoutCourseNestedInput
+  }
+
   export type VideoCreateWithoutTasksInput = {
     title: string
     description?: string | null
     url: string
-    level?: string | null
+    level?: $Enums.Level | null
     createdAt?: Date | string
+    tags?: VideoCreatetagsInput | string[]
+    course?: CourseCreateNestedOneWithoutVideosInput
   }
 
   export type VideoUncheckedCreateWithoutTasksInput = {
@@ -13729,8 +14261,10 @@ export namespace Prisma {
     title: string
     description?: string | null
     url: string
-    level?: string | null
+    level?: $Enums.Level | null
     createdAt?: Date | string
+    tags?: VideoCreatetagsInput | string[]
+    courseId?: number | null
   }
 
   export type VideoCreateOrConnectWithoutTasksInput = {
@@ -13742,11 +14276,13 @@ export namespace Prisma {
     title: string
     description?: string | null
     imageUrl?: string | null
-    level?: string
+    level?: $Enums.Level
     isPublished?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    tags?: CourseCreatetagsInput | string[]
     enrollments?: EnrollmentCreateNestedManyWithoutCourseInput
+    videos?: VideoCreateNestedManyWithoutCourseInput
   }
 
   export type CourseUncheckedCreateWithoutTasksInput = {
@@ -13754,11 +14290,13 @@ export namespace Prisma {
     title: string
     description?: string | null
     imageUrl?: string | null
-    level?: string
+    level?: $Enums.Level
     isPublished?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    tags?: CourseCreatetagsInput | string[]
     enrollments?: EnrollmentUncheckedCreateNestedManyWithoutCourseInput
+    videos?: VideoUncheckedCreateNestedManyWithoutCourseInput
   }
 
   export type CourseCreateOrConnectWithoutTasksInput = {
@@ -13781,8 +14319,10 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     url?: StringFieldUpdateOperationsInput | string
-    level?: NullableStringFieldUpdateOperationsInput | string | null
+    level?: NullableEnumLevelFieldUpdateOperationsInput | $Enums.Level | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tags?: VideoUpdatetagsInput | string[]
+    course?: CourseUpdateOneWithoutVideosNestedInput
   }
 
   export type VideoUncheckedUpdateWithoutTasksInput = {
@@ -13790,8 +14330,10 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     url?: StringFieldUpdateOperationsInput | string
-    level?: NullableStringFieldUpdateOperationsInput | string | null
+    level?: NullableEnumLevelFieldUpdateOperationsInput | $Enums.Level | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tags?: VideoUpdatetagsInput | string[]
+    courseId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type CourseUpsertWithoutTasksInput = {
@@ -13809,11 +14351,13 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    level?: StringFieldUpdateOperationsInput | string
+    level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
     isPublished?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tags?: CourseUpdatetagsInput | string[]
     enrollments?: EnrollmentUpdateManyWithoutCourseNestedInput
+    videos?: VideoUpdateManyWithoutCourseNestedInput
   }
 
   export type CourseUncheckedUpdateWithoutTasksInput = {
@@ -13821,11 +14365,13 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    level?: StringFieldUpdateOperationsInput | string
+    level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
     isPublished?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tags?: CourseUpdatetagsInput | string[]
     enrollments?: EnrollmentUncheckedUpdateManyWithoutCourseNestedInput
+    videos?: VideoUncheckedUpdateManyWithoutCourseNestedInput
   }
 
   export type TaskCreateWithoutCourseInput = {
@@ -13833,6 +14379,7 @@ export namespace Prisma {
     answer: string
     options?: TaskCreateoptionsInput | string[]
     type?: $Enums.TaskType
+    score?: number | null
     createdAt?: Date | string
     language?: $Enums.Language
     video?: VideoCreateNestedOneWithoutTasksInput
@@ -13844,6 +14391,7 @@ export namespace Prisma {
     answer: string
     options?: TaskCreateoptionsInput | string[]
     type?: $Enums.TaskType
+    score?: number | null
     createdAt?: Date | string
     language?: $Enums.Language
     videoId?: number | null
@@ -13882,6 +14430,37 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type VideoCreateWithoutCourseInput = {
+    title: string
+    description?: string | null
+    url: string
+    level?: $Enums.Level | null
+    createdAt?: Date | string
+    tags?: VideoCreatetagsInput | string[]
+    tasks?: TaskCreateNestedManyWithoutVideoInput
+  }
+
+  export type VideoUncheckedCreateWithoutCourseInput = {
+    id?: number
+    title: string
+    description?: string | null
+    url: string
+    level?: $Enums.Level | null
+    createdAt?: Date | string
+    tags?: VideoCreatetagsInput | string[]
+    tasks?: TaskUncheckedCreateNestedManyWithoutVideoInput
+  }
+
+  export type VideoCreateOrConnectWithoutCourseInput = {
+    where: VideoWhereUniqueInput
+    create: XOR<VideoCreateWithoutCourseInput, VideoUncheckedCreateWithoutCourseInput>
+  }
+
+  export type VideoCreateManyCourseInputEnvelope = {
+    data: VideoCreateManyCourseInput | VideoCreateManyCourseInput[]
+    skipDuplicates?: boolean
+  }
+
   export type TaskUpsertWithWhereUniqueWithoutCourseInput = {
     where: TaskWhereUniqueInput
     update: XOR<TaskUpdateWithoutCourseInput, TaskUncheckedUpdateWithoutCourseInput>
@@ -13912,6 +14491,36 @@ export namespace Prisma {
   export type EnrollmentUpdateManyWithWhereWithoutCourseInput = {
     where: EnrollmentScalarWhereInput
     data: XOR<EnrollmentUpdateManyMutationInput, EnrollmentUncheckedUpdateManyWithoutCourseInput>
+  }
+
+  export type VideoUpsertWithWhereUniqueWithoutCourseInput = {
+    where: VideoWhereUniqueInput
+    update: XOR<VideoUpdateWithoutCourseInput, VideoUncheckedUpdateWithoutCourseInput>
+    create: XOR<VideoCreateWithoutCourseInput, VideoUncheckedCreateWithoutCourseInput>
+  }
+
+  export type VideoUpdateWithWhereUniqueWithoutCourseInput = {
+    where: VideoWhereUniqueInput
+    data: XOR<VideoUpdateWithoutCourseInput, VideoUncheckedUpdateWithoutCourseInput>
+  }
+
+  export type VideoUpdateManyWithWhereWithoutCourseInput = {
+    where: VideoScalarWhereInput
+    data: XOR<VideoUpdateManyMutationInput, VideoUncheckedUpdateManyWithoutCourseInput>
+  }
+
+  export type VideoScalarWhereInput = {
+    AND?: VideoScalarWhereInput | VideoScalarWhereInput[]
+    OR?: VideoScalarWhereInput[]
+    NOT?: VideoScalarWhereInput | VideoScalarWhereInput[]
+    id?: IntFilter<"Video"> | number
+    title?: StringFilter<"Video"> | string
+    description?: StringNullableFilter<"Video"> | string | null
+    url?: StringFilter<"Video"> | string
+    level?: EnumLevelNullableFilter<"Video"> | $Enums.Level | null
+    createdAt?: DateTimeFilter<"Video"> | Date | string
+    tags?: StringNullableListFilter<"Video">
+    courseId?: IntNullableFilter<"Video"> | number | null
   }
 
   export type UserCreateWithoutEnrollmentsInput = {
@@ -13948,11 +14557,13 @@ export namespace Prisma {
     title: string
     description?: string | null
     imageUrl?: string | null
-    level?: string
+    level?: $Enums.Level
     isPublished?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    tags?: CourseCreatetagsInput | string[]
     tasks?: TaskCreateNestedManyWithoutCourseInput
+    videos?: VideoCreateNestedManyWithoutCourseInput
   }
 
   export type CourseUncheckedCreateWithoutEnrollmentsInput = {
@@ -13960,11 +14571,13 @@ export namespace Prisma {
     title: string
     description?: string | null
     imageUrl?: string | null
-    level?: string
+    level?: $Enums.Level
     isPublished?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    tags?: CourseCreatetagsInput | string[]
     tasks?: TaskUncheckedCreateNestedManyWithoutCourseInput
+    videos?: VideoUncheckedCreateNestedManyWithoutCourseInput
   }
 
   export type CourseCreateOrConnectWithoutEnrollmentsInput = {
@@ -14023,11 +14636,13 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    level?: StringFieldUpdateOperationsInput | string
+    level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
     isPublished?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tags?: CourseUpdatetagsInput | string[]
     tasks?: TaskUpdateManyWithoutCourseNestedInput
+    videos?: VideoUpdateManyWithoutCourseNestedInput
   }
 
   export type CourseUncheckedUpdateWithoutEnrollmentsInput = {
@@ -14035,11 +14650,13 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    level?: StringFieldUpdateOperationsInput | string
+    level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
     isPublished?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tags?: CourseUpdatetagsInput | string[]
     tasks?: TaskUncheckedUpdateManyWithoutCourseNestedInput
+    videos?: VideoUncheckedUpdateManyWithoutCourseNestedInput
   }
 
   export type UserCreateWithoutSettingInput = {
@@ -14143,6 +14760,7 @@ export namespace Prisma {
     language: $Enums.Language
     meaning: string
     example?: string | null
+    partOfSpeech?: string | null
     createdAt?: Date | string
   }
 
@@ -14152,6 +14770,7 @@ export namespace Prisma {
     language: $Enums.Language
     meaning: string
     example?: string | null
+    partOfSpeech?: string | null
     createdAt?: Date | string
   }
 
@@ -14212,6 +14831,7 @@ export namespace Prisma {
     language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
     meaning?: StringFieldUpdateOperationsInput | string
     example?: NullableStringFieldUpdateOperationsInput | string | null
+    partOfSpeech?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -14221,6 +14841,7 @@ export namespace Prisma {
     language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
     meaning?: StringFieldUpdateOperationsInput | string
     example?: NullableStringFieldUpdateOperationsInput | string | null
+    partOfSpeech?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -14311,6 +14932,7 @@ export namespace Prisma {
     answer: string
     options?: TaskCreateoptionsInput | string[]
     type?: $Enums.TaskType
+    score?: number | null
     createdAt?: Date | string
     language?: $Enums.Language
     courseId?: number | null
@@ -14321,6 +14943,7 @@ export namespace Prisma {
     answer?: StringFieldUpdateOperationsInput | string
     options?: TaskUpdateoptionsInput | string[]
     type?: EnumTaskTypeFieldUpdateOperationsInput | $Enums.TaskType
+    score?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
     course?: CourseUpdateOneWithoutTasksNestedInput
@@ -14332,6 +14955,7 @@ export namespace Prisma {
     answer?: StringFieldUpdateOperationsInput | string
     options?: TaskUpdateoptionsInput | string[]
     type?: EnumTaskTypeFieldUpdateOperationsInput | $Enums.TaskType
+    score?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
     courseId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -14343,6 +14967,7 @@ export namespace Prisma {
     answer?: StringFieldUpdateOperationsInput | string
     options?: TaskUpdateoptionsInput | string[]
     type?: EnumTaskTypeFieldUpdateOperationsInput | $Enums.TaskType
+    score?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
     courseId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -14354,6 +14979,7 @@ export namespace Prisma {
     answer: string
     options?: TaskCreateoptionsInput | string[]
     type?: $Enums.TaskType
+    score?: number | null
     createdAt?: Date | string
     language?: $Enums.Language
     videoId?: number | null
@@ -14366,11 +14992,22 @@ export namespace Prisma {
     enrolledAt?: Date | string
   }
 
+  export type VideoCreateManyCourseInput = {
+    id?: number
+    title: string
+    description?: string | null
+    url: string
+    level?: $Enums.Level | null
+    createdAt?: Date | string
+    tags?: VideoCreatetagsInput | string[]
+  }
+
   export type TaskUpdateWithoutCourseInput = {
     question?: StringFieldUpdateOperationsInput | string
     answer?: StringFieldUpdateOperationsInput | string
     options?: TaskUpdateoptionsInput | string[]
     type?: EnumTaskTypeFieldUpdateOperationsInput | $Enums.TaskType
+    score?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
     video?: VideoUpdateOneWithoutTasksNestedInput
@@ -14382,6 +15019,7 @@ export namespace Prisma {
     answer?: StringFieldUpdateOperationsInput | string
     options?: TaskUpdateoptionsInput | string[]
     type?: EnumTaskTypeFieldUpdateOperationsInput | $Enums.TaskType
+    score?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
     videoId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -14393,6 +15031,7 @@ export namespace Prisma {
     answer?: StringFieldUpdateOperationsInput | string
     options?: TaskUpdateoptionsInput | string[]
     type?: EnumTaskTypeFieldUpdateOperationsInput | $Enums.TaskType
+    score?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
     videoId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -14416,6 +15055,37 @@ export namespace Prisma {
     userId?: IntFieldUpdateOperationsInput | number
     progress?: FloatFieldUpdateOperationsInput | number
     enrolledAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VideoUpdateWithoutCourseInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    url?: StringFieldUpdateOperationsInput | string
+    level?: NullableEnumLevelFieldUpdateOperationsInput | $Enums.Level | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tags?: VideoUpdatetagsInput | string[]
+    tasks?: TaskUpdateManyWithoutVideoNestedInput
+  }
+
+  export type VideoUncheckedUpdateWithoutCourseInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    url?: StringFieldUpdateOperationsInput | string
+    level?: NullableEnumLevelFieldUpdateOperationsInput | $Enums.Level | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tags?: VideoUpdatetagsInput | string[]
+    tasks?: TaskUncheckedUpdateManyWithoutVideoNestedInput
+  }
+
+  export type VideoUncheckedUpdateManyWithoutCourseInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    url?: StringFieldUpdateOperationsInput | string
+    level?: NullableEnumLevelFieldUpdateOperationsInput | $Enums.Level | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tags?: VideoUpdatetagsInput | string[]
   }
 
 

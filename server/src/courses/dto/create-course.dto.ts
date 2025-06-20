@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsString, IsOptional, IsEnum, IsBoolean } from 'class-validator';
+import { Level } from 'generated/prisma';
 
 export class CreateCourseDto {
   @ApiProperty({ example: 'Англійська для початківців' })
@@ -16,9 +17,10 @@ export class CreateCourseDto {
   @IsString()
   imageUrl?: string;
 
-  @ApiProperty({ default: "None" })
+  @ApiProperty({ default: Level.NONE })
   @IsOptional()
-  level?: string;
+  @IsEnum(Level)
+  level?: Level;
 
   @ApiProperty({ example: true, required: false })
   @IsOptional()

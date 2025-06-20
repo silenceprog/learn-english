@@ -29,13 +29,6 @@ export class SettingsController {
     return this.settingsService.findById(userId);
   }
 
-  @ApiOperation({ summary: 'Створення налаштувань користувача' })
-  @ApiResponse({ status: 201, type: CreateSettingDto })
-  @Post()
-  create(@Body() createSettingDto: CreateSettingDto) {
-    return this.settingsService.create(createSettingDto);
-  }
-
   @ApiOperation({ summary: 'Оновлення налашувань користувача' })
   @ApiResponse({ status: 200, type: UpdateSettingDto })
   @Patch()
@@ -44,11 +37,4 @@ export class SettingsController {
     return this.settingsService.update(userId, updateSettingDto);
   }
 
-  @ApiOperation({ summary: 'Видалення налаштувань користувача' })
-  @ApiResponse({ status: 200 })
-  @Roles(Role.OWNER)
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.settingsService.remove(+id);
-  }
 }

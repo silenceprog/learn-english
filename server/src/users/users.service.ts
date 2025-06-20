@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Role } from 'generated/prisma/client';
+import { Level, Purpose, Role } from 'generated/prisma/client';
 import { DatabaseService } from 'src/database/database.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -16,9 +16,9 @@ export class UsersService {
         setting: {
           create: {
             global_language: 'UA',
-            curent_language: 'EN',
-            purposes: ['none'],
-            current_level: 'none',
+            current_language: 'EN',
+            purposes: [Purpose.NONE],
+            current_level: Level.NONE,
           },
         },
       },

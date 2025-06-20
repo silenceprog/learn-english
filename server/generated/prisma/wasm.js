@@ -134,6 +134,7 @@ exports.Prisma.WordScalarFieldEnum = {
   language: 'language',
   meaning: 'meaning',
   example: 'example',
+  partOfSpeech: 'partOfSpeech',
   createdAt: 'createdAt'
 };
 
@@ -143,7 +144,9 @@ exports.Prisma.VideoScalarFieldEnum = {
   description: 'description',
   url: 'url',
   level: 'level',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  tags: 'tags',
+  courseId: 'courseId'
 };
 
 exports.Prisma.TaskScalarFieldEnum = {
@@ -152,6 +155,7 @@ exports.Prisma.TaskScalarFieldEnum = {
   answer: 'answer',
   options: 'options',
   type: 'type',
+  score: 'score',
   createdAt: 'createdAt',
   language: 'language',
   videoId: 'videoId',
@@ -166,7 +170,8 @@ exports.Prisma.CourseScalarFieldEnum = {
   level: 'level',
   isPublished: 'isPublished',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  tags: 'tags'
 };
 
 exports.Prisma.EnrollmentScalarFieldEnum = {
@@ -181,7 +186,7 @@ exports.Prisma.SettingScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   global_language: 'global_language',
-  curent_language: 'curent_language',
+  current_language: 'current_language',
   purposes: 'purposes',
   current_level: 'current_level'
 };
@@ -220,10 +225,27 @@ exports.Language = exports.$Enums.Language = {
   DE: 'DE'
 };
 
+exports.Level = exports.$Enums.Level = {
+  NONE: 'NONE',
+  A1: 'A1',
+  A2: 'A2',
+  B1: 'B1',
+  B2: 'B2',
+  C1: 'C1',
+  C2: 'C2'
+};
+
 exports.TaskType = exports.$Enums.TaskType = {
   MULTIPLE_CHOICE: 'MULTIPLE_CHOICE',
   FILL_IN_THE_BLANK: 'FILL_IN_THE_BLANK',
   TRUE_FALSE: 'TRUE_FALSE'
+};
+
+exports.Purpose = exports.$Enums.Purpose = {
+  NONE: 'NONE',
+  EXAM: 'EXAM',
+  TRAVEL: 'TRAVEL',
+  WORK: 'WORK'
 };
 
 exports.Prisma.ModelName = {

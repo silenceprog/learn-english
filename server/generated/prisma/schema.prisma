@@ -30,13 +30,14 @@ model User {
 }
 
 model Word {
-  id         Int            @id @default(autoincrement())
-  text       String
-  language   Language
-  meaning    String
-  example    String?
-  createdAt  DateTime       @default(now())
-  progresses WordProgress[]
+  id           Int            @id @default(autoincrement())
+  text         String
+  language     Language
+  meaning      String
+  example      String?
+  partOfSpeech String?
+  createdAt    DateTime       @default(now())
+  progresses   WordProgress[]
 }
 
 model Video {
@@ -44,10 +45,13 @@ model Video {
   title       String
   description String?
   url         String   @unique
-  level       String?
+  level       Level?
   createdAt   DateTime @default(now())
+  tags        String[] @default([])
 
-  tasks Task[]
+  tasks    Task[]
+  courseId Int?
+  course   Course? @relation(fields: [courseId], references: [id])
 }
 
 model Task {
@@ -56,14 +60,15 @@ model Task {
   answer    String
   options   String[]
   type      TaskType @default(MULTIPLE_CHOICE)
+  score     Int?
   createdAt DateTime @default(now())
   language  Language @default(EN)
 
   video   Video? @relation(fields: [videoId], references: [id])
   videoId Int?
 
-  courseId Int?
   course   Course? @relation(fields: [courseId], references: [id])
+  courseId Int?
 }
 
 model Course {
@@ -71,14 +76,16 @@ model Course {
   title       String
   description String?
   imageUrl    String?
-  level       String   @default("None")
+  level       Level    @default(NONE)
   isPublished Boolean  @default(false)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  tags        String[] @default([])
 
   tasks Task[]
 
   enrollments Enrollment[]
+  videos      Video[]
 }
 
 model Enrollment {
@@ -86,7 +93,7 @@ model Enrollment {
   userId     Int
   courseId   Int
   progress   Float    @default(0.0)
-  user       User     @relation(fields: [userId], references: [id])
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   course     Course   @relation(fields: [courseId], references: [id])
   enrolledAt DateTime @default(now())
 
@@ -94,22 +101,22 @@ model Enrollment {
 }
 
 model Setting {
-  id              Int      @id @default(autoincrement())
-  userId          Int      @unique
-  user            User     @relation(fields: [userId], references: [id])
-  global_language Language @default(UA)
-  curent_language Language @default(EN)
-  purposes        String[] @default(["none"])
-  current_level   String   @default("none")
+  id               Int       @id @default(autoincrement())
+  userId           Int       @unique
+  user             User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  global_language  Language  @default(UA)
+  current_language Language  @default(EN)
+  purposes         Purpose[] @default([NONE])
+  current_level    Level     @default(NONE)
 }
 
 model WordProgress {
   id     Int  @id @default(autoincrement())
-  user   User @relation(fields: [userId], references: [id])
   userId Int
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  word   Word @relation(fields: [wordId], references: [id])
   wordId Int
+  word   Word @relation(fields: [wordId], references: [id])
 
   progress  Int     @default(0)
   isLearned Boolean @default(false)
@@ -133,4 +140,21 @@ enum Language {
   EN
   UA
   DE
+}
+
+enum Purpose {
+  NONE
+  EXAM
+  TRAVEL
+  WORK
+}
+
+enum Level {
+  NONE
+  A1
+  A2
+  B1
+  B2
+  C1
+  C2
 }
