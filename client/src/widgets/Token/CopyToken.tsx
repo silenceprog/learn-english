@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { Button } from "@/shared/ui/Button";
 
 export function CopyToken() {
   const [status, setStatus] = useState<"copied" | "not_found" | false>(false);
@@ -21,7 +22,7 @@ export function CopyToken() {
     }
   };
   return (
-    <button
+    <Button
       onClick={handleCopy}
       className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition duration-300"
     >
@@ -30,6 +31,6 @@ export function CopyToken() {
         : status === "copied"
           ? "Copied ✅"
           : "Copy access token"}
-    </button>
+    </Button>
   );
 }

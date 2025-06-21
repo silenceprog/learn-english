@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useStates } from "@/states/useStates";
 
 export default function Login() {
   const router = useRouter();
@@ -18,7 +19,7 @@ export default function Login() {
     setError(null);
     setSuccess(null);
   };
-
+  const { setIsLoggedIn } = useStates();
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -45,6 +46,7 @@ export default function Login() {
       }
 
       setSuccess("Login successful!");
+      setIsLoggedIn(true);
       // Save token
       localStorage.setItem("access_token", data.access_token);
       localStorage.setItem("role", data.user_role);

@@ -5,14 +5,15 @@ import { CiUser } from "react-icons/ci";
 import Link from "next/link";
 import { DropDownLanguageSwitcher } from "@/widgets/Header/ui/DropDownLanguageSwitcher";
 import { Button } from "@/shared/ui/Button";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { DropDownUserAccount } from "@/widgets/Header/ui/DropDownUserAccount";
 import { DropDownUserMenu } from "@/widgets/Header/ui/DropDownUserMenu";
 import { useTranslation } from "react-i18next";
+import { useUserSettingsStore } from "@/states/requests/useUserSettings";
+import { useStates } from "@/states/useStates";
 
 export function Header() {
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-
+  const { isLoggedIn, setIsLoggedIn } = useStates();
   function isTokenValid(token: string): boolean {
     try {
       const payloadBase64 = token.split(".")[1];
@@ -23,24 +24,29 @@ export function Header() {
       return false;
     }
   }
-
+  const { fetchSettings } = useUserSettingsStore();
   useEffect(() => {
     if (typeof window !== "undefined") {
       const token = localStorage.getItem("access_token");
       if (token && isTokenValid(token)) {
         setIsLoggedIn(true);
+        fetchSettings();
       } else {
         setIsLoggedIn(false);
       }
     }
   }, []);
-
+  useEffect(() => {
+    if (isLoggedIn) {
+      fetchSettings();
+    }
+  }, [isLoggedIn]);
   const { t } = useTranslation();
 
   return (
     <Section className="border-b border-gray-200 sticky top-0 z-50 w-full bg-white">
       <div className="flex justify-between h-16 items-center px-4">
-        <Link href="#" className="text-2xl font-bold text-blue-600">
+        <Link href="/" className="text-2xl font-bold text-blue-600">
           LinguaLearn
         </Link>
 
