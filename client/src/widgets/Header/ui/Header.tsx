@@ -71,35 +71,36 @@ export function Header() {
             {t("community")}
           </Link>
         </nav>
-
-        {isLoggedIn ? (
-          <div>
-            <DropDownUserAccount />
-            <DropDownUserMenu />
-          </div>
-        ) : (
-          <div className="hidden md:flex items-center gap-4">
-            <DropDownLanguageSwitcher />
-            <Link href="/login">
-              <Button
-                color="outline"
-                className="flex justify-center items-center border cursor-pointer"
-              >
-                <IoEnterOutline className="w-5 h-5 mr-1" />
-                {t("login")}
-              </Button>
-            </Link>
-            <Link href="/registration">
-              <Button
-                className="flex justify-center items-center border cursor-pointer"
-                color="outline"
-              >
-                <CiUser className="h-5 w-5 mr-1" />
-                {t("registration")}
-              </Button>
-            </Link>
-          </div>
-        )}
+        <div className="flex">
+          <DropDownLanguageSwitcher />
+          {isLoggedIn ? (
+            <div>
+              <DropDownUserAccount />
+              <DropDownUserMenu />
+            </div>
+          ) : (
+            <div className="hidden md:flex items-center gap-4">
+              <Link href="/login">
+                <Button
+                  color="outline"
+                  className="flex justify-center items-center border cursor-pointer"
+                >
+                  <IoEnterOutline className="w-5 h-5 mr-1" />
+                  {t("login")}
+                </Button>
+              </Link>
+              <Link href="/registration">
+                <Button
+                  className="flex justify-center items-center border cursor-pointer"
+                  color="outline"
+                >
+                  <CiUser className="h-5 w-5 mr-1" />
+                  {t("registration")}
+                </Button>
+              </Link>
+            </div>
+          )}
+        </div>
       </div>
     </Section>
   );
