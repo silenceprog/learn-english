@@ -1,4 +1,9 @@
-import { Module } from '@nestjs/common';
+import {
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+  RequestMethod,
+} from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
@@ -18,46 +23,64 @@ import { EmailModule } from './auth/email/email.module';
 import { CoursesModule } from './courses/courses.module';
 import { EmailController } from './auth/email/email.controller';
 import { SettingsModule } from './settings/settings.module';
+import { RequestLoggerMiddleware } from './logs/request-logger.middleware';
 
 @Module({
-  imports: [ConfigModule.forRoot({ isGlobal: true }),
-    UsersModule, AuthModule, DatabaseModule,
-    ThrottlerModule.forRoot([{
-    name: 'short',
-    ttl: 1000,
-    limit: 3,
-  },
-   {
-    name: 'medium',
-    ttl: 10000,
-    limit: 20
-  },
-  {
-    name: 'long',
-    ttl: 60000,
-    limit: 100,
-  }]),
+  imports: [
+    ConfigModule.forRoot({ isGlobal: true }),
+    UsersModule,
+    AuthModule,
+    DatabaseModule,
+    ThrottlerModule.forRoot([
+      {
+        name: 'short',
+        ttl: 1000,
+        limit: 3,
+      },
+      {
+        name: 'medium',
+        ttl: 10000,
+        limit: 20,
+      },
+      {
+        name: 'long',
+        ttl: 60000,
+        limit: 100,
+      },
+    ]),
     VideosModule,
     TasksModule,
     WordsModule,
     AdminModule,
     EmailModule,
     CoursesModule,
-    SettingsModule,],
+    SettingsModule,
+  ],
   controllers: [AppController, EmailController],
-  providers: [AppService,
-     {
-    provide: APP_GUARD,
-    useClass: JwtGuard,
-  },{
-    provide: APP_GUARD,
-    useClass: ThrottlerGuard
-  },
-  {
-    provide: APP_GUARD,
-    useClass: RolesGuard,
-    
-  },
-  JwtStrategy],
+  providers: [
+    AppService,
+    {
+      provide: APP_GUARD,
+      useClass: JwtGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard,
+    },
+    JwtStrategy,
+  ],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(RequestLoggerMiddleware)
+      .exclude(
+        { path: 'admin/users', method: RequestMethod.DELETE },
+      )
+      .forRoutes('*');
+  }
+}
