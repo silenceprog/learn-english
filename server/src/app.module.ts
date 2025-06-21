@@ -23,7 +23,7 @@ import { EmailModule } from './auth/email/email.module';
 import { CoursesModule } from './courses/courses.module';
 import { EmailController } from './auth/email/email.controller';
 import { SettingsModule } from './settings/settings.module';
-import { RequestLoggerMiddleware } from './logs/request-logger.middleware';
+import { RequestLoggerMiddleware } from './middleware/request-logger.middleware';
 
 @Module({
   imports: [
