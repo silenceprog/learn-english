@@ -1,8 +1,7 @@
 import { Language, Level, Purpose } from 'generated/prisma';
+import { CreateSettingDto } from './create-setting.dto';
+import { PartialType } from '@nestjs/swagger';
 
-export class UpdateSettingDto {
-  current_language?: Language;
-  global_language?: Language;
-  purposes?: Purpose[];
-  current_level?: Level;
+export class UpdateSettingDto extends PartialType(CreateSettingDto) {
+
 }
