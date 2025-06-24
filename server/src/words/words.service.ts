@@ -3,6 +3,7 @@ import { UpdateWordDTO } from './dto/update-word.dto';
 import { DatabaseService } from 'src/database/database.service';
 import { CreateWordDto } from './dto/create-word.dto';
 import { Language } from 'generated/prisma';
+import { PaginationDto } from './dto/pagination.dto';
 
 @Injectable()
 export class WordsService {
@@ -25,26 +26,41 @@ export class WordsService {
     });
   }
 
-  async getWordsByLanguage(userId: number,language: Language) {
+  async getWordsByLanguage(userId: number, language: Language) {
     return this.databaseService.word.findMany({
       where: { language },
     });
   }
 
-  async getWordsByUserLanguage(userId: number) {
+  async getWordsByUserLanguage(userId: number, paginationDto: PaginationDto) {
+    const { page = 1, limit = 10 } = paginationDto;
+    const skip = (page - 1) * limit;
     const setting = await this.databaseService.setting.findUnique({
       where: { userId },
     });
 
     if (!setting) {
-    throw new NotFoundException('User settings not found');
+      throw new NotFoundException('User settings not found');
     }
 
-    return this.databaseService.word.findMany({
-      where: {
-        language: setting?.current_language,
-      },
-    });
+    const [data, total] = await this.databaseService.$transaction([
+      this.databaseService.word.findMany({
+        where: {
+          language: setting?.current_language,
+        },
+        skip,
+        take: limit,
+      }),
+      this.databaseService.word.count(),
+    ]);
+
+    return {
+      data,
+      total,
+      page,
+      limit,
+      pages: Math.ceil(total / limit),
+    };
   }
 
   async updateWord(id: number, updateWordDto: UpdateWordDTO) {

@@ -8,11 +8,13 @@ import {
   Delete,
   ParseIntPipe,
   Req,
+  Query,
 } from '@nestjs/common';
 import { WordsService } from './words.service';
 import {
   ApiBearerAuth,
   ApiOperation,
+  ApiQuery,
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
@@ -20,6 +22,7 @@ import { CreateWordDto } from './dto/create-word.dto';
 import { UpdateWordDTO } from './dto/update-word.dto';
 import { WordEntity } from './dto/word.entity';
 import { Language } from 'generated/prisma';
+import { PaginationDto } from './dto/pagination.dto';
 
 @ApiTags('Words')
 @ApiBearerAuth('access-token')
@@ -41,11 +44,15 @@ export class WordsController {
     return this.wordsService.findAll();
   }
 
-  @ApiOperation({ summary: 'Отримання слова по айді' })
-  @ApiResponse({ status: 200, type: WordEntity })
-  @Get(':id')
-  findById(@Param('id', ParseIntPipe) id: number) {
-    return this.wordsService.findById(id);
+   @ApiQuery({ name: 'page', required: false, type: Number })
+  @ApiQuery({ name: 'limit', required: false, type: Number })
+  @Get('by-language')
+  @ApiOperation({
+    summary: 'Отримати слова за поточними налаштуваннями мови користувача',
+  })
+  getWordsByUser(@Req() req, @Query() paginationDto: PaginationDto) {
+    const userId = req.user.id;
+    return this.wordsService.getWordsByUserLanguage(userId, paginationDto);
   }
 
   @ApiOperation({ summary: 'Отримати слова за мовою' })
@@ -55,13 +62,11 @@ export class WordsController {
     return this.wordsService.getWordsByLanguage(userId,lang);
   }
 
-  @Get('by-language/:lang')
-  @ApiOperation({
-    summary: 'Отримати слова за поточними налаштуваннями мови користувача',
-  })
-  getWordsByUser(@Req() req) {
-    const userId = req.user.id;
-    return this.wordsService.getWordsByUserLanguage(userId);
+  @ApiOperation({ summary: 'Отримання слова по айді' })
+  @ApiResponse({ status: 200, type: WordEntity })
+  @Get(':id')
+  findById(@Param('id', ParseIntPipe) id: number) {
+    return this.wordsService.findById(id);
   }
 
   @ApiOperation({ summary: 'Оновлення інформації про слово' })
