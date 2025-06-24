@@ -123,6 +123,7 @@ exports.Prisma.UserScalarFieldEnum = {
   username: 'username',
   password: 'password',
   role: 'role',
+  isEmailVerified: 'isEmailVerified',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -130,8 +131,11 @@ exports.Prisma.UserScalarFieldEnum = {
 exports.Prisma.WordScalarFieldEnum = {
   id: 'id',
   text: 'text',
+  language: 'language',
+  translate: 'translate',
   meaning: 'meaning',
   example: 'example',
+  partOfSpeech: 'partOfSpeech',
   createdAt: 'createdAt'
 };
 
@@ -141,7 +145,9 @@ exports.Prisma.VideoScalarFieldEnum = {
   description: 'description',
   url: 'url',
   level: 'level',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  tags: 'tags',
+  courseId: 'courseId'
 };
 
 exports.Prisma.TaskScalarFieldEnum = {
@@ -150,8 +156,48 @@ exports.Prisma.TaskScalarFieldEnum = {
   answer: 'answer',
   options: 'options',
   type: 'type',
+  score: 'score',
   createdAt: 'createdAt',
-  videoId: 'videoId'
+  language: 'language',
+  videoId: 'videoId',
+  courseId: 'courseId'
+};
+
+exports.Prisma.CourseScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  imageUrl: 'imageUrl',
+  level: 'level',
+  isPublished: 'isPublished',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  tags: 'tags'
+};
+
+exports.Prisma.EnrollmentScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  courseId: 'courseId',
+  progress: 'progress',
+  enrolledAt: 'enrolledAt'
+};
+
+exports.Prisma.SettingScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  global_language: 'global_language',
+  current_language: 'current_language',
+  purposes: 'purposes',
+  current_level: 'current_level'
+};
+
+exports.Prisma.WordProgressScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  wordId: 'wordId',
+  progress: 'progress',
+  isLearned: 'isLearned'
 };
 
 exports.Prisma.SortOrder = {
@@ -174,17 +220,44 @@ exports.Role = exports.$Enums.Role = {
   ADMIN: 'ADMIN'
 };
 
+exports.Language = exports.$Enums.Language = {
+  EN: 'EN',
+  UA: 'UA',
+  DE: 'DE'
+};
+
+exports.Level = exports.$Enums.Level = {
+  NONE: 'NONE',
+  A1: 'A1',
+  A2: 'A2',
+  B1: 'B1',
+  B2: 'B2',
+  C1: 'C1',
+  C2: 'C2'
+};
+
 exports.TaskType = exports.$Enums.TaskType = {
   MULTIPLE_CHOICE: 'MULTIPLE_CHOICE',
   FILL_IN_THE_BLANK: 'FILL_IN_THE_BLANK',
   TRUE_FALSE: 'TRUE_FALSE'
 };
 
+exports.Purpose = exports.$Enums.Purpose = {
+  NONE: 'NONE',
+  EXAM: 'EXAM',
+  TRAVEL: 'TRAVEL',
+  WORK: 'WORK'
+};
+
 exports.Prisma.ModelName = {
   User: 'User',
   Word: 'Word',
   Video: 'Video',
-  Task: 'Task'
+  Task: 'Task',
+  Course: 'Course',
+  Enrollment: 'Enrollment',
+  Setting: 'Setting',
+  WordProgress: 'WordProgress'
 };
 
 /**
