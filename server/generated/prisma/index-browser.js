@@ -132,6 +132,7 @@ exports.Prisma.WordScalarFieldEnum = {
   id: 'id',
   text: 'text',
   language: 'language',
+  translate: 'translate',
   meaning: 'meaning',
   example: 'example',
   partOfSpeech: 'partOfSpeech',

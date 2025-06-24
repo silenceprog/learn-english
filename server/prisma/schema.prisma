@@ -33,7 +33,8 @@ model Word {
   id           Int            @id @default(autoincrement())
   text         String
   language     Language
-  meaning      String
+  translate    String[]
+  meaning      String[]
   example      String?
   partOfSpeech String?
   createdAt    DateTime       @default(now())

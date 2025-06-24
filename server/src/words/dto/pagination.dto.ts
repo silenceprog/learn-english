@@ -5,7 +5,7 @@ import { IsNumber, IsOptional, IsPositive } from 'class-validator';
 export class PaginationDto {
   @ApiProperty({
     example: '1',
-    description: 'Кількість пропущених слів',
+    description: 'Кількість сторінок',
     default: 1,
   })
   @IsOptional()

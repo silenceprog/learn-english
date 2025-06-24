@@ -2949,7 +2949,6 @@ export namespace Prisma {
     id: number | null
     text: string | null
     language: $Enums.Language | null
-    meaning: string | null
     example: string | null
     partOfSpeech: string | null
     createdAt: Date | null
@@ -2959,7 +2958,6 @@ export namespace Prisma {
     id: number | null
     text: string | null
     language: $Enums.Language | null
-    meaning: string | null
     example: string | null
     partOfSpeech: string | null
     createdAt: Date | null
@@ -2969,6 +2967,7 @@ export namespace Prisma {
     id: number
     text: number
     language: number
+    translate: number
     meaning: number
     example: number
     partOfSpeech: number
@@ -2989,7 +2988,6 @@ export namespace Prisma {
     id?: true
     text?: true
     language?: true
-    meaning?: true
     example?: true
     partOfSpeech?: true
     createdAt?: true
@@ -2999,7 +2997,6 @@ export namespace Prisma {
     id?: true
     text?: true
     language?: true
-    meaning?: true
     example?: true
     partOfSpeech?: true
     createdAt?: true
@@ -3009,6 +3006,7 @@ export namespace Prisma {
     id?: true
     text?: true
     language?: true
+    translate?: true
     meaning?: true
     example?: true
     partOfSpeech?: true
@@ -3106,7 +3104,8 @@ export namespace Prisma {
     id: number
     text: string
     language: $Enums.Language
-    meaning: string
+    translate: string[]
+    meaning: string[]
     example: string | null
     partOfSpeech: string | null
     createdAt: Date
@@ -3135,6 +3134,7 @@ export namespace Prisma {
     id?: boolean
     text?: boolean
     language?: boolean
+    translate?: boolean
     meaning?: boolean
     example?: boolean
     partOfSpeech?: boolean
@@ -3147,6 +3147,7 @@ export namespace Prisma {
     id?: boolean
     text?: boolean
     language?: boolean
+    translate?: boolean
     meaning?: boolean
     example?: boolean
     partOfSpeech?: boolean
@@ -3157,6 +3158,7 @@ export namespace Prisma {
     id?: boolean
     text?: boolean
     language?: boolean
+    translate?: boolean
     meaning?: boolean
     example?: boolean
     partOfSpeech?: boolean
@@ -3167,13 +3169,14 @@ export namespace Prisma {
     id?: boolean
     text?: boolean
     language?: boolean
+    translate?: boolean
     meaning?: boolean
     example?: boolean
     partOfSpeech?: boolean
     createdAt?: boolean
   }
 
-  export type WordOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "text" | "language" | "meaning" | "example" | "partOfSpeech" | "createdAt", ExtArgs["result"]["word"]>
+  export type WordOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "text" | "language" | "translate" | "meaning" | "example" | "partOfSpeech" | "createdAt", ExtArgs["result"]["word"]>
   export type WordInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     progresses?: boolean | Word$progressesArgs<ExtArgs>
     _count?: boolean | WordCountOutputTypeDefaultArgs<ExtArgs>
@@ -3190,7 +3193,8 @@ export namespace Prisma {
       id: number
       text: string
       language: $Enums.Language
-      meaning: string
+      translate: string[]
+      meaning: string[]
       example: string | null
       partOfSpeech: string | null
       createdAt: Date
@@ -3621,7 +3625,8 @@ export namespace Prisma {
     readonly id: FieldRef<"Word", 'Int'>
     readonly text: FieldRef<"Word", 'String'>
     readonly language: FieldRef<"Word", 'Language'>
-    readonly meaning: FieldRef<"Word", 'String'>
+    readonly translate: FieldRef<"Word", 'String[]'>
+    readonly meaning: FieldRef<"Word", 'String[]'>
     readonly example: FieldRef<"Word", 'String'>
     readonly partOfSpeech: FieldRef<"Word", 'String'>
     readonly createdAt: FieldRef<"Word", 'DateTime'>
@@ -11015,6 +11020,7 @@ export namespace Prisma {
     id: 'id',
     text: 'text',
     language: 'language',
+    translate: 'translate',
     meaning: 'meaning',
     example: 'example',
     partOfSpeech: 'partOfSpeech',
@@ -11353,7 +11359,8 @@ export namespace Prisma {
     id?: IntFilter<"Word"> | number
     text?: StringFilter<"Word"> | string
     language?: EnumLanguageFilter<"Word"> | $Enums.Language
-    meaning?: StringFilter<"Word"> | string
+    translate?: StringNullableListFilter<"Word">
+    meaning?: StringNullableListFilter<"Word">
     example?: StringNullableFilter<"Word"> | string | null
     partOfSpeech?: StringNullableFilter<"Word"> | string | null
     createdAt?: DateTimeFilter<"Word"> | Date | string
@@ -11364,6 +11371,7 @@ export namespace Prisma {
     id?: SortOrder
     text?: SortOrder
     language?: SortOrder
+    translate?: SortOrder
     meaning?: SortOrder
     example?: SortOrderInput | SortOrder
     partOfSpeech?: SortOrderInput | SortOrder
@@ -11378,7 +11386,8 @@ export namespace Prisma {
     NOT?: WordWhereInput | WordWhereInput[]
     text?: StringFilter<"Word"> | string
     language?: EnumLanguageFilter<"Word"> | $Enums.Language
-    meaning?: StringFilter<"Word"> | string
+    translate?: StringNullableListFilter<"Word">
+    meaning?: StringNullableListFilter<"Word">
     example?: StringNullableFilter<"Word"> | string | null
     partOfSpeech?: StringNullableFilter<"Word"> | string | null
     createdAt?: DateTimeFilter<"Word"> | Date | string
@@ -11389,6 +11398,7 @@ export namespace Prisma {
     id?: SortOrder
     text?: SortOrder
     language?: SortOrder
+    translate?: SortOrder
     meaning?: SortOrder
     example?: SortOrderInput | SortOrder
     partOfSpeech?: SortOrderInput | SortOrder
@@ -11407,7 +11417,8 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"Word"> | number
     text?: StringWithAggregatesFilter<"Word"> | string
     language?: EnumLanguageWithAggregatesFilter<"Word"> | $Enums.Language
-    meaning?: StringWithAggregatesFilter<"Word"> | string
+    translate?: StringNullableListFilter<"Word">
+    meaning?: StringNullableListFilter<"Word">
     example?: StringNullableWithAggregatesFilter<"Word"> | string | null
     partOfSpeech?: StringNullableWithAggregatesFilter<"Word"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Word"> | Date | string
@@ -11929,7 +11940,8 @@ export namespace Prisma {
   export type WordCreateInput = {
     text: string
     language: $Enums.Language
-    meaning: string
+    translate?: WordCreatetranslateInput | string[]
+    meaning?: WordCreatemeaningInput | string[]
     example?: string | null
     partOfSpeech?: string | null
     createdAt?: Date | string
@@ -11940,7 +11952,8 @@ export namespace Prisma {
     id?: number
     text: string
     language: $Enums.Language
-    meaning: string
+    translate?: WordCreatetranslateInput | string[]
+    meaning?: WordCreatemeaningInput | string[]
     example?: string | null
     partOfSpeech?: string | null
     createdAt?: Date | string
@@ -11950,7 +11963,8 @@ export namespace Prisma {
   export type WordUpdateInput = {
     text?: StringFieldUpdateOperationsInput | string
     language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
-    meaning?: StringFieldUpdateOperationsInput | string
+    translate?: WordUpdatetranslateInput | string[]
+    meaning?: WordUpdatemeaningInput | string[]
     example?: NullableStringFieldUpdateOperationsInput | string | null
     partOfSpeech?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -11961,7 +11975,8 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     text?: StringFieldUpdateOperationsInput | string
     language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
-    meaning?: StringFieldUpdateOperationsInput | string
+    translate?: WordUpdatetranslateInput | string[]
+    meaning?: WordUpdatemeaningInput | string[]
     example?: NullableStringFieldUpdateOperationsInput | string | null
     partOfSpeech?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -11972,7 +11987,8 @@ export namespace Prisma {
     id?: number
     text: string
     language: $Enums.Language
-    meaning: string
+    translate?: WordCreatetranslateInput | string[]
+    meaning?: WordCreatemeaningInput | string[]
     example?: string | null
     partOfSpeech?: string | null
     createdAt?: Date | string
@@ -11981,7 +11997,8 @@ export namespace Prisma {
   export type WordUpdateManyMutationInput = {
     text?: StringFieldUpdateOperationsInput | string
     language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
-    meaning?: StringFieldUpdateOperationsInput | string
+    translate?: WordUpdatetranslateInput | string[]
+    meaning?: WordUpdatemeaningInput | string[]
     example?: NullableStringFieldUpdateOperationsInput | string | null
     partOfSpeech?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -11991,7 +12008,8 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     text?: StringFieldUpdateOperationsInput | string
     language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
-    meaning?: StringFieldUpdateOperationsInput | string
+    translate?: WordUpdatetranslateInput | string[]
+    meaning?: WordUpdatemeaningInput | string[]
     example?: NullableStringFieldUpdateOperationsInput | string | null
     partOfSpeech?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -12602,6 +12620,14 @@ export namespace Prisma {
     not?: NestedEnumLanguageFilter<$PrismaModel> | $Enums.Language
   }
 
+  export type StringNullableListFilter<$PrismaModel = never> = {
+    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    has?: string | StringFieldRefInput<$PrismaModel> | null
+    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
+    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
+    isEmpty?: boolean
+  }
+
   export type StringNullableFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -12626,6 +12652,7 @@ export namespace Prisma {
     id?: SortOrder
     text?: SortOrder
     language?: SortOrder
+    translate?: SortOrder
     meaning?: SortOrder
     example?: SortOrder
     partOfSpeech?: SortOrder
@@ -12640,7 +12667,6 @@ export namespace Prisma {
     id?: SortOrder
     text?: SortOrder
     language?: SortOrder
-    meaning?: SortOrder
     example?: SortOrder
     partOfSpeech?: SortOrder
     createdAt?: SortOrder
@@ -12650,7 +12676,6 @@ export namespace Prisma {
     id?: SortOrder
     text?: SortOrder
     language?: SortOrder
-    meaning?: SortOrder
     example?: SortOrder
     partOfSpeech?: SortOrder
     createdAt?: SortOrder
@@ -12693,14 +12718,6 @@ export namespace Prisma {
     in?: $Enums.Level[] | ListEnumLevelFieldRefInput<$PrismaModel> | null
     notIn?: $Enums.Level[] | ListEnumLevelFieldRefInput<$PrismaModel> | null
     not?: NestedEnumLevelNullableFilter<$PrismaModel> | $Enums.Level | null
-  }
-
-  export type StringNullableListFilter<$PrismaModel = never> = {
-    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    has?: string | StringFieldRefInput<$PrismaModel> | null
-    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
-    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
-    isEmpty?: boolean
   }
 
   export type IntNullableFilter<$PrismaModel = never> = {
@@ -13249,6 +13266,14 @@ export namespace Prisma {
     update?: XOR<XOR<SettingUpdateToOneWithWhereWithoutUserInput, SettingUpdateWithoutUserInput>, SettingUncheckedUpdateWithoutUserInput>
   }
 
+  export type WordCreatetranslateInput = {
+    set: string[]
+  }
+
+  export type WordCreatemeaningInput = {
+    set: string[]
+  }
+
   export type WordProgressCreateNestedManyWithoutWordInput = {
     create?: XOR<WordProgressCreateWithoutWordInput, WordProgressUncheckedCreateWithoutWordInput> | WordProgressCreateWithoutWordInput[] | WordProgressUncheckedCreateWithoutWordInput[]
     connectOrCreate?: WordProgressCreateOrConnectWithoutWordInput | WordProgressCreateOrConnectWithoutWordInput[]
@@ -13265,6 +13290,16 @@ export namespace Prisma {
 
   export type EnumLanguageFieldUpdateOperationsInput = {
     set?: $Enums.Language
+  }
+
+  export type WordUpdatetranslateInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type WordUpdatemeaningInput = {
+    set?: string[]
+    push?: string | string[]
   }
 
   export type NullableStringFieldUpdateOperationsInput = {
@@ -14758,7 +14793,8 @@ export namespace Prisma {
   export type WordCreateWithoutProgressesInput = {
     text: string
     language: $Enums.Language
-    meaning: string
+    translate?: WordCreatetranslateInput | string[]
+    meaning?: WordCreatemeaningInput | string[]
     example?: string | null
     partOfSpeech?: string | null
     createdAt?: Date | string
@@ -14768,7 +14804,8 @@ export namespace Prisma {
     id?: number
     text: string
     language: $Enums.Language
-    meaning: string
+    translate?: WordCreatetranslateInput | string[]
+    meaning?: WordCreatemeaningInput | string[]
     example?: string | null
     partOfSpeech?: string | null
     createdAt?: Date | string
@@ -14829,7 +14866,8 @@ export namespace Prisma {
   export type WordUpdateWithoutProgressesInput = {
     text?: StringFieldUpdateOperationsInput | string
     language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
-    meaning?: StringFieldUpdateOperationsInput | string
+    translate?: WordUpdatetranslateInput | string[]
+    meaning?: WordUpdatemeaningInput | string[]
     example?: NullableStringFieldUpdateOperationsInput | string | null
     partOfSpeech?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -14839,7 +14877,8 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     text?: StringFieldUpdateOperationsInput | string
     language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
-    meaning?: StringFieldUpdateOperationsInput | string
+    translate?: WordUpdatetranslateInput | string[]
+    meaning?: WordUpdatemeaningInput | string[]
     example?: NullableStringFieldUpdateOperationsInput | string | null
     partOfSpeech?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
