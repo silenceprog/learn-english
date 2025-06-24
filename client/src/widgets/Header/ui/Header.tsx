@@ -8,9 +8,9 @@ import { Button } from "@/shared/ui/Button";
 import { useEffect } from "react";
 import { DropDownUserAccount } from "@/widgets/Header/ui/DropDownUserAccount";
 import { DropDownUserMenu } from "@/widgets/Header/ui/DropDownUserMenu";
-import { useTranslation } from "react-i18next";
 import { useUserSettingsStore } from "@/states/requests/useUserSettings";
 import { useStates } from "@/states/useStates";
+import { useTranslation } from "next-i18next";
 
 export function Header() {
   const { isLoggedIn, setIsLoggedIn } = useStates();
