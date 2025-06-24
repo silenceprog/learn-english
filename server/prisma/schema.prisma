@@ -5,55 +5,124 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
-  output   = "../generated/prisma"
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "windows", "debian-openssl-3.0.x"]
+  output        = "../generated/prisma"
 }
 
 datasource db {
-  provider  = "postgresql"
-  url  	    = env("DATABASE_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
-model User{
-  id  Int @id @default(autoincrement())
-  email     String   @unique
-  username  String   @unique
-  password  String  
-  role      Role  @default(USER)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model User {
+  id              Int            @id @default(autoincrement())
+  email           String         @unique
+  username        String         @unique
+  password        String
+  role            Role           @default(USER)
+  isEmailVerified Boolean        @default(false)
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+  enrollments     Enrollment[]
+  wordProgresses  WordProgress[]
+  setting         Setting?
 }
 
 model Word {
-  id        Int     @id @default(autoincrement())
-  text      String
-  meaning   String
-  example   String?
-  createdAt DateTime @default(now())
-
+  id           Int            @id @default(autoincrement())
+  text         String
+  language     Language
+  translate    String[]
+  meaning      String[]
+  example      String?
+  partOfSpeech String?
+  createdAt    DateTime       @default(now())
+  progresses   WordProgress[]
 }
 
 model Video {
-  id          Int       @id @default(autoincrement())
+  id          Int      @id @default(autoincrement())
   title       String
   description String?
-  url         String    @unique   
-  level       String?             
-  createdAt   DateTime  @default(now())
+  url         String   @unique
+  level       Level?
+  createdAt   DateTime @default(now())
+  tags        String[] @default([])
 
-  tasks       Task[]
+  tasks    Task[]
+  courseId Int?
+  course   Course? @relation(fields: [courseId], references: [id])
 }
 
 model Task {
   id        Int      @id @default(autoincrement())
   question  String
   answer    String
-  options   String[] 
+  options   String[]
   type      TaskType @default(MULTIPLE_CHOICE)
+  score     Int?
   createdAt DateTime @default(now())
+  language  Language @default(EN)
 
-  video     Video?    @relation(fields: [videoId], references: [id])
-  videoId   Int?
+  video   Video? @relation(fields: [videoId], references: [id])
+  videoId Int?
+
+  course   Course? @relation(fields: [courseId], references: [id])
+  courseId Int?
+}
+
+model Course {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String?
+  imageUrl    String?
+  level       Level    @default(NONE)
+  isPublished Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  tags        String[] @default([])
+
+  tasks Task[]
+
+  enrollments Enrollment[]
+  videos      Video[]
+}
+
+model Enrollment {
+  id         Int      @id @default(autoincrement())
+  userId     Int
+  courseId   Int
+  progress   Float    @default(0.0)
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  course     Course   @relation(fields: [courseId], references: [id])
+  enrolledAt DateTime @default(now())
+
+  @@unique([userId, courseId])
+}
+
+model Setting {
+  id               Int       @id @default(autoincrement())
+  userId           Int       @unique
+  user             User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  global_language  Language  @default(UA)
+  current_language Language  @default(EN)
+  purposes         Purpose[] @default([NONE])
+  current_level    Level     @default(NONE)
+}
+
+model WordProgress {
+  id     Int  @id @default(autoincrement())
+  userId Int
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  wordId Int
+  word   Word @relation(fields: [wordId], references: [id])
+
+  progress  Int     @default(0)
+  isLearned Boolean @default(false)
+
+  @@unique([userId, wordId])
 }
 
 enum Role {
@@ -66,4 +135,27 @@ enum TaskType {
   MULTIPLE_CHOICE
   FILL_IN_THE_BLANK
   TRUE_FALSE
+}
+
+enum Language {
+  EN
+  UA
+  DE
+}
+
+enum Purpose {
+  NONE
+  EXAM
+  TRAVEL
+  WORK
+}
+
+enum Level {
+  NONE
+  A1
+  A2
+  B1
+  B2
+  C1
+  C2
 }

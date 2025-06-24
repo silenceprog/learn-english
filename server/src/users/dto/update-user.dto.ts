@@ -1,20 +1,5 @@
-import { ApiPropertyOptional } from '@nestjs/swagger';
-import { Role } from 'generated/prisma/client';
+import { PartialType } from '@nestjs/swagger';
+import { CreateUserDto } from './create-user.dto';
 
 
-export class UpdateUserDto {
-  @ApiPropertyOptional()
-  email?: string;
-
-  @ApiPropertyOptional()
-  username?: string;
-
-  @ApiPropertyOptional()
-  password?: string;
-
-  @ApiPropertyOptional({ enum: Role })
-  role?: Role;
-
-  @ApiPropertyOptional()
-  isActive?: boolean;
-}
+export class UpdateUserDto extends PartialType(CreateUserDto) {}
