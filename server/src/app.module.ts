@@ -24,6 +24,7 @@ import { CoursesModule } from './courses/courses.module';
 import { EmailController } from './auth/email/email.controller';
 import { SettingsModule } from './settings/settings.module';
 import { RequestLoggerMiddleware } from './middleware/request-logger.middleware';
+import { TranslateModule } from './translate/translate.module';
 
 @Module({
   imports: [
@@ -55,6 +56,7 @@ import { RequestLoggerMiddleware } from './middleware/request-logger.middleware'
     EmailModule,
     CoursesModule,
     SettingsModule,
+    TranslateModule,
   ],
   controllers: [AppController, EmailController],
   providers: [
