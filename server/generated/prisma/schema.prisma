@@ -145,9 +145,12 @@ enum Language {
 
 enum Purpose {
   NONE
-  EXAM
-  TRAVEL
   WORK
+  TRAVEL
+  EDUCATION
+  SELF_DEV
+  COMMUNICATION
+  HOBBY
 }
 
 enum Level {

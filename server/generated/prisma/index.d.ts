@@ -87,9 +87,12 @@ export type Language = (typeof Language)[keyof typeof Language]
 
 export const Purpose: {
   NONE: 'NONE',
-  EXAM: 'EXAM',
+  WORK: 'WORK',
   TRAVEL: 'TRAVEL',
-  WORK: 'WORK'
+  EDUCATION: 'EDUCATION',
+  SELF_DEV: 'SELF_DEV',
+  COMMUNICATION: 'COMMUNICATION',
+  HOBBY: 'HOBBY'
 };
 
 export type Purpose = (typeof Purpose)[keyof typeof Purpose]

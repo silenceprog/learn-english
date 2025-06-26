@@ -244,9 +244,12 @@ exports.TaskType = exports.$Enums.TaskType = {
 
 exports.Purpose = exports.$Enums.Purpose = {
   NONE: 'NONE',
-  EXAM: 'EXAM',
+  WORK: 'WORK',
   TRAVEL: 'TRAVEL',
-  WORK: 'WORK'
+  EDUCATION: 'EDUCATION',
+  SELF_DEV: 'SELF_DEV',
+  COMMUNICATION: 'COMMUNICATION',
+  HOBBY: 'HOBBY'
 };
 
 exports.Prisma.ModelName = {
