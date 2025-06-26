@@ -16,8 +16,13 @@ export class TranslateController {
   async getTranslation(
     @Query('text') text: string,
     @Query('from') from: Language,
-    @Query('to') to: Language
+    @Query('to') to: Language,
   ) {
     return this.translateService.wordTranslate(text, from, to);
+  }
+
+  @Get('time')
+  getTime() {
+    return { time: Date.now() };
   }
 }

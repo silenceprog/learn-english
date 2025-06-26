@@ -32,7 +32,7 @@ import { APP_INTERCEPTOR } from '@nestjs/core';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
-    CacheModule.register(RedisOptions),
+    CacheModule.register({RedisOptions,ttl:60*60}),
     UsersModule,
     AuthModule,
     DatabaseModule,
