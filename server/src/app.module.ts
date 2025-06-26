@@ -25,10 +25,14 @@ import { EmailController } from './auth/email/email.controller';
 import { SettingsModule } from './settings/settings.module';
 import { RequestLoggerMiddleware } from './middleware/request-logger.middleware';
 import { TranslateModule } from './translate/translate.module';
+import { CacheInterceptor, CacheModule } from '@nestjs/cache-manager';
+import { RedisOptions } from './app-options';
+import { APP_INTERCEPTOR } from '@nestjs/core';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
+    CacheModule.register(RedisOptions),
     UsersModule,
     AuthModule,
     DatabaseModule,
@@ -72,6 +76,10 @@ import { TranslateModule } from './translate/translate.module';
     {
       provide: APP_GUARD,
       useClass: RolesGuard,
+    },
+    {
+      provide: APP_INTERCEPTOR, 
+      useClass: CacheInterceptor,
     },
     JwtStrategy,
   ],
