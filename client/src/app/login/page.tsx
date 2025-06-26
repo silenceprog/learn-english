@@ -2,6 +2,8 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useStates } from "@/states/useStates";
+import { Button } from "@/shared/ui/Button";
+import { Loader2 } from "lucide-react";
 
 export default function Login() {
   const router = useRouter();
@@ -12,6 +14,7 @@ export default function Login() {
 
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -22,6 +25,7 @@ export default function Login() {
   const { setIsLoggedIn } = useStates();
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsLoading(true);
 
     try {
       const response = await fetch(
@@ -54,6 +58,8 @@ export default function Login() {
       router.push("/");
     } catch (error) {
       setError("Something went wrong. Please try again later." + error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -93,12 +99,12 @@ export default function Login() {
             className="w-full border rounded-md px-3 py-2"
           />
         </div>
-        <button
-          type="submit"
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg"
-        >
-          Увійти
-        </button>
+        <Button type="submit" className="w-full text-white cursor-pointer">
+          <div className="flex flex-row justify-center">
+            Увійти
+            {isLoading ? <Loader2 className="animate-spin h-5 w-5 ml-2" /> : ""}
+          </div>
+        </Button>
       </form>
     </div>
   );
