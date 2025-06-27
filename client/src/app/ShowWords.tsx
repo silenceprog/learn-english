@@ -54,7 +54,7 @@ export function ShowWords(Tabs: Tabs) {
         console.log(data.data);
         console.log(Tabs.currentTab); // якщо API повертає { words: [...] }
       } catch {
-        console.log("Щось пішло не так");
+        console.log("Щось пішло не так1");
       }
     };
     if (isLoggedIn) {
