@@ -7,5 +7,9 @@ export function Section({
   children: React.ReactNode;
   className?: string;
 }) {
-  return <div className={clsx(className, "max-w-7xl mx-auto")}>{children}</div>;
+  return (
+    <div className={clsx(className, "max-w-7xl mx-auto mb-8 px-4")}>
+      {children}
+    </div>
+  );
 }
