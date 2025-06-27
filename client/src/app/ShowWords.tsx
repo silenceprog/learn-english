@@ -51,8 +51,8 @@ export function ShowWords(Tabs: Tabs) {
         setWords(data.data);
         console.log(data.data);
         console.log(Tabs.currentTab); // якщо API повертає { words: [...] }
-      } catch (err: any) {
-        console.log(err.message || "Щось пішло не так");
+      } catch {
+        console.log("Щось пішло не так");
       }
     };
 
