@@ -45,10 +45,6 @@ export function ShowWords(Tabs: Tabs) {
           },
         );
 
-        /*if (!response.ok) {
-          console.error("Помилка при отриманні слів");
-        }*/
-
         const data = await response.json();
         setWords(data.data);
         console.log(data.data);
