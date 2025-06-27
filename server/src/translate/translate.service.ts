@@ -20,11 +20,13 @@ export class TranslateService {
     const dictionaryUrl = `https://api.dictionaryapi.dev/api/v2/entries/${fromIso}/${text}`;
 
     try {
-      const lingvaRes = await firstValueFrom(this.httpService.get(lingvaUrl));
+      const lingvaRes = await firstValueFrom(this.httpService.get(lingvaUrl, {
+    headers: { 'User-Agent': 'Mozilla/5.0' },}));
 
       let dictionaryRes: any = null;
       if (SupportedDictionaryLangs.includes(fromIso)) {
-        const dict = await firstValueFrom(this.httpService.get(dictionaryUrl));
+        const dict = await firstValueFrom(this.httpService.get(dictionaryUrl, {
+    headers: { 'User-Agent': 'Mozilla/5.0' },}));
         dictionaryRes = dict.data;
       }
 
@@ -33,6 +35,7 @@ export class TranslateService {
         dictionary: dictionaryRes,
       };
     } catch (error) {
+      console.error('Translation error:', error.response?.status, error.response?.data);
       if (error.response?.status === 404) {
         return { message: 'Word not found in dictionary' };
       }

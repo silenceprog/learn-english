@@ -53,6 +53,7 @@ export class WordsService {
       }),
       this.databaseService.word.count(),
     ]);
+    
 
     return {
       data,
