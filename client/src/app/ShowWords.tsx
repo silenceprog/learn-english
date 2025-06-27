@@ -5,30 +5,7 @@ interface Tabs {
   currentTab: "ALL" | "DO" | "DONE";
 }
 export function ShowWords(Tabs: Tabs) {
-  const data = [
-    {
-      text: "accomplish",
-      translate: "достигать, выполнять",
-      example: '"She accomplished all her goals for the year."',
-      progress: 33,
-      voice: "http../sdfsdf.ua",
-    },
-    {
-      text: "accomplish",
-      translate: "достигать, выполнять",
-      example: '"She accomplished all her goals for the year."',
-      progress: 33,
-      voice: "http../sdfsdf.ua",
-    },
-    {
-      text: "accomplish",
-      translate: "достигать, выполнять",
-      example: '"She accomplished all her goals for the year."',
-      progress: 33,
-      voice: "http../sdfsdf.ua",
-    },
-  ];
-  const [words, setWords] = useState<Word[]>(data);
+  const [words, setWords] = useState<Word[]>([]);
   useEffect(() => {
     const fetchWords = async () => {
       try {
