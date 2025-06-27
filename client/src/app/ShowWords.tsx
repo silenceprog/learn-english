@@ -1,5 +1,6 @@
 import { ShowWord, Word } from "@/app/ShowWord";
 import { useEffect, useState } from "react";
+import { useStates } from "@/states/useStates";
 
 interface Tabs {
   currentTab: "ALL" | "DO" | "DONE";
@@ -29,6 +30,7 @@ export function ShowWords(Tabs: Tabs) {
     },
   ];
   const [words, setWords] = useState<Word[]>(data);
+  const { isLoggedIn } = useStates();
   useEffect(() => {
     const fetchWords = async () => {
       try {
@@ -43,9 +45,9 @@ export function ShowWords(Tabs: Tabs) {
           },
         );
 
-        if (!response.ok) {
+        /*if (!response.ok) {
           console.error("Помилка при отриманні слів");
-        }
+        }*/
 
         const data = await response.json();
         setWords(data.data);
@@ -55,9 +57,10 @@ export function ShowWords(Tabs: Tabs) {
         console.log("Щось пішло не так");
       }
     };
-
-    fetchWords();
-  }, []);
+    if (isLoggedIn) {
+      fetchWords();
+    }
+  }, [isLoggedIn]);
   return (
     <div className="grid grid-cols-2 gap-4 py-4">
       {words.map((word, i) => (
