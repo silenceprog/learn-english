@@ -16,29 +16,31 @@ datasource db {
 }
 
 model User {
-  id              Int            @id @default(autoincrement())
-  email           String         @unique
-  username        String         @unique
+  id              Int                @id @default(autoincrement())
+  email           String             @unique
+  username        String             @unique
   password        String
-  role            Role           @default(USER)
-  isEmailVerified Boolean        @default(false)
-  createdAt       DateTime       @default(now())
-  updatedAt       DateTime       @updatedAt
+  role            Role               @default(USER)
+  isEmailVerified Boolean            @default(false)
+  createdAt       DateTime           @default(now())
+  updatedAt       DateTime           @updatedAt
   enrollments     Enrollment[]
-  wordProgresses  WordProgress[]
+  wordProgresses  WordTaskProgress[]
   setting         Setting?
 }
 
 model Word {
-  id           Int            @id @default(autoincrement())
-  text         String
-  language     Language
-  translate    String[]
-  meaning      String[]
-  example      String?
-  partOfSpeech String?
-  createdAt    DateTime       @default(now())
-  progresses   WordProgress[]
+  id            Int                @id @default(autoincrement())
+  text          String
+  language      Language
+  translate     String[]
+  meaning       String[]
+  example       String?
+  partOfSpeech  String?
+  createdAt     DateTime           @default(now())
+  progresses    WordTaskProgress[]
+  totalProgress Int                @default(0)
+  isLearned     Boolean            @default(false)
 }
 
 model Video {
@@ -111,7 +113,7 @@ model Setting {
   current_level    Level     @default(NONE)
 }
 
-model WordProgress {
+model WordTaskProgress {
   id     Int  @id @default(autoincrement())
   userId Int
   user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -119,10 +121,18 @@ model WordProgress {
   wordId Int
   word   Word @relation(fields: [wordId], references: [id])
 
-  progress  Int     @default(0)
-  isLearned Boolean @default(false)
+  taskType WordTaskType
+  isPassed Boolean      @default(false)
+  score    Int          @default(0)
+  attempts Int          @default(0)
 
-  @@unique([userId, wordId])
+  @@unique([userId, wordId, taskType])
+}
+
+enum WordTaskType {
+  TRANSLATION
+  MATCHING
+  LISTENING
 }
 
 enum Role {

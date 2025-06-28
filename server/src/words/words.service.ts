@@ -2,21 +2,65 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { UpdateWordDTO } from './dto/update-word.dto';
 import { DatabaseService } from 'src/database/database.service';
 import { CreateWordDto } from './dto/create-word.dto';
-import { Language } from 'generated/prisma';
+import { Language, WordTaskType } from 'generated/prisma';
 import { PaginationDto } from './dto/pagination.dto';
 
 @Injectable()
 export class WordsService {
   constructor(private readonly databaseService: DatabaseService) {}
-  async createWord(createWordDto: CreateWordDto) {
+  async createWord(userId: number, dto: CreateWordDto) {
+    const taskTypes = Object.values(WordTaskType);
+
     return this.databaseService.word.create({
-      data: createWordDto,
+      data: {
+        text: dto.text,
+        language: dto.language,
+        translate: dto.translate,
+        meaning: dto.meaning,
+        example: dto.example,
+        partOfSpeech: dto.partOfSpeech,
+
+        progresses: {
+          create: taskTypes.map((taskType) => ({
+            taskType,
+            user: { connect: { id: userId } },
+            isPassed: false,
+            score: 0,
+            attempts: 0,
+          })),
+        },
+      },
+      include: {
+        progresses: true,
+      },
     });
   }
 
-  async findAll() {
-    return this.databaseService.video.findMany();
+  async searchWords(userId: number, query: string) {
+  const setting = await this.databaseService.setting.findUnique({
+    where: { userId },
+  });
+
+  if (!setting) {
+    throw new NotFoundException('User settings not found');
   }
+
+  return this.databaseService.word.findMany({
+    where: {
+      language: setting.current_language,
+      text: {
+        startsWith: query,
+        mode: 'insensitive',
+      },
+      progresses: {
+        some: {
+          userId,
+        },
+      },
+    },
+    take: 10,
+  });
+}
 
   async findById(id: number) {
     return this.databaseService.word.findUnique({
@@ -26,15 +70,14 @@ export class WordsService {
     });
   }
 
-  async getWordsByLanguage(userId: number, language: Language) {
-    return this.databaseService.word.findMany({
-      where: { language },
-    });
-  }
-
-  async getWordsByUserLanguage(userId: number, paginationDto: PaginationDto) {
+  async getWordsByUserLanguage(
+    userId: number,
+    paginationDto: PaginationDto,
+    type?: 'learned' | 'learning',
+  ) {
     const { page = 1, limit = 10 } = paginationDto;
     const skip = (page - 1) * limit;
+
     const setting = await this.databaseService.setting.findUnique({
       where: { userId },
     });
@@ -43,24 +86,56 @@ export class WordsService {
       throw new NotFoundException('User settings not found');
     }
 
-    const [data, total] = await this.databaseService.$transaction([
-      this.databaseService.word.findMany({
-        where: {
-          language: setting?.current_language,
-        },
-        skip,
-        take: limit,
-      }),
-      this.databaseService.word.count(),
-    ]);
-    
+    const baseWhere: any = {
+      language: setting.current_language,
+    };
+
+    if (type === 'learned') baseWhere.isLearned = true;
+    if (type === 'learning') baseWhere.isLearned = false;
+
+    const [words, totalCount, learnedCount, learningCount] =
+      await this.databaseService.$transaction([
+        this.databaseService.word.findMany({
+          where: baseWhere,
+          skip,
+          take: limit,
+          include: {
+            progresses: {
+              where: { userId },
+              select: {
+                taskType: true,
+                isPassed: true,
+              },
+            },
+          },
+        }),
+        this.databaseService.word.count({
+          where: {
+            language: setting.current_language,
+          },
+        }),
+        this.databaseService.word.count({
+          where: {
+            language: setting.current_language,
+            isLearned: true,
+          },
+        }),
+        this.databaseService.word.count({
+          where: {
+            language: setting.current_language,
+            isLearned: false,
+          },
+        }),
+      ]);
 
     return {
-      data,
-      total,
+      data: words,
       page,
       limit,
-      pages: Math.ceil(total / limit),
+      total: totalCount,
+      learned: learnedCount,
+      learning: learningCount,
+      pages: Math.ceil(totalCount / limit),
     };
   }
 

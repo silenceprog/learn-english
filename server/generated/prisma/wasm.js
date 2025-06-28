@@ -136,7 +136,9 @@ exports.Prisma.WordScalarFieldEnum = {
   meaning: 'meaning',
   example: 'example',
   partOfSpeech: 'partOfSpeech',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  totalProgress: 'totalProgress',
+  isLearned: 'isLearned'
 };
 
 exports.Prisma.VideoScalarFieldEnum = {
@@ -192,12 +194,14 @@ exports.Prisma.SettingScalarFieldEnum = {
   current_level: 'current_level'
 };
 
-exports.Prisma.WordProgressScalarFieldEnum = {
+exports.Prisma.WordTaskProgressScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   wordId: 'wordId',
-  progress: 'progress',
-  isLearned: 'isLearned'
+  taskType: 'taskType',
+  isPassed: 'isPassed',
+  score: 'score',
+  attempts: 'attempts'
 };
 
 exports.Prisma.SortOrder = {
@@ -252,6 +256,12 @@ exports.Purpose = exports.$Enums.Purpose = {
   HOBBY: 'HOBBY'
 };
 
+exports.WordTaskType = exports.$Enums.WordTaskType = {
+  TRANSLATION: 'TRANSLATION',
+  MATCHING: 'MATCHING',
+  LISTENING: 'LISTENING'
+};
+
 exports.Prisma.ModelName = {
   User: 'User',
   Word: 'Word',
@@ -260,7 +270,7 @@ exports.Prisma.ModelName = {
   Course: 'Course',
   Enrollment: 'Enrollment',
   Setting: 'Setting',
-  WordProgress: 'WordProgress'
+  WordTaskProgress: 'WordTaskProgress'
 };
 
 /**

@@ -33,33 +33,29 @@ export class WordsController {
   @ApiOperation({ summary: 'Створення слова' })
   @ApiResponse({ status: 201, type: CreateWordDto })
   @Post()
-  createWord(@Body() createWordDTO: CreateWordDto) {
-    return this.wordsService.createWord(createWordDTO);
+  createWord(@Req() req, @Body() createWordDTO: CreateWordDto) {
+    const userId = req.user.id;
+    return this.wordsService.createWord(userId, createWordDTO);
   }
 
-  @ApiOperation({ summary: 'Отримання всіх слів' })
+  @ApiOperation({ summary: 'Отримання слів побуквено' })
   @ApiResponse({ status: 200, type: WordEntity })
-  @Get()
-  findAll() {
-    return this.wordsService.findAll();
+  @Get('search')
+  searchWords(@Req() req,  @Query('q') query: string) {
+    const userId = req.user.id;
+    return this.wordsService.searchWords(userId,query);
   }
 
-   @ApiQuery({ name: 'page', required: false, type: Number })
-  @ApiQuery({ name: 'limit', required: false, type: Number })
+  @ApiQuery({ name: 'page', required: false, type: Number,description:"Поточна сторінка" })
+  @ApiQuery({ name: 'limit', required: false, type: Number,description:"Кількість значень на одну сторінку" })
+  @ApiQuery({ name: 'type', required: false, type: String, description:"Тип значення" })
   @Get('by-language')
   @ApiOperation({
     summary: 'Отримати слова за поточними налаштуваннями мови користувача',
   })
-  getWordsByUser(@Req() req, @Query() paginationDto: PaginationDto) {
+  getWordsByUser(@Req() req, @Query() paginationDto: PaginationDto,@Query() type) {
     const userId = req.user.id;
-    return this.wordsService.getWordsByUserLanguage(userId, paginationDto);
-  }
-
-  @ApiOperation({ summary: 'Отримати слова за мовою' })
-  @Get('by-language/:lang')
-  getByLanguage(@Param('lang') lang: Language,@Req() req) {
-    const userId = req.user.id;
-    return this.wordsService.getWordsByLanguage(userId,lang);
+    return this.wordsService.getWordsByUserLanguage(userId, paginationDto,type);
   }
 
   @ApiOperation({ summary: 'Отримання слова по айді' })

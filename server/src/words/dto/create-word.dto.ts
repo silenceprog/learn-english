@@ -23,4 +23,9 @@ export class CreateWordDto {
   @IsOptional()
   @IsString()
   example?: string;
+
+  @ApiProperty({ example: 'noun', description: 'Частина мови', required: false })
+  @IsOptional()
+  @IsString()
+  partOfSpeech?: string;
   }

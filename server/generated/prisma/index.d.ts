@@ -49,16 +49,25 @@ export type Enrollment = $Result.DefaultSelection<Prisma.$EnrollmentPayload>
  */
 export type Setting = $Result.DefaultSelection<Prisma.$SettingPayload>
 /**
- * Model WordProgress
+ * Model WordTaskProgress
  * 
  */
-export type WordProgress = $Result.DefaultSelection<Prisma.$WordProgressPayload>
+export type WordTaskProgress = $Result.DefaultSelection<Prisma.$WordTaskProgressPayload>
 
 /**
  * Enums
  */
 export namespace $Enums {
-  export const Role: {
+  export const WordTaskType: {
+  TRANSLATION: 'TRANSLATION',
+  MATCHING: 'MATCHING',
+  LISTENING: 'LISTENING'
+};
+
+export type WordTaskType = (typeof WordTaskType)[keyof typeof WordTaskType]
+
+
+export const Role: {
   OWNER: 'OWNER',
   USER: 'USER',
   ADMIN: 'ADMIN'
@@ -111,6 +120,10 @@ export const Level: {
 export type Level = (typeof Level)[keyof typeof Level]
 
 }
+
+export type WordTaskType = $Enums.WordTaskType
+
+export const WordTaskType: typeof $Enums.WordTaskType
 
 export type Role = $Enums.Role
 
@@ -328,14 +341,14 @@ export class PrismaClient<
   get setting(): Prisma.SettingDelegate<ExtArgs, ClientOptions>;
 
   /**
-   * `prisma.wordProgress`: Exposes CRUD operations for the **WordProgress** model.
+   * `prisma.wordTaskProgress`: Exposes CRUD operations for the **WordTaskProgress** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more WordProgresses
-    * const wordProgresses = await prisma.wordProgress.findMany()
+    * // Fetch zero or more WordTaskProgresses
+    * const wordTaskProgresses = await prisma.wordTaskProgress.findMany()
     * ```
     */
-  get wordProgress(): Prisma.WordProgressDelegate<ExtArgs, ClientOptions>;
+  get wordTaskProgress(): Prisma.WordTaskProgressDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -783,7 +796,7 @@ export namespace Prisma {
     Course: 'Course',
     Enrollment: 'Enrollment',
     Setting: 'Setting',
-    WordProgress: 'WordProgress'
+    WordTaskProgress: 'WordTaskProgress'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -802,7 +815,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "word" | "video" | "task" | "course" | "enrollment" | "setting" | "wordProgress"
+      modelProps: "user" | "word" | "video" | "task" | "course" | "enrollment" | "setting" | "wordTaskProgress"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1324,77 +1337,77 @@ export namespace Prisma {
           }
         }
       }
-      WordProgress: {
-        payload: Prisma.$WordProgressPayload<ExtArgs>
-        fields: Prisma.WordProgressFieldRefs
+      WordTaskProgress: {
+        payload: Prisma.$WordTaskProgressPayload<ExtArgs>
+        fields: Prisma.WordTaskProgressFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.WordProgressFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$WordProgressPayload> | null
+            args: Prisma.WordTaskProgressFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WordTaskProgressPayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.WordProgressFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$WordProgressPayload>
+            args: Prisma.WordTaskProgressFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WordTaskProgressPayload>
           }
           findFirst: {
-            args: Prisma.WordProgressFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$WordProgressPayload> | null
+            args: Prisma.WordTaskProgressFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WordTaskProgressPayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.WordProgressFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$WordProgressPayload>
+            args: Prisma.WordTaskProgressFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WordTaskProgressPayload>
           }
           findMany: {
-            args: Prisma.WordProgressFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$WordProgressPayload>[]
+            args: Prisma.WordTaskProgressFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WordTaskProgressPayload>[]
           }
           create: {
-            args: Prisma.WordProgressCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$WordProgressPayload>
+            args: Prisma.WordTaskProgressCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WordTaskProgressPayload>
           }
           createMany: {
-            args: Prisma.WordProgressCreateManyArgs<ExtArgs>
+            args: Prisma.WordTaskProgressCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.WordProgressCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$WordProgressPayload>[]
+            args: Prisma.WordTaskProgressCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WordTaskProgressPayload>[]
           }
           delete: {
-            args: Prisma.WordProgressDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$WordProgressPayload>
+            args: Prisma.WordTaskProgressDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WordTaskProgressPayload>
           }
           update: {
-            args: Prisma.WordProgressUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$WordProgressPayload>
+            args: Prisma.WordTaskProgressUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WordTaskProgressPayload>
           }
           deleteMany: {
-            args: Prisma.WordProgressDeleteManyArgs<ExtArgs>
+            args: Prisma.WordTaskProgressDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.WordProgressUpdateManyArgs<ExtArgs>
+            args: Prisma.WordTaskProgressUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateManyAndReturn: {
-            args: Prisma.WordProgressUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$WordProgressPayload>[]
+            args: Prisma.WordTaskProgressUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WordTaskProgressPayload>[]
           }
           upsert: {
-            args: Prisma.WordProgressUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$WordProgressPayload>
+            args: Prisma.WordTaskProgressUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WordTaskProgressPayload>
           }
           aggregate: {
-            args: Prisma.WordProgressAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateWordProgress>
+            args: Prisma.WordTaskProgressAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateWordTaskProgress>
           }
           groupBy: {
-            args: Prisma.WordProgressGroupByArgs<ExtArgs>
-            result: $Utils.Optional<WordProgressGroupByOutputType>[]
+            args: Prisma.WordTaskProgressGroupByArgs<ExtArgs>
+            result: $Utils.Optional<WordTaskProgressGroupByOutputType>[]
           }
           count: {
-            args: Prisma.WordProgressCountArgs<ExtArgs>
-            result: $Utils.Optional<WordProgressCountAggregateOutputType> | number
+            args: Prisma.WordTaskProgressCountArgs<ExtArgs>
+            result: $Utils.Optional<WordTaskProgressCountAggregateOutputType> | number
           }
         }
       }
@@ -1489,7 +1502,7 @@ export namespace Prisma {
     course?: CourseOmit
     enrollment?: EnrollmentOmit
     setting?: SettingOmit
-    wordProgress?: WordProgressOmit
+    wordTaskProgress?: WordTaskProgressOmit
   }
 
   /* Types for Logging */
@@ -1615,7 +1628,7 @@ export namespace Prisma {
    * UserCountOutputType without action
    */
   export type UserCountOutputTypeCountWordProgressesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: WordProgressWhereInput
+    where?: WordTaskProgressWhereInput
   }
 
 
@@ -1646,7 +1659,7 @@ export namespace Prisma {
    * WordCountOutputType without action
    */
   export type WordCountOutputTypeCountProgressesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: WordProgressWhereInput
+    where?: WordTaskProgressWhereInput
   }
 
 
@@ -2009,7 +2022,7 @@ export namespace Prisma {
     name: "User"
     objects: {
       enrollments: Prisma.$EnrollmentPayload<ExtArgs>[]
-      wordProgresses: Prisma.$WordProgressPayload<ExtArgs>[]
+      wordProgresses: Prisma.$WordTaskProgressPayload<ExtArgs>[]
       setting: Prisma.$SettingPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -2416,7 +2429,7 @@ export namespace Prisma {
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     enrollments<T extends User$enrollmentsArgs<ExtArgs> = {}>(args?: Subset<T, User$enrollmentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EnrollmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    wordProgresses<T extends User$wordProgressesArgs<ExtArgs> = {}>(args?: Subset<T, User$wordProgressesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WordProgressPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    wordProgresses<T extends User$wordProgressesArgs<ExtArgs> = {}>(args?: Subset<T, User$wordProgressesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WordTaskProgressPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     setting<T extends User$settingArgs<ExtArgs> = {}>(args?: Subset<T, User$settingArgs<ExtArgs>>): Prisma__SettingClient<$Result.GetResult<Prisma.$SettingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -2871,23 +2884,23 @@ export namespace Prisma {
    */
   export type User$wordProgressesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the WordProgress
+     * Select specific fields to fetch from the WordTaskProgress
      */
-    select?: WordProgressSelect<ExtArgs> | null
+    select?: WordTaskProgressSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the WordProgress
+     * Omit specific fields from the WordTaskProgress
      */
-    omit?: WordProgressOmit<ExtArgs> | null
+    omit?: WordTaskProgressOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: WordProgressInclude<ExtArgs> | null
-    where?: WordProgressWhereInput
-    orderBy?: WordProgressOrderByWithRelationInput | WordProgressOrderByWithRelationInput[]
-    cursor?: WordProgressWhereUniqueInput
+    include?: WordTaskProgressInclude<ExtArgs> | null
+    where?: WordTaskProgressWhereInput
+    orderBy?: WordTaskProgressOrderByWithRelationInput | WordTaskProgressOrderByWithRelationInput[]
+    cursor?: WordTaskProgressWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: WordProgressScalarFieldEnum | WordProgressScalarFieldEnum[]
+    distinct?: WordTaskProgressScalarFieldEnum | WordTaskProgressScalarFieldEnum[]
   }
 
   /**
@@ -2942,10 +2955,12 @@ export namespace Prisma {
 
   export type WordAvgAggregateOutputType = {
     id: number | null
+    totalProgress: number | null
   }
 
   export type WordSumAggregateOutputType = {
     id: number | null
+    totalProgress: number | null
   }
 
   export type WordMinAggregateOutputType = {
@@ -2955,6 +2970,8 @@ export namespace Prisma {
     example: string | null
     partOfSpeech: string | null
     createdAt: Date | null
+    totalProgress: number | null
+    isLearned: boolean | null
   }
 
   export type WordMaxAggregateOutputType = {
@@ -2964,6 +2981,8 @@ export namespace Prisma {
     example: string | null
     partOfSpeech: string | null
     createdAt: Date | null
+    totalProgress: number | null
+    isLearned: boolean | null
   }
 
   export type WordCountAggregateOutputType = {
@@ -2975,16 +2994,20 @@ export namespace Prisma {
     example: number
     partOfSpeech: number
     createdAt: number
+    totalProgress: number
+    isLearned: number
     _all: number
   }
 
 
   export type WordAvgAggregateInputType = {
     id?: true
+    totalProgress?: true
   }
 
   export type WordSumAggregateInputType = {
     id?: true
+    totalProgress?: true
   }
 
   export type WordMinAggregateInputType = {
@@ -2994,6 +3017,8 @@ export namespace Prisma {
     example?: true
     partOfSpeech?: true
     createdAt?: true
+    totalProgress?: true
+    isLearned?: true
   }
 
   export type WordMaxAggregateInputType = {
@@ -3003,6 +3028,8 @@ export namespace Prisma {
     example?: true
     partOfSpeech?: true
     createdAt?: true
+    totalProgress?: true
+    isLearned?: true
   }
 
   export type WordCountAggregateInputType = {
@@ -3014,6 +3041,8 @@ export namespace Prisma {
     example?: true
     partOfSpeech?: true
     createdAt?: true
+    totalProgress?: true
+    isLearned?: true
     _all?: true
   }
 
@@ -3112,6 +3141,8 @@ export namespace Prisma {
     example: string | null
     partOfSpeech: string | null
     createdAt: Date
+    totalProgress: number
+    isLearned: boolean
     _count: WordCountAggregateOutputType | null
     _avg: WordAvgAggregateOutputType | null
     _sum: WordSumAggregateOutputType | null
@@ -3142,6 +3173,8 @@ export namespace Prisma {
     example?: boolean
     partOfSpeech?: boolean
     createdAt?: boolean
+    totalProgress?: boolean
+    isLearned?: boolean
     progresses?: boolean | Word$progressesArgs<ExtArgs>
     _count?: boolean | WordCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["word"]>
@@ -3155,6 +3188,8 @@ export namespace Prisma {
     example?: boolean
     partOfSpeech?: boolean
     createdAt?: boolean
+    totalProgress?: boolean
+    isLearned?: boolean
   }, ExtArgs["result"]["word"]>
 
   export type WordSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -3166,6 +3201,8 @@ export namespace Prisma {
     example?: boolean
     partOfSpeech?: boolean
     createdAt?: boolean
+    totalProgress?: boolean
+    isLearned?: boolean
   }, ExtArgs["result"]["word"]>
 
   export type WordSelectScalar = {
@@ -3177,9 +3214,11 @@ export namespace Prisma {
     example?: boolean
     partOfSpeech?: boolean
     createdAt?: boolean
+    totalProgress?: boolean
+    isLearned?: boolean
   }
 
-  export type WordOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "text" | "language" | "translate" | "meaning" | "example" | "partOfSpeech" | "createdAt", ExtArgs["result"]["word"]>
+  export type WordOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "text" | "language" | "translate" | "meaning" | "example" | "partOfSpeech" | "createdAt" | "totalProgress" | "isLearned", ExtArgs["result"]["word"]>
   export type WordInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     progresses?: boolean | Word$progressesArgs<ExtArgs>
     _count?: boolean | WordCountOutputTypeDefaultArgs<ExtArgs>
@@ -3190,7 +3229,7 @@ export namespace Prisma {
   export type $WordPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Word"
     objects: {
-      progresses: Prisma.$WordProgressPayload<ExtArgs>[]
+      progresses: Prisma.$WordTaskProgressPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -3201,6 +3240,8 @@ export namespace Prisma {
       example: string | null
       partOfSpeech: string | null
       createdAt: Date
+      totalProgress: number
+      isLearned: boolean
     }, ExtArgs["result"]["word"]>
     composites: {}
   }
@@ -3595,7 +3636,7 @@ export namespace Prisma {
    */
   export interface Prisma__WordClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    progresses<T extends Word$progressesArgs<ExtArgs> = {}>(args?: Subset<T, Word$progressesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WordProgressPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    progresses<T extends Word$progressesArgs<ExtArgs> = {}>(args?: Subset<T, Word$progressesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WordTaskProgressPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3633,6 +3674,8 @@ export namespace Prisma {
     readonly example: FieldRef<"Word", 'String'>
     readonly partOfSpeech: FieldRef<"Word", 'String'>
     readonly createdAt: FieldRef<"Word", 'DateTime'>
+    readonly totalProgress: FieldRef<"Word", 'Int'>
+    readonly isLearned: FieldRef<"Word", 'Boolean'>
   }
     
 
@@ -4025,23 +4068,23 @@ export namespace Prisma {
    */
   export type Word$progressesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the WordProgress
+     * Select specific fields to fetch from the WordTaskProgress
      */
-    select?: WordProgressSelect<ExtArgs> | null
+    select?: WordTaskProgressSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the WordProgress
+     * Omit specific fields from the WordTaskProgress
      */
-    omit?: WordProgressOmit<ExtArgs> | null
+    omit?: WordTaskProgressOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: WordProgressInclude<ExtArgs> | null
-    where?: WordProgressWhereInput
-    orderBy?: WordProgressOrderByWithRelationInput | WordProgressOrderByWithRelationInput[]
-    cursor?: WordProgressWhereUniqueInput
+    include?: WordTaskProgressInclude<ExtArgs> | null
+    where?: WordTaskProgressWhereInput
+    orderBy?: WordTaskProgressOrderByWithRelationInput | WordTaskProgressOrderByWithRelationInput[]
+    cursor?: WordTaskProgressWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: WordProgressScalarFieldEnum | WordProgressScalarFieldEnum[]
+    distinct?: WordTaskProgressScalarFieldEnum | WordTaskProgressScalarFieldEnum[]
   }
 
   /**
@@ -9880,263 +9923,289 @@ export namespace Prisma {
 
 
   /**
-   * Model WordProgress
+   * Model WordTaskProgress
    */
 
-  export type AggregateWordProgress = {
-    _count: WordProgressCountAggregateOutputType | null
-    _avg: WordProgressAvgAggregateOutputType | null
-    _sum: WordProgressSumAggregateOutputType | null
-    _min: WordProgressMinAggregateOutputType | null
-    _max: WordProgressMaxAggregateOutputType | null
+  export type AggregateWordTaskProgress = {
+    _count: WordTaskProgressCountAggregateOutputType | null
+    _avg: WordTaskProgressAvgAggregateOutputType | null
+    _sum: WordTaskProgressSumAggregateOutputType | null
+    _min: WordTaskProgressMinAggregateOutputType | null
+    _max: WordTaskProgressMaxAggregateOutputType | null
   }
 
-  export type WordProgressAvgAggregateOutputType = {
+  export type WordTaskProgressAvgAggregateOutputType = {
     id: number | null
     userId: number | null
     wordId: number | null
-    progress: number | null
+    score: number | null
+    attempts: number | null
   }
 
-  export type WordProgressSumAggregateOutputType = {
+  export type WordTaskProgressSumAggregateOutputType = {
     id: number | null
     userId: number | null
     wordId: number | null
-    progress: number | null
+    score: number | null
+    attempts: number | null
   }
 
-  export type WordProgressMinAggregateOutputType = {
+  export type WordTaskProgressMinAggregateOutputType = {
     id: number | null
     userId: number | null
     wordId: number | null
-    progress: number | null
-    isLearned: boolean | null
+    taskType: $Enums.WordTaskType | null
+    isPassed: boolean | null
+    score: number | null
+    attempts: number | null
   }
 
-  export type WordProgressMaxAggregateOutputType = {
+  export type WordTaskProgressMaxAggregateOutputType = {
     id: number | null
     userId: number | null
     wordId: number | null
-    progress: number | null
-    isLearned: boolean | null
+    taskType: $Enums.WordTaskType | null
+    isPassed: boolean | null
+    score: number | null
+    attempts: number | null
   }
 
-  export type WordProgressCountAggregateOutputType = {
+  export type WordTaskProgressCountAggregateOutputType = {
     id: number
     userId: number
     wordId: number
-    progress: number
-    isLearned: number
+    taskType: number
+    isPassed: number
+    score: number
+    attempts: number
     _all: number
   }
 
 
-  export type WordProgressAvgAggregateInputType = {
+  export type WordTaskProgressAvgAggregateInputType = {
     id?: true
     userId?: true
     wordId?: true
-    progress?: true
+    score?: true
+    attempts?: true
   }
 
-  export type WordProgressSumAggregateInputType = {
+  export type WordTaskProgressSumAggregateInputType = {
     id?: true
     userId?: true
     wordId?: true
-    progress?: true
+    score?: true
+    attempts?: true
   }
 
-  export type WordProgressMinAggregateInputType = {
+  export type WordTaskProgressMinAggregateInputType = {
     id?: true
     userId?: true
     wordId?: true
-    progress?: true
-    isLearned?: true
+    taskType?: true
+    isPassed?: true
+    score?: true
+    attempts?: true
   }
 
-  export type WordProgressMaxAggregateInputType = {
+  export type WordTaskProgressMaxAggregateInputType = {
     id?: true
     userId?: true
     wordId?: true
-    progress?: true
-    isLearned?: true
+    taskType?: true
+    isPassed?: true
+    score?: true
+    attempts?: true
   }
 
-  export type WordProgressCountAggregateInputType = {
+  export type WordTaskProgressCountAggregateInputType = {
     id?: true
     userId?: true
     wordId?: true
-    progress?: true
-    isLearned?: true
+    taskType?: true
+    isPassed?: true
+    score?: true
+    attempts?: true
     _all?: true
   }
 
-  export type WordProgressAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type WordTaskProgressAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which WordProgress to aggregate.
+     * Filter which WordTaskProgress to aggregate.
      */
-    where?: WordProgressWhereInput
+    where?: WordTaskProgressWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of WordProgresses to fetch.
+     * Determine the order of WordTaskProgresses to fetch.
      */
-    orderBy?: WordProgressOrderByWithRelationInput | WordProgressOrderByWithRelationInput[]
+    orderBy?: WordTaskProgressOrderByWithRelationInput | WordTaskProgressOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: WordProgressWhereUniqueInput
+    cursor?: WordTaskProgressWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` WordProgresses from the position of the cursor.
+     * Take `±n` WordTaskProgresses from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` WordProgresses.
+     * Skip the first `n` WordTaskProgresses.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned WordProgresses
+     * Count returned WordTaskProgresses
     **/
-    _count?: true | WordProgressCountAggregateInputType
+    _count?: true | WordTaskProgressCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to average
     **/
-    _avg?: WordProgressAvgAggregateInputType
+    _avg?: WordTaskProgressAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to sum
     **/
-    _sum?: WordProgressSumAggregateInputType
+    _sum?: WordTaskProgressSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: WordProgressMinAggregateInputType
+    _min?: WordTaskProgressMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: WordProgressMaxAggregateInputType
+    _max?: WordTaskProgressMaxAggregateInputType
   }
 
-  export type GetWordProgressAggregateType<T extends WordProgressAggregateArgs> = {
-        [P in keyof T & keyof AggregateWordProgress]: P extends '_count' | 'count'
+  export type GetWordTaskProgressAggregateType<T extends WordTaskProgressAggregateArgs> = {
+        [P in keyof T & keyof AggregateWordTaskProgress]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateWordProgress[P]>
-      : GetScalarType<T[P], AggregateWordProgress[P]>
+        : GetScalarType<T[P], AggregateWordTaskProgress[P]>
+      : GetScalarType<T[P], AggregateWordTaskProgress[P]>
   }
 
 
 
 
-  export type WordProgressGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: WordProgressWhereInput
-    orderBy?: WordProgressOrderByWithAggregationInput | WordProgressOrderByWithAggregationInput[]
-    by: WordProgressScalarFieldEnum[] | WordProgressScalarFieldEnum
-    having?: WordProgressScalarWhereWithAggregatesInput
+  export type WordTaskProgressGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: WordTaskProgressWhereInput
+    orderBy?: WordTaskProgressOrderByWithAggregationInput | WordTaskProgressOrderByWithAggregationInput[]
+    by: WordTaskProgressScalarFieldEnum[] | WordTaskProgressScalarFieldEnum
+    having?: WordTaskProgressScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: WordProgressCountAggregateInputType | true
-    _avg?: WordProgressAvgAggregateInputType
-    _sum?: WordProgressSumAggregateInputType
-    _min?: WordProgressMinAggregateInputType
-    _max?: WordProgressMaxAggregateInputType
+    _count?: WordTaskProgressCountAggregateInputType | true
+    _avg?: WordTaskProgressAvgAggregateInputType
+    _sum?: WordTaskProgressSumAggregateInputType
+    _min?: WordTaskProgressMinAggregateInputType
+    _max?: WordTaskProgressMaxAggregateInputType
   }
 
-  export type WordProgressGroupByOutputType = {
+  export type WordTaskProgressGroupByOutputType = {
     id: number
     userId: number
     wordId: number
-    progress: number
-    isLearned: boolean
-    _count: WordProgressCountAggregateOutputType | null
-    _avg: WordProgressAvgAggregateOutputType | null
-    _sum: WordProgressSumAggregateOutputType | null
-    _min: WordProgressMinAggregateOutputType | null
-    _max: WordProgressMaxAggregateOutputType | null
+    taskType: $Enums.WordTaskType
+    isPassed: boolean
+    score: number
+    attempts: number
+    _count: WordTaskProgressCountAggregateOutputType | null
+    _avg: WordTaskProgressAvgAggregateOutputType | null
+    _sum: WordTaskProgressSumAggregateOutputType | null
+    _min: WordTaskProgressMinAggregateOutputType | null
+    _max: WordTaskProgressMaxAggregateOutputType | null
   }
 
-  type GetWordProgressGroupByPayload<T extends WordProgressGroupByArgs> = Prisma.PrismaPromise<
+  type GetWordTaskProgressGroupByPayload<T extends WordTaskProgressGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<WordProgressGroupByOutputType, T['by']> &
+      PickEnumerable<WordTaskProgressGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof WordProgressGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof WordTaskProgressGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], WordProgressGroupByOutputType[P]>
-            : GetScalarType<T[P], WordProgressGroupByOutputType[P]>
+              : GetScalarType<T[P], WordTaskProgressGroupByOutputType[P]>
+            : GetScalarType<T[P], WordTaskProgressGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type WordProgressSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type WordTaskProgressSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     userId?: boolean
     wordId?: boolean
-    progress?: boolean
-    isLearned?: boolean
+    taskType?: boolean
+    isPassed?: boolean
+    score?: boolean
+    attempts?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     word?: boolean | WordDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["wordProgress"]>
+  }, ExtArgs["result"]["wordTaskProgress"]>
 
-  export type WordProgressSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type WordTaskProgressSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     userId?: boolean
     wordId?: boolean
-    progress?: boolean
-    isLearned?: boolean
+    taskType?: boolean
+    isPassed?: boolean
+    score?: boolean
+    attempts?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     word?: boolean | WordDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["wordProgress"]>
+  }, ExtArgs["result"]["wordTaskProgress"]>
 
-  export type WordProgressSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type WordTaskProgressSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     userId?: boolean
     wordId?: boolean
-    progress?: boolean
-    isLearned?: boolean
+    taskType?: boolean
+    isPassed?: boolean
+    score?: boolean
+    attempts?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     word?: boolean | WordDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["wordProgress"]>
+  }, ExtArgs["result"]["wordTaskProgress"]>
 
-  export type WordProgressSelectScalar = {
+  export type WordTaskProgressSelectScalar = {
     id?: boolean
     userId?: boolean
     wordId?: boolean
-    progress?: boolean
-    isLearned?: boolean
+    taskType?: boolean
+    isPassed?: boolean
+    score?: boolean
+    attempts?: boolean
   }
 
-  export type WordProgressOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "wordId" | "progress" | "isLearned", ExtArgs["result"]["wordProgress"]>
-  export type WordProgressInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type WordTaskProgressOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "wordId" | "taskType" | "isPassed" | "score" | "attempts", ExtArgs["result"]["wordTaskProgress"]>
+  export type WordTaskProgressInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     word?: boolean | WordDefaultArgs<ExtArgs>
   }
-  export type WordProgressIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type WordTaskProgressIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     word?: boolean | WordDefaultArgs<ExtArgs>
   }
-  export type WordProgressIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type WordTaskProgressIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     word?: boolean | WordDefaultArgs<ExtArgs>
   }
 
-  export type $WordProgressPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "WordProgress"
+  export type $WordTaskProgressPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "WordTaskProgress"
     objects: {
       user: Prisma.$UserPayload<ExtArgs>
       word: Prisma.$WordPayload<ExtArgs>
@@ -10145,138 +10214,140 @@ export namespace Prisma {
       id: number
       userId: number
       wordId: number
-      progress: number
-      isLearned: boolean
-    }, ExtArgs["result"]["wordProgress"]>
+      taskType: $Enums.WordTaskType
+      isPassed: boolean
+      score: number
+      attempts: number
+    }, ExtArgs["result"]["wordTaskProgress"]>
     composites: {}
   }
 
-  type WordProgressGetPayload<S extends boolean | null | undefined | WordProgressDefaultArgs> = $Result.GetResult<Prisma.$WordProgressPayload, S>
+  type WordTaskProgressGetPayload<S extends boolean | null | undefined | WordTaskProgressDefaultArgs> = $Result.GetResult<Prisma.$WordTaskProgressPayload, S>
 
-  type WordProgressCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<WordProgressFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: WordProgressCountAggregateInputType | true
+  type WordTaskProgressCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<WordTaskProgressFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: WordTaskProgressCountAggregateInputType | true
     }
 
-  export interface WordProgressDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['WordProgress'], meta: { name: 'WordProgress' } }
+  export interface WordTaskProgressDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['WordTaskProgress'], meta: { name: 'WordTaskProgress' } }
     /**
-     * Find zero or one WordProgress that matches the filter.
-     * @param {WordProgressFindUniqueArgs} args - Arguments to find a WordProgress
+     * Find zero or one WordTaskProgress that matches the filter.
+     * @param {WordTaskProgressFindUniqueArgs} args - Arguments to find a WordTaskProgress
      * @example
-     * // Get one WordProgress
-     * const wordProgress = await prisma.wordProgress.findUnique({
+     * // Get one WordTaskProgress
+     * const wordTaskProgress = await prisma.wordTaskProgress.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUnique<T extends WordProgressFindUniqueArgs>(args: SelectSubset<T, WordProgressFindUniqueArgs<ExtArgs>>): Prisma__WordProgressClient<$Result.GetResult<Prisma.$WordProgressPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends WordTaskProgressFindUniqueArgs>(args: SelectSubset<T, WordTaskProgressFindUniqueArgs<ExtArgs>>): Prisma__WordTaskProgressClient<$Result.GetResult<Prisma.$WordTaskProgressPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one WordProgress that matches the filter or throw an error with `error.code='P2025'`
+     * Find one WordTaskProgress that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
-     * @param {WordProgressFindUniqueOrThrowArgs} args - Arguments to find a WordProgress
+     * @param {WordTaskProgressFindUniqueOrThrowArgs} args - Arguments to find a WordTaskProgress
      * @example
-     * // Get one WordProgress
-     * const wordProgress = await prisma.wordProgress.findUniqueOrThrow({
+     * // Get one WordTaskProgress
+     * const wordTaskProgress = await prisma.wordTaskProgress.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUniqueOrThrow<T extends WordProgressFindUniqueOrThrowArgs>(args: SelectSubset<T, WordProgressFindUniqueOrThrowArgs<ExtArgs>>): Prisma__WordProgressClient<$Result.GetResult<Prisma.$WordProgressPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends WordTaskProgressFindUniqueOrThrowArgs>(args: SelectSubset<T, WordTaskProgressFindUniqueOrThrowArgs<ExtArgs>>): Prisma__WordTaskProgressClient<$Result.GetResult<Prisma.$WordTaskProgressPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first WordProgress that matches the filter.
+     * Find the first WordTaskProgress that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {WordProgressFindFirstArgs} args - Arguments to find a WordProgress
+     * @param {WordTaskProgressFindFirstArgs} args - Arguments to find a WordTaskProgress
      * @example
-     * // Get one WordProgress
-     * const wordProgress = await prisma.wordProgress.findFirst({
+     * // Get one WordTaskProgress
+     * const wordTaskProgress = await prisma.wordTaskProgress.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirst<T extends WordProgressFindFirstArgs>(args?: SelectSubset<T, WordProgressFindFirstArgs<ExtArgs>>): Prisma__WordProgressClient<$Result.GetResult<Prisma.$WordProgressPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends WordTaskProgressFindFirstArgs>(args?: SelectSubset<T, WordTaskProgressFindFirstArgs<ExtArgs>>): Prisma__WordTaskProgressClient<$Result.GetResult<Prisma.$WordTaskProgressPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first WordProgress that matches the filter or
+     * Find the first WordTaskProgress that matches the filter or
      * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {WordProgressFindFirstOrThrowArgs} args - Arguments to find a WordProgress
+     * @param {WordTaskProgressFindFirstOrThrowArgs} args - Arguments to find a WordTaskProgress
      * @example
-     * // Get one WordProgress
-     * const wordProgress = await prisma.wordProgress.findFirstOrThrow({
+     * // Get one WordTaskProgress
+     * const wordTaskProgress = await prisma.wordTaskProgress.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirstOrThrow<T extends WordProgressFindFirstOrThrowArgs>(args?: SelectSubset<T, WordProgressFindFirstOrThrowArgs<ExtArgs>>): Prisma__WordProgressClient<$Result.GetResult<Prisma.$WordProgressPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends WordTaskProgressFindFirstOrThrowArgs>(args?: SelectSubset<T, WordTaskProgressFindFirstOrThrowArgs<ExtArgs>>): Prisma__WordTaskProgressClient<$Result.GetResult<Prisma.$WordTaskProgressPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find zero or more WordProgresses that matches the filter.
+     * Find zero or more WordTaskProgresses that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {WordProgressFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @param {WordTaskProgressFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all WordProgresses
-     * const wordProgresses = await prisma.wordProgress.findMany()
+     * // Get all WordTaskProgresses
+     * const wordTaskProgresses = await prisma.wordTaskProgress.findMany()
      * 
-     * // Get first 10 WordProgresses
-     * const wordProgresses = await prisma.wordProgress.findMany({ take: 10 })
+     * // Get first 10 WordTaskProgresses
+     * const wordTaskProgresses = await prisma.wordTaskProgress.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const wordProgressWithIdOnly = await prisma.wordProgress.findMany({ select: { id: true } })
+     * const wordTaskProgressWithIdOnly = await prisma.wordTaskProgress.findMany({ select: { id: true } })
      * 
      */
-    findMany<T extends WordProgressFindManyArgs>(args?: SelectSubset<T, WordProgressFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WordProgressPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends WordTaskProgressFindManyArgs>(args?: SelectSubset<T, WordTaskProgressFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WordTaskProgressPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
     /**
-     * Create a WordProgress.
-     * @param {WordProgressCreateArgs} args - Arguments to create a WordProgress.
+     * Create a WordTaskProgress.
+     * @param {WordTaskProgressCreateArgs} args - Arguments to create a WordTaskProgress.
      * @example
-     * // Create one WordProgress
-     * const WordProgress = await prisma.wordProgress.create({
+     * // Create one WordTaskProgress
+     * const WordTaskProgress = await prisma.wordTaskProgress.create({
      *   data: {
-     *     // ... data to create a WordProgress
+     *     // ... data to create a WordTaskProgress
      *   }
      * })
      * 
      */
-    create<T extends WordProgressCreateArgs>(args: SelectSubset<T, WordProgressCreateArgs<ExtArgs>>): Prisma__WordProgressClient<$Result.GetResult<Prisma.$WordProgressPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends WordTaskProgressCreateArgs>(args: SelectSubset<T, WordTaskProgressCreateArgs<ExtArgs>>): Prisma__WordTaskProgressClient<$Result.GetResult<Prisma.$WordTaskProgressPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Create many WordProgresses.
-     * @param {WordProgressCreateManyArgs} args - Arguments to create many WordProgresses.
+     * Create many WordTaskProgresses.
+     * @param {WordTaskProgressCreateManyArgs} args - Arguments to create many WordTaskProgresses.
      * @example
-     * // Create many WordProgresses
-     * const wordProgress = await prisma.wordProgress.createMany({
+     * // Create many WordTaskProgresses
+     * const wordTaskProgress = await prisma.wordTaskProgress.createMany({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      *     
      */
-    createMany<T extends WordProgressCreateManyArgs>(args?: SelectSubset<T, WordProgressCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    createMany<T extends WordTaskProgressCreateManyArgs>(args?: SelectSubset<T, WordTaskProgressCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create many WordProgresses and returns the data saved in the database.
-     * @param {WordProgressCreateManyAndReturnArgs} args - Arguments to create many WordProgresses.
+     * Create many WordTaskProgresses and returns the data saved in the database.
+     * @param {WordTaskProgressCreateManyAndReturnArgs} args - Arguments to create many WordTaskProgresses.
      * @example
-     * // Create many WordProgresses
-     * const wordProgress = await prisma.wordProgress.createManyAndReturn({
+     * // Create many WordTaskProgresses
+     * const wordTaskProgress = await prisma.wordTaskProgress.createManyAndReturn({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      * 
-     * // Create many WordProgresses and only return the `id`
-     * const wordProgressWithIdOnly = await prisma.wordProgress.createManyAndReturn({
+     * // Create many WordTaskProgresses and only return the `id`
+     * const wordTaskProgressWithIdOnly = await prisma.wordTaskProgress.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -10286,28 +10357,28 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    createManyAndReturn<T extends WordProgressCreateManyAndReturnArgs>(args?: SelectSubset<T, WordProgressCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WordProgressPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+    createManyAndReturn<T extends WordTaskProgressCreateManyAndReturnArgs>(args?: SelectSubset<T, WordTaskProgressCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WordTaskProgressPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Delete a WordProgress.
-     * @param {WordProgressDeleteArgs} args - Arguments to delete one WordProgress.
+     * Delete a WordTaskProgress.
+     * @param {WordTaskProgressDeleteArgs} args - Arguments to delete one WordTaskProgress.
      * @example
-     * // Delete one WordProgress
-     * const WordProgress = await prisma.wordProgress.delete({
+     * // Delete one WordTaskProgress
+     * const WordTaskProgress = await prisma.wordTaskProgress.delete({
      *   where: {
-     *     // ... filter to delete one WordProgress
+     *     // ... filter to delete one WordTaskProgress
      *   }
      * })
      * 
      */
-    delete<T extends WordProgressDeleteArgs>(args: SelectSubset<T, WordProgressDeleteArgs<ExtArgs>>): Prisma__WordProgressClient<$Result.GetResult<Prisma.$WordProgressPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends WordTaskProgressDeleteArgs>(args: SelectSubset<T, WordTaskProgressDeleteArgs<ExtArgs>>): Prisma__WordTaskProgressClient<$Result.GetResult<Prisma.$WordTaskProgressPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Update one WordProgress.
-     * @param {WordProgressUpdateArgs} args - Arguments to update one WordProgress.
+     * Update one WordTaskProgress.
+     * @param {WordTaskProgressUpdateArgs} args - Arguments to update one WordTaskProgress.
      * @example
-     * // Update one WordProgress
-     * const wordProgress = await prisma.wordProgress.update({
+     * // Update one WordTaskProgress
+     * const wordTaskProgress = await prisma.wordTaskProgress.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -10317,30 +10388,30 @@ export namespace Prisma {
      * })
      * 
      */
-    update<T extends WordProgressUpdateArgs>(args: SelectSubset<T, WordProgressUpdateArgs<ExtArgs>>): Prisma__WordProgressClient<$Result.GetResult<Prisma.$WordProgressPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends WordTaskProgressUpdateArgs>(args: SelectSubset<T, WordTaskProgressUpdateArgs<ExtArgs>>): Prisma__WordTaskProgressClient<$Result.GetResult<Prisma.$WordTaskProgressPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Delete zero or more WordProgresses.
-     * @param {WordProgressDeleteManyArgs} args - Arguments to filter WordProgresses to delete.
+     * Delete zero or more WordTaskProgresses.
+     * @param {WordTaskProgressDeleteManyArgs} args - Arguments to filter WordTaskProgresses to delete.
      * @example
-     * // Delete a few WordProgresses
-     * const { count } = await prisma.wordProgress.deleteMany({
+     * // Delete a few WordTaskProgresses
+     * const { count } = await prisma.wordTaskProgress.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
      */
-    deleteMany<T extends WordProgressDeleteManyArgs>(args?: SelectSubset<T, WordProgressDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    deleteMany<T extends WordTaskProgressDeleteManyArgs>(args?: SelectSubset<T, WordTaskProgressDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more WordProgresses.
+     * Update zero or more WordTaskProgresses.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {WordProgressUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {WordTaskProgressUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many WordProgresses
-     * const wordProgress = await prisma.wordProgress.updateMany({
+     * // Update many WordTaskProgresses
+     * const wordTaskProgress = await prisma.wordTaskProgress.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -10350,14 +10421,14 @@ export namespace Prisma {
      * })
      * 
      */
-    updateMany<T extends WordProgressUpdateManyArgs>(args: SelectSubset<T, WordProgressUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    updateMany<T extends WordTaskProgressUpdateManyArgs>(args: SelectSubset<T, WordTaskProgressUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more WordProgresses and returns the data updated in the database.
-     * @param {WordProgressUpdateManyAndReturnArgs} args - Arguments to update many WordProgresses.
+     * Update zero or more WordTaskProgresses and returns the data updated in the database.
+     * @param {WordTaskProgressUpdateManyAndReturnArgs} args - Arguments to update many WordTaskProgresses.
      * @example
-     * // Update many WordProgresses
-     * const wordProgress = await prisma.wordProgress.updateManyAndReturn({
+     * // Update many WordTaskProgresses
+     * const wordTaskProgress = await prisma.wordTaskProgress.updateManyAndReturn({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -10366,8 +10437,8 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more WordProgresses and only return the `id`
-     * const wordProgressWithIdOnly = await prisma.wordProgress.updateManyAndReturn({
+     * // Update zero or more WordTaskProgresses and only return the `id`
+     * const wordTaskProgressWithIdOnly = await prisma.wordTaskProgress.updateManyAndReturn({
      *   select: { id: true },
      *   where: {
      *     // ... provide filter here
@@ -10380,56 +10451,56 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    updateManyAndReturn<T extends WordProgressUpdateManyAndReturnArgs>(args: SelectSubset<T, WordProgressUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WordProgressPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+    updateManyAndReturn<T extends WordTaskProgressUpdateManyAndReturnArgs>(args: SelectSubset<T, WordTaskProgressUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WordTaskProgressPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Create or update one WordProgress.
-     * @param {WordProgressUpsertArgs} args - Arguments to update or create a WordProgress.
+     * Create or update one WordTaskProgress.
+     * @param {WordTaskProgressUpsertArgs} args - Arguments to update or create a WordTaskProgress.
      * @example
-     * // Update or create a WordProgress
-     * const wordProgress = await prisma.wordProgress.upsert({
+     * // Update or create a WordTaskProgress
+     * const wordTaskProgress = await prisma.wordTaskProgress.upsert({
      *   create: {
-     *     // ... data to create a WordProgress
+     *     // ... data to create a WordTaskProgress
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the WordProgress we want to update
+     *     // ... the filter for the WordTaskProgress we want to update
      *   }
      * })
      */
-    upsert<T extends WordProgressUpsertArgs>(args: SelectSubset<T, WordProgressUpsertArgs<ExtArgs>>): Prisma__WordProgressClient<$Result.GetResult<Prisma.$WordProgressPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    upsert<T extends WordTaskProgressUpsertArgs>(args: SelectSubset<T, WordTaskProgressUpsertArgs<ExtArgs>>): Prisma__WordTaskProgressClient<$Result.GetResult<Prisma.$WordTaskProgressPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
 
     /**
-     * Count the number of WordProgresses.
+     * Count the number of WordTaskProgresses.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {WordProgressCountArgs} args - Arguments to filter WordProgresses to count.
+     * @param {WordTaskProgressCountArgs} args - Arguments to filter WordTaskProgresses to count.
      * @example
-     * // Count the number of WordProgresses
-     * const count = await prisma.wordProgress.count({
+     * // Count the number of WordTaskProgresses
+     * const count = await prisma.wordTaskProgress.count({
      *   where: {
-     *     // ... the filter for the WordProgresses we want to count
+     *     // ... the filter for the WordTaskProgresses we want to count
      *   }
      * })
     **/
-    count<T extends WordProgressCountArgs>(
-      args?: Subset<T, WordProgressCountArgs>,
+    count<T extends WordTaskProgressCountArgs>(
+      args?: Subset<T, WordTaskProgressCountArgs>,
     ): Prisma.PrismaPromise<
       T extends $Utils.Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], WordProgressCountAggregateOutputType>
+          : GetScalarType<T['select'], WordTaskProgressCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a WordProgress.
+     * Allows you to perform aggregations operations on a WordTaskProgress.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {WordProgressAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {WordTaskProgressAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -10449,13 +10520,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends WordProgressAggregateArgs>(args: Subset<T, WordProgressAggregateArgs>): Prisma.PrismaPromise<GetWordProgressAggregateType<T>>
+    aggregate<T extends WordTaskProgressAggregateArgs>(args: Subset<T, WordTaskProgressAggregateArgs>): Prisma.PrismaPromise<GetWordTaskProgressAggregateType<T>>
 
     /**
-     * Group by WordProgress.
+     * Group by WordTaskProgress.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {WordProgressGroupByArgs} args - Group by arguments.
+     * @param {WordTaskProgressGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -10470,14 +10541,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends WordProgressGroupByArgs,
+      T extends WordTaskProgressGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: WordProgressGroupByArgs['orderBy'] }
-        : { orderBy?: WordProgressGroupByArgs['orderBy'] },
+        ? { orderBy: WordTaskProgressGroupByArgs['orderBy'] }
+        : { orderBy?: WordTaskProgressGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -10526,20 +10597,20 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, WordProgressGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetWordProgressGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, WordTaskProgressGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetWordTaskProgressGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
   /**
-   * Fields of the WordProgress model
+   * Fields of the WordTaskProgress model
    */
-  readonly fields: WordProgressFieldRefs;
+  readonly fields: WordTaskProgressFieldRefs;
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for WordProgress.
+   * The delegate class that acts as a "Promise-like" for WordTaskProgress.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__WordProgressClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__WordTaskProgressClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     word<T extends WordDefaultArgs<ExtArgs> = {}>(args?: Subset<T, WordDefaultArgs<ExtArgs>>): Prisma__WordClient<$Result.GetResult<Prisma.$WordPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
@@ -10569,425 +10640,427 @@ export namespace Prisma {
 
 
   /**
-   * Fields of the WordProgress model
+   * Fields of the WordTaskProgress model
    */
-  interface WordProgressFieldRefs {
-    readonly id: FieldRef<"WordProgress", 'Int'>
-    readonly userId: FieldRef<"WordProgress", 'Int'>
-    readonly wordId: FieldRef<"WordProgress", 'Int'>
-    readonly progress: FieldRef<"WordProgress", 'Int'>
-    readonly isLearned: FieldRef<"WordProgress", 'Boolean'>
+  interface WordTaskProgressFieldRefs {
+    readonly id: FieldRef<"WordTaskProgress", 'Int'>
+    readonly userId: FieldRef<"WordTaskProgress", 'Int'>
+    readonly wordId: FieldRef<"WordTaskProgress", 'Int'>
+    readonly taskType: FieldRef<"WordTaskProgress", 'WordTaskType'>
+    readonly isPassed: FieldRef<"WordTaskProgress", 'Boolean'>
+    readonly score: FieldRef<"WordTaskProgress", 'Int'>
+    readonly attempts: FieldRef<"WordTaskProgress", 'Int'>
   }
     
 
   // Custom InputTypes
   /**
-   * WordProgress findUnique
+   * WordTaskProgress findUnique
    */
-  export type WordProgressFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type WordTaskProgressFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the WordProgress
+     * Select specific fields to fetch from the WordTaskProgress
      */
-    select?: WordProgressSelect<ExtArgs> | null
+    select?: WordTaskProgressSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the WordProgress
+     * Omit specific fields from the WordTaskProgress
      */
-    omit?: WordProgressOmit<ExtArgs> | null
+    omit?: WordTaskProgressOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: WordProgressInclude<ExtArgs> | null
+    include?: WordTaskProgressInclude<ExtArgs> | null
     /**
-     * Filter, which WordProgress to fetch.
+     * Filter, which WordTaskProgress to fetch.
      */
-    where: WordProgressWhereUniqueInput
+    where: WordTaskProgressWhereUniqueInput
   }
 
   /**
-   * WordProgress findUniqueOrThrow
+   * WordTaskProgress findUniqueOrThrow
    */
-  export type WordProgressFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type WordTaskProgressFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the WordProgress
+     * Select specific fields to fetch from the WordTaskProgress
      */
-    select?: WordProgressSelect<ExtArgs> | null
+    select?: WordTaskProgressSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the WordProgress
+     * Omit specific fields from the WordTaskProgress
      */
-    omit?: WordProgressOmit<ExtArgs> | null
+    omit?: WordTaskProgressOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: WordProgressInclude<ExtArgs> | null
+    include?: WordTaskProgressInclude<ExtArgs> | null
     /**
-     * Filter, which WordProgress to fetch.
+     * Filter, which WordTaskProgress to fetch.
      */
-    where: WordProgressWhereUniqueInput
+    where: WordTaskProgressWhereUniqueInput
   }
 
   /**
-   * WordProgress findFirst
+   * WordTaskProgress findFirst
    */
-  export type WordProgressFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type WordTaskProgressFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the WordProgress
+     * Select specific fields to fetch from the WordTaskProgress
      */
-    select?: WordProgressSelect<ExtArgs> | null
+    select?: WordTaskProgressSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the WordProgress
+     * Omit specific fields from the WordTaskProgress
      */
-    omit?: WordProgressOmit<ExtArgs> | null
+    omit?: WordTaskProgressOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: WordProgressInclude<ExtArgs> | null
+    include?: WordTaskProgressInclude<ExtArgs> | null
     /**
-     * Filter, which WordProgress to fetch.
+     * Filter, which WordTaskProgress to fetch.
      */
-    where?: WordProgressWhereInput
+    where?: WordTaskProgressWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of WordProgresses to fetch.
+     * Determine the order of WordTaskProgresses to fetch.
      */
-    orderBy?: WordProgressOrderByWithRelationInput | WordProgressOrderByWithRelationInput[]
+    orderBy?: WordTaskProgressOrderByWithRelationInput | WordTaskProgressOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for WordProgresses.
+     * Sets the position for searching for WordTaskProgresses.
      */
-    cursor?: WordProgressWhereUniqueInput
+    cursor?: WordTaskProgressWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` WordProgresses from the position of the cursor.
+     * Take `±n` WordTaskProgresses from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` WordProgresses.
+     * Skip the first `n` WordTaskProgresses.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of WordProgresses.
+     * Filter by unique combinations of WordTaskProgresses.
      */
-    distinct?: WordProgressScalarFieldEnum | WordProgressScalarFieldEnum[]
+    distinct?: WordTaskProgressScalarFieldEnum | WordTaskProgressScalarFieldEnum[]
   }
 
   /**
-   * WordProgress findFirstOrThrow
+   * WordTaskProgress findFirstOrThrow
    */
-  export type WordProgressFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type WordTaskProgressFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the WordProgress
+     * Select specific fields to fetch from the WordTaskProgress
      */
-    select?: WordProgressSelect<ExtArgs> | null
+    select?: WordTaskProgressSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the WordProgress
+     * Omit specific fields from the WordTaskProgress
      */
-    omit?: WordProgressOmit<ExtArgs> | null
+    omit?: WordTaskProgressOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: WordProgressInclude<ExtArgs> | null
+    include?: WordTaskProgressInclude<ExtArgs> | null
     /**
-     * Filter, which WordProgress to fetch.
+     * Filter, which WordTaskProgress to fetch.
      */
-    where?: WordProgressWhereInput
+    where?: WordTaskProgressWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of WordProgresses to fetch.
+     * Determine the order of WordTaskProgresses to fetch.
      */
-    orderBy?: WordProgressOrderByWithRelationInput | WordProgressOrderByWithRelationInput[]
+    orderBy?: WordTaskProgressOrderByWithRelationInput | WordTaskProgressOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for WordProgresses.
+     * Sets the position for searching for WordTaskProgresses.
      */
-    cursor?: WordProgressWhereUniqueInput
+    cursor?: WordTaskProgressWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` WordProgresses from the position of the cursor.
+     * Take `±n` WordTaskProgresses from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` WordProgresses.
+     * Skip the first `n` WordTaskProgresses.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of WordProgresses.
+     * Filter by unique combinations of WordTaskProgresses.
      */
-    distinct?: WordProgressScalarFieldEnum | WordProgressScalarFieldEnum[]
+    distinct?: WordTaskProgressScalarFieldEnum | WordTaskProgressScalarFieldEnum[]
   }
 
   /**
-   * WordProgress findMany
+   * WordTaskProgress findMany
    */
-  export type WordProgressFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type WordTaskProgressFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the WordProgress
+     * Select specific fields to fetch from the WordTaskProgress
      */
-    select?: WordProgressSelect<ExtArgs> | null
+    select?: WordTaskProgressSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the WordProgress
+     * Omit specific fields from the WordTaskProgress
      */
-    omit?: WordProgressOmit<ExtArgs> | null
+    omit?: WordTaskProgressOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: WordProgressInclude<ExtArgs> | null
+    include?: WordTaskProgressInclude<ExtArgs> | null
     /**
-     * Filter, which WordProgresses to fetch.
+     * Filter, which WordTaskProgresses to fetch.
      */
-    where?: WordProgressWhereInput
+    where?: WordTaskProgressWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of WordProgresses to fetch.
+     * Determine the order of WordTaskProgresses to fetch.
      */
-    orderBy?: WordProgressOrderByWithRelationInput | WordProgressOrderByWithRelationInput[]
+    orderBy?: WordTaskProgressOrderByWithRelationInput | WordTaskProgressOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing WordProgresses.
+     * Sets the position for listing WordTaskProgresses.
      */
-    cursor?: WordProgressWhereUniqueInput
+    cursor?: WordTaskProgressWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` WordProgresses from the position of the cursor.
+     * Take `±n` WordTaskProgresses from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` WordProgresses.
+     * Skip the first `n` WordTaskProgresses.
      */
     skip?: number
-    distinct?: WordProgressScalarFieldEnum | WordProgressScalarFieldEnum[]
+    distinct?: WordTaskProgressScalarFieldEnum | WordTaskProgressScalarFieldEnum[]
   }
 
   /**
-   * WordProgress create
+   * WordTaskProgress create
    */
-  export type WordProgressCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type WordTaskProgressCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the WordProgress
+     * Select specific fields to fetch from the WordTaskProgress
      */
-    select?: WordProgressSelect<ExtArgs> | null
+    select?: WordTaskProgressSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the WordProgress
+     * Omit specific fields from the WordTaskProgress
      */
-    omit?: WordProgressOmit<ExtArgs> | null
+    omit?: WordTaskProgressOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: WordProgressInclude<ExtArgs> | null
+    include?: WordTaskProgressInclude<ExtArgs> | null
     /**
-     * The data needed to create a WordProgress.
+     * The data needed to create a WordTaskProgress.
      */
-    data: XOR<WordProgressCreateInput, WordProgressUncheckedCreateInput>
+    data: XOR<WordTaskProgressCreateInput, WordTaskProgressUncheckedCreateInput>
   }
 
   /**
-   * WordProgress createMany
+   * WordTaskProgress createMany
    */
-  export type WordProgressCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type WordTaskProgressCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to create many WordProgresses.
+     * The data used to create many WordTaskProgresses.
      */
-    data: WordProgressCreateManyInput | WordProgressCreateManyInput[]
+    data: WordTaskProgressCreateManyInput | WordTaskProgressCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * WordProgress createManyAndReturn
+   * WordTaskProgress createManyAndReturn
    */
-  export type WordProgressCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type WordTaskProgressCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the WordProgress
+     * Select specific fields to fetch from the WordTaskProgress
      */
-    select?: WordProgressSelectCreateManyAndReturn<ExtArgs> | null
+    select?: WordTaskProgressSelectCreateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the WordProgress
+     * Omit specific fields from the WordTaskProgress
      */
-    omit?: WordProgressOmit<ExtArgs> | null
+    omit?: WordTaskProgressOmit<ExtArgs> | null
     /**
-     * The data used to create many WordProgresses.
+     * The data used to create many WordTaskProgresses.
      */
-    data: WordProgressCreateManyInput | WordProgressCreateManyInput[]
+    data: WordTaskProgressCreateManyInput | WordTaskProgressCreateManyInput[]
     skipDuplicates?: boolean
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: WordProgressIncludeCreateManyAndReturn<ExtArgs> | null
+    include?: WordTaskProgressIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * WordProgress update
+   * WordTaskProgress update
    */
-  export type WordProgressUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type WordTaskProgressUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the WordProgress
+     * Select specific fields to fetch from the WordTaskProgress
      */
-    select?: WordProgressSelect<ExtArgs> | null
+    select?: WordTaskProgressSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the WordProgress
+     * Omit specific fields from the WordTaskProgress
      */
-    omit?: WordProgressOmit<ExtArgs> | null
+    omit?: WordTaskProgressOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: WordProgressInclude<ExtArgs> | null
+    include?: WordTaskProgressInclude<ExtArgs> | null
     /**
-     * The data needed to update a WordProgress.
+     * The data needed to update a WordTaskProgress.
      */
-    data: XOR<WordProgressUpdateInput, WordProgressUncheckedUpdateInput>
+    data: XOR<WordTaskProgressUpdateInput, WordTaskProgressUncheckedUpdateInput>
     /**
-     * Choose, which WordProgress to update.
+     * Choose, which WordTaskProgress to update.
      */
-    where: WordProgressWhereUniqueInput
+    where: WordTaskProgressWhereUniqueInput
   }
 
   /**
-   * WordProgress updateMany
+   * WordTaskProgress updateMany
    */
-  export type WordProgressUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type WordTaskProgressUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to update WordProgresses.
+     * The data used to update WordTaskProgresses.
      */
-    data: XOR<WordProgressUpdateManyMutationInput, WordProgressUncheckedUpdateManyInput>
+    data: XOR<WordTaskProgressUpdateManyMutationInput, WordTaskProgressUncheckedUpdateManyInput>
     /**
-     * Filter which WordProgresses to update
+     * Filter which WordTaskProgresses to update
      */
-    where?: WordProgressWhereInput
+    where?: WordTaskProgressWhereInput
     /**
-     * Limit how many WordProgresses to update.
+     * Limit how many WordTaskProgresses to update.
      */
     limit?: number
   }
 
   /**
-   * WordProgress updateManyAndReturn
+   * WordTaskProgress updateManyAndReturn
    */
-  export type WordProgressUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type WordTaskProgressUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the WordProgress
+     * Select specific fields to fetch from the WordTaskProgress
      */
-    select?: WordProgressSelectUpdateManyAndReturn<ExtArgs> | null
+    select?: WordTaskProgressSelectUpdateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the WordProgress
+     * Omit specific fields from the WordTaskProgress
      */
-    omit?: WordProgressOmit<ExtArgs> | null
+    omit?: WordTaskProgressOmit<ExtArgs> | null
     /**
-     * The data used to update WordProgresses.
+     * The data used to update WordTaskProgresses.
      */
-    data: XOR<WordProgressUpdateManyMutationInput, WordProgressUncheckedUpdateManyInput>
+    data: XOR<WordTaskProgressUpdateManyMutationInput, WordTaskProgressUncheckedUpdateManyInput>
     /**
-     * Filter which WordProgresses to update
+     * Filter which WordTaskProgresses to update
      */
-    where?: WordProgressWhereInput
+    where?: WordTaskProgressWhereInput
     /**
-     * Limit how many WordProgresses to update.
+     * Limit how many WordTaskProgresses to update.
      */
     limit?: number
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: WordProgressIncludeUpdateManyAndReturn<ExtArgs> | null
+    include?: WordTaskProgressIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
-   * WordProgress upsert
+   * WordTaskProgress upsert
    */
-  export type WordProgressUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type WordTaskProgressUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the WordProgress
+     * Select specific fields to fetch from the WordTaskProgress
      */
-    select?: WordProgressSelect<ExtArgs> | null
+    select?: WordTaskProgressSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the WordProgress
+     * Omit specific fields from the WordTaskProgress
      */
-    omit?: WordProgressOmit<ExtArgs> | null
+    omit?: WordTaskProgressOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: WordProgressInclude<ExtArgs> | null
+    include?: WordTaskProgressInclude<ExtArgs> | null
     /**
-     * The filter to search for the WordProgress to update in case it exists.
+     * The filter to search for the WordTaskProgress to update in case it exists.
      */
-    where: WordProgressWhereUniqueInput
+    where: WordTaskProgressWhereUniqueInput
     /**
-     * In case the WordProgress found by the `where` argument doesn't exist, create a new WordProgress with this data.
+     * In case the WordTaskProgress found by the `where` argument doesn't exist, create a new WordTaskProgress with this data.
      */
-    create: XOR<WordProgressCreateInput, WordProgressUncheckedCreateInput>
+    create: XOR<WordTaskProgressCreateInput, WordTaskProgressUncheckedCreateInput>
     /**
-     * In case the WordProgress was found with the provided `where` argument, update it with this data.
+     * In case the WordTaskProgress was found with the provided `where` argument, update it with this data.
      */
-    update: XOR<WordProgressUpdateInput, WordProgressUncheckedUpdateInput>
+    update: XOR<WordTaskProgressUpdateInput, WordTaskProgressUncheckedUpdateInput>
   }
 
   /**
-   * WordProgress delete
+   * WordTaskProgress delete
    */
-  export type WordProgressDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type WordTaskProgressDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the WordProgress
+     * Select specific fields to fetch from the WordTaskProgress
      */
-    select?: WordProgressSelect<ExtArgs> | null
+    select?: WordTaskProgressSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the WordProgress
+     * Omit specific fields from the WordTaskProgress
      */
-    omit?: WordProgressOmit<ExtArgs> | null
+    omit?: WordTaskProgressOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: WordProgressInclude<ExtArgs> | null
+    include?: WordTaskProgressInclude<ExtArgs> | null
     /**
-     * Filter which WordProgress to delete.
+     * Filter which WordTaskProgress to delete.
      */
-    where: WordProgressWhereUniqueInput
+    where: WordTaskProgressWhereUniqueInput
   }
 
   /**
-   * WordProgress deleteMany
+   * WordTaskProgress deleteMany
    */
-  export type WordProgressDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type WordTaskProgressDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which WordProgresses to delete
+     * Filter which WordTaskProgresses to delete
      */
-    where?: WordProgressWhereInput
+    where?: WordTaskProgressWhereInput
     /**
-     * Limit how many WordProgresses to delete.
+     * Limit how many WordTaskProgresses to delete.
      */
     limit?: number
   }
 
   /**
-   * WordProgress without action
+   * WordTaskProgress without action
    */
-  export type WordProgressDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type WordTaskProgressDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the WordProgress
+     * Select specific fields to fetch from the WordTaskProgress
      */
-    select?: WordProgressSelect<ExtArgs> | null
+    select?: WordTaskProgressSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the WordProgress
+     * Omit specific fields from the WordTaskProgress
      */
-    omit?: WordProgressOmit<ExtArgs> | null
+    omit?: WordTaskProgressOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: WordProgressInclude<ExtArgs> | null
+    include?: WordTaskProgressInclude<ExtArgs> | null
   }
 
 
@@ -11027,7 +11100,9 @@ export namespace Prisma {
     meaning: 'meaning',
     example: 'example',
     partOfSpeech: 'partOfSpeech',
-    createdAt: 'createdAt'
+    createdAt: 'createdAt',
+    totalProgress: 'totalProgress',
+    isLearned: 'isLearned'
   };
 
   export type WordScalarFieldEnum = (typeof WordScalarFieldEnum)[keyof typeof WordScalarFieldEnum]
@@ -11101,15 +11176,17 @@ export namespace Prisma {
   export type SettingScalarFieldEnum = (typeof SettingScalarFieldEnum)[keyof typeof SettingScalarFieldEnum]
 
 
-  export const WordProgressScalarFieldEnum: {
+  export const WordTaskProgressScalarFieldEnum: {
     id: 'id',
     userId: 'userId',
     wordId: 'wordId',
-    progress: 'progress',
-    isLearned: 'isLearned'
+    taskType: 'taskType',
+    isPassed: 'isPassed',
+    score: 'score',
+    attempts: 'attempts'
   };
 
-  export type WordProgressScalarFieldEnum = (typeof WordProgressScalarFieldEnum)[keyof typeof WordProgressScalarFieldEnum]
+  export type WordTaskProgressScalarFieldEnum = (typeof WordTaskProgressScalarFieldEnum)[keyof typeof WordTaskProgressScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -11272,6 +11349,20 @@ export namespace Prisma {
    */
   export type EnumPurposeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Purpose'>
     
+
+
+  /**
+   * Reference to a field of type 'WordTaskType'
+   */
+  export type EnumWordTaskTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'WordTaskType'>
+    
+
+
+  /**
+   * Reference to a field of type 'WordTaskType[]'
+   */
+  export type ListEnumWordTaskTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'WordTaskType[]'>
+    
   /**
    * Deep Input Types
    */
@@ -11290,7 +11381,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     enrollments?: EnrollmentListRelationFilter
-    wordProgresses?: WordProgressListRelationFilter
+    wordProgresses?: WordTaskProgressListRelationFilter
     setting?: XOR<SettingNullableScalarRelationFilter, SettingWhereInput> | null
   }
 
@@ -11304,7 +11395,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     enrollments?: EnrollmentOrderByRelationAggregateInput
-    wordProgresses?: WordProgressOrderByRelationAggregateInput
+    wordProgresses?: WordTaskProgressOrderByRelationAggregateInput
     setting?: SettingOrderByWithRelationInput
   }
 
@@ -11321,7 +11412,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     enrollments?: EnrollmentListRelationFilter
-    wordProgresses?: WordProgressListRelationFilter
+    wordProgresses?: WordTaskProgressListRelationFilter
     setting?: XOR<SettingNullableScalarRelationFilter, SettingWhereInput> | null
   }, "id" | "email" | "username">
 
@@ -11367,7 +11458,9 @@ export namespace Prisma {
     example?: StringNullableFilter<"Word"> | string | null
     partOfSpeech?: StringNullableFilter<"Word"> | string | null
     createdAt?: DateTimeFilter<"Word"> | Date | string
-    progresses?: WordProgressListRelationFilter
+    totalProgress?: IntFilter<"Word"> | number
+    isLearned?: BoolFilter<"Word"> | boolean
+    progresses?: WordTaskProgressListRelationFilter
   }
 
   export type WordOrderByWithRelationInput = {
@@ -11379,7 +11472,9 @@ export namespace Prisma {
     example?: SortOrderInput | SortOrder
     partOfSpeech?: SortOrderInput | SortOrder
     createdAt?: SortOrder
-    progresses?: WordProgressOrderByRelationAggregateInput
+    totalProgress?: SortOrder
+    isLearned?: SortOrder
+    progresses?: WordTaskProgressOrderByRelationAggregateInput
   }
 
   export type WordWhereUniqueInput = Prisma.AtLeast<{
@@ -11394,7 +11489,9 @@ export namespace Prisma {
     example?: StringNullableFilter<"Word"> | string | null
     partOfSpeech?: StringNullableFilter<"Word"> | string | null
     createdAt?: DateTimeFilter<"Word"> | Date | string
-    progresses?: WordProgressListRelationFilter
+    totalProgress?: IntFilter<"Word"> | number
+    isLearned?: BoolFilter<"Word"> | boolean
+    progresses?: WordTaskProgressListRelationFilter
   }, "id">
 
   export type WordOrderByWithAggregationInput = {
@@ -11406,6 +11503,8 @@ export namespace Prisma {
     example?: SortOrderInput | SortOrder
     partOfSpeech?: SortOrderInput | SortOrder
     createdAt?: SortOrder
+    totalProgress?: SortOrder
+    isLearned?: SortOrder
     _count?: WordCountOrderByAggregateInput
     _avg?: WordAvgOrderByAggregateInput
     _max?: WordMaxOrderByAggregateInput
@@ -11425,6 +11524,8 @@ export namespace Prisma {
     example?: StringNullableWithAggregatesFilter<"Word"> | string | null
     partOfSpeech?: StringNullableWithAggregatesFilter<"Word"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Word"> | Date | string
+    totalProgress?: IntWithAggregatesFilter<"Word"> | number
+    isLearned?: BoolWithAggregatesFilter<"Word"> | boolean
   }
 
   export type VideoWhereInput = {
@@ -11793,65 +11894,75 @@ export namespace Prisma {
     current_level?: EnumLevelWithAggregatesFilter<"Setting"> | $Enums.Level
   }
 
-  export type WordProgressWhereInput = {
-    AND?: WordProgressWhereInput | WordProgressWhereInput[]
-    OR?: WordProgressWhereInput[]
-    NOT?: WordProgressWhereInput | WordProgressWhereInput[]
-    id?: IntFilter<"WordProgress"> | number
-    userId?: IntFilter<"WordProgress"> | number
-    wordId?: IntFilter<"WordProgress"> | number
-    progress?: IntFilter<"WordProgress"> | number
-    isLearned?: BoolFilter<"WordProgress"> | boolean
+  export type WordTaskProgressWhereInput = {
+    AND?: WordTaskProgressWhereInput | WordTaskProgressWhereInput[]
+    OR?: WordTaskProgressWhereInput[]
+    NOT?: WordTaskProgressWhereInput | WordTaskProgressWhereInput[]
+    id?: IntFilter<"WordTaskProgress"> | number
+    userId?: IntFilter<"WordTaskProgress"> | number
+    wordId?: IntFilter<"WordTaskProgress"> | number
+    taskType?: EnumWordTaskTypeFilter<"WordTaskProgress"> | $Enums.WordTaskType
+    isPassed?: BoolFilter<"WordTaskProgress"> | boolean
+    score?: IntFilter<"WordTaskProgress"> | number
+    attempts?: IntFilter<"WordTaskProgress"> | number
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     word?: XOR<WordScalarRelationFilter, WordWhereInput>
   }
 
-  export type WordProgressOrderByWithRelationInput = {
+  export type WordTaskProgressOrderByWithRelationInput = {
     id?: SortOrder
     userId?: SortOrder
     wordId?: SortOrder
-    progress?: SortOrder
-    isLearned?: SortOrder
+    taskType?: SortOrder
+    isPassed?: SortOrder
+    score?: SortOrder
+    attempts?: SortOrder
     user?: UserOrderByWithRelationInput
     word?: WordOrderByWithRelationInput
   }
 
-  export type WordProgressWhereUniqueInput = Prisma.AtLeast<{
+  export type WordTaskProgressWhereUniqueInput = Prisma.AtLeast<{
     id?: number
-    userId_wordId?: WordProgressUserIdWordIdCompoundUniqueInput
-    AND?: WordProgressWhereInput | WordProgressWhereInput[]
-    OR?: WordProgressWhereInput[]
-    NOT?: WordProgressWhereInput | WordProgressWhereInput[]
-    userId?: IntFilter<"WordProgress"> | number
-    wordId?: IntFilter<"WordProgress"> | number
-    progress?: IntFilter<"WordProgress"> | number
-    isLearned?: BoolFilter<"WordProgress"> | boolean
+    userId_wordId_taskType?: WordTaskProgressUserIdWordIdTaskTypeCompoundUniqueInput
+    AND?: WordTaskProgressWhereInput | WordTaskProgressWhereInput[]
+    OR?: WordTaskProgressWhereInput[]
+    NOT?: WordTaskProgressWhereInput | WordTaskProgressWhereInput[]
+    userId?: IntFilter<"WordTaskProgress"> | number
+    wordId?: IntFilter<"WordTaskProgress"> | number
+    taskType?: EnumWordTaskTypeFilter<"WordTaskProgress"> | $Enums.WordTaskType
+    isPassed?: BoolFilter<"WordTaskProgress"> | boolean
+    score?: IntFilter<"WordTaskProgress"> | number
+    attempts?: IntFilter<"WordTaskProgress"> | number
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     word?: XOR<WordScalarRelationFilter, WordWhereInput>
-  }, "id" | "userId_wordId">
+  }, "id" | "userId_wordId_taskType">
 
-  export type WordProgressOrderByWithAggregationInput = {
+  export type WordTaskProgressOrderByWithAggregationInput = {
     id?: SortOrder
     userId?: SortOrder
     wordId?: SortOrder
-    progress?: SortOrder
-    isLearned?: SortOrder
-    _count?: WordProgressCountOrderByAggregateInput
-    _avg?: WordProgressAvgOrderByAggregateInput
-    _max?: WordProgressMaxOrderByAggregateInput
-    _min?: WordProgressMinOrderByAggregateInput
-    _sum?: WordProgressSumOrderByAggregateInput
+    taskType?: SortOrder
+    isPassed?: SortOrder
+    score?: SortOrder
+    attempts?: SortOrder
+    _count?: WordTaskProgressCountOrderByAggregateInput
+    _avg?: WordTaskProgressAvgOrderByAggregateInput
+    _max?: WordTaskProgressMaxOrderByAggregateInput
+    _min?: WordTaskProgressMinOrderByAggregateInput
+    _sum?: WordTaskProgressSumOrderByAggregateInput
   }
 
-  export type WordProgressScalarWhereWithAggregatesInput = {
-    AND?: WordProgressScalarWhereWithAggregatesInput | WordProgressScalarWhereWithAggregatesInput[]
-    OR?: WordProgressScalarWhereWithAggregatesInput[]
-    NOT?: WordProgressScalarWhereWithAggregatesInput | WordProgressScalarWhereWithAggregatesInput[]
-    id?: IntWithAggregatesFilter<"WordProgress"> | number
-    userId?: IntWithAggregatesFilter<"WordProgress"> | number
-    wordId?: IntWithAggregatesFilter<"WordProgress"> | number
-    progress?: IntWithAggregatesFilter<"WordProgress"> | number
-    isLearned?: BoolWithAggregatesFilter<"WordProgress"> | boolean
+  export type WordTaskProgressScalarWhereWithAggregatesInput = {
+    AND?: WordTaskProgressScalarWhereWithAggregatesInput | WordTaskProgressScalarWhereWithAggregatesInput[]
+    OR?: WordTaskProgressScalarWhereWithAggregatesInput[]
+    NOT?: WordTaskProgressScalarWhereWithAggregatesInput | WordTaskProgressScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"WordTaskProgress"> | number
+    userId?: IntWithAggregatesFilter<"WordTaskProgress"> | number
+    wordId?: IntWithAggregatesFilter<"WordTaskProgress"> | number
+    taskType?: EnumWordTaskTypeWithAggregatesFilter<"WordTaskProgress"> | $Enums.WordTaskType
+    isPassed?: BoolWithAggregatesFilter<"WordTaskProgress"> | boolean
+    score?: IntWithAggregatesFilter<"WordTaskProgress"> | number
+    attempts?: IntWithAggregatesFilter<"WordTaskProgress"> | number
   }
 
   export type UserCreateInput = {
@@ -11863,7 +11974,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     enrollments?: EnrollmentCreateNestedManyWithoutUserInput
-    wordProgresses?: WordProgressCreateNestedManyWithoutUserInput
+    wordProgresses?: WordTaskProgressCreateNestedManyWithoutUserInput
     setting?: SettingCreateNestedOneWithoutUserInput
   }
 
@@ -11877,7 +11988,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     enrollments?: EnrollmentUncheckedCreateNestedManyWithoutUserInput
-    wordProgresses?: WordProgressUncheckedCreateNestedManyWithoutUserInput
+    wordProgresses?: WordTaskProgressUncheckedCreateNestedManyWithoutUserInput
     setting?: SettingUncheckedCreateNestedOneWithoutUserInput
   }
 
@@ -11890,7 +12001,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     enrollments?: EnrollmentUpdateManyWithoutUserNestedInput
-    wordProgresses?: WordProgressUpdateManyWithoutUserNestedInput
+    wordProgresses?: WordTaskProgressUpdateManyWithoutUserNestedInput
     setting?: SettingUpdateOneWithoutUserNestedInput
   }
 
@@ -11904,7 +12015,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     enrollments?: EnrollmentUncheckedUpdateManyWithoutUserNestedInput
-    wordProgresses?: WordProgressUncheckedUpdateManyWithoutUserNestedInput
+    wordProgresses?: WordTaskProgressUncheckedUpdateManyWithoutUserNestedInput
     setting?: SettingUncheckedUpdateOneWithoutUserNestedInput
   }
 
@@ -11948,7 +12059,9 @@ export namespace Prisma {
     example?: string | null
     partOfSpeech?: string | null
     createdAt?: Date | string
-    progresses?: WordProgressCreateNestedManyWithoutWordInput
+    totalProgress?: number
+    isLearned?: boolean
+    progresses?: WordTaskProgressCreateNestedManyWithoutWordInput
   }
 
   export type WordUncheckedCreateInput = {
@@ -11960,7 +12073,9 @@ export namespace Prisma {
     example?: string | null
     partOfSpeech?: string | null
     createdAt?: Date | string
-    progresses?: WordProgressUncheckedCreateNestedManyWithoutWordInput
+    totalProgress?: number
+    isLearned?: boolean
+    progresses?: WordTaskProgressUncheckedCreateNestedManyWithoutWordInput
   }
 
   export type WordUpdateInput = {
@@ -11971,7 +12086,9 @@ export namespace Prisma {
     example?: NullableStringFieldUpdateOperationsInput | string | null
     partOfSpeech?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    progresses?: WordProgressUpdateManyWithoutWordNestedInput
+    totalProgress?: IntFieldUpdateOperationsInput | number
+    isLearned?: BoolFieldUpdateOperationsInput | boolean
+    progresses?: WordTaskProgressUpdateManyWithoutWordNestedInput
   }
 
   export type WordUncheckedUpdateInput = {
@@ -11983,7 +12100,9 @@ export namespace Prisma {
     example?: NullableStringFieldUpdateOperationsInput | string | null
     partOfSpeech?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    progresses?: WordProgressUncheckedUpdateManyWithoutWordNestedInput
+    totalProgress?: IntFieldUpdateOperationsInput | number
+    isLearned?: BoolFieldUpdateOperationsInput | boolean
+    progresses?: WordTaskProgressUncheckedUpdateManyWithoutWordNestedInput
   }
 
   export type WordCreateManyInput = {
@@ -11995,6 +12114,8 @@ export namespace Prisma {
     example?: string | null
     partOfSpeech?: string | null
     createdAt?: Date | string
+    totalProgress?: number
+    isLearned?: boolean
   }
 
   export type WordUpdateManyMutationInput = {
@@ -12005,6 +12126,8 @@ export namespace Prisma {
     example?: NullableStringFieldUpdateOperationsInput | string | null
     partOfSpeech?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    totalProgress?: IntFieldUpdateOperationsInput | number
+    isLearned?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type WordUncheckedUpdateManyInput = {
@@ -12016,6 +12139,8 @@ export namespace Prisma {
     example?: NullableStringFieldUpdateOperationsInput | string | null
     partOfSpeech?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    totalProgress?: IntFieldUpdateOperationsInput | number
+    isLearned?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type VideoCreateInput = {
@@ -12384,55 +12509,69 @@ export namespace Prisma {
     current_level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
   }
 
-  export type WordProgressCreateInput = {
-    progress?: number
-    isLearned?: boolean
+  export type WordTaskProgressCreateInput = {
+    taskType: $Enums.WordTaskType
+    isPassed?: boolean
+    score?: number
+    attempts?: number
     user: UserCreateNestedOneWithoutWordProgressesInput
     word: WordCreateNestedOneWithoutProgressesInput
   }
 
-  export type WordProgressUncheckedCreateInput = {
+  export type WordTaskProgressUncheckedCreateInput = {
     id?: number
     userId: number
     wordId: number
-    progress?: number
-    isLearned?: boolean
+    taskType: $Enums.WordTaskType
+    isPassed?: boolean
+    score?: number
+    attempts?: number
   }
 
-  export type WordProgressUpdateInput = {
-    progress?: IntFieldUpdateOperationsInput | number
-    isLearned?: BoolFieldUpdateOperationsInput | boolean
+  export type WordTaskProgressUpdateInput = {
+    taskType?: EnumWordTaskTypeFieldUpdateOperationsInput | $Enums.WordTaskType
+    isPassed?: BoolFieldUpdateOperationsInput | boolean
+    score?: IntFieldUpdateOperationsInput | number
+    attempts?: IntFieldUpdateOperationsInput | number
     user?: UserUpdateOneRequiredWithoutWordProgressesNestedInput
     word?: WordUpdateOneRequiredWithoutProgressesNestedInput
   }
 
-  export type WordProgressUncheckedUpdateInput = {
+  export type WordTaskProgressUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     userId?: IntFieldUpdateOperationsInput | number
     wordId?: IntFieldUpdateOperationsInput | number
-    progress?: IntFieldUpdateOperationsInput | number
-    isLearned?: BoolFieldUpdateOperationsInput | boolean
+    taskType?: EnumWordTaskTypeFieldUpdateOperationsInput | $Enums.WordTaskType
+    isPassed?: BoolFieldUpdateOperationsInput | boolean
+    score?: IntFieldUpdateOperationsInput | number
+    attempts?: IntFieldUpdateOperationsInput | number
   }
 
-  export type WordProgressCreateManyInput = {
+  export type WordTaskProgressCreateManyInput = {
     id?: number
     userId: number
     wordId: number
-    progress?: number
-    isLearned?: boolean
+    taskType: $Enums.WordTaskType
+    isPassed?: boolean
+    score?: number
+    attempts?: number
   }
 
-  export type WordProgressUpdateManyMutationInput = {
-    progress?: IntFieldUpdateOperationsInput | number
-    isLearned?: BoolFieldUpdateOperationsInput | boolean
+  export type WordTaskProgressUpdateManyMutationInput = {
+    taskType?: EnumWordTaskTypeFieldUpdateOperationsInput | $Enums.WordTaskType
+    isPassed?: BoolFieldUpdateOperationsInput | boolean
+    score?: IntFieldUpdateOperationsInput | number
+    attempts?: IntFieldUpdateOperationsInput | number
   }
 
-  export type WordProgressUncheckedUpdateManyInput = {
+  export type WordTaskProgressUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     userId?: IntFieldUpdateOperationsInput | number
     wordId?: IntFieldUpdateOperationsInput | number
-    progress?: IntFieldUpdateOperationsInput | number
-    isLearned?: BoolFieldUpdateOperationsInput | boolean
+    taskType?: EnumWordTaskTypeFieldUpdateOperationsInput | $Enums.WordTaskType
+    isPassed?: BoolFieldUpdateOperationsInput | boolean
+    score?: IntFieldUpdateOperationsInput | number
+    attempts?: IntFieldUpdateOperationsInput | number
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -12490,10 +12629,10 @@ export namespace Prisma {
     none?: EnrollmentWhereInput
   }
 
-  export type WordProgressListRelationFilter = {
-    every?: WordProgressWhereInput
-    some?: WordProgressWhereInput
-    none?: WordProgressWhereInput
+  export type WordTaskProgressListRelationFilter = {
+    every?: WordTaskProgressWhereInput
+    some?: WordTaskProgressWhereInput
+    none?: WordTaskProgressWhereInput
   }
 
   export type SettingNullableScalarRelationFilter = {
@@ -12505,7 +12644,7 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
-  export type WordProgressOrderByRelationAggregateInput = {
+  export type WordTaskProgressOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -12660,10 +12799,13 @@ export namespace Prisma {
     example?: SortOrder
     partOfSpeech?: SortOrder
     createdAt?: SortOrder
+    totalProgress?: SortOrder
+    isLearned?: SortOrder
   }
 
   export type WordAvgOrderByAggregateInput = {
     id?: SortOrder
+    totalProgress?: SortOrder
   }
 
   export type WordMaxOrderByAggregateInput = {
@@ -12673,6 +12815,8 @@ export namespace Prisma {
     example?: SortOrder
     partOfSpeech?: SortOrder
     createdAt?: SortOrder
+    totalProgress?: SortOrder
+    isLearned?: SortOrder
   }
 
   export type WordMinOrderByAggregateInput = {
@@ -12682,10 +12826,13 @@ export namespace Prisma {
     example?: SortOrder
     partOfSpeech?: SortOrder
     createdAt?: SortOrder
+    totalProgress?: SortOrder
+    isLearned?: SortOrder
   }
 
   export type WordSumOrderByAggregateInput = {
     id?: SortOrder
+    totalProgress?: SortOrder
   }
 
   export type EnumLanguageWithAggregatesFilter<$PrismaModel = never> = {
@@ -13081,52 +13228,78 @@ export namespace Prisma {
     userId?: SortOrder
   }
 
+  export type EnumWordTaskTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.WordTaskType | EnumWordTaskTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.WordTaskType[] | ListEnumWordTaskTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.WordTaskType[] | ListEnumWordTaskTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumWordTaskTypeFilter<$PrismaModel> | $Enums.WordTaskType
+  }
+
   export type WordScalarRelationFilter = {
     is?: WordWhereInput
     isNot?: WordWhereInput
   }
 
-  export type WordProgressUserIdWordIdCompoundUniqueInput = {
+  export type WordTaskProgressUserIdWordIdTaskTypeCompoundUniqueInput = {
     userId: number
     wordId: number
+    taskType: $Enums.WordTaskType
   }
 
-  export type WordProgressCountOrderByAggregateInput = {
+  export type WordTaskProgressCountOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
     wordId?: SortOrder
-    progress?: SortOrder
-    isLearned?: SortOrder
+    taskType?: SortOrder
+    isPassed?: SortOrder
+    score?: SortOrder
+    attempts?: SortOrder
   }
 
-  export type WordProgressAvgOrderByAggregateInput = {
+  export type WordTaskProgressAvgOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
     wordId?: SortOrder
-    progress?: SortOrder
+    score?: SortOrder
+    attempts?: SortOrder
   }
 
-  export type WordProgressMaxOrderByAggregateInput = {
+  export type WordTaskProgressMaxOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
     wordId?: SortOrder
-    progress?: SortOrder
-    isLearned?: SortOrder
+    taskType?: SortOrder
+    isPassed?: SortOrder
+    score?: SortOrder
+    attempts?: SortOrder
   }
 
-  export type WordProgressMinOrderByAggregateInput = {
+  export type WordTaskProgressMinOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
     wordId?: SortOrder
-    progress?: SortOrder
-    isLearned?: SortOrder
+    taskType?: SortOrder
+    isPassed?: SortOrder
+    score?: SortOrder
+    attempts?: SortOrder
   }
 
-  export type WordProgressSumOrderByAggregateInput = {
+  export type WordTaskProgressSumOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
     wordId?: SortOrder
-    progress?: SortOrder
+    score?: SortOrder
+    attempts?: SortOrder
+  }
+
+  export type EnumWordTaskTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.WordTaskType | EnumWordTaskTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.WordTaskType[] | ListEnumWordTaskTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.WordTaskType[] | ListEnumWordTaskTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumWordTaskTypeWithAggregatesFilter<$PrismaModel> | $Enums.WordTaskType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumWordTaskTypeFilter<$PrismaModel>
+    _max?: NestedEnumWordTaskTypeFilter<$PrismaModel>
   }
 
   export type EnrollmentCreateNestedManyWithoutUserInput = {
@@ -13136,11 +13309,11 @@ export namespace Prisma {
     connect?: EnrollmentWhereUniqueInput | EnrollmentWhereUniqueInput[]
   }
 
-  export type WordProgressCreateNestedManyWithoutUserInput = {
-    create?: XOR<WordProgressCreateWithoutUserInput, WordProgressUncheckedCreateWithoutUserInput> | WordProgressCreateWithoutUserInput[] | WordProgressUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: WordProgressCreateOrConnectWithoutUserInput | WordProgressCreateOrConnectWithoutUserInput[]
-    createMany?: WordProgressCreateManyUserInputEnvelope
-    connect?: WordProgressWhereUniqueInput | WordProgressWhereUniqueInput[]
+  export type WordTaskProgressCreateNestedManyWithoutUserInput = {
+    create?: XOR<WordTaskProgressCreateWithoutUserInput, WordTaskProgressUncheckedCreateWithoutUserInput> | WordTaskProgressCreateWithoutUserInput[] | WordTaskProgressUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: WordTaskProgressCreateOrConnectWithoutUserInput | WordTaskProgressCreateOrConnectWithoutUserInput[]
+    createMany?: WordTaskProgressCreateManyUserInputEnvelope
+    connect?: WordTaskProgressWhereUniqueInput | WordTaskProgressWhereUniqueInput[]
   }
 
   export type SettingCreateNestedOneWithoutUserInput = {
@@ -13156,11 +13329,11 @@ export namespace Prisma {
     connect?: EnrollmentWhereUniqueInput | EnrollmentWhereUniqueInput[]
   }
 
-  export type WordProgressUncheckedCreateNestedManyWithoutUserInput = {
-    create?: XOR<WordProgressCreateWithoutUserInput, WordProgressUncheckedCreateWithoutUserInput> | WordProgressCreateWithoutUserInput[] | WordProgressUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: WordProgressCreateOrConnectWithoutUserInput | WordProgressCreateOrConnectWithoutUserInput[]
-    createMany?: WordProgressCreateManyUserInputEnvelope
-    connect?: WordProgressWhereUniqueInput | WordProgressWhereUniqueInput[]
+  export type WordTaskProgressUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<WordTaskProgressCreateWithoutUserInput, WordTaskProgressUncheckedCreateWithoutUserInput> | WordTaskProgressCreateWithoutUserInput[] | WordTaskProgressUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: WordTaskProgressCreateOrConnectWithoutUserInput | WordTaskProgressCreateOrConnectWithoutUserInput[]
+    createMany?: WordTaskProgressCreateManyUserInputEnvelope
+    connect?: WordTaskProgressWhereUniqueInput | WordTaskProgressWhereUniqueInput[]
   }
 
   export type SettingUncheckedCreateNestedOneWithoutUserInput = {
@@ -13199,18 +13372,18 @@ export namespace Prisma {
     deleteMany?: EnrollmentScalarWhereInput | EnrollmentScalarWhereInput[]
   }
 
-  export type WordProgressUpdateManyWithoutUserNestedInput = {
-    create?: XOR<WordProgressCreateWithoutUserInput, WordProgressUncheckedCreateWithoutUserInput> | WordProgressCreateWithoutUserInput[] | WordProgressUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: WordProgressCreateOrConnectWithoutUserInput | WordProgressCreateOrConnectWithoutUserInput[]
-    upsert?: WordProgressUpsertWithWhereUniqueWithoutUserInput | WordProgressUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: WordProgressCreateManyUserInputEnvelope
-    set?: WordProgressWhereUniqueInput | WordProgressWhereUniqueInput[]
-    disconnect?: WordProgressWhereUniqueInput | WordProgressWhereUniqueInput[]
-    delete?: WordProgressWhereUniqueInput | WordProgressWhereUniqueInput[]
-    connect?: WordProgressWhereUniqueInput | WordProgressWhereUniqueInput[]
-    update?: WordProgressUpdateWithWhereUniqueWithoutUserInput | WordProgressUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: WordProgressUpdateManyWithWhereWithoutUserInput | WordProgressUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: WordProgressScalarWhereInput | WordProgressScalarWhereInput[]
+  export type WordTaskProgressUpdateManyWithoutUserNestedInput = {
+    create?: XOR<WordTaskProgressCreateWithoutUserInput, WordTaskProgressUncheckedCreateWithoutUserInput> | WordTaskProgressCreateWithoutUserInput[] | WordTaskProgressUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: WordTaskProgressCreateOrConnectWithoutUserInput | WordTaskProgressCreateOrConnectWithoutUserInput[]
+    upsert?: WordTaskProgressUpsertWithWhereUniqueWithoutUserInput | WordTaskProgressUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: WordTaskProgressCreateManyUserInputEnvelope
+    set?: WordTaskProgressWhereUniqueInput | WordTaskProgressWhereUniqueInput[]
+    disconnect?: WordTaskProgressWhereUniqueInput | WordTaskProgressWhereUniqueInput[]
+    delete?: WordTaskProgressWhereUniqueInput | WordTaskProgressWhereUniqueInput[]
+    connect?: WordTaskProgressWhereUniqueInput | WordTaskProgressWhereUniqueInput[]
+    update?: WordTaskProgressUpdateWithWhereUniqueWithoutUserInput | WordTaskProgressUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: WordTaskProgressUpdateManyWithWhereWithoutUserInput | WordTaskProgressUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: WordTaskProgressScalarWhereInput | WordTaskProgressScalarWhereInput[]
   }
 
   export type SettingUpdateOneWithoutUserNestedInput = {
@@ -13245,18 +13418,18 @@ export namespace Prisma {
     deleteMany?: EnrollmentScalarWhereInput | EnrollmentScalarWhereInput[]
   }
 
-  export type WordProgressUncheckedUpdateManyWithoutUserNestedInput = {
-    create?: XOR<WordProgressCreateWithoutUserInput, WordProgressUncheckedCreateWithoutUserInput> | WordProgressCreateWithoutUserInput[] | WordProgressUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: WordProgressCreateOrConnectWithoutUserInput | WordProgressCreateOrConnectWithoutUserInput[]
-    upsert?: WordProgressUpsertWithWhereUniqueWithoutUserInput | WordProgressUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: WordProgressCreateManyUserInputEnvelope
-    set?: WordProgressWhereUniqueInput | WordProgressWhereUniqueInput[]
-    disconnect?: WordProgressWhereUniqueInput | WordProgressWhereUniqueInput[]
-    delete?: WordProgressWhereUniqueInput | WordProgressWhereUniqueInput[]
-    connect?: WordProgressWhereUniqueInput | WordProgressWhereUniqueInput[]
-    update?: WordProgressUpdateWithWhereUniqueWithoutUserInput | WordProgressUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: WordProgressUpdateManyWithWhereWithoutUserInput | WordProgressUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: WordProgressScalarWhereInput | WordProgressScalarWhereInput[]
+  export type WordTaskProgressUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<WordTaskProgressCreateWithoutUserInput, WordTaskProgressUncheckedCreateWithoutUserInput> | WordTaskProgressCreateWithoutUserInput[] | WordTaskProgressUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: WordTaskProgressCreateOrConnectWithoutUserInput | WordTaskProgressCreateOrConnectWithoutUserInput[]
+    upsert?: WordTaskProgressUpsertWithWhereUniqueWithoutUserInput | WordTaskProgressUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: WordTaskProgressCreateManyUserInputEnvelope
+    set?: WordTaskProgressWhereUniqueInput | WordTaskProgressWhereUniqueInput[]
+    disconnect?: WordTaskProgressWhereUniqueInput | WordTaskProgressWhereUniqueInput[]
+    delete?: WordTaskProgressWhereUniqueInput | WordTaskProgressWhereUniqueInput[]
+    connect?: WordTaskProgressWhereUniqueInput | WordTaskProgressWhereUniqueInput[]
+    update?: WordTaskProgressUpdateWithWhereUniqueWithoutUserInput | WordTaskProgressUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: WordTaskProgressUpdateManyWithWhereWithoutUserInput | WordTaskProgressUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: WordTaskProgressScalarWhereInput | WordTaskProgressScalarWhereInput[]
   }
 
   export type SettingUncheckedUpdateOneWithoutUserNestedInput = {
@@ -13277,18 +13450,18 @@ export namespace Prisma {
     set: string[]
   }
 
-  export type WordProgressCreateNestedManyWithoutWordInput = {
-    create?: XOR<WordProgressCreateWithoutWordInput, WordProgressUncheckedCreateWithoutWordInput> | WordProgressCreateWithoutWordInput[] | WordProgressUncheckedCreateWithoutWordInput[]
-    connectOrCreate?: WordProgressCreateOrConnectWithoutWordInput | WordProgressCreateOrConnectWithoutWordInput[]
-    createMany?: WordProgressCreateManyWordInputEnvelope
-    connect?: WordProgressWhereUniqueInput | WordProgressWhereUniqueInput[]
+  export type WordTaskProgressCreateNestedManyWithoutWordInput = {
+    create?: XOR<WordTaskProgressCreateWithoutWordInput, WordTaskProgressUncheckedCreateWithoutWordInput> | WordTaskProgressCreateWithoutWordInput[] | WordTaskProgressUncheckedCreateWithoutWordInput[]
+    connectOrCreate?: WordTaskProgressCreateOrConnectWithoutWordInput | WordTaskProgressCreateOrConnectWithoutWordInput[]
+    createMany?: WordTaskProgressCreateManyWordInputEnvelope
+    connect?: WordTaskProgressWhereUniqueInput | WordTaskProgressWhereUniqueInput[]
   }
 
-  export type WordProgressUncheckedCreateNestedManyWithoutWordInput = {
-    create?: XOR<WordProgressCreateWithoutWordInput, WordProgressUncheckedCreateWithoutWordInput> | WordProgressCreateWithoutWordInput[] | WordProgressUncheckedCreateWithoutWordInput[]
-    connectOrCreate?: WordProgressCreateOrConnectWithoutWordInput | WordProgressCreateOrConnectWithoutWordInput[]
-    createMany?: WordProgressCreateManyWordInputEnvelope
-    connect?: WordProgressWhereUniqueInput | WordProgressWhereUniqueInput[]
+  export type WordTaskProgressUncheckedCreateNestedManyWithoutWordInput = {
+    create?: XOR<WordTaskProgressCreateWithoutWordInput, WordTaskProgressUncheckedCreateWithoutWordInput> | WordTaskProgressCreateWithoutWordInput[] | WordTaskProgressUncheckedCreateWithoutWordInput[]
+    connectOrCreate?: WordTaskProgressCreateOrConnectWithoutWordInput | WordTaskProgressCreateOrConnectWithoutWordInput[]
+    createMany?: WordTaskProgressCreateManyWordInputEnvelope
+    connect?: WordTaskProgressWhereUniqueInput | WordTaskProgressWhereUniqueInput[]
   }
 
   export type EnumLanguageFieldUpdateOperationsInput = {
@@ -13309,32 +13482,32 @@ export namespace Prisma {
     set?: string | null
   }
 
-  export type WordProgressUpdateManyWithoutWordNestedInput = {
-    create?: XOR<WordProgressCreateWithoutWordInput, WordProgressUncheckedCreateWithoutWordInput> | WordProgressCreateWithoutWordInput[] | WordProgressUncheckedCreateWithoutWordInput[]
-    connectOrCreate?: WordProgressCreateOrConnectWithoutWordInput | WordProgressCreateOrConnectWithoutWordInput[]
-    upsert?: WordProgressUpsertWithWhereUniqueWithoutWordInput | WordProgressUpsertWithWhereUniqueWithoutWordInput[]
-    createMany?: WordProgressCreateManyWordInputEnvelope
-    set?: WordProgressWhereUniqueInput | WordProgressWhereUniqueInput[]
-    disconnect?: WordProgressWhereUniqueInput | WordProgressWhereUniqueInput[]
-    delete?: WordProgressWhereUniqueInput | WordProgressWhereUniqueInput[]
-    connect?: WordProgressWhereUniqueInput | WordProgressWhereUniqueInput[]
-    update?: WordProgressUpdateWithWhereUniqueWithoutWordInput | WordProgressUpdateWithWhereUniqueWithoutWordInput[]
-    updateMany?: WordProgressUpdateManyWithWhereWithoutWordInput | WordProgressUpdateManyWithWhereWithoutWordInput[]
-    deleteMany?: WordProgressScalarWhereInput | WordProgressScalarWhereInput[]
+  export type WordTaskProgressUpdateManyWithoutWordNestedInput = {
+    create?: XOR<WordTaskProgressCreateWithoutWordInput, WordTaskProgressUncheckedCreateWithoutWordInput> | WordTaskProgressCreateWithoutWordInput[] | WordTaskProgressUncheckedCreateWithoutWordInput[]
+    connectOrCreate?: WordTaskProgressCreateOrConnectWithoutWordInput | WordTaskProgressCreateOrConnectWithoutWordInput[]
+    upsert?: WordTaskProgressUpsertWithWhereUniqueWithoutWordInput | WordTaskProgressUpsertWithWhereUniqueWithoutWordInput[]
+    createMany?: WordTaskProgressCreateManyWordInputEnvelope
+    set?: WordTaskProgressWhereUniqueInput | WordTaskProgressWhereUniqueInput[]
+    disconnect?: WordTaskProgressWhereUniqueInput | WordTaskProgressWhereUniqueInput[]
+    delete?: WordTaskProgressWhereUniqueInput | WordTaskProgressWhereUniqueInput[]
+    connect?: WordTaskProgressWhereUniqueInput | WordTaskProgressWhereUniqueInput[]
+    update?: WordTaskProgressUpdateWithWhereUniqueWithoutWordInput | WordTaskProgressUpdateWithWhereUniqueWithoutWordInput[]
+    updateMany?: WordTaskProgressUpdateManyWithWhereWithoutWordInput | WordTaskProgressUpdateManyWithWhereWithoutWordInput[]
+    deleteMany?: WordTaskProgressScalarWhereInput | WordTaskProgressScalarWhereInput[]
   }
 
-  export type WordProgressUncheckedUpdateManyWithoutWordNestedInput = {
-    create?: XOR<WordProgressCreateWithoutWordInput, WordProgressUncheckedCreateWithoutWordInput> | WordProgressCreateWithoutWordInput[] | WordProgressUncheckedCreateWithoutWordInput[]
-    connectOrCreate?: WordProgressCreateOrConnectWithoutWordInput | WordProgressCreateOrConnectWithoutWordInput[]
-    upsert?: WordProgressUpsertWithWhereUniqueWithoutWordInput | WordProgressUpsertWithWhereUniqueWithoutWordInput[]
-    createMany?: WordProgressCreateManyWordInputEnvelope
-    set?: WordProgressWhereUniqueInput | WordProgressWhereUniqueInput[]
-    disconnect?: WordProgressWhereUniqueInput | WordProgressWhereUniqueInput[]
-    delete?: WordProgressWhereUniqueInput | WordProgressWhereUniqueInput[]
-    connect?: WordProgressWhereUniqueInput | WordProgressWhereUniqueInput[]
-    update?: WordProgressUpdateWithWhereUniqueWithoutWordInput | WordProgressUpdateWithWhereUniqueWithoutWordInput[]
-    updateMany?: WordProgressUpdateManyWithWhereWithoutWordInput | WordProgressUpdateManyWithWhereWithoutWordInput[]
-    deleteMany?: WordProgressScalarWhereInput | WordProgressScalarWhereInput[]
+  export type WordTaskProgressUncheckedUpdateManyWithoutWordNestedInput = {
+    create?: XOR<WordTaskProgressCreateWithoutWordInput, WordTaskProgressUncheckedCreateWithoutWordInput> | WordTaskProgressCreateWithoutWordInput[] | WordTaskProgressUncheckedCreateWithoutWordInput[]
+    connectOrCreate?: WordTaskProgressCreateOrConnectWithoutWordInput | WordTaskProgressCreateOrConnectWithoutWordInput[]
+    upsert?: WordTaskProgressUpsertWithWhereUniqueWithoutWordInput | WordTaskProgressUpsertWithWhereUniqueWithoutWordInput[]
+    createMany?: WordTaskProgressCreateManyWordInputEnvelope
+    set?: WordTaskProgressWhereUniqueInput | WordTaskProgressWhereUniqueInput[]
+    disconnect?: WordTaskProgressWhereUniqueInput | WordTaskProgressWhereUniqueInput[]
+    delete?: WordTaskProgressWhereUniqueInput | WordTaskProgressWhereUniqueInput[]
+    connect?: WordTaskProgressWhereUniqueInput | WordTaskProgressWhereUniqueInput[]
+    update?: WordTaskProgressUpdateWithWhereUniqueWithoutWordInput | WordTaskProgressUpdateWithWhereUniqueWithoutWordInput[]
+    updateMany?: WordTaskProgressUpdateManyWithWhereWithoutWordInput | WordTaskProgressUpdateManyWithWhereWithoutWordInput[]
+    deleteMany?: WordTaskProgressScalarWhereInput | WordTaskProgressScalarWhereInput[]
   }
 
   export type VideoCreatetagsInput = {
@@ -13671,6 +13844,10 @@ export namespace Prisma {
     connect?: WordWhereUniqueInput
   }
 
+  export type EnumWordTaskTypeFieldUpdateOperationsInput = {
+    set?: $Enums.WordTaskType
+  }
+
   export type UserUpdateOneRequiredWithoutWordProgressesNestedInput = {
     create?: XOR<UserCreateWithoutWordProgressesInput, UserUncheckedCreateWithoutWordProgressesInput>
     connectOrCreate?: UserCreateOrConnectWithoutWordProgressesInput
@@ -13964,6 +14141,23 @@ export namespace Prisma {
     _max?: NestedFloatFilter<$PrismaModel>
   }
 
+  export type NestedEnumWordTaskTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.WordTaskType | EnumWordTaskTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.WordTaskType[] | ListEnumWordTaskTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.WordTaskType[] | ListEnumWordTaskTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumWordTaskTypeFilter<$PrismaModel> | $Enums.WordTaskType
+  }
+
+  export type NestedEnumWordTaskTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.WordTaskType | EnumWordTaskTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.WordTaskType[] | ListEnumWordTaskTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.WordTaskType[] | ListEnumWordTaskTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumWordTaskTypeWithAggregatesFilter<$PrismaModel> | $Enums.WordTaskType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumWordTaskTypeFilter<$PrismaModel>
+    _max?: NestedEnumWordTaskTypeFilter<$PrismaModel>
+  }
+
   export type EnrollmentCreateWithoutUserInput = {
     progress?: number
     enrolledAt?: Date | string
@@ -13987,26 +14181,30 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type WordProgressCreateWithoutUserInput = {
-    progress?: number
-    isLearned?: boolean
+  export type WordTaskProgressCreateWithoutUserInput = {
+    taskType: $Enums.WordTaskType
+    isPassed?: boolean
+    score?: number
+    attempts?: number
     word: WordCreateNestedOneWithoutProgressesInput
   }
 
-  export type WordProgressUncheckedCreateWithoutUserInput = {
+  export type WordTaskProgressUncheckedCreateWithoutUserInput = {
     id?: number
     wordId: number
-    progress?: number
-    isLearned?: boolean
+    taskType: $Enums.WordTaskType
+    isPassed?: boolean
+    score?: number
+    attempts?: number
   }
 
-  export type WordProgressCreateOrConnectWithoutUserInput = {
-    where: WordProgressWhereUniqueInput
-    create: XOR<WordProgressCreateWithoutUserInput, WordProgressUncheckedCreateWithoutUserInput>
+  export type WordTaskProgressCreateOrConnectWithoutUserInput = {
+    where: WordTaskProgressWhereUniqueInput
+    create: XOR<WordTaskProgressCreateWithoutUserInput, WordTaskProgressUncheckedCreateWithoutUserInput>
   }
 
-  export type WordProgressCreateManyUserInputEnvelope = {
-    data: WordProgressCreateManyUserInput | WordProgressCreateManyUserInput[]
+  export type WordTaskProgressCreateManyUserInputEnvelope = {
+    data: WordTaskProgressCreateManyUserInput | WordTaskProgressCreateManyUserInput[]
     skipDuplicates?: boolean
   }
 
@@ -14057,31 +14255,33 @@ export namespace Prisma {
     enrolledAt?: DateTimeFilter<"Enrollment"> | Date | string
   }
 
-  export type WordProgressUpsertWithWhereUniqueWithoutUserInput = {
-    where: WordProgressWhereUniqueInput
-    update: XOR<WordProgressUpdateWithoutUserInput, WordProgressUncheckedUpdateWithoutUserInput>
-    create: XOR<WordProgressCreateWithoutUserInput, WordProgressUncheckedCreateWithoutUserInput>
+  export type WordTaskProgressUpsertWithWhereUniqueWithoutUserInput = {
+    where: WordTaskProgressWhereUniqueInput
+    update: XOR<WordTaskProgressUpdateWithoutUserInput, WordTaskProgressUncheckedUpdateWithoutUserInput>
+    create: XOR<WordTaskProgressCreateWithoutUserInput, WordTaskProgressUncheckedCreateWithoutUserInput>
   }
 
-  export type WordProgressUpdateWithWhereUniqueWithoutUserInput = {
-    where: WordProgressWhereUniqueInput
-    data: XOR<WordProgressUpdateWithoutUserInput, WordProgressUncheckedUpdateWithoutUserInput>
+  export type WordTaskProgressUpdateWithWhereUniqueWithoutUserInput = {
+    where: WordTaskProgressWhereUniqueInput
+    data: XOR<WordTaskProgressUpdateWithoutUserInput, WordTaskProgressUncheckedUpdateWithoutUserInput>
   }
 
-  export type WordProgressUpdateManyWithWhereWithoutUserInput = {
-    where: WordProgressScalarWhereInput
-    data: XOR<WordProgressUpdateManyMutationInput, WordProgressUncheckedUpdateManyWithoutUserInput>
+  export type WordTaskProgressUpdateManyWithWhereWithoutUserInput = {
+    where: WordTaskProgressScalarWhereInput
+    data: XOR<WordTaskProgressUpdateManyMutationInput, WordTaskProgressUncheckedUpdateManyWithoutUserInput>
   }
 
-  export type WordProgressScalarWhereInput = {
-    AND?: WordProgressScalarWhereInput | WordProgressScalarWhereInput[]
-    OR?: WordProgressScalarWhereInput[]
-    NOT?: WordProgressScalarWhereInput | WordProgressScalarWhereInput[]
-    id?: IntFilter<"WordProgress"> | number
-    userId?: IntFilter<"WordProgress"> | number
-    wordId?: IntFilter<"WordProgress"> | number
-    progress?: IntFilter<"WordProgress"> | number
-    isLearned?: BoolFilter<"WordProgress"> | boolean
+  export type WordTaskProgressScalarWhereInput = {
+    AND?: WordTaskProgressScalarWhereInput | WordTaskProgressScalarWhereInput[]
+    OR?: WordTaskProgressScalarWhereInput[]
+    NOT?: WordTaskProgressScalarWhereInput | WordTaskProgressScalarWhereInput[]
+    id?: IntFilter<"WordTaskProgress"> | number
+    userId?: IntFilter<"WordTaskProgress"> | number
+    wordId?: IntFilter<"WordTaskProgress"> | number
+    taskType?: EnumWordTaskTypeFilter<"WordTaskProgress"> | $Enums.WordTaskType
+    isPassed?: BoolFilter<"WordTaskProgress"> | boolean
+    score?: IntFilter<"WordTaskProgress"> | number
+    attempts?: IntFilter<"WordTaskProgress"> | number
   }
 
   export type SettingUpsertWithoutUserInput = {
@@ -14110,43 +14310,47 @@ export namespace Prisma {
     current_level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
   }
 
-  export type WordProgressCreateWithoutWordInput = {
-    progress?: number
-    isLearned?: boolean
+  export type WordTaskProgressCreateWithoutWordInput = {
+    taskType: $Enums.WordTaskType
+    isPassed?: boolean
+    score?: number
+    attempts?: number
     user: UserCreateNestedOneWithoutWordProgressesInput
   }
 
-  export type WordProgressUncheckedCreateWithoutWordInput = {
+  export type WordTaskProgressUncheckedCreateWithoutWordInput = {
     id?: number
     userId: number
-    progress?: number
-    isLearned?: boolean
+    taskType: $Enums.WordTaskType
+    isPassed?: boolean
+    score?: number
+    attempts?: number
   }
 
-  export type WordProgressCreateOrConnectWithoutWordInput = {
-    where: WordProgressWhereUniqueInput
-    create: XOR<WordProgressCreateWithoutWordInput, WordProgressUncheckedCreateWithoutWordInput>
+  export type WordTaskProgressCreateOrConnectWithoutWordInput = {
+    where: WordTaskProgressWhereUniqueInput
+    create: XOR<WordTaskProgressCreateWithoutWordInput, WordTaskProgressUncheckedCreateWithoutWordInput>
   }
 
-  export type WordProgressCreateManyWordInputEnvelope = {
-    data: WordProgressCreateManyWordInput | WordProgressCreateManyWordInput[]
+  export type WordTaskProgressCreateManyWordInputEnvelope = {
+    data: WordTaskProgressCreateManyWordInput | WordTaskProgressCreateManyWordInput[]
     skipDuplicates?: boolean
   }
 
-  export type WordProgressUpsertWithWhereUniqueWithoutWordInput = {
-    where: WordProgressWhereUniqueInput
-    update: XOR<WordProgressUpdateWithoutWordInput, WordProgressUncheckedUpdateWithoutWordInput>
-    create: XOR<WordProgressCreateWithoutWordInput, WordProgressUncheckedCreateWithoutWordInput>
+  export type WordTaskProgressUpsertWithWhereUniqueWithoutWordInput = {
+    where: WordTaskProgressWhereUniqueInput
+    update: XOR<WordTaskProgressUpdateWithoutWordInput, WordTaskProgressUncheckedUpdateWithoutWordInput>
+    create: XOR<WordTaskProgressCreateWithoutWordInput, WordTaskProgressUncheckedCreateWithoutWordInput>
   }
 
-  export type WordProgressUpdateWithWhereUniqueWithoutWordInput = {
-    where: WordProgressWhereUniqueInput
-    data: XOR<WordProgressUpdateWithoutWordInput, WordProgressUncheckedUpdateWithoutWordInput>
+  export type WordTaskProgressUpdateWithWhereUniqueWithoutWordInput = {
+    where: WordTaskProgressWhereUniqueInput
+    data: XOR<WordTaskProgressUpdateWithoutWordInput, WordTaskProgressUncheckedUpdateWithoutWordInput>
   }
 
-  export type WordProgressUpdateManyWithWhereWithoutWordInput = {
-    where: WordProgressScalarWhereInput
-    data: XOR<WordProgressUpdateManyMutationInput, WordProgressUncheckedUpdateManyWithoutWordInput>
+  export type WordTaskProgressUpdateManyWithWhereWithoutWordInput = {
+    where: WordTaskProgressScalarWhereInput
+    data: XOR<WordTaskProgressUpdateManyMutationInput, WordTaskProgressUncheckedUpdateManyWithoutWordInput>
   }
 
   export type TaskCreateWithoutVideoInput = {
@@ -14569,7 +14773,7 @@ export namespace Prisma {
     isEmailVerified?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
-    wordProgresses?: WordProgressCreateNestedManyWithoutUserInput
+    wordProgresses?: WordTaskProgressCreateNestedManyWithoutUserInput
     setting?: SettingCreateNestedOneWithoutUserInput
   }
 
@@ -14582,7 +14786,7 @@ export namespace Prisma {
     isEmailVerified?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
-    wordProgresses?: WordProgressUncheckedCreateNestedManyWithoutUserInput
+    wordProgresses?: WordTaskProgressUncheckedCreateNestedManyWithoutUserInput
     setting?: SettingUncheckedCreateNestedOneWithoutUserInput
   }
 
@@ -14642,7 +14846,7 @@ export namespace Prisma {
     isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    wordProgresses?: WordProgressUpdateManyWithoutUserNestedInput
+    wordProgresses?: WordTaskProgressUpdateManyWithoutUserNestedInput
     setting?: SettingUpdateOneWithoutUserNestedInput
   }
 
@@ -14655,7 +14859,7 @@ export namespace Prisma {
     isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    wordProgresses?: WordProgressUncheckedUpdateManyWithoutUserNestedInput
+    wordProgresses?: WordTaskProgressUncheckedUpdateManyWithoutUserNestedInput
     setting?: SettingUncheckedUpdateOneWithoutUserNestedInput
   }
 
@@ -14706,7 +14910,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     enrollments?: EnrollmentCreateNestedManyWithoutUserInput
-    wordProgresses?: WordProgressCreateNestedManyWithoutUserInput
+    wordProgresses?: WordTaskProgressCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSettingInput = {
@@ -14719,7 +14923,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     enrollments?: EnrollmentUncheckedCreateNestedManyWithoutUserInput
-    wordProgresses?: WordProgressUncheckedCreateNestedManyWithoutUserInput
+    wordProgresses?: WordTaskProgressUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSettingInput = {
@@ -14747,7 +14951,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     enrollments?: EnrollmentUpdateManyWithoutUserNestedInput
-    wordProgresses?: WordProgressUpdateManyWithoutUserNestedInput
+    wordProgresses?: WordTaskProgressUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSettingInput = {
@@ -14760,7 +14964,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     enrollments?: EnrollmentUncheckedUpdateManyWithoutUserNestedInput
-    wordProgresses?: WordProgressUncheckedUpdateManyWithoutUserNestedInput
+    wordProgresses?: WordTaskProgressUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutWordProgressesInput = {
@@ -14801,6 +15005,8 @@ export namespace Prisma {
     example?: string | null
     partOfSpeech?: string | null
     createdAt?: Date | string
+    totalProgress?: number
+    isLearned?: boolean
   }
 
   export type WordUncheckedCreateWithoutProgressesInput = {
@@ -14812,6 +15018,8 @@ export namespace Prisma {
     example?: string | null
     partOfSpeech?: string | null
     createdAt?: Date | string
+    totalProgress?: number
+    isLearned?: boolean
   }
 
   export type WordCreateOrConnectWithoutProgressesInput = {
@@ -14874,6 +15082,8 @@ export namespace Prisma {
     example?: NullableStringFieldUpdateOperationsInput | string | null
     partOfSpeech?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    totalProgress?: IntFieldUpdateOperationsInput | number
+    isLearned?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type WordUncheckedUpdateWithoutProgressesInput = {
@@ -14885,6 +15095,8 @@ export namespace Prisma {
     example?: NullableStringFieldUpdateOperationsInput | string | null
     partOfSpeech?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    totalProgress?: IntFieldUpdateOperationsInput | number
+    isLearned?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type EnrollmentCreateManyUserInput = {
@@ -14894,11 +15106,13 @@ export namespace Prisma {
     enrolledAt?: Date | string
   }
 
-  export type WordProgressCreateManyUserInput = {
+  export type WordTaskProgressCreateManyUserInput = {
     id?: number
     wordId: number
-    progress?: number
-    isLearned?: boolean
+    taskType: $Enums.WordTaskType
+    isPassed?: boolean
+    score?: number
+    attempts?: number
   }
 
   export type EnrollmentUpdateWithoutUserInput = {
@@ -14921,51 +15135,65 @@ export namespace Prisma {
     enrolledAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type WordProgressUpdateWithoutUserInput = {
-    progress?: IntFieldUpdateOperationsInput | number
-    isLearned?: BoolFieldUpdateOperationsInput | boolean
+  export type WordTaskProgressUpdateWithoutUserInput = {
+    taskType?: EnumWordTaskTypeFieldUpdateOperationsInput | $Enums.WordTaskType
+    isPassed?: BoolFieldUpdateOperationsInput | boolean
+    score?: IntFieldUpdateOperationsInput | number
+    attempts?: IntFieldUpdateOperationsInput | number
     word?: WordUpdateOneRequiredWithoutProgressesNestedInput
   }
 
-  export type WordProgressUncheckedUpdateWithoutUserInput = {
+  export type WordTaskProgressUncheckedUpdateWithoutUserInput = {
     id?: IntFieldUpdateOperationsInput | number
     wordId?: IntFieldUpdateOperationsInput | number
-    progress?: IntFieldUpdateOperationsInput | number
-    isLearned?: BoolFieldUpdateOperationsInput | boolean
+    taskType?: EnumWordTaskTypeFieldUpdateOperationsInput | $Enums.WordTaskType
+    isPassed?: BoolFieldUpdateOperationsInput | boolean
+    score?: IntFieldUpdateOperationsInput | number
+    attempts?: IntFieldUpdateOperationsInput | number
   }
 
-  export type WordProgressUncheckedUpdateManyWithoutUserInput = {
+  export type WordTaskProgressUncheckedUpdateManyWithoutUserInput = {
     id?: IntFieldUpdateOperationsInput | number
     wordId?: IntFieldUpdateOperationsInput | number
-    progress?: IntFieldUpdateOperationsInput | number
-    isLearned?: BoolFieldUpdateOperationsInput | boolean
+    taskType?: EnumWordTaskTypeFieldUpdateOperationsInput | $Enums.WordTaskType
+    isPassed?: BoolFieldUpdateOperationsInput | boolean
+    score?: IntFieldUpdateOperationsInput | number
+    attempts?: IntFieldUpdateOperationsInput | number
   }
 
-  export type WordProgressCreateManyWordInput = {
+  export type WordTaskProgressCreateManyWordInput = {
     id?: number
     userId: number
-    progress?: number
-    isLearned?: boolean
+    taskType: $Enums.WordTaskType
+    isPassed?: boolean
+    score?: number
+    attempts?: number
   }
 
-  export type WordProgressUpdateWithoutWordInput = {
-    progress?: IntFieldUpdateOperationsInput | number
-    isLearned?: BoolFieldUpdateOperationsInput | boolean
+  export type WordTaskProgressUpdateWithoutWordInput = {
+    taskType?: EnumWordTaskTypeFieldUpdateOperationsInput | $Enums.WordTaskType
+    isPassed?: BoolFieldUpdateOperationsInput | boolean
+    score?: IntFieldUpdateOperationsInput | number
+    attempts?: IntFieldUpdateOperationsInput | number
     user?: UserUpdateOneRequiredWithoutWordProgressesNestedInput
   }
 
-  export type WordProgressUncheckedUpdateWithoutWordInput = {
+  export type WordTaskProgressUncheckedUpdateWithoutWordInput = {
     id?: IntFieldUpdateOperationsInput | number
     userId?: IntFieldUpdateOperationsInput | number
-    progress?: IntFieldUpdateOperationsInput | number
-    isLearned?: BoolFieldUpdateOperationsInput | boolean
+    taskType?: EnumWordTaskTypeFieldUpdateOperationsInput | $Enums.WordTaskType
+    isPassed?: BoolFieldUpdateOperationsInput | boolean
+    score?: IntFieldUpdateOperationsInput | number
+    attempts?: IntFieldUpdateOperationsInput | number
   }
 
-  export type WordProgressUncheckedUpdateManyWithoutWordInput = {
+  export type WordTaskProgressUncheckedUpdateManyWithoutWordInput = {
     id?: IntFieldUpdateOperationsInput | number
     userId?: IntFieldUpdateOperationsInput | number
-    progress?: IntFieldUpdateOperationsInput | number
-    isLearned?: BoolFieldUpdateOperationsInput | boolean
+    taskType?: EnumWordTaskTypeFieldUpdateOperationsInput | $Enums.WordTaskType
+    isPassed?: BoolFieldUpdateOperationsInput | boolean
+    score?: IntFieldUpdateOperationsInput | number
+    attempts?: IntFieldUpdateOperationsInput | number
   }
 
   export type TaskCreateManyVideoInput = {
