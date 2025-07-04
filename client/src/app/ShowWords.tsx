@@ -5,9 +5,11 @@ import { useStates } from "@/states/useStates";
 export function ShowWords({
   currentTab,
   getCountWords,
+  wordsLimit,
 }: {
   currentTab: "ALL" | "LEARNING" | "LEARNED";
   getCountWords: (count: number) => void;
+  wordsLimit: number;
 }) {
   const data = [
     {
@@ -38,7 +40,7 @@ export function ShowWords({
     const fetchWords = async () => {
       try {
         const response = await fetch(
-          "https://learn-english-6ufl.onrender.com/api/words/by-language",
+          `https://learn-english-6ufl.onrender.com/api/words/by-language?limit=${wordsLimit}`,
           {
             method: "GET",
             headers: {
@@ -60,7 +62,7 @@ export function ShowWords({
     if (isLoggedIn) {
       fetchWords();
     }
-  }, [isLoggedIn]);
+  }, [isLoggedIn, wordsLimit]);
   return (
     <div className="grid grid-cols-2 gap-4 py-4">
       {words.map((word, i) => (
