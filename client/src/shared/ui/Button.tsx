@@ -3,7 +3,13 @@ import { forwardRef, ReactNode } from "react";
 
 type ButtonProps = {
   children: ReactNode;
-  color?: "default" | "white" | "outline" | "outlineBlue" | "active";
+  color?:
+    | "default"
+    | "white"
+    | "outline"
+    | "outlineBlue"
+    | "active"
+    | "disabled";
   size?: "default" | "sm" | "md" | "lg" | "xl";
   rounded?: "default" | "sm" | "md" | "lg" | "xl" | "none" | "left" | "right";
   className?: string;
@@ -23,13 +29,14 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ) => {
     const colors = {
       default: "bg-blue-600 hover:bg-blue-800",
-      white: "hover:bg-gray-200 text-gray-900",
+      white: "hover:bg-gray-200 text-gray-900 cursor-pointer",
       outline:
         "hover:bg-gray-200 text-gray-900 border border-gray-200 cursor-pointer",
       active:
         "text-gray-900 border border-gray-200 bg-gray-500 cursor-not-allowed",
       outlineBlue:
         "gap-2 text-blue-600 border-blue-200 border hover:bg-blue-50 cursor-pointer",
+      disabled: "gap-2 text-gray-600 border-blue-200 border cursor-not-allowed",
     };
 
     const sizes = {

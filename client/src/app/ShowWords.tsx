@@ -6,10 +6,14 @@ export function ShowWords({
   currentTab,
   getCountWords,
   wordsLimit,
+  currentPage,
+  maxPages,
 }: {
   currentTab: "ALL" | "LEARNING" | "LEARNED";
   getCountWords: (count: number) => void;
   wordsLimit: number;
+  currentPage: number;
+  maxPages: (count: number) => void;
 }) {
   const data = [
     {
@@ -40,7 +44,7 @@ export function ShowWords({
     const fetchWords = async () => {
       try {
         const response = await fetch(
-          `https://learn-english-6ufl.onrender.com/api/words/by-language?limit=${wordsLimit}`,
+          `https://learn-english-6ufl.onrender.com/api/words/by-language?limit=${wordsLimit}&page=${currentPage}`,
           {
             method: "GET",
             headers: {
@@ -53,6 +57,7 @@ export function ShowWords({
         const data = await response.json();
         setWords(data.data);
         getCountWords(data.total);
+        maxPages(data.pages);
         console.log(data.data);
         console.log(currentTab); // якщо API повертає { words: [...] }
       } catch {
@@ -62,7 +67,7 @@ export function ShowWords({
     if (isLoggedIn) {
       fetchWords();
     }
-  }, [isLoggedIn, wordsLimit]);
+  }, [isLoggedIn, wordsLimit, currentPage]);
   return (
     <div className="grid grid-cols-2 gap-4 py-4">
       {words.map((word, i) => (
