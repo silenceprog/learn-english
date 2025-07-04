@@ -2,10 +2,13 @@ import { ShowWord, Word } from "@/app/ShowWord";
 import { useEffect, useState } from "react";
 import { useStates } from "@/states/useStates";
 
-interface Tabs {
-  currentTab: "ALL" | "DO" | "DONE";
-}
-export function ShowWords(Tabs: Tabs) {
+export function ShowWords({
+  currentTab,
+  getCountWords,
+}: {
+  currentTab: "ALL" | "LEARNING" | "LEARNED";
+  getCountWords: (count: number) => void;
+}) {
   const data = [
     {
       text: "accomplish",
@@ -47,8 +50,9 @@ export function ShowWords(Tabs: Tabs) {
 
         const data = await response.json();
         setWords(data.data);
+        getCountWords(data.total);
         console.log(data.data);
-        console.log(Tabs.currentTab); // якщо API повертає { words: [...] }
+        console.log(currentTab); // якщо API повертає { words: [...] }
       } catch {
         console.log("Щось пішло не так1");
       }

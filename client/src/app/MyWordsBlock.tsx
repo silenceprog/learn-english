@@ -4,7 +4,10 @@ import { useState } from "react";
 import { ShowWords } from "@/app/ShowWords";
 
 export function MyWordsBlock() {
-  const [activeTab, setActiveTab] = useState<"ALL" | "DO" | "DONE">("ALL");
+  const [activeTab, setActiveTab] = useState<"ALL" | "LEARNING" | "LEARNED">(
+    "ALL",
+  );
+  const [totalWords, setTotalWords] = useState(0);
   return (
     <div>
       <div className="text-xl font-bold text-blue-700 flex items-center justify-between">
@@ -16,7 +19,7 @@ export function MyWordsBlock() {
           </div>
         </Button>
       </div>
-      <p className="text-gray-500 py-2">Всего изучено слов: 5</p>
+      <p className="text-gray-500 py-2">Всего изучено слов: {totalWords}</p>
       <div>
         <Button
           color={activeTab === "ALL" ? "active" : "outline"}
@@ -28,25 +31,25 @@ export function MyWordsBlock() {
           Все слова
         </Button>
         <Button
-          color={activeTab === "DO" ? "active" : "outline"}
+          color={activeTab === "LEARNING" ? "active" : "outline"}
           rounded="none"
           onClick={() => {
-            setActiveTab("DO");
+            setActiveTab("LEARNING");
           }}
         >
           Изучаемые
         </Button>
         <Button
-          color={activeTab === "DONE" ? "active" : "outline"}
+          color={activeTab === "LEARNED" ? "active" : "outline"}
           rounded="right"
           onClick={() => {
-            setActiveTab("DONE");
+            setActiveTab("LEARNED");
           }}
         >
           Изученные
         </Button>
       </div>
-      <ShowWords currentTab={activeTab} />
+      <ShowWords currentTab={activeTab} getCountWords={setTotalWords} />
     </div>
   );
 }
