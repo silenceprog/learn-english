@@ -42,24 +42,30 @@ export function ShowWords({
   const { isLoggedIn } = useStates();
   useEffect(() => {
     const fetchWords = async () => {
+      const baseUrl =
+        "https://learn-english-6ufl.onrender.com/api/words/by-language";
+      const params = new URLSearchParams({
+        limit: wordsLimit.toString(),
+        page: currentPage.toString(),
+      });
+      const tab: string = currentTab.toLowerCase();
+      if (tab !== "all") {
+        params.append("type", tab);
+      }
+      const url = `${baseUrl}?${params}`;
       try {
-        const response = await fetch(
-          `https://learn-english-6ufl.onrender.com/api/words/by-language?limit=${wordsLimit}&page=${currentPage}`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-            },
+        const response = await fetch(url, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("access_token")}`,
           },
-        );
+        });
 
         const data = await response.json();
         setWords(data.data);
         getCountWords(data.total);
         maxPages(data.pages);
-        console.log(data.data);
-        console.log(currentTab); // якщо API повертає { words: [...] }
       } catch {
         console.log("Щось пішло не так1");
       }
@@ -67,7 +73,7 @@ export function ShowWords({
     if (isLoggedIn) {
       fetchWords();
     }
-  }, [isLoggedIn, wordsLimit, currentPage]);
+  }, [isLoggedIn, wordsLimit, currentPage, currentTab]);
   return (
     <div className="grid grid-cols-2 gap-4 py-4">
       {words.map((word, i) => (
