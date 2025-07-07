@@ -37,30 +37,30 @@ export class WordsService {
   }
 
   async searchWords(userId: number, query: string) {
-  const setting = await this.databaseService.setting.findUnique({
-    where: { userId },
-  });
+    const setting = await this.databaseService.setting.findUnique({
+      where: { userId },
+    });
 
-  if (!setting) {
-    throw new NotFoundException('User settings not found');
-  }
+    if (!setting) {
+      throw new NotFoundException('User settings not found');
+    }
 
-  return this.databaseService.word.findMany({
-    where: {
-      language: setting.current_language,
-      text: {
-        startsWith: query,
-        mode: 'insensitive',
-      },
-      progresses: {
-        some: {
-          userId,
+    return this.databaseService.word.findMany({
+      where: {
+        language: setting.current_language,
+        text: {
+          startsWith: query,
+          mode: 'insensitive',
+        },
+        progresses: {
+          some: {
+            userId,
+          },
         },
       },
-    },
-    take: 10,
-  });
-}
+      take: 10,
+    });
+  }
 
   async findById(id: number) {
     return this.databaseService.word.findUnique({
@@ -70,12 +70,8 @@ export class WordsService {
     });
   }
 
-  async getWordsByUserLanguage(
-    userId: number,
-    paginationDto: PaginationDto,
-    type?: 'learned' | 'learning',
-  ) {
-    const { page = 1, limit = 10 } = paginationDto;
+  async getWordsByUserLanguage(userId: number, paginationDto: PaginationDto) {
+    const { page = 1, limit = 10, type } = paginationDto;
     const skip = (page - 1) * limit;
 
     const setting = await this.databaseService.setting.findUnique({
@@ -86,25 +82,29 @@ export class WordsService {
       throw new NotFoundException('User settings not found');
     }
 
-    const baseWhere: any = {
-      language: setting.current_language,
-    };
-
-    if (type === 'learned') baseWhere.isLearned = true;
-    if (type === 'learning') baseWhere.isLearned = false;
-
-    const [words, totalCount, learnedCount, learningCount] =
+    const [allWords, totalCount, learnedCount, learningCount] =
       await this.databaseService.$transaction([
         this.databaseService.word.findMany({
-          where: baseWhere,
-          skip,
-          take: limit,
+          where: {
+            language: setting.current_language,
+            progresses: {
+              some: {
+                userId,
+              },
+            },
+          },
           include: {
             progresses: {
               where: { userId },
-              select: {
-                taskType: true,
-                isPassed: true,
+            },
+          },
+        }),
+        this.databaseService.word.count({
+          where: {
+            language: setting.current_language,
+            progresses: {
+              some: {
+                userId,
               },
             },
           },
@@ -112,30 +112,48 @@ export class WordsService {
         this.databaseService.word.count({
           where: {
             language: setting.current_language,
-          },
-        }),
-        this.databaseService.word.count({
-          where: {
-            language: setting.current_language,
             isLearned: true,
+            progresses: {
+              some: {
+                userId,
+              },
+            },
           },
         }),
         this.databaseService.word.count({
           where: {
             language: setting.current_language,
             isLearned: false,
+            progresses: {
+              some: {
+                userId,
+              },
+            },
           },
         }),
       ]);
 
+    const filteredWords = allWords.filter((word) => {
+      const userProgresses = word.progresses;
+      const allPassed =
+        userProgresses.length > 0 && userProgresses.every((p) => p.isPassed);
+
+      if (type === 'learned') return allPassed;
+      if (type === 'learning') return !allPassed;
+
+      return true;
+    });
+
+    const paginatedWords = filteredWords.slice(skip, skip + limit);
+
     return {
-      data: words,
+      data: paginatedWords,
       page,
       limit,
       total: totalCount,
-      learned: learnedCount,
       learning: learningCount,
-      pages: Math.ceil(totalCount / limit),
+      learned: learnedCount,
+      pages: Math.ceil(filteredWords.length / limit),
     };
   }
 

@@ -1,9 +1,10 @@
 import { Controller, Get, Query } from '@nestjs/common';
 import { TranslateService } from './translate.service';
 import { Language } from './enums/language.enum';
-import { ApiQuery, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiQuery, ApiOperation, ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 
 @ApiTags('Translation')
+@ApiBearerAuth('access-token')
 @Controller('translate')
 export class TranslateController {
   constructor(private readonly translateService: TranslateService) {}

@@ -53,9 +53,9 @@ export class WordsController {
   @ApiOperation({
     summary: 'Отримати слова за поточними налаштуваннями мови користувача',
   })
-  getWordsByUser(@Req() req, @Query() paginationDto: PaginationDto,@Query() type) {
+  getWordsByUser(@Req() req, @Query() paginationDto: PaginationDto) {
     const userId = req.user.id;
-    return this.wordsService.getWordsByUserLanguage(userId, paginationDto,type);
+    return this.wordsService.getWordsByUserLanguage(userId, paginationDto);
   }
 
   @ApiOperation({ summary: 'Отримання слова по айді' })
