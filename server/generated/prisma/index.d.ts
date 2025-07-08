@@ -1599,11 +1599,15 @@ export namespace Prisma {
   export type UserCountOutputType = {
     enrollments: number
     wordProgresses: number
+    courses: number
+    tasks: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     enrollments?: boolean | UserCountOutputTypeCountEnrollmentsArgs
     wordProgresses?: boolean | UserCountOutputTypeCountWordProgressesArgs
+    courses?: boolean | UserCountOutputTypeCountCoursesArgs
+    tasks?: boolean | UserCountOutputTypeCountTasksArgs
   }
 
   // Custom InputTypes
@@ -1629,6 +1633,20 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountWordProgressesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: WordTaskProgressWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountCoursesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CourseWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountTasksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TaskWhereInput
   }
 
 
@@ -1776,6 +1794,9 @@ export namespace Prisma {
     isEmailVerified: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
+    deleteAt: Date | null
+    lastLoginAt: Date | null
+    provider: string | null
   }
 
   export type UserMaxAggregateOutputType = {
@@ -1787,6 +1808,9 @@ export namespace Prisma {
     isEmailVerified: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
+    deleteAt: Date | null
+    lastLoginAt: Date | null
+    provider: string | null
   }
 
   export type UserCountAggregateOutputType = {
@@ -1798,6 +1822,9 @@ export namespace Prisma {
     isEmailVerified: number
     createdAt: number
     updatedAt: number
+    deleteAt: number
+    lastLoginAt: number
+    provider: number
     _all: number
   }
 
@@ -1819,6 +1846,9 @@ export namespace Prisma {
     isEmailVerified?: true
     createdAt?: true
     updatedAt?: true
+    deleteAt?: true
+    lastLoginAt?: true
+    provider?: true
   }
 
   export type UserMaxAggregateInputType = {
@@ -1830,6 +1860,9 @@ export namespace Prisma {
     isEmailVerified?: true
     createdAt?: true
     updatedAt?: true
+    deleteAt?: true
+    lastLoginAt?: true
+    provider?: true
   }
 
   export type UserCountAggregateInputType = {
@@ -1841,6 +1874,9 @@ export namespace Prisma {
     isEmailVerified?: true
     createdAt?: true
     updatedAt?: true
+    deleteAt?: true
+    lastLoginAt?: true
+    provider?: true
     _all?: true
   }
 
@@ -1939,6 +1975,9 @@ export namespace Prisma {
     isEmailVerified: boolean
     createdAt: Date
     updatedAt: Date
+    deleteAt: Date | null
+    lastLoginAt: Date | null
+    provider: string | null
     _count: UserCountAggregateOutputType | null
     _avg: UserAvgAggregateOutputType | null
     _sum: UserSumAggregateOutputType | null
@@ -1969,8 +2008,13 @@ export namespace Prisma {
     isEmailVerified?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    deleteAt?: boolean
+    lastLoginAt?: boolean
+    provider?: boolean
     enrollments?: boolean | User$enrollmentsArgs<ExtArgs>
     wordProgresses?: boolean | User$wordProgressesArgs<ExtArgs>
+    courses?: boolean | User$coursesArgs<ExtArgs>
+    tasks?: boolean | User$tasksArgs<ExtArgs>
     setting?: boolean | User$settingArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
@@ -1984,6 +2028,9 @@ export namespace Prisma {
     isEmailVerified?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    deleteAt?: boolean
+    lastLoginAt?: boolean
+    provider?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -1995,6 +2042,9 @@ export namespace Prisma {
     isEmailVerified?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    deleteAt?: boolean
+    lastLoginAt?: boolean
+    provider?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
@@ -2006,12 +2056,17 @@ export namespace Prisma {
     isEmailVerified?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    deleteAt?: boolean
+    lastLoginAt?: boolean
+    provider?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "username" | "password" | "role" | "isEmailVerified" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "username" | "password" | "role" | "isEmailVerified" | "createdAt" | "updatedAt" | "deleteAt" | "lastLoginAt" | "provider", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     enrollments?: boolean | User$enrollmentsArgs<ExtArgs>
     wordProgresses?: boolean | User$wordProgressesArgs<ExtArgs>
+    courses?: boolean | User$coursesArgs<ExtArgs>
+    tasks?: boolean | User$tasksArgs<ExtArgs>
     setting?: boolean | User$settingArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
@@ -2023,6 +2078,8 @@ export namespace Prisma {
     objects: {
       enrollments: Prisma.$EnrollmentPayload<ExtArgs>[]
       wordProgresses: Prisma.$WordTaskProgressPayload<ExtArgs>[]
+      courses: Prisma.$CoursePayload<ExtArgs>[]
+      tasks: Prisma.$TaskPayload<ExtArgs>[]
       setting: Prisma.$SettingPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -2034,6 +2091,9 @@ export namespace Prisma {
       isEmailVerified: boolean
       createdAt: Date
       updatedAt: Date
+      deleteAt: Date | null
+      lastLoginAt: Date | null
+      provider: string | null
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -2430,6 +2490,8 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     enrollments<T extends User$enrollmentsArgs<ExtArgs> = {}>(args?: Subset<T, User$enrollmentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EnrollmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     wordProgresses<T extends User$wordProgressesArgs<ExtArgs> = {}>(args?: Subset<T, User$wordProgressesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WordTaskProgressPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    courses<T extends User$coursesArgs<ExtArgs> = {}>(args?: Subset<T, User$coursesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CoursePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    tasks<T extends User$tasksArgs<ExtArgs> = {}>(args?: Subset<T, User$tasksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     setting<T extends User$settingArgs<ExtArgs> = {}>(args?: Subset<T, User$settingArgs<ExtArgs>>): Prisma__SettingClient<$Result.GetResult<Prisma.$SettingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -2468,6 +2530,9 @@ export namespace Prisma {
     readonly isEmailVerified: FieldRef<"User", 'Boolean'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
     readonly updatedAt: FieldRef<"User", 'DateTime'>
+    readonly deleteAt: FieldRef<"User", 'DateTime'>
+    readonly lastLoginAt: FieldRef<"User", 'DateTime'>
+    readonly provider: FieldRef<"User", 'String'>
   }
     
 
@@ -2904,6 +2969,54 @@ export namespace Prisma {
   }
 
   /**
+   * User.courses
+   */
+  export type User$coursesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Course
+     */
+    select?: CourseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Course
+     */
+    omit?: CourseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CourseInclude<ExtArgs> | null
+    where?: CourseWhereInput
+    orderBy?: CourseOrderByWithRelationInput | CourseOrderByWithRelationInput[]
+    cursor?: CourseWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CourseScalarFieldEnum | CourseScalarFieldEnum[]
+  }
+
+  /**
+   * User.tasks
+   */
+  export type User$tasksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Task
+     */
+    select?: TaskSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Task
+     */
+    omit?: TaskOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TaskInclude<ExtArgs> | null
+    where?: TaskWhereInput
+    orderBy?: TaskOrderByWithRelationInput | TaskOrderByWithRelationInput[]
+    cursor?: TaskWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: TaskScalarFieldEnum | TaskScalarFieldEnum[]
+  }
+
+  /**
    * User.setting
    */
   export type User$settingArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2972,6 +3085,10 @@ export namespace Prisma {
     createdAt: Date | null
     totalProgress: number | null
     isLearned: boolean | null
+    phonetic: string | null
+    audio: string | null
+    phoneticUS: string | null
+    audioUS: string | null
   }
 
   export type WordMaxAggregateOutputType = {
@@ -2983,6 +3100,10 @@ export namespace Prisma {
     createdAt: Date | null
     totalProgress: number | null
     isLearned: boolean | null
+    phonetic: string | null
+    audio: string | null
+    phoneticUS: string | null
+    audioUS: string | null
   }
 
   export type WordCountAggregateOutputType = {
@@ -2996,6 +3117,10 @@ export namespace Prisma {
     createdAt: number
     totalProgress: number
     isLearned: number
+    phonetic: number
+    audio: number
+    phoneticUS: number
+    audioUS: number
     _all: number
   }
 
@@ -3019,6 +3144,10 @@ export namespace Prisma {
     createdAt?: true
     totalProgress?: true
     isLearned?: true
+    phonetic?: true
+    audio?: true
+    phoneticUS?: true
+    audioUS?: true
   }
 
   export type WordMaxAggregateInputType = {
@@ -3030,6 +3159,10 @@ export namespace Prisma {
     createdAt?: true
     totalProgress?: true
     isLearned?: true
+    phonetic?: true
+    audio?: true
+    phoneticUS?: true
+    audioUS?: true
   }
 
   export type WordCountAggregateInputType = {
@@ -3043,6 +3176,10 @@ export namespace Prisma {
     createdAt?: true
     totalProgress?: true
     isLearned?: true
+    phonetic?: true
+    audio?: true
+    phoneticUS?: true
+    audioUS?: true
     _all?: true
   }
 
@@ -3143,6 +3280,10 @@ export namespace Prisma {
     createdAt: Date
     totalProgress: number
     isLearned: boolean
+    phonetic: string
+    audio: string
+    phoneticUS: string | null
+    audioUS: string | null
     _count: WordCountAggregateOutputType | null
     _avg: WordAvgAggregateOutputType | null
     _sum: WordSumAggregateOutputType | null
@@ -3175,6 +3316,10 @@ export namespace Prisma {
     createdAt?: boolean
     totalProgress?: boolean
     isLearned?: boolean
+    phonetic?: boolean
+    audio?: boolean
+    phoneticUS?: boolean
+    audioUS?: boolean
     progresses?: boolean | Word$progressesArgs<ExtArgs>
     _count?: boolean | WordCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["word"]>
@@ -3190,6 +3335,10 @@ export namespace Prisma {
     createdAt?: boolean
     totalProgress?: boolean
     isLearned?: boolean
+    phonetic?: boolean
+    audio?: boolean
+    phoneticUS?: boolean
+    audioUS?: boolean
   }, ExtArgs["result"]["word"]>
 
   export type WordSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -3203,6 +3352,10 @@ export namespace Prisma {
     createdAt?: boolean
     totalProgress?: boolean
     isLearned?: boolean
+    phonetic?: boolean
+    audio?: boolean
+    phoneticUS?: boolean
+    audioUS?: boolean
   }, ExtArgs["result"]["word"]>
 
   export type WordSelectScalar = {
@@ -3216,9 +3369,13 @@ export namespace Prisma {
     createdAt?: boolean
     totalProgress?: boolean
     isLearned?: boolean
+    phonetic?: boolean
+    audio?: boolean
+    phoneticUS?: boolean
+    audioUS?: boolean
   }
 
-  export type WordOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "text" | "language" | "translate" | "meaning" | "example" | "partOfSpeech" | "createdAt" | "totalProgress" | "isLearned", ExtArgs["result"]["word"]>
+  export type WordOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "text" | "language" | "translate" | "meaning" | "example" | "partOfSpeech" | "createdAt" | "totalProgress" | "isLearned" | "phonetic" | "audio" | "phoneticUS" | "audioUS", ExtArgs["result"]["word"]>
   export type WordInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     progresses?: boolean | Word$progressesArgs<ExtArgs>
     _count?: boolean | WordCountOutputTypeDefaultArgs<ExtArgs>
@@ -3242,6 +3399,10 @@ export namespace Prisma {
       createdAt: Date
       totalProgress: number
       isLearned: boolean
+      phonetic: string
+      audio: string
+      phoneticUS: string | null
+      audioUS: string | null
     }, ExtArgs["result"]["word"]>
     composites: {}
   }
@@ -3676,6 +3837,10 @@ export namespace Prisma {
     readonly createdAt: FieldRef<"Word", 'DateTime'>
     readonly totalProgress: FieldRef<"Word", 'Int'>
     readonly isLearned: FieldRef<"Word", 'Boolean'>
+    readonly phonetic: FieldRef<"Word", 'String'>
+    readonly audio: FieldRef<"Word", 'String'>
+    readonly phoneticUS: FieldRef<"Word", 'String'>
+    readonly audioUS: FieldRef<"Word", 'String'>
   }
     
 
@@ -5301,6 +5466,8 @@ export namespace Prisma {
   export type TaskAvgAggregateOutputType = {
     id: number | null
     score: number | null
+    order: number | null
+    authorId: number | null
     videoId: number | null
     courseId: number | null
   }
@@ -5308,6 +5475,8 @@ export namespace Prisma {
   export type TaskSumAggregateOutputType = {
     id: number | null
     score: number | null
+    order: number | null
+    authorId: number | null
     videoId: number | null
     courseId: number | null
   }
@@ -5320,6 +5489,9 @@ export namespace Prisma {
     score: number | null
     createdAt: Date | null
     language: $Enums.Language | null
+    order: number | null
+    explanation: string | null
+    authorId: number | null
     videoId: number | null
     courseId: number | null
   }
@@ -5332,6 +5504,9 @@ export namespace Prisma {
     score: number | null
     createdAt: Date | null
     language: $Enums.Language | null
+    order: number | null
+    explanation: string | null
+    authorId: number | null
     videoId: number | null
     courseId: number | null
   }
@@ -5345,6 +5520,9 @@ export namespace Prisma {
     score: number
     createdAt: number
     language: number
+    order: number
+    explanation: number
+    authorId: number
     videoId: number
     courseId: number
     _all: number
@@ -5354,6 +5532,8 @@ export namespace Prisma {
   export type TaskAvgAggregateInputType = {
     id?: true
     score?: true
+    order?: true
+    authorId?: true
     videoId?: true
     courseId?: true
   }
@@ -5361,6 +5541,8 @@ export namespace Prisma {
   export type TaskSumAggregateInputType = {
     id?: true
     score?: true
+    order?: true
+    authorId?: true
     videoId?: true
     courseId?: true
   }
@@ -5373,6 +5555,9 @@ export namespace Prisma {
     score?: true
     createdAt?: true
     language?: true
+    order?: true
+    explanation?: true
+    authorId?: true
     videoId?: true
     courseId?: true
   }
@@ -5385,6 +5570,9 @@ export namespace Prisma {
     score?: true
     createdAt?: true
     language?: true
+    order?: true
+    explanation?: true
+    authorId?: true
     videoId?: true
     courseId?: true
   }
@@ -5398,6 +5586,9 @@ export namespace Prisma {
     score?: true
     createdAt?: true
     language?: true
+    order?: true
+    explanation?: true
+    authorId?: true
     videoId?: true
     courseId?: true
     _all?: true
@@ -5498,6 +5689,9 @@ export namespace Prisma {
     score: number | null
     createdAt: Date
     language: $Enums.Language
+    order: number | null
+    explanation: string | null
+    authorId: number | null
     videoId: number | null
     courseId: number | null
     _count: TaskCountAggregateOutputType | null
@@ -5530,8 +5724,12 @@ export namespace Prisma {
     score?: boolean
     createdAt?: boolean
     language?: boolean
+    order?: boolean
+    explanation?: boolean
+    authorId?: boolean
     videoId?: boolean
     courseId?: boolean
+    author?: boolean | Task$authorArgs<ExtArgs>
     video?: boolean | Task$videoArgs<ExtArgs>
     course?: boolean | Task$courseArgs<ExtArgs>
   }, ExtArgs["result"]["task"]>
@@ -5545,8 +5743,12 @@ export namespace Prisma {
     score?: boolean
     createdAt?: boolean
     language?: boolean
+    order?: boolean
+    explanation?: boolean
+    authorId?: boolean
     videoId?: boolean
     courseId?: boolean
+    author?: boolean | Task$authorArgs<ExtArgs>
     video?: boolean | Task$videoArgs<ExtArgs>
     course?: boolean | Task$courseArgs<ExtArgs>
   }, ExtArgs["result"]["task"]>
@@ -5560,8 +5762,12 @@ export namespace Prisma {
     score?: boolean
     createdAt?: boolean
     language?: boolean
+    order?: boolean
+    explanation?: boolean
+    authorId?: boolean
     videoId?: boolean
     courseId?: boolean
+    author?: boolean | Task$authorArgs<ExtArgs>
     video?: boolean | Task$videoArgs<ExtArgs>
     course?: boolean | Task$courseArgs<ExtArgs>
   }, ExtArgs["result"]["task"]>
@@ -5575,20 +5781,26 @@ export namespace Prisma {
     score?: boolean
     createdAt?: boolean
     language?: boolean
+    order?: boolean
+    explanation?: boolean
+    authorId?: boolean
     videoId?: boolean
     courseId?: boolean
   }
 
-  export type TaskOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "question" | "answer" | "options" | "type" | "score" | "createdAt" | "language" | "videoId" | "courseId", ExtArgs["result"]["task"]>
+  export type TaskOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "question" | "answer" | "options" | "type" | "score" | "createdAt" | "language" | "order" | "explanation" | "authorId" | "videoId" | "courseId", ExtArgs["result"]["task"]>
   export type TaskInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    author?: boolean | Task$authorArgs<ExtArgs>
     video?: boolean | Task$videoArgs<ExtArgs>
     course?: boolean | Task$courseArgs<ExtArgs>
   }
   export type TaskIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    author?: boolean | Task$authorArgs<ExtArgs>
     video?: boolean | Task$videoArgs<ExtArgs>
     course?: boolean | Task$courseArgs<ExtArgs>
   }
   export type TaskIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    author?: boolean | Task$authorArgs<ExtArgs>
     video?: boolean | Task$videoArgs<ExtArgs>
     course?: boolean | Task$courseArgs<ExtArgs>
   }
@@ -5596,6 +5808,7 @@ export namespace Prisma {
   export type $TaskPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Task"
     objects: {
+      author: Prisma.$UserPayload<ExtArgs> | null
       video: Prisma.$VideoPayload<ExtArgs> | null
       course: Prisma.$CoursePayload<ExtArgs> | null
     }
@@ -5608,6 +5821,9 @@ export namespace Prisma {
       score: number | null
       createdAt: Date
       language: $Enums.Language
+      order: number | null
+      explanation: string | null
+      authorId: number | null
       videoId: number | null
       courseId: number | null
     }, ExtArgs["result"]["task"]>
@@ -6004,6 +6220,7 @@ export namespace Prisma {
    */
   export interface Prisma__TaskClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    author<T extends Task$authorArgs<ExtArgs> = {}>(args?: Subset<T, Task$authorArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     video<T extends Task$videoArgs<ExtArgs> = {}>(args?: Subset<T, Task$videoArgs<ExtArgs>>): Prisma__VideoClient<$Result.GetResult<Prisma.$VideoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     course<T extends Task$courseArgs<ExtArgs> = {}>(args?: Subset<T, Task$courseArgs<ExtArgs>>): Prisma__CourseClient<$Result.GetResult<Prisma.$CoursePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
@@ -6043,6 +6260,9 @@ export namespace Prisma {
     readonly score: FieldRef<"Task", 'Int'>
     readonly createdAt: FieldRef<"Task", 'DateTime'>
     readonly language: FieldRef<"Task", 'Language'>
+    readonly order: FieldRef<"Task", 'Int'>
+    readonly explanation: FieldRef<"Task", 'String'>
+    readonly authorId: FieldRef<"Task", 'Int'>
     readonly videoId: FieldRef<"Task", 'Int'>
     readonly courseId: FieldRef<"Task", 'Int'>
   }
@@ -6441,6 +6661,25 @@ export namespace Prisma {
   }
 
   /**
+   * Task.author
+   */
+  export type Task$authorArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+  }
+
+  /**
    * Task.video
    */
   export type Task$videoArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -6511,10 +6750,12 @@ export namespace Prisma {
 
   export type CourseAvgAggregateOutputType = {
     id: number | null
+    authorId: number | null
   }
 
   export type CourseSumAggregateOutputType = {
     id: number | null
+    authorId: number | null
   }
 
   export type CourseMinAggregateOutputType = {
@@ -6526,6 +6767,7 @@ export namespace Prisma {
     isPublished: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
+    authorId: number | null
   }
 
   export type CourseMaxAggregateOutputType = {
@@ -6537,6 +6779,7 @@ export namespace Prisma {
     isPublished: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
+    authorId: number | null
   }
 
   export type CourseCountAggregateOutputType = {
@@ -6549,16 +6792,19 @@ export namespace Prisma {
     createdAt: number
     updatedAt: number
     tags: number
+    authorId: number
     _all: number
   }
 
 
   export type CourseAvgAggregateInputType = {
     id?: true
+    authorId?: true
   }
 
   export type CourseSumAggregateInputType = {
     id?: true
+    authorId?: true
   }
 
   export type CourseMinAggregateInputType = {
@@ -6570,6 +6816,7 @@ export namespace Prisma {
     isPublished?: true
     createdAt?: true
     updatedAt?: true
+    authorId?: true
   }
 
   export type CourseMaxAggregateInputType = {
@@ -6581,6 +6828,7 @@ export namespace Prisma {
     isPublished?: true
     createdAt?: true
     updatedAt?: true
+    authorId?: true
   }
 
   export type CourseCountAggregateInputType = {
@@ -6593,6 +6841,7 @@ export namespace Prisma {
     createdAt?: true
     updatedAt?: true
     tags?: true
+    authorId?: true
     _all?: true
   }
 
@@ -6692,6 +6941,7 @@ export namespace Prisma {
     createdAt: Date
     updatedAt: Date
     tags: string[]
+    authorId: number | null
     _count: CourseCountAggregateOutputType | null
     _avg: CourseAvgAggregateOutputType | null
     _sum: CourseSumAggregateOutputType | null
@@ -6723,9 +6973,11 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     tags?: boolean
+    authorId?: boolean
     tasks?: boolean | Course$tasksArgs<ExtArgs>
     enrollments?: boolean | Course$enrollmentsArgs<ExtArgs>
     videos?: boolean | Course$videosArgs<ExtArgs>
+    author?: boolean | Course$authorArgs<ExtArgs>
     _count?: boolean | CourseCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["course"]>
 
@@ -6739,6 +6991,8 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     tags?: boolean
+    authorId?: boolean
+    author?: boolean | Course$authorArgs<ExtArgs>
   }, ExtArgs["result"]["course"]>
 
   export type CourseSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -6751,6 +7005,8 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     tags?: boolean
+    authorId?: boolean
+    author?: boolean | Course$authorArgs<ExtArgs>
   }, ExtArgs["result"]["course"]>
 
   export type CourseSelectScalar = {
@@ -6763,17 +7019,23 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     tags?: boolean
+    authorId?: boolean
   }
 
-  export type CourseOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "imageUrl" | "level" | "isPublished" | "createdAt" | "updatedAt" | "tags", ExtArgs["result"]["course"]>
+  export type CourseOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "imageUrl" | "level" | "isPublished" | "createdAt" | "updatedAt" | "tags" | "authorId", ExtArgs["result"]["course"]>
   export type CourseInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     tasks?: boolean | Course$tasksArgs<ExtArgs>
     enrollments?: boolean | Course$enrollmentsArgs<ExtArgs>
     videos?: boolean | Course$videosArgs<ExtArgs>
+    author?: boolean | Course$authorArgs<ExtArgs>
     _count?: boolean | CourseCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type CourseIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type CourseIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type CourseIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    author?: boolean | Course$authorArgs<ExtArgs>
+  }
+  export type CourseIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    author?: boolean | Course$authorArgs<ExtArgs>
+  }
 
   export type $CoursePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Course"
@@ -6781,6 +7043,7 @@ export namespace Prisma {
       tasks: Prisma.$TaskPayload<ExtArgs>[]
       enrollments: Prisma.$EnrollmentPayload<ExtArgs>[]
       videos: Prisma.$VideoPayload<ExtArgs>[]
+      author: Prisma.$UserPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -6792,6 +7055,7 @@ export namespace Prisma {
       createdAt: Date
       updatedAt: Date
       tags: string[]
+      authorId: number | null
     }, ExtArgs["result"]["course"]>
     composites: {}
   }
@@ -7189,6 +7453,7 @@ export namespace Prisma {
     tasks<T extends Course$tasksArgs<ExtArgs> = {}>(args?: Subset<T, Course$tasksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     enrollments<T extends Course$enrollmentsArgs<ExtArgs> = {}>(args?: Subset<T, Course$enrollmentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EnrollmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     videos<T extends Course$videosArgs<ExtArgs> = {}>(args?: Subset<T, Course$videosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VideoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    author<T extends Course$authorArgs<ExtArgs> = {}>(args?: Subset<T, Course$authorArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7227,6 +7492,7 @@ export namespace Prisma {
     readonly createdAt: FieldRef<"Course", 'DateTime'>
     readonly updatedAt: FieldRef<"Course", 'DateTime'>
     readonly tags: FieldRef<"Course", 'String[]'>
+    readonly authorId: FieldRef<"Course", 'Int'>
   }
     
 
@@ -7476,6 +7742,10 @@ export namespace Prisma {
      */
     data: CourseCreateManyInput | CourseCreateManyInput[]
     skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CourseIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -7546,6 +7816,10 @@ export namespace Prisma {
      * Limit how many Courses to update.
      */
     limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CourseIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -7684,6 +7958,25 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: VideoScalarFieldEnum | VideoScalarFieldEnum[]
+  }
+
+  /**
+   * Course.author
+   */
+  export type Course$authorArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
   }
 
   /**
@@ -11086,7 +11379,10 @@ export namespace Prisma {
     role: 'role',
     isEmailVerified: 'isEmailVerified',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    updatedAt: 'updatedAt',
+    deleteAt: 'deleteAt',
+    lastLoginAt: 'lastLoginAt',
+    provider: 'provider'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -11102,7 +11398,11 @@ export namespace Prisma {
     partOfSpeech: 'partOfSpeech',
     createdAt: 'createdAt',
     totalProgress: 'totalProgress',
-    isLearned: 'isLearned'
+    isLearned: 'isLearned',
+    phonetic: 'phonetic',
+    audio: 'audio',
+    phoneticUS: 'phoneticUS',
+    audioUS: 'audioUS'
   };
 
   export type WordScalarFieldEnum = (typeof WordScalarFieldEnum)[keyof typeof WordScalarFieldEnum]
@@ -11131,6 +11431,9 @@ export namespace Prisma {
     score: 'score',
     createdAt: 'createdAt',
     language: 'language',
+    order: 'order',
+    explanation: 'explanation',
+    authorId: 'authorId',
     videoId: 'videoId',
     courseId: 'courseId'
   };
@@ -11147,7 +11450,8 @@ export namespace Prisma {
     isPublished: 'isPublished',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
-    tags: 'tags'
+    tags: 'tags',
+    authorId: 'authorId'
   };
 
   export type CourseScalarFieldEnum = (typeof CourseScalarFieldEnum)[keyof typeof CourseScalarFieldEnum]
@@ -11380,8 +11684,13 @@ export namespace Prisma {
     isEmailVerified?: BoolFilter<"User"> | boolean
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
+    deleteAt?: DateTimeNullableFilter<"User"> | Date | string | null
+    lastLoginAt?: DateTimeNullableFilter<"User"> | Date | string | null
+    provider?: StringNullableFilter<"User"> | string | null
     enrollments?: EnrollmentListRelationFilter
     wordProgresses?: WordTaskProgressListRelationFilter
+    courses?: CourseListRelationFilter
+    tasks?: TaskListRelationFilter
     setting?: XOR<SettingNullableScalarRelationFilter, SettingWhereInput> | null
   }
 
@@ -11394,8 +11703,13 @@ export namespace Prisma {
     isEmailVerified?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    deleteAt?: SortOrderInput | SortOrder
+    lastLoginAt?: SortOrderInput | SortOrder
+    provider?: SortOrderInput | SortOrder
     enrollments?: EnrollmentOrderByRelationAggregateInput
     wordProgresses?: WordTaskProgressOrderByRelationAggregateInput
+    courses?: CourseOrderByRelationAggregateInput
+    tasks?: TaskOrderByRelationAggregateInput
     setting?: SettingOrderByWithRelationInput
   }
 
@@ -11411,8 +11725,13 @@ export namespace Prisma {
     isEmailVerified?: BoolFilter<"User"> | boolean
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
+    deleteAt?: DateTimeNullableFilter<"User"> | Date | string | null
+    lastLoginAt?: DateTimeNullableFilter<"User"> | Date | string | null
+    provider?: StringNullableFilter<"User"> | string | null
     enrollments?: EnrollmentListRelationFilter
     wordProgresses?: WordTaskProgressListRelationFilter
+    courses?: CourseListRelationFilter
+    tasks?: TaskListRelationFilter
     setting?: XOR<SettingNullableScalarRelationFilter, SettingWhereInput> | null
   }, "id" | "email" | "username">
 
@@ -11425,6 +11744,9 @@ export namespace Prisma {
     isEmailVerified?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    deleteAt?: SortOrderInput | SortOrder
+    lastLoginAt?: SortOrderInput | SortOrder
+    provider?: SortOrderInput | SortOrder
     _count?: UserCountOrderByAggregateInput
     _avg?: UserAvgOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
@@ -11444,6 +11766,9 @@ export namespace Prisma {
     isEmailVerified?: BoolWithAggregatesFilter<"User"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
+    deleteAt?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
+    lastLoginAt?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
+    provider?: StringNullableWithAggregatesFilter<"User"> | string | null
   }
 
   export type WordWhereInput = {
@@ -11460,6 +11785,10 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Word"> | Date | string
     totalProgress?: IntFilter<"Word"> | number
     isLearned?: BoolFilter<"Word"> | boolean
+    phonetic?: StringFilter<"Word"> | string
+    audio?: StringFilter<"Word"> | string
+    phoneticUS?: StringNullableFilter<"Word"> | string | null
+    audioUS?: StringNullableFilter<"Word"> | string | null
     progresses?: WordTaskProgressListRelationFilter
   }
 
@@ -11474,6 +11803,10 @@ export namespace Prisma {
     createdAt?: SortOrder
     totalProgress?: SortOrder
     isLearned?: SortOrder
+    phonetic?: SortOrder
+    audio?: SortOrder
+    phoneticUS?: SortOrderInput | SortOrder
+    audioUS?: SortOrderInput | SortOrder
     progresses?: WordTaskProgressOrderByRelationAggregateInput
   }
 
@@ -11491,6 +11824,10 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Word"> | Date | string
     totalProgress?: IntFilter<"Word"> | number
     isLearned?: BoolFilter<"Word"> | boolean
+    phonetic?: StringFilter<"Word"> | string
+    audio?: StringFilter<"Word"> | string
+    phoneticUS?: StringNullableFilter<"Word"> | string | null
+    audioUS?: StringNullableFilter<"Word"> | string | null
     progresses?: WordTaskProgressListRelationFilter
   }, "id">
 
@@ -11505,6 +11842,10 @@ export namespace Prisma {
     createdAt?: SortOrder
     totalProgress?: SortOrder
     isLearned?: SortOrder
+    phonetic?: SortOrder
+    audio?: SortOrder
+    phoneticUS?: SortOrderInput | SortOrder
+    audioUS?: SortOrderInput | SortOrder
     _count?: WordCountOrderByAggregateInput
     _avg?: WordAvgOrderByAggregateInput
     _max?: WordMaxOrderByAggregateInput
@@ -11526,6 +11867,10 @@ export namespace Prisma {
     createdAt?: DateTimeWithAggregatesFilter<"Word"> | Date | string
     totalProgress?: IntWithAggregatesFilter<"Word"> | number
     isLearned?: BoolWithAggregatesFilter<"Word"> | boolean
+    phonetic?: StringWithAggregatesFilter<"Word"> | string
+    audio?: StringWithAggregatesFilter<"Word"> | string
+    phoneticUS?: StringNullableWithAggregatesFilter<"Word"> | string | null
+    audioUS?: StringNullableWithAggregatesFilter<"Word"> | string | null
   }
 
   export type VideoWhereInput = {
@@ -11615,8 +11960,12 @@ export namespace Prisma {
     score?: IntNullableFilter<"Task"> | number | null
     createdAt?: DateTimeFilter<"Task"> | Date | string
     language?: EnumLanguageFilter<"Task"> | $Enums.Language
+    order?: IntNullableFilter<"Task"> | number | null
+    explanation?: StringNullableFilter<"Task"> | string | null
+    authorId?: IntNullableFilter<"Task"> | number | null
     videoId?: IntNullableFilter<"Task"> | number | null
     courseId?: IntNullableFilter<"Task"> | number | null
+    author?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     video?: XOR<VideoNullableScalarRelationFilter, VideoWhereInput> | null
     course?: XOR<CourseNullableScalarRelationFilter, CourseWhereInput> | null
   }
@@ -11630,8 +11979,12 @@ export namespace Prisma {
     score?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     language?: SortOrder
+    order?: SortOrderInput | SortOrder
+    explanation?: SortOrderInput | SortOrder
+    authorId?: SortOrderInput | SortOrder
     videoId?: SortOrderInput | SortOrder
     courseId?: SortOrderInput | SortOrder
+    author?: UserOrderByWithRelationInput
     video?: VideoOrderByWithRelationInput
     course?: CourseOrderByWithRelationInput
   }
@@ -11648,8 +12001,12 @@ export namespace Prisma {
     score?: IntNullableFilter<"Task"> | number | null
     createdAt?: DateTimeFilter<"Task"> | Date | string
     language?: EnumLanguageFilter<"Task"> | $Enums.Language
+    order?: IntNullableFilter<"Task"> | number | null
+    explanation?: StringNullableFilter<"Task"> | string | null
+    authorId?: IntNullableFilter<"Task"> | number | null
     videoId?: IntNullableFilter<"Task"> | number | null
     courseId?: IntNullableFilter<"Task"> | number | null
+    author?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     video?: XOR<VideoNullableScalarRelationFilter, VideoWhereInput> | null
     course?: XOR<CourseNullableScalarRelationFilter, CourseWhereInput> | null
   }, "id">
@@ -11663,6 +12020,9 @@ export namespace Prisma {
     score?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     language?: SortOrder
+    order?: SortOrderInput | SortOrder
+    explanation?: SortOrderInput | SortOrder
+    authorId?: SortOrderInput | SortOrder
     videoId?: SortOrderInput | SortOrder
     courseId?: SortOrderInput | SortOrder
     _count?: TaskCountOrderByAggregateInput
@@ -11684,6 +12044,9 @@ export namespace Prisma {
     score?: IntNullableWithAggregatesFilter<"Task"> | number | null
     createdAt?: DateTimeWithAggregatesFilter<"Task"> | Date | string
     language?: EnumLanguageWithAggregatesFilter<"Task"> | $Enums.Language
+    order?: IntNullableWithAggregatesFilter<"Task"> | number | null
+    explanation?: StringNullableWithAggregatesFilter<"Task"> | string | null
+    authorId?: IntNullableWithAggregatesFilter<"Task"> | number | null
     videoId?: IntNullableWithAggregatesFilter<"Task"> | number | null
     courseId?: IntNullableWithAggregatesFilter<"Task"> | number | null
   }
@@ -11701,9 +12064,11 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Course"> | Date | string
     updatedAt?: DateTimeFilter<"Course"> | Date | string
     tags?: StringNullableListFilter<"Course">
+    authorId?: IntNullableFilter<"Course"> | number | null
     tasks?: TaskListRelationFilter
     enrollments?: EnrollmentListRelationFilter
     videos?: VideoListRelationFilter
+    author?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
   }
 
   export type CourseOrderByWithRelationInput = {
@@ -11716,9 +12081,11 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     tags?: SortOrder
+    authorId?: SortOrderInput | SortOrder
     tasks?: TaskOrderByRelationAggregateInput
     enrollments?: EnrollmentOrderByRelationAggregateInput
     videos?: VideoOrderByRelationAggregateInput
+    author?: UserOrderByWithRelationInput
   }
 
   export type CourseWhereUniqueInput = Prisma.AtLeast<{
@@ -11734,9 +12101,11 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Course"> | Date | string
     updatedAt?: DateTimeFilter<"Course"> | Date | string
     tags?: StringNullableListFilter<"Course">
+    authorId?: IntNullableFilter<"Course"> | number | null
     tasks?: TaskListRelationFilter
     enrollments?: EnrollmentListRelationFilter
     videos?: VideoListRelationFilter
+    author?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
   }, "id">
 
   export type CourseOrderByWithAggregationInput = {
@@ -11749,6 +12118,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     tags?: SortOrder
+    authorId?: SortOrderInput | SortOrder
     _count?: CourseCountOrderByAggregateInput
     _avg?: CourseAvgOrderByAggregateInput
     _max?: CourseMaxOrderByAggregateInput
@@ -11769,6 +12139,7 @@ export namespace Prisma {
     createdAt?: DateTimeWithAggregatesFilter<"Course"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Course"> | Date | string
     tags?: StringNullableListFilter<"Course">
+    authorId?: IntNullableWithAggregatesFilter<"Course"> | number | null
   }
 
   export type EnrollmentWhereInput = {
@@ -11973,8 +12344,13 @@ export namespace Prisma {
     isEmailVerified?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    deleteAt?: Date | string | null
+    lastLoginAt?: Date | string | null
+    provider?: string | null
     enrollments?: EnrollmentCreateNestedManyWithoutUserInput
     wordProgresses?: WordTaskProgressCreateNestedManyWithoutUserInput
+    courses?: CourseCreateNestedManyWithoutAuthorInput
+    tasks?: TaskCreateNestedManyWithoutAuthorInput
     setting?: SettingCreateNestedOneWithoutUserInput
   }
 
@@ -11987,8 +12363,13 @@ export namespace Prisma {
     isEmailVerified?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    deleteAt?: Date | string | null
+    lastLoginAt?: Date | string | null
+    provider?: string | null
     enrollments?: EnrollmentUncheckedCreateNestedManyWithoutUserInput
     wordProgresses?: WordTaskProgressUncheckedCreateNestedManyWithoutUserInput
+    courses?: CourseUncheckedCreateNestedManyWithoutAuthorInput
+    tasks?: TaskUncheckedCreateNestedManyWithoutAuthorInput
     setting?: SettingUncheckedCreateNestedOneWithoutUserInput
   }
 
@@ -12000,8 +12381,13 @@ export namespace Prisma {
     isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    provider?: NullableStringFieldUpdateOperationsInput | string | null
     enrollments?: EnrollmentUpdateManyWithoutUserNestedInput
     wordProgresses?: WordTaskProgressUpdateManyWithoutUserNestedInput
+    courses?: CourseUpdateManyWithoutAuthorNestedInput
+    tasks?: TaskUpdateManyWithoutAuthorNestedInput
     setting?: SettingUpdateOneWithoutUserNestedInput
   }
 
@@ -12014,8 +12400,13 @@ export namespace Prisma {
     isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    provider?: NullableStringFieldUpdateOperationsInput | string | null
     enrollments?: EnrollmentUncheckedUpdateManyWithoutUserNestedInput
     wordProgresses?: WordTaskProgressUncheckedUpdateManyWithoutUserNestedInput
+    courses?: CourseUncheckedUpdateManyWithoutAuthorNestedInput
+    tasks?: TaskUncheckedUpdateManyWithoutAuthorNestedInput
     setting?: SettingUncheckedUpdateOneWithoutUserNestedInput
   }
 
@@ -12028,6 +12419,9 @@ export namespace Prisma {
     isEmailVerified?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    deleteAt?: Date | string | null
+    lastLoginAt?: Date | string | null
+    provider?: string | null
   }
 
   export type UserUpdateManyMutationInput = {
@@ -12038,6 +12432,9 @@ export namespace Prisma {
     isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    provider?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type UserUncheckedUpdateManyInput = {
@@ -12049,6 +12446,9 @@ export namespace Prisma {
     isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    provider?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type WordCreateInput = {
@@ -12061,6 +12461,10 @@ export namespace Prisma {
     createdAt?: Date | string
     totalProgress?: number
     isLearned?: boolean
+    phonetic?: string
+    audio?: string
+    phoneticUS?: string | null
+    audioUS?: string | null
     progresses?: WordTaskProgressCreateNestedManyWithoutWordInput
   }
 
@@ -12075,6 +12479,10 @@ export namespace Prisma {
     createdAt?: Date | string
     totalProgress?: number
     isLearned?: boolean
+    phonetic?: string
+    audio?: string
+    phoneticUS?: string | null
+    audioUS?: string | null
     progresses?: WordTaskProgressUncheckedCreateNestedManyWithoutWordInput
   }
 
@@ -12088,6 +12496,10 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     totalProgress?: IntFieldUpdateOperationsInput | number
     isLearned?: BoolFieldUpdateOperationsInput | boolean
+    phonetic?: StringFieldUpdateOperationsInput | string
+    audio?: StringFieldUpdateOperationsInput | string
+    phoneticUS?: NullableStringFieldUpdateOperationsInput | string | null
+    audioUS?: NullableStringFieldUpdateOperationsInput | string | null
     progresses?: WordTaskProgressUpdateManyWithoutWordNestedInput
   }
 
@@ -12102,6 +12514,10 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     totalProgress?: IntFieldUpdateOperationsInput | number
     isLearned?: BoolFieldUpdateOperationsInput | boolean
+    phonetic?: StringFieldUpdateOperationsInput | string
+    audio?: StringFieldUpdateOperationsInput | string
+    phoneticUS?: NullableStringFieldUpdateOperationsInput | string | null
+    audioUS?: NullableStringFieldUpdateOperationsInput | string | null
     progresses?: WordTaskProgressUncheckedUpdateManyWithoutWordNestedInput
   }
 
@@ -12116,6 +12532,10 @@ export namespace Prisma {
     createdAt?: Date | string
     totalProgress?: number
     isLearned?: boolean
+    phonetic?: string
+    audio?: string
+    phoneticUS?: string | null
+    audioUS?: string | null
   }
 
   export type WordUpdateManyMutationInput = {
@@ -12128,6 +12548,10 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     totalProgress?: IntFieldUpdateOperationsInput | number
     isLearned?: BoolFieldUpdateOperationsInput | boolean
+    phonetic?: StringFieldUpdateOperationsInput | string
+    audio?: StringFieldUpdateOperationsInput | string
+    phoneticUS?: NullableStringFieldUpdateOperationsInput | string | null
+    audioUS?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type WordUncheckedUpdateManyInput = {
@@ -12141,6 +12565,10 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     totalProgress?: IntFieldUpdateOperationsInput | number
     isLearned?: BoolFieldUpdateOperationsInput | boolean
+    phonetic?: StringFieldUpdateOperationsInput | string
+    audio?: StringFieldUpdateOperationsInput | string
+    phoneticUS?: NullableStringFieldUpdateOperationsInput | string | null
+    audioUS?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type VideoCreateInput = {
@@ -12228,6 +12656,9 @@ export namespace Prisma {
     score?: number | null
     createdAt?: Date | string
     language?: $Enums.Language
+    order?: number | null
+    explanation?: string | null
+    author?: UserCreateNestedOneWithoutTasksInput
     video?: VideoCreateNestedOneWithoutTasksInput
     course?: CourseCreateNestedOneWithoutTasksInput
   }
@@ -12241,6 +12672,9 @@ export namespace Prisma {
     score?: number | null
     createdAt?: Date | string
     language?: $Enums.Language
+    order?: number | null
+    explanation?: string | null
+    authorId?: number | null
     videoId?: number | null
     courseId?: number | null
   }
@@ -12253,6 +12687,9 @@ export namespace Prisma {
     score?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    explanation?: NullableStringFieldUpdateOperationsInput | string | null
+    author?: UserUpdateOneWithoutTasksNestedInput
     video?: VideoUpdateOneWithoutTasksNestedInput
     course?: CourseUpdateOneWithoutTasksNestedInput
   }
@@ -12266,6 +12703,9 @@ export namespace Prisma {
     score?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    explanation?: NullableStringFieldUpdateOperationsInput | string | null
+    authorId?: NullableIntFieldUpdateOperationsInput | number | null
     videoId?: NullableIntFieldUpdateOperationsInput | number | null
     courseId?: NullableIntFieldUpdateOperationsInput | number | null
   }
@@ -12279,6 +12719,9 @@ export namespace Prisma {
     score?: number | null
     createdAt?: Date | string
     language?: $Enums.Language
+    order?: number | null
+    explanation?: string | null
+    authorId?: number | null
     videoId?: number | null
     courseId?: number | null
   }
@@ -12291,6 +12734,8 @@ export namespace Prisma {
     score?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    explanation?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type TaskUncheckedUpdateManyInput = {
@@ -12302,6 +12747,9 @@ export namespace Prisma {
     score?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    explanation?: NullableStringFieldUpdateOperationsInput | string | null
+    authorId?: NullableIntFieldUpdateOperationsInput | number | null
     videoId?: NullableIntFieldUpdateOperationsInput | number | null
     courseId?: NullableIntFieldUpdateOperationsInput | number | null
   }
@@ -12318,6 +12766,7 @@ export namespace Prisma {
     tasks?: TaskCreateNestedManyWithoutCourseInput
     enrollments?: EnrollmentCreateNestedManyWithoutCourseInput
     videos?: VideoCreateNestedManyWithoutCourseInput
+    author?: UserCreateNestedOneWithoutCoursesInput
   }
 
   export type CourseUncheckedCreateInput = {
@@ -12330,6 +12779,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     tags?: CourseCreatetagsInput | string[]
+    authorId?: number | null
     tasks?: TaskUncheckedCreateNestedManyWithoutCourseInput
     enrollments?: EnrollmentUncheckedCreateNestedManyWithoutCourseInput
     videos?: VideoUncheckedCreateNestedManyWithoutCourseInput
@@ -12347,6 +12797,7 @@ export namespace Prisma {
     tasks?: TaskUpdateManyWithoutCourseNestedInput
     enrollments?: EnrollmentUpdateManyWithoutCourseNestedInput
     videos?: VideoUpdateManyWithoutCourseNestedInput
+    author?: UserUpdateOneWithoutCoursesNestedInput
   }
 
   export type CourseUncheckedUpdateInput = {
@@ -12359,6 +12810,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tags?: CourseUpdatetagsInput | string[]
+    authorId?: NullableIntFieldUpdateOperationsInput | number | null
     tasks?: TaskUncheckedUpdateManyWithoutCourseNestedInput
     enrollments?: EnrollmentUncheckedUpdateManyWithoutCourseNestedInput
     videos?: VideoUncheckedUpdateManyWithoutCourseNestedInput
@@ -12374,6 +12826,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     tags?: CourseCreatetagsInput | string[]
+    authorId?: number | null
   }
 
   export type CourseUpdateManyMutationInput = {
@@ -12397,6 +12850,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tags?: CourseUpdatetagsInput | string[]
+    authorId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type EnrollmentCreateInput = {
@@ -12623,6 +13077,32 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
+  export type DateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
+  export type StringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
   export type EnrollmentListRelationFilter = {
     every?: EnrollmentWhereInput
     some?: EnrollmentWhereInput
@@ -12635,9 +13115,26 @@ export namespace Prisma {
     none?: WordTaskProgressWhereInput
   }
 
+  export type CourseListRelationFilter = {
+    every?: CourseWhereInput
+    some?: CourseWhereInput
+    none?: CourseWhereInput
+  }
+
+  export type TaskListRelationFilter = {
+    every?: TaskWhereInput
+    some?: TaskWhereInput
+    none?: TaskWhereInput
+  }
+
   export type SettingNullableScalarRelationFilter = {
     is?: SettingWhereInput | null
     isNot?: SettingWhereInput | null
+  }
+
+  export type SortOrderInput = {
+    sort: SortOrder
+    nulls?: NullsOrder
   }
 
   export type EnrollmentOrderByRelationAggregateInput = {
@@ -12645,6 +13142,14 @@ export namespace Prisma {
   }
 
   export type WordTaskProgressOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type CourseOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type TaskOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -12657,6 +13162,9 @@ export namespace Prisma {
     isEmailVerified?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    deleteAt?: SortOrder
+    lastLoginAt?: SortOrder
+    provider?: SortOrder
   }
 
   export type UserAvgOrderByAggregateInput = {
@@ -12672,6 +13180,9 @@ export namespace Prisma {
     isEmailVerified?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    deleteAt?: SortOrder
+    lastLoginAt?: SortOrder
+    provider?: SortOrder
   }
 
   export type UserMinOrderByAggregateInput = {
@@ -12683,6 +13194,9 @@ export namespace Prisma {
     isEmailVerified?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    deleteAt?: SortOrder
+    lastLoginAt?: SortOrder
+    provider?: SortOrder
   }
 
   export type UserSumOrderByAggregateInput = {
@@ -12755,94 +13269,18 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
-  export type EnumLanguageFilter<$PrismaModel = never> = {
-    equals?: $Enums.Language | EnumLanguageFieldRefInput<$PrismaModel>
-    in?: $Enums.Language[] | ListEnumLanguageFieldRefInput<$PrismaModel>
-    notIn?: $Enums.Language[] | ListEnumLanguageFieldRefInput<$PrismaModel>
-    not?: NestedEnumLanguageFilter<$PrismaModel> | $Enums.Language
-  }
-
-  export type StringNullableListFilter<$PrismaModel = never> = {
-    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    has?: string | StringFieldRefInput<$PrismaModel> | null
-    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
-    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
-    isEmpty?: boolean
-  }
-
-  export type StringNullableFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedStringNullableFilter<$PrismaModel> | string | null
-  }
-
-  export type SortOrderInput = {
-    sort: SortOrder
-    nulls?: NullsOrder
-  }
-
-  export type WordCountOrderByAggregateInput = {
-    id?: SortOrder
-    text?: SortOrder
-    language?: SortOrder
-    translate?: SortOrder
-    meaning?: SortOrder
-    example?: SortOrder
-    partOfSpeech?: SortOrder
-    createdAt?: SortOrder
-    totalProgress?: SortOrder
-    isLearned?: SortOrder
-  }
-
-  export type WordAvgOrderByAggregateInput = {
-    id?: SortOrder
-    totalProgress?: SortOrder
-  }
-
-  export type WordMaxOrderByAggregateInput = {
-    id?: SortOrder
-    text?: SortOrder
-    language?: SortOrder
-    example?: SortOrder
-    partOfSpeech?: SortOrder
-    createdAt?: SortOrder
-    totalProgress?: SortOrder
-    isLearned?: SortOrder
-  }
-
-  export type WordMinOrderByAggregateInput = {
-    id?: SortOrder
-    text?: SortOrder
-    language?: SortOrder
-    example?: SortOrder
-    partOfSpeech?: SortOrder
-    createdAt?: SortOrder
-    totalProgress?: SortOrder
-    isLearned?: SortOrder
-  }
-
-  export type WordSumOrderByAggregateInput = {
-    id?: SortOrder
-    totalProgress?: SortOrder
-  }
-
-  export type EnumLanguageWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.Language | EnumLanguageFieldRefInput<$PrismaModel>
-    in?: $Enums.Language[] | ListEnumLanguageFieldRefInput<$PrismaModel>
-    notIn?: $Enums.Language[] | ListEnumLanguageFieldRefInput<$PrismaModel>
-    not?: NestedEnumLanguageWithAggregatesFilter<$PrismaModel> | $Enums.Language
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumLanguageFilter<$PrismaModel>
-    _max?: NestedEnumLanguageFilter<$PrismaModel>
+  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
   export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -12863,6 +13301,88 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
+  export type EnumLanguageFilter<$PrismaModel = never> = {
+    equals?: $Enums.Language | EnumLanguageFieldRefInput<$PrismaModel>
+    in?: $Enums.Language[] | ListEnumLanguageFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Language[] | ListEnumLanguageFieldRefInput<$PrismaModel>
+    not?: NestedEnumLanguageFilter<$PrismaModel> | $Enums.Language
+  }
+
+  export type StringNullableListFilter<$PrismaModel = never> = {
+    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    has?: string | StringFieldRefInput<$PrismaModel> | null
+    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
+    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
+    isEmpty?: boolean
+  }
+
+  export type WordCountOrderByAggregateInput = {
+    id?: SortOrder
+    text?: SortOrder
+    language?: SortOrder
+    translate?: SortOrder
+    meaning?: SortOrder
+    example?: SortOrder
+    partOfSpeech?: SortOrder
+    createdAt?: SortOrder
+    totalProgress?: SortOrder
+    isLearned?: SortOrder
+    phonetic?: SortOrder
+    audio?: SortOrder
+    phoneticUS?: SortOrder
+    audioUS?: SortOrder
+  }
+
+  export type WordAvgOrderByAggregateInput = {
+    id?: SortOrder
+    totalProgress?: SortOrder
+  }
+
+  export type WordMaxOrderByAggregateInput = {
+    id?: SortOrder
+    text?: SortOrder
+    language?: SortOrder
+    example?: SortOrder
+    partOfSpeech?: SortOrder
+    createdAt?: SortOrder
+    totalProgress?: SortOrder
+    isLearned?: SortOrder
+    phonetic?: SortOrder
+    audio?: SortOrder
+    phoneticUS?: SortOrder
+    audioUS?: SortOrder
+  }
+
+  export type WordMinOrderByAggregateInput = {
+    id?: SortOrder
+    text?: SortOrder
+    language?: SortOrder
+    example?: SortOrder
+    partOfSpeech?: SortOrder
+    createdAt?: SortOrder
+    totalProgress?: SortOrder
+    isLearned?: SortOrder
+    phonetic?: SortOrder
+    audio?: SortOrder
+    phoneticUS?: SortOrder
+    audioUS?: SortOrder
+  }
+
+  export type WordSumOrderByAggregateInput = {
+    id?: SortOrder
+    totalProgress?: SortOrder
+  }
+
+  export type EnumLanguageWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Language | EnumLanguageFieldRefInput<$PrismaModel>
+    in?: $Enums.Language[] | ListEnumLanguageFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Language[] | ListEnumLanguageFieldRefInput<$PrismaModel>
+    not?: NestedEnumLanguageWithAggregatesFilter<$PrismaModel> | $Enums.Language
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumLanguageFilter<$PrismaModel>
+    _max?: NestedEnumLanguageFilter<$PrismaModel>
+  }
+
   export type EnumLevelNullableFilter<$PrismaModel = never> = {
     equals?: $Enums.Level | EnumLevelFieldRefInput<$PrismaModel> | null
     in?: $Enums.Level[] | ListEnumLevelFieldRefInput<$PrismaModel> | null
@@ -12881,19 +13401,9 @@ export namespace Prisma {
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
-  export type TaskListRelationFilter = {
-    every?: TaskWhereInput
-    some?: TaskWhereInput
-    none?: TaskWhereInput
-  }
-
   export type CourseNullableScalarRelationFilter = {
     is?: CourseWhereInput | null
     isNot?: CourseWhereInput | null
-  }
-
-  export type TaskOrderByRelationAggregateInput = {
-    _count?: SortOrder
   }
 
   export type VideoCountOrderByAggregateInput = {
@@ -12970,6 +13480,11 @@ export namespace Prisma {
     not?: NestedEnumTaskTypeFilter<$PrismaModel> | $Enums.TaskType
   }
 
+  export type UserNullableScalarRelationFilter = {
+    is?: UserWhereInput | null
+    isNot?: UserWhereInput | null
+  }
+
   export type VideoNullableScalarRelationFilter = {
     is?: VideoWhereInput | null
     isNot?: VideoWhereInput | null
@@ -12984,6 +13499,9 @@ export namespace Prisma {
     score?: SortOrder
     createdAt?: SortOrder
     language?: SortOrder
+    order?: SortOrder
+    explanation?: SortOrder
+    authorId?: SortOrder
     videoId?: SortOrder
     courseId?: SortOrder
   }
@@ -12991,6 +13509,8 @@ export namespace Prisma {
   export type TaskAvgOrderByAggregateInput = {
     id?: SortOrder
     score?: SortOrder
+    order?: SortOrder
+    authorId?: SortOrder
     videoId?: SortOrder
     courseId?: SortOrder
   }
@@ -13003,6 +13523,9 @@ export namespace Prisma {
     score?: SortOrder
     createdAt?: SortOrder
     language?: SortOrder
+    order?: SortOrder
+    explanation?: SortOrder
+    authorId?: SortOrder
     videoId?: SortOrder
     courseId?: SortOrder
   }
@@ -13015,6 +13538,9 @@ export namespace Prisma {
     score?: SortOrder
     createdAt?: SortOrder
     language?: SortOrder
+    order?: SortOrder
+    explanation?: SortOrder
+    authorId?: SortOrder
     videoId?: SortOrder
     courseId?: SortOrder
   }
@@ -13022,6 +13548,8 @@ export namespace Prisma {
   export type TaskSumOrderByAggregateInput = {
     id?: SortOrder
     score?: SortOrder
+    order?: SortOrder
+    authorId?: SortOrder
     videoId?: SortOrder
     courseId?: SortOrder
   }
@@ -13063,10 +13591,12 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     tags?: SortOrder
+    authorId?: SortOrder
   }
 
   export type CourseAvgOrderByAggregateInput = {
     id?: SortOrder
+    authorId?: SortOrder
   }
 
   export type CourseMaxOrderByAggregateInput = {
@@ -13078,6 +13608,7 @@ export namespace Prisma {
     isPublished?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    authorId?: SortOrder
   }
 
   export type CourseMinOrderByAggregateInput = {
@@ -13089,10 +13620,12 @@ export namespace Prisma {
     isPublished?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    authorId?: SortOrder
   }
 
   export type CourseSumOrderByAggregateInput = {
     id?: SortOrder
+    authorId?: SortOrder
   }
 
   export type EnumLevelWithAggregatesFilter<$PrismaModel = never> = {
@@ -13316,6 +13849,20 @@ export namespace Prisma {
     connect?: WordTaskProgressWhereUniqueInput | WordTaskProgressWhereUniqueInput[]
   }
 
+  export type CourseCreateNestedManyWithoutAuthorInput = {
+    create?: XOR<CourseCreateWithoutAuthorInput, CourseUncheckedCreateWithoutAuthorInput> | CourseCreateWithoutAuthorInput[] | CourseUncheckedCreateWithoutAuthorInput[]
+    connectOrCreate?: CourseCreateOrConnectWithoutAuthorInput | CourseCreateOrConnectWithoutAuthorInput[]
+    createMany?: CourseCreateManyAuthorInputEnvelope
+    connect?: CourseWhereUniqueInput | CourseWhereUniqueInput[]
+  }
+
+  export type TaskCreateNestedManyWithoutAuthorInput = {
+    create?: XOR<TaskCreateWithoutAuthorInput, TaskUncheckedCreateWithoutAuthorInput> | TaskCreateWithoutAuthorInput[] | TaskUncheckedCreateWithoutAuthorInput[]
+    connectOrCreate?: TaskCreateOrConnectWithoutAuthorInput | TaskCreateOrConnectWithoutAuthorInput[]
+    createMany?: TaskCreateManyAuthorInputEnvelope
+    connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+  }
+
   export type SettingCreateNestedOneWithoutUserInput = {
     create?: XOR<SettingCreateWithoutUserInput, SettingUncheckedCreateWithoutUserInput>
     connectOrCreate?: SettingCreateOrConnectWithoutUserInput
@@ -13334,6 +13881,20 @@ export namespace Prisma {
     connectOrCreate?: WordTaskProgressCreateOrConnectWithoutUserInput | WordTaskProgressCreateOrConnectWithoutUserInput[]
     createMany?: WordTaskProgressCreateManyUserInputEnvelope
     connect?: WordTaskProgressWhereUniqueInput | WordTaskProgressWhereUniqueInput[]
+  }
+
+  export type CourseUncheckedCreateNestedManyWithoutAuthorInput = {
+    create?: XOR<CourseCreateWithoutAuthorInput, CourseUncheckedCreateWithoutAuthorInput> | CourseCreateWithoutAuthorInput[] | CourseUncheckedCreateWithoutAuthorInput[]
+    connectOrCreate?: CourseCreateOrConnectWithoutAuthorInput | CourseCreateOrConnectWithoutAuthorInput[]
+    createMany?: CourseCreateManyAuthorInputEnvelope
+    connect?: CourseWhereUniqueInput | CourseWhereUniqueInput[]
+  }
+
+  export type TaskUncheckedCreateNestedManyWithoutAuthorInput = {
+    create?: XOR<TaskCreateWithoutAuthorInput, TaskUncheckedCreateWithoutAuthorInput> | TaskCreateWithoutAuthorInput[] | TaskUncheckedCreateWithoutAuthorInput[]
+    connectOrCreate?: TaskCreateOrConnectWithoutAuthorInput | TaskCreateOrConnectWithoutAuthorInput[]
+    createMany?: TaskCreateManyAuthorInputEnvelope
+    connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
   }
 
   export type SettingUncheckedCreateNestedOneWithoutUserInput = {
@@ -13356,6 +13917,14 @@ export namespace Prisma {
 
   export type DateTimeFieldUpdateOperationsInput = {
     set?: Date | string
+  }
+
+  export type NullableDateTimeFieldUpdateOperationsInput = {
+    set?: Date | string | null
+  }
+
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
   }
 
   export type EnrollmentUpdateManyWithoutUserNestedInput = {
@@ -13384,6 +13953,34 @@ export namespace Prisma {
     update?: WordTaskProgressUpdateWithWhereUniqueWithoutUserInput | WordTaskProgressUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: WordTaskProgressUpdateManyWithWhereWithoutUserInput | WordTaskProgressUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: WordTaskProgressScalarWhereInput | WordTaskProgressScalarWhereInput[]
+  }
+
+  export type CourseUpdateManyWithoutAuthorNestedInput = {
+    create?: XOR<CourseCreateWithoutAuthorInput, CourseUncheckedCreateWithoutAuthorInput> | CourseCreateWithoutAuthorInput[] | CourseUncheckedCreateWithoutAuthorInput[]
+    connectOrCreate?: CourseCreateOrConnectWithoutAuthorInput | CourseCreateOrConnectWithoutAuthorInput[]
+    upsert?: CourseUpsertWithWhereUniqueWithoutAuthorInput | CourseUpsertWithWhereUniqueWithoutAuthorInput[]
+    createMany?: CourseCreateManyAuthorInputEnvelope
+    set?: CourseWhereUniqueInput | CourseWhereUniqueInput[]
+    disconnect?: CourseWhereUniqueInput | CourseWhereUniqueInput[]
+    delete?: CourseWhereUniqueInput | CourseWhereUniqueInput[]
+    connect?: CourseWhereUniqueInput | CourseWhereUniqueInput[]
+    update?: CourseUpdateWithWhereUniqueWithoutAuthorInput | CourseUpdateWithWhereUniqueWithoutAuthorInput[]
+    updateMany?: CourseUpdateManyWithWhereWithoutAuthorInput | CourseUpdateManyWithWhereWithoutAuthorInput[]
+    deleteMany?: CourseScalarWhereInput | CourseScalarWhereInput[]
+  }
+
+  export type TaskUpdateManyWithoutAuthorNestedInput = {
+    create?: XOR<TaskCreateWithoutAuthorInput, TaskUncheckedCreateWithoutAuthorInput> | TaskCreateWithoutAuthorInput[] | TaskUncheckedCreateWithoutAuthorInput[]
+    connectOrCreate?: TaskCreateOrConnectWithoutAuthorInput | TaskCreateOrConnectWithoutAuthorInput[]
+    upsert?: TaskUpsertWithWhereUniqueWithoutAuthorInput | TaskUpsertWithWhereUniqueWithoutAuthorInput[]
+    createMany?: TaskCreateManyAuthorInputEnvelope
+    set?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+    disconnect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+    delete?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+    connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+    update?: TaskUpdateWithWhereUniqueWithoutAuthorInput | TaskUpdateWithWhereUniqueWithoutAuthorInput[]
+    updateMany?: TaskUpdateManyWithWhereWithoutAuthorInput | TaskUpdateManyWithWhereWithoutAuthorInput[]
+    deleteMany?: TaskScalarWhereInput | TaskScalarWhereInput[]
   }
 
   export type SettingUpdateOneWithoutUserNestedInput = {
@@ -13432,6 +14029,34 @@ export namespace Prisma {
     deleteMany?: WordTaskProgressScalarWhereInput | WordTaskProgressScalarWhereInput[]
   }
 
+  export type CourseUncheckedUpdateManyWithoutAuthorNestedInput = {
+    create?: XOR<CourseCreateWithoutAuthorInput, CourseUncheckedCreateWithoutAuthorInput> | CourseCreateWithoutAuthorInput[] | CourseUncheckedCreateWithoutAuthorInput[]
+    connectOrCreate?: CourseCreateOrConnectWithoutAuthorInput | CourseCreateOrConnectWithoutAuthorInput[]
+    upsert?: CourseUpsertWithWhereUniqueWithoutAuthorInput | CourseUpsertWithWhereUniqueWithoutAuthorInput[]
+    createMany?: CourseCreateManyAuthorInputEnvelope
+    set?: CourseWhereUniqueInput | CourseWhereUniqueInput[]
+    disconnect?: CourseWhereUniqueInput | CourseWhereUniqueInput[]
+    delete?: CourseWhereUniqueInput | CourseWhereUniqueInput[]
+    connect?: CourseWhereUniqueInput | CourseWhereUniqueInput[]
+    update?: CourseUpdateWithWhereUniqueWithoutAuthorInput | CourseUpdateWithWhereUniqueWithoutAuthorInput[]
+    updateMany?: CourseUpdateManyWithWhereWithoutAuthorInput | CourseUpdateManyWithWhereWithoutAuthorInput[]
+    deleteMany?: CourseScalarWhereInput | CourseScalarWhereInput[]
+  }
+
+  export type TaskUncheckedUpdateManyWithoutAuthorNestedInput = {
+    create?: XOR<TaskCreateWithoutAuthorInput, TaskUncheckedCreateWithoutAuthorInput> | TaskCreateWithoutAuthorInput[] | TaskUncheckedCreateWithoutAuthorInput[]
+    connectOrCreate?: TaskCreateOrConnectWithoutAuthorInput | TaskCreateOrConnectWithoutAuthorInput[]
+    upsert?: TaskUpsertWithWhereUniqueWithoutAuthorInput | TaskUpsertWithWhereUniqueWithoutAuthorInput[]
+    createMany?: TaskCreateManyAuthorInputEnvelope
+    set?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+    disconnect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+    delete?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+    connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+    update?: TaskUpdateWithWhereUniqueWithoutAuthorInput | TaskUpdateWithWhereUniqueWithoutAuthorInput[]
+    updateMany?: TaskUpdateManyWithWhereWithoutAuthorInput | TaskUpdateManyWithWhereWithoutAuthorInput[]
+    deleteMany?: TaskScalarWhereInput | TaskScalarWhereInput[]
+  }
+
   export type SettingUncheckedUpdateOneWithoutUserNestedInput = {
     create?: XOR<SettingCreateWithoutUserInput, SettingUncheckedCreateWithoutUserInput>
     connectOrCreate?: SettingCreateOrConnectWithoutUserInput
@@ -13476,10 +14101,6 @@ export namespace Prisma {
   export type WordUpdatemeaningInput = {
     set?: string[]
     push?: string | string[]
-  }
-
-  export type NullableStringFieldUpdateOperationsInput = {
-    set?: string | null
   }
 
   export type WordTaskProgressUpdateManyWithoutWordNestedInput = {
@@ -13593,6 +14214,12 @@ export namespace Prisma {
     set: string[]
   }
 
+  export type UserCreateNestedOneWithoutTasksInput = {
+    create?: XOR<UserCreateWithoutTasksInput, UserUncheckedCreateWithoutTasksInput>
+    connectOrCreate?: UserCreateOrConnectWithoutTasksInput
+    connect?: UserWhereUniqueInput
+  }
+
   export type VideoCreateNestedOneWithoutTasksInput = {
     create?: XOR<VideoCreateWithoutTasksInput, VideoUncheckedCreateWithoutTasksInput>
     connectOrCreate?: VideoCreateOrConnectWithoutTasksInput
@@ -13612,6 +14239,16 @@ export namespace Prisma {
 
   export type EnumTaskTypeFieldUpdateOperationsInput = {
     set?: $Enums.TaskType
+  }
+
+  export type UserUpdateOneWithoutTasksNestedInput = {
+    create?: XOR<UserCreateWithoutTasksInput, UserUncheckedCreateWithoutTasksInput>
+    connectOrCreate?: UserCreateOrConnectWithoutTasksInput
+    upsert?: UserUpsertWithoutTasksInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutTasksInput, UserUpdateWithoutTasksInput>, UserUncheckedUpdateWithoutTasksInput>
   }
 
   export type VideoUpdateOneWithoutTasksNestedInput = {
@@ -13657,6 +14294,12 @@ export namespace Prisma {
     connectOrCreate?: VideoCreateOrConnectWithoutCourseInput | VideoCreateOrConnectWithoutCourseInput[]
     createMany?: VideoCreateManyCourseInputEnvelope
     connect?: VideoWhereUniqueInput | VideoWhereUniqueInput[]
+  }
+
+  export type UserCreateNestedOneWithoutCoursesInput = {
+    create?: XOR<UserCreateWithoutCoursesInput, UserUncheckedCreateWithoutCoursesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCoursesInput
+    connect?: UserWhereUniqueInput
   }
 
   export type TaskUncheckedCreateNestedManyWithoutCourseInput = {
@@ -13729,6 +14372,16 @@ export namespace Prisma {
     update?: VideoUpdateWithWhereUniqueWithoutCourseInput | VideoUpdateWithWhereUniqueWithoutCourseInput[]
     updateMany?: VideoUpdateManyWithWhereWithoutCourseInput | VideoUpdateManyWithWhereWithoutCourseInput[]
     deleteMany?: VideoScalarWhereInput | VideoScalarWhereInput[]
+  }
+
+  export type UserUpdateOneWithoutCoursesNestedInput = {
+    create?: XOR<UserCreateWithoutCoursesInput, UserUncheckedCreateWithoutCoursesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCoursesInput
+    upsert?: UserUpsertWithoutCoursesInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutCoursesInput, UserUpdateWithoutCoursesInput>, UserUncheckedUpdateWithoutCoursesInput>
   }
 
   export type TaskUncheckedUpdateManyWithoutCourseNestedInput = {
@@ -13912,6 +14565,31 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
+  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
+  export type NestedStringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -13988,35 +14666,29 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
-  export type NestedEnumLanguageFilter<$PrismaModel = never> = {
-    equals?: $Enums.Language | EnumLanguageFieldRefInput<$PrismaModel>
-    in?: $Enums.Language[] | ListEnumLanguageFieldRefInput<$PrismaModel>
-    notIn?: $Enums.Language[] | ListEnumLanguageFieldRefInput<$PrismaModel>
-    not?: NestedEnumLanguageFilter<$PrismaModel> | $Enums.Language
+  export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
-  export type NestedStringNullableFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedStringNullableFilter<$PrismaModel> | string | null
-  }
-
-  export type NestedEnumLanguageWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.Language | EnumLanguageFieldRefInput<$PrismaModel>
-    in?: $Enums.Language[] | ListEnumLanguageFieldRefInput<$PrismaModel>
-    notIn?: $Enums.Language[] | ListEnumLanguageFieldRefInput<$PrismaModel>
-    not?: NestedEnumLanguageWithAggregatesFilter<$PrismaModel> | $Enums.Language
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumLanguageFilter<$PrismaModel>
-    _max?: NestedEnumLanguageFilter<$PrismaModel>
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
   export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -14036,15 +14708,21 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
-  export type NestedIntNullableFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  export type NestedEnumLanguageFilter<$PrismaModel = never> = {
+    equals?: $Enums.Language | EnumLanguageFieldRefInput<$PrismaModel>
+    in?: $Enums.Language[] | ListEnumLanguageFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Language[] | ListEnumLanguageFieldRefInput<$PrismaModel>
+    not?: NestedEnumLanguageFilter<$PrismaModel> | $Enums.Language
+  }
+
+  export type NestedEnumLanguageWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Language | EnumLanguageFieldRefInput<$PrismaModel>
+    in?: $Enums.Language[] | ListEnumLanguageFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Language[] | ListEnumLanguageFieldRefInput<$PrismaModel>
+    not?: NestedEnumLanguageWithAggregatesFilter<$PrismaModel> | $Enums.Language
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumLanguageFilter<$PrismaModel>
+    _max?: NestedEnumLanguageFilter<$PrismaModel>
   }
 
   export type NestedEnumLevelNullableFilter<$PrismaModel = never> = {
@@ -14208,6 +14886,84 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type CourseCreateWithoutAuthorInput = {
+    title: string
+    description?: string | null
+    imageUrl?: string | null
+    level?: $Enums.Level
+    isPublished?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    tags?: CourseCreatetagsInput | string[]
+    tasks?: TaskCreateNestedManyWithoutCourseInput
+    enrollments?: EnrollmentCreateNestedManyWithoutCourseInput
+    videos?: VideoCreateNestedManyWithoutCourseInput
+  }
+
+  export type CourseUncheckedCreateWithoutAuthorInput = {
+    id?: number
+    title: string
+    description?: string | null
+    imageUrl?: string | null
+    level?: $Enums.Level
+    isPublished?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    tags?: CourseCreatetagsInput | string[]
+    tasks?: TaskUncheckedCreateNestedManyWithoutCourseInput
+    enrollments?: EnrollmentUncheckedCreateNestedManyWithoutCourseInput
+    videos?: VideoUncheckedCreateNestedManyWithoutCourseInput
+  }
+
+  export type CourseCreateOrConnectWithoutAuthorInput = {
+    where: CourseWhereUniqueInput
+    create: XOR<CourseCreateWithoutAuthorInput, CourseUncheckedCreateWithoutAuthorInput>
+  }
+
+  export type CourseCreateManyAuthorInputEnvelope = {
+    data: CourseCreateManyAuthorInput | CourseCreateManyAuthorInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type TaskCreateWithoutAuthorInput = {
+    question: string
+    answer: string
+    options?: TaskCreateoptionsInput | string[]
+    type?: $Enums.TaskType
+    score?: number | null
+    createdAt?: Date | string
+    language?: $Enums.Language
+    order?: number | null
+    explanation?: string | null
+    video?: VideoCreateNestedOneWithoutTasksInput
+    course?: CourseCreateNestedOneWithoutTasksInput
+  }
+
+  export type TaskUncheckedCreateWithoutAuthorInput = {
+    id?: number
+    question: string
+    answer: string
+    options?: TaskCreateoptionsInput | string[]
+    type?: $Enums.TaskType
+    score?: number | null
+    createdAt?: Date | string
+    language?: $Enums.Language
+    order?: number | null
+    explanation?: string | null
+    videoId?: number | null
+    courseId?: number | null
+  }
+
+  export type TaskCreateOrConnectWithoutAuthorInput = {
+    where: TaskWhereUniqueInput
+    create: XOR<TaskCreateWithoutAuthorInput, TaskUncheckedCreateWithoutAuthorInput>
+  }
+
+  export type TaskCreateManyAuthorInputEnvelope = {
+    data: TaskCreateManyAuthorInput | TaskCreateManyAuthorInput[]
+    skipDuplicates?: boolean
+  }
+
   export type SettingCreateWithoutUserInput = {
     global_language?: $Enums.Language
     current_language?: $Enums.Language
@@ -14282,6 +15038,73 @@ export namespace Prisma {
     isPassed?: BoolFilter<"WordTaskProgress"> | boolean
     score?: IntFilter<"WordTaskProgress"> | number
     attempts?: IntFilter<"WordTaskProgress"> | number
+  }
+
+  export type CourseUpsertWithWhereUniqueWithoutAuthorInput = {
+    where: CourseWhereUniqueInput
+    update: XOR<CourseUpdateWithoutAuthorInput, CourseUncheckedUpdateWithoutAuthorInput>
+    create: XOR<CourseCreateWithoutAuthorInput, CourseUncheckedCreateWithoutAuthorInput>
+  }
+
+  export type CourseUpdateWithWhereUniqueWithoutAuthorInput = {
+    where: CourseWhereUniqueInput
+    data: XOR<CourseUpdateWithoutAuthorInput, CourseUncheckedUpdateWithoutAuthorInput>
+  }
+
+  export type CourseUpdateManyWithWhereWithoutAuthorInput = {
+    where: CourseScalarWhereInput
+    data: XOR<CourseUpdateManyMutationInput, CourseUncheckedUpdateManyWithoutAuthorInput>
+  }
+
+  export type CourseScalarWhereInput = {
+    AND?: CourseScalarWhereInput | CourseScalarWhereInput[]
+    OR?: CourseScalarWhereInput[]
+    NOT?: CourseScalarWhereInput | CourseScalarWhereInput[]
+    id?: IntFilter<"Course"> | number
+    title?: StringFilter<"Course"> | string
+    description?: StringNullableFilter<"Course"> | string | null
+    imageUrl?: StringNullableFilter<"Course"> | string | null
+    level?: EnumLevelFilter<"Course"> | $Enums.Level
+    isPublished?: BoolFilter<"Course"> | boolean
+    createdAt?: DateTimeFilter<"Course"> | Date | string
+    updatedAt?: DateTimeFilter<"Course"> | Date | string
+    tags?: StringNullableListFilter<"Course">
+    authorId?: IntNullableFilter<"Course"> | number | null
+  }
+
+  export type TaskUpsertWithWhereUniqueWithoutAuthorInput = {
+    where: TaskWhereUniqueInput
+    update: XOR<TaskUpdateWithoutAuthorInput, TaskUncheckedUpdateWithoutAuthorInput>
+    create: XOR<TaskCreateWithoutAuthorInput, TaskUncheckedCreateWithoutAuthorInput>
+  }
+
+  export type TaskUpdateWithWhereUniqueWithoutAuthorInput = {
+    where: TaskWhereUniqueInput
+    data: XOR<TaskUpdateWithoutAuthorInput, TaskUncheckedUpdateWithoutAuthorInput>
+  }
+
+  export type TaskUpdateManyWithWhereWithoutAuthorInput = {
+    where: TaskScalarWhereInput
+    data: XOR<TaskUpdateManyMutationInput, TaskUncheckedUpdateManyWithoutAuthorInput>
+  }
+
+  export type TaskScalarWhereInput = {
+    AND?: TaskScalarWhereInput | TaskScalarWhereInput[]
+    OR?: TaskScalarWhereInput[]
+    NOT?: TaskScalarWhereInput | TaskScalarWhereInput[]
+    id?: IntFilter<"Task"> | number
+    question?: StringFilter<"Task"> | string
+    answer?: StringFilter<"Task"> | string
+    options?: StringNullableListFilter<"Task">
+    type?: EnumTaskTypeFilter<"Task"> | $Enums.TaskType
+    score?: IntNullableFilter<"Task"> | number | null
+    createdAt?: DateTimeFilter<"Task"> | Date | string
+    language?: EnumLanguageFilter<"Task"> | $Enums.Language
+    order?: IntNullableFilter<"Task"> | number | null
+    explanation?: StringNullableFilter<"Task"> | string | null
+    authorId?: IntNullableFilter<"Task"> | number | null
+    videoId?: IntNullableFilter<"Task"> | number | null
+    courseId?: IntNullableFilter<"Task"> | number | null
   }
 
   export type SettingUpsertWithoutUserInput = {
@@ -14361,6 +15184,9 @@ export namespace Prisma {
     score?: number | null
     createdAt?: Date | string
     language?: $Enums.Language
+    order?: number | null
+    explanation?: string | null
+    author?: UserCreateNestedOneWithoutTasksInput
     course?: CourseCreateNestedOneWithoutTasksInput
   }
 
@@ -14373,6 +15199,9 @@ export namespace Prisma {
     score?: number | null
     createdAt?: Date | string
     language?: $Enums.Language
+    order?: number | null
+    explanation?: string | null
+    authorId?: number | null
     courseId?: number | null
   }
 
@@ -14397,6 +15226,7 @@ export namespace Prisma {
     tags?: CourseCreatetagsInput | string[]
     tasks?: TaskCreateNestedManyWithoutCourseInput
     enrollments?: EnrollmentCreateNestedManyWithoutCourseInput
+    author?: UserCreateNestedOneWithoutCoursesInput
   }
 
   export type CourseUncheckedCreateWithoutVideosInput = {
@@ -14409,6 +15239,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     tags?: CourseCreatetagsInput | string[]
+    authorId?: number | null
     tasks?: TaskUncheckedCreateNestedManyWithoutCourseInput
     enrollments?: EnrollmentUncheckedCreateNestedManyWithoutCourseInput
   }
@@ -14434,22 +15265,6 @@ export namespace Prisma {
     data: XOR<TaskUpdateManyMutationInput, TaskUncheckedUpdateManyWithoutVideoInput>
   }
 
-  export type TaskScalarWhereInput = {
-    AND?: TaskScalarWhereInput | TaskScalarWhereInput[]
-    OR?: TaskScalarWhereInput[]
-    NOT?: TaskScalarWhereInput | TaskScalarWhereInput[]
-    id?: IntFilter<"Task"> | number
-    question?: StringFilter<"Task"> | string
-    answer?: StringFilter<"Task"> | string
-    options?: StringNullableListFilter<"Task">
-    type?: EnumTaskTypeFilter<"Task"> | $Enums.TaskType
-    score?: IntNullableFilter<"Task"> | number | null
-    createdAt?: DateTimeFilter<"Task"> | Date | string
-    language?: EnumLanguageFilter<"Task"> | $Enums.Language
-    videoId?: IntNullableFilter<"Task"> | number | null
-    courseId?: IntNullableFilter<"Task"> | number | null
-  }
-
   export type CourseUpsertWithoutVideosInput = {
     update: XOR<CourseUpdateWithoutVideosInput, CourseUncheckedUpdateWithoutVideosInput>
     create: XOR<CourseCreateWithoutVideosInput, CourseUncheckedCreateWithoutVideosInput>
@@ -14472,6 +15287,7 @@ export namespace Prisma {
     tags?: CourseUpdatetagsInput | string[]
     tasks?: TaskUpdateManyWithoutCourseNestedInput
     enrollments?: EnrollmentUpdateManyWithoutCourseNestedInput
+    author?: UserUpdateOneWithoutCoursesNestedInput
   }
 
   export type CourseUncheckedUpdateWithoutVideosInput = {
@@ -14484,8 +15300,49 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tags?: CourseUpdatetagsInput | string[]
+    authorId?: NullableIntFieldUpdateOperationsInput | number | null
     tasks?: TaskUncheckedUpdateManyWithoutCourseNestedInput
     enrollments?: EnrollmentUncheckedUpdateManyWithoutCourseNestedInput
+  }
+
+  export type UserCreateWithoutTasksInput = {
+    email: string
+    username: string
+    password: string
+    role?: $Enums.Role
+    isEmailVerified?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    deleteAt?: Date | string | null
+    lastLoginAt?: Date | string | null
+    provider?: string | null
+    enrollments?: EnrollmentCreateNestedManyWithoutUserInput
+    wordProgresses?: WordTaskProgressCreateNestedManyWithoutUserInput
+    courses?: CourseCreateNestedManyWithoutAuthorInput
+    setting?: SettingCreateNestedOneWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutTasksInput = {
+    id?: number
+    email: string
+    username: string
+    password: string
+    role?: $Enums.Role
+    isEmailVerified?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    deleteAt?: Date | string | null
+    lastLoginAt?: Date | string | null
+    provider?: string | null
+    enrollments?: EnrollmentUncheckedCreateNestedManyWithoutUserInput
+    wordProgresses?: WordTaskProgressUncheckedCreateNestedManyWithoutUserInput
+    courses?: CourseUncheckedCreateNestedManyWithoutAuthorInput
+    setting?: SettingUncheckedCreateNestedOneWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutTasksInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutTasksInput, UserUncheckedCreateWithoutTasksInput>
   }
 
   export type VideoCreateWithoutTasksInput = {
@@ -14525,6 +15382,7 @@ export namespace Prisma {
     tags?: CourseCreatetagsInput | string[]
     enrollments?: EnrollmentCreateNestedManyWithoutCourseInput
     videos?: VideoCreateNestedManyWithoutCourseInput
+    author?: UserCreateNestedOneWithoutCoursesInput
   }
 
   export type CourseUncheckedCreateWithoutTasksInput = {
@@ -14537,6 +15395,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     tags?: CourseCreatetagsInput | string[]
+    authorId?: number | null
     enrollments?: EnrollmentUncheckedCreateNestedManyWithoutCourseInput
     videos?: VideoUncheckedCreateNestedManyWithoutCourseInput
   }
@@ -14544,6 +15403,52 @@ export namespace Prisma {
   export type CourseCreateOrConnectWithoutTasksInput = {
     where: CourseWhereUniqueInput
     create: XOR<CourseCreateWithoutTasksInput, CourseUncheckedCreateWithoutTasksInput>
+  }
+
+  export type UserUpsertWithoutTasksInput = {
+    update: XOR<UserUpdateWithoutTasksInput, UserUncheckedUpdateWithoutTasksInput>
+    create: XOR<UserCreateWithoutTasksInput, UserUncheckedCreateWithoutTasksInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutTasksInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutTasksInput, UserUncheckedUpdateWithoutTasksInput>
+  }
+
+  export type UserUpdateWithoutTasksInput = {
+    email?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    provider?: NullableStringFieldUpdateOperationsInput | string | null
+    enrollments?: EnrollmentUpdateManyWithoutUserNestedInput
+    wordProgresses?: WordTaskProgressUpdateManyWithoutUserNestedInput
+    courses?: CourseUpdateManyWithoutAuthorNestedInput
+    setting?: SettingUpdateOneWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutTasksInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    email?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    provider?: NullableStringFieldUpdateOperationsInput | string | null
+    enrollments?: EnrollmentUncheckedUpdateManyWithoutUserNestedInput
+    wordProgresses?: WordTaskProgressUncheckedUpdateManyWithoutUserNestedInput
+    courses?: CourseUncheckedUpdateManyWithoutAuthorNestedInput
+    setting?: SettingUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type VideoUpsertWithoutTasksInput = {
@@ -14600,6 +15505,7 @@ export namespace Prisma {
     tags?: CourseUpdatetagsInput | string[]
     enrollments?: EnrollmentUpdateManyWithoutCourseNestedInput
     videos?: VideoUpdateManyWithoutCourseNestedInput
+    author?: UserUpdateOneWithoutCoursesNestedInput
   }
 
   export type CourseUncheckedUpdateWithoutTasksInput = {
@@ -14612,6 +15518,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tags?: CourseUpdatetagsInput | string[]
+    authorId?: NullableIntFieldUpdateOperationsInput | number | null
     enrollments?: EnrollmentUncheckedUpdateManyWithoutCourseNestedInput
     videos?: VideoUncheckedUpdateManyWithoutCourseNestedInput
   }
@@ -14624,6 +15531,9 @@ export namespace Prisma {
     score?: number | null
     createdAt?: Date | string
     language?: $Enums.Language
+    order?: number | null
+    explanation?: string | null
+    author?: UserCreateNestedOneWithoutTasksInput
     video?: VideoCreateNestedOneWithoutTasksInput
   }
 
@@ -14636,6 +15546,9 @@ export namespace Prisma {
     score?: number | null
     createdAt?: Date | string
     language?: $Enums.Language
+    order?: number | null
+    explanation?: string | null
+    authorId?: number | null
     videoId?: number | null
   }
 
@@ -14703,6 +15616,46 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type UserCreateWithoutCoursesInput = {
+    email: string
+    username: string
+    password: string
+    role?: $Enums.Role
+    isEmailVerified?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    deleteAt?: Date | string | null
+    lastLoginAt?: Date | string | null
+    provider?: string | null
+    enrollments?: EnrollmentCreateNestedManyWithoutUserInput
+    wordProgresses?: WordTaskProgressCreateNestedManyWithoutUserInput
+    tasks?: TaskCreateNestedManyWithoutAuthorInput
+    setting?: SettingCreateNestedOneWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutCoursesInput = {
+    id?: number
+    email: string
+    username: string
+    password: string
+    role?: $Enums.Role
+    isEmailVerified?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    deleteAt?: Date | string | null
+    lastLoginAt?: Date | string | null
+    provider?: string | null
+    enrollments?: EnrollmentUncheckedCreateNestedManyWithoutUserInput
+    wordProgresses?: WordTaskProgressUncheckedCreateNestedManyWithoutUserInput
+    tasks?: TaskUncheckedCreateNestedManyWithoutAuthorInput
+    setting?: SettingUncheckedCreateNestedOneWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutCoursesInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutCoursesInput, UserUncheckedCreateWithoutCoursesInput>
+  }
+
   export type TaskUpsertWithWhereUniqueWithoutCourseInput = {
     where: TaskWhereUniqueInput
     update: XOR<TaskUpdateWithoutCourseInput, TaskUncheckedUpdateWithoutCourseInput>
@@ -14765,6 +15718,52 @@ export namespace Prisma {
     courseId?: IntNullableFilter<"Video"> | number | null
   }
 
+  export type UserUpsertWithoutCoursesInput = {
+    update: XOR<UserUpdateWithoutCoursesInput, UserUncheckedUpdateWithoutCoursesInput>
+    create: XOR<UserCreateWithoutCoursesInput, UserUncheckedCreateWithoutCoursesInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutCoursesInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutCoursesInput, UserUncheckedUpdateWithoutCoursesInput>
+  }
+
+  export type UserUpdateWithoutCoursesInput = {
+    email?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    provider?: NullableStringFieldUpdateOperationsInput | string | null
+    enrollments?: EnrollmentUpdateManyWithoutUserNestedInput
+    wordProgresses?: WordTaskProgressUpdateManyWithoutUserNestedInput
+    tasks?: TaskUpdateManyWithoutAuthorNestedInput
+    setting?: SettingUpdateOneWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutCoursesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    email?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    provider?: NullableStringFieldUpdateOperationsInput | string | null
+    enrollments?: EnrollmentUncheckedUpdateManyWithoutUserNestedInput
+    wordProgresses?: WordTaskProgressUncheckedUpdateManyWithoutUserNestedInput
+    tasks?: TaskUncheckedUpdateManyWithoutAuthorNestedInput
+    setting?: SettingUncheckedUpdateOneWithoutUserNestedInput
+  }
+
   export type UserCreateWithoutEnrollmentsInput = {
     email: string
     username: string
@@ -14773,7 +15772,12 @@ export namespace Prisma {
     isEmailVerified?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    deleteAt?: Date | string | null
+    lastLoginAt?: Date | string | null
+    provider?: string | null
     wordProgresses?: WordTaskProgressCreateNestedManyWithoutUserInput
+    courses?: CourseCreateNestedManyWithoutAuthorInput
+    tasks?: TaskCreateNestedManyWithoutAuthorInput
     setting?: SettingCreateNestedOneWithoutUserInput
   }
 
@@ -14786,7 +15790,12 @@ export namespace Prisma {
     isEmailVerified?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    deleteAt?: Date | string | null
+    lastLoginAt?: Date | string | null
+    provider?: string | null
     wordProgresses?: WordTaskProgressUncheckedCreateNestedManyWithoutUserInput
+    courses?: CourseUncheckedCreateNestedManyWithoutAuthorInput
+    tasks?: TaskUncheckedCreateNestedManyWithoutAuthorInput
     setting?: SettingUncheckedCreateNestedOneWithoutUserInput
   }
 
@@ -14806,6 +15815,7 @@ export namespace Prisma {
     tags?: CourseCreatetagsInput | string[]
     tasks?: TaskCreateNestedManyWithoutCourseInput
     videos?: VideoCreateNestedManyWithoutCourseInput
+    author?: UserCreateNestedOneWithoutCoursesInput
   }
 
   export type CourseUncheckedCreateWithoutEnrollmentsInput = {
@@ -14818,6 +15828,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     tags?: CourseCreatetagsInput | string[]
+    authorId?: number | null
     tasks?: TaskUncheckedCreateNestedManyWithoutCourseInput
     videos?: VideoUncheckedCreateNestedManyWithoutCourseInput
   }
@@ -14846,7 +15857,12 @@ export namespace Prisma {
     isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    provider?: NullableStringFieldUpdateOperationsInput | string | null
     wordProgresses?: WordTaskProgressUpdateManyWithoutUserNestedInput
+    courses?: CourseUpdateManyWithoutAuthorNestedInput
+    tasks?: TaskUpdateManyWithoutAuthorNestedInput
     setting?: SettingUpdateOneWithoutUserNestedInput
   }
 
@@ -14859,7 +15875,12 @@ export namespace Prisma {
     isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    provider?: NullableStringFieldUpdateOperationsInput | string | null
     wordProgresses?: WordTaskProgressUncheckedUpdateManyWithoutUserNestedInput
+    courses?: CourseUncheckedUpdateManyWithoutAuthorNestedInput
+    tasks?: TaskUncheckedUpdateManyWithoutAuthorNestedInput
     setting?: SettingUncheckedUpdateOneWithoutUserNestedInput
   }
 
@@ -14885,6 +15906,7 @@ export namespace Prisma {
     tags?: CourseUpdatetagsInput | string[]
     tasks?: TaskUpdateManyWithoutCourseNestedInput
     videos?: VideoUpdateManyWithoutCourseNestedInput
+    author?: UserUpdateOneWithoutCoursesNestedInput
   }
 
   export type CourseUncheckedUpdateWithoutEnrollmentsInput = {
@@ -14897,6 +15919,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tags?: CourseUpdatetagsInput | string[]
+    authorId?: NullableIntFieldUpdateOperationsInput | number | null
     tasks?: TaskUncheckedUpdateManyWithoutCourseNestedInput
     videos?: VideoUncheckedUpdateManyWithoutCourseNestedInput
   }
@@ -14909,8 +15932,13 @@ export namespace Prisma {
     isEmailVerified?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    deleteAt?: Date | string | null
+    lastLoginAt?: Date | string | null
+    provider?: string | null
     enrollments?: EnrollmentCreateNestedManyWithoutUserInput
     wordProgresses?: WordTaskProgressCreateNestedManyWithoutUserInput
+    courses?: CourseCreateNestedManyWithoutAuthorInput
+    tasks?: TaskCreateNestedManyWithoutAuthorInput
   }
 
   export type UserUncheckedCreateWithoutSettingInput = {
@@ -14922,8 +15950,13 @@ export namespace Prisma {
     isEmailVerified?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    deleteAt?: Date | string | null
+    lastLoginAt?: Date | string | null
+    provider?: string | null
     enrollments?: EnrollmentUncheckedCreateNestedManyWithoutUserInput
     wordProgresses?: WordTaskProgressUncheckedCreateNestedManyWithoutUserInput
+    courses?: CourseUncheckedCreateNestedManyWithoutAuthorInput
+    tasks?: TaskUncheckedCreateNestedManyWithoutAuthorInput
   }
 
   export type UserCreateOrConnectWithoutSettingInput = {
@@ -14950,8 +15983,13 @@ export namespace Prisma {
     isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    provider?: NullableStringFieldUpdateOperationsInput | string | null
     enrollments?: EnrollmentUpdateManyWithoutUserNestedInput
     wordProgresses?: WordTaskProgressUpdateManyWithoutUserNestedInput
+    courses?: CourseUpdateManyWithoutAuthorNestedInput
+    tasks?: TaskUpdateManyWithoutAuthorNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSettingInput = {
@@ -14963,8 +16001,13 @@ export namespace Prisma {
     isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    provider?: NullableStringFieldUpdateOperationsInput | string | null
     enrollments?: EnrollmentUncheckedUpdateManyWithoutUserNestedInput
     wordProgresses?: WordTaskProgressUncheckedUpdateManyWithoutUserNestedInput
+    courses?: CourseUncheckedUpdateManyWithoutAuthorNestedInput
+    tasks?: TaskUncheckedUpdateManyWithoutAuthorNestedInput
   }
 
   export type UserCreateWithoutWordProgressesInput = {
@@ -14975,7 +16018,12 @@ export namespace Prisma {
     isEmailVerified?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    deleteAt?: Date | string | null
+    lastLoginAt?: Date | string | null
+    provider?: string | null
     enrollments?: EnrollmentCreateNestedManyWithoutUserInput
+    courses?: CourseCreateNestedManyWithoutAuthorInput
+    tasks?: TaskCreateNestedManyWithoutAuthorInput
     setting?: SettingCreateNestedOneWithoutUserInput
   }
 
@@ -14988,7 +16036,12 @@ export namespace Prisma {
     isEmailVerified?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    deleteAt?: Date | string | null
+    lastLoginAt?: Date | string | null
+    provider?: string | null
     enrollments?: EnrollmentUncheckedCreateNestedManyWithoutUserInput
+    courses?: CourseUncheckedCreateNestedManyWithoutAuthorInput
+    tasks?: TaskUncheckedCreateNestedManyWithoutAuthorInput
     setting?: SettingUncheckedCreateNestedOneWithoutUserInput
   }
 
@@ -15007,6 +16060,10 @@ export namespace Prisma {
     createdAt?: Date | string
     totalProgress?: number
     isLearned?: boolean
+    phonetic?: string
+    audio?: string
+    phoneticUS?: string | null
+    audioUS?: string | null
   }
 
   export type WordUncheckedCreateWithoutProgressesInput = {
@@ -15020,6 +16077,10 @@ export namespace Prisma {
     createdAt?: Date | string
     totalProgress?: number
     isLearned?: boolean
+    phonetic?: string
+    audio?: string
+    phoneticUS?: string | null
+    audioUS?: string | null
   }
 
   export type WordCreateOrConnectWithoutProgressesInput = {
@@ -15046,7 +16107,12 @@ export namespace Prisma {
     isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    provider?: NullableStringFieldUpdateOperationsInput | string | null
     enrollments?: EnrollmentUpdateManyWithoutUserNestedInput
+    courses?: CourseUpdateManyWithoutAuthorNestedInput
+    tasks?: TaskUpdateManyWithoutAuthorNestedInput
     setting?: SettingUpdateOneWithoutUserNestedInput
   }
 
@@ -15059,7 +16125,12 @@ export namespace Prisma {
     isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    provider?: NullableStringFieldUpdateOperationsInput | string | null
     enrollments?: EnrollmentUncheckedUpdateManyWithoutUserNestedInput
+    courses?: CourseUncheckedUpdateManyWithoutAuthorNestedInput
+    tasks?: TaskUncheckedUpdateManyWithoutAuthorNestedInput
     setting?: SettingUncheckedUpdateOneWithoutUserNestedInput
   }
 
@@ -15084,6 +16155,10 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     totalProgress?: IntFieldUpdateOperationsInput | number
     isLearned?: BoolFieldUpdateOperationsInput | boolean
+    phonetic?: StringFieldUpdateOperationsInput | string
+    audio?: StringFieldUpdateOperationsInput | string
+    phoneticUS?: NullableStringFieldUpdateOperationsInput | string | null
+    audioUS?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type WordUncheckedUpdateWithoutProgressesInput = {
@@ -15097,6 +16172,10 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     totalProgress?: IntFieldUpdateOperationsInput | number
     isLearned?: BoolFieldUpdateOperationsInput | boolean
+    phonetic?: StringFieldUpdateOperationsInput | string
+    audio?: StringFieldUpdateOperationsInput | string
+    phoneticUS?: NullableStringFieldUpdateOperationsInput | string | null
+    audioUS?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type EnrollmentCreateManyUserInput = {
@@ -15113,6 +16192,33 @@ export namespace Prisma {
     isPassed?: boolean
     score?: number
     attempts?: number
+  }
+
+  export type CourseCreateManyAuthorInput = {
+    id?: number
+    title: string
+    description?: string | null
+    imageUrl?: string | null
+    level?: $Enums.Level
+    isPublished?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    tags?: CourseCreatetagsInput | string[]
+  }
+
+  export type TaskCreateManyAuthorInput = {
+    id?: number
+    question: string
+    answer: string
+    options?: TaskCreateoptionsInput | string[]
+    type?: $Enums.TaskType
+    score?: number | null
+    createdAt?: Date | string
+    language?: $Enums.Language
+    order?: number | null
+    explanation?: string | null
+    videoId?: number | null
+    courseId?: number | null
   }
 
   export type EnrollmentUpdateWithoutUserInput = {
@@ -15161,6 +16267,91 @@ export namespace Prisma {
     attempts?: IntFieldUpdateOperationsInput | number
   }
 
+  export type CourseUpdateWithoutAuthorInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
+    isPublished?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tags?: CourseUpdatetagsInput | string[]
+    tasks?: TaskUpdateManyWithoutCourseNestedInput
+    enrollments?: EnrollmentUpdateManyWithoutCourseNestedInput
+    videos?: VideoUpdateManyWithoutCourseNestedInput
+  }
+
+  export type CourseUncheckedUpdateWithoutAuthorInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
+    isPublished?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tags?: CourseUpdatetagsInput | string[]
+    tasks?: TaskUncheckedUpdateManyWithoutCourseNestedInput
+    enrollments?: EnrollmentUncheckedUpdateManyWithoutCourseNestedInput
+    videos?: VideoUncheckedUpdateManyWithoutCourseNestedInput
+  }
+
+  export type CourseUncheckedUpdateManyWithoutAuthorInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
+    isPublished?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tags?: CourseUpdatetagsInput | string[]
+  }
+
+  export type TaskUpdateWithoutAuthorInput = {
+    question?: StringFieldUpdateOperationsInput | string
+    answer?: StringFieldUpdateOperationsInput | string
+    options?: TaskUpdateoptionsInput | string[]
+    type?: EnumTaskTypeFieldUpdateOperationsInput | $Enums.TaskType
+    score?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    explanation?: NullableStringFieldUpdateOperationsInput | string | null
+    video?: VideoUpdateOneWithoutTasksNestedInput
+    course?: CourseUpdateOneWithoutTasksNestedInput
+  }
+
+  export type TaskUncheckedUpdateWithoutAuthorInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    question?: StringFieldUpdateOperationsInput | string
+    answer?: StringFieldUpdateOperationsInput | string
+    options?: TaskUpdateoptionsInput | string[]
+    type?: EnumTaskTypeFieldUpdateOperationsInput | $Enums.TaskType
+    score?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    explanation?: NullableStringFieldUpdateOperationsInput | string | null
+    videoId?: NullableIntFieldUpdateOperationsInput | number | null
+    courseId?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type TaskUncheckedUpdateManyWithoutAuthorInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    question?: StringFieldUpdateOperationsInput | string
+    answer?: StringFieldUpdateOperationsInput | string
+    options?: TaskUpdateoptionsInput | string[]
+    type?: EnumTaskTypeFieldUpdateOperationsInput | $Enums.TaskType
+    score?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    explanation?: NullableStringFieldUpdateOperationsInput | string | null
+    videoId?: NullableIntFieldUpdateOperationsInput | number | null
+    courseId?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
   export type WordTaskProgressCreateManyWordInput = {
     id?: number
     userId: number
@@ -15205,6 +16396,9 @@ export namespace Prisma {
     score?: number | null
     createdAt?: Date | string
     language?: $Enums.Language
+    order?: number | null
+    explanation?: string | null
+    authorId?: number | null
     courseId?: number | null
   }
 
@@ -15216,6 +16410,9 @@ export namespace Prisma {
     score?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    explanation?: NullableStringFieldUpdateOperationsInput | string | null
+    author?: UserUpdateOneWithoutTasksNestedInput
     course?: CourseUpdateOneWithoutTasksNestedInput
   }
 
@@ -15228,6 +16425,9 @@ export namespace Prisma {
     score?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    explanation?: NullableStringFieldUpdateOperationsInput | string | null
+    authorId?: NullableIntFieldUpdateOperationsInput | number | null
     courseId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
@@ -15240,6 +16440,9 @@ export namespace Prisma {
     score?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    explanation?: NullableStringFieldUpdateOperationsInput | string | null
+    authorId?: NullableIntFieldUpdateOperationsInput | number | null
     courseId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
@@ -15252,6 +16455,9 @@ export namespace Prisma {
     score?: number | null
     createdAt?: Date | string
     language?: $Enums.Language
+    order?: number | null
+    explanation?: string | null
+    authorId?: number | null
     videoId?: number | null
   }
 
@@ -15280,6 +16486,9 @@ export namespace Prisma {
     score?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    explanation?: NullableStringFieldUpdateOperationsInput | string | null
+    author?: UserUpdateOneWithoutTasksNestedInput
     video?: VideoUpdateOneWithoutTasksNestedInput
   }
 
@@ -15292,6 +16501,9 @@ export namespace Prisma {
     score?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    explanation?: NullableStringFieldUpdateOperationsInput | string | null
+    authorId?: NullableIntFieldUpdateOperationsInput | number | null
     videoId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
@@ -15304,6 +16516,9 @@ export namespace Prisma {
     score?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    explanation?: NullableStringFieldUpdateOperationsInput | string | null
+    authorId?: NullableIntFieldUpdateOperationsInput | number | null
     videoId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 

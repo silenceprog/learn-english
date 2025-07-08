@@ -1,15 +1,12 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsArray, IsEnum, IsNotEmpty, IsOptional, IsString } from "class-validator";
+import { Transform } from "class-transformer";
+import { IsArray, IsEnum, IsOptional, IsString } from "class-validator";
 import { Language } from "generated/prisma";
 
 export class CreateWordDto {
   @ApiProperty({ example: 'apple', description: 'Слово англійською або іншою мовою' })
   @IsString()
   text: string;
-
-  @ApiProperty({ enum: Language, example: Language.EN, description: 'Мова слова' })
-  @IsEnum(Language)
-  language: Language;
 
   @ApiProperty({ example: ['яблуко'], description: 'Переклад слова', type: [String] })
   @IsArray()

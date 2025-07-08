@@ -1,7 +1,7 @@
 import { Controller, Get, Query } from '@nestjs/common';
 import { TranslateService } from './translate.service';
-import { Language } from './enums/language.enum';
 import { ApiQuery, ApiOperation, ApiTags, ApiBearerAuth } from '@nestjs/swagger';
+import { Language } from 'generated/prisma';
 
 @ApiTags('Translation')
 @ApiBearerAuth('access-token')

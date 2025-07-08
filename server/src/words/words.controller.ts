@@ -21,7 +21,6 @@ import {
 import { CreateWordDto } from './dto/create-word.dto';
 import { UpdateWordDTO } from './dto/update-word.dto';
 import { WordEntity } from './dto/word.entity';
-import { Language } from 'generated/prisma';
 import { PaginationDto } from './dto/pagination.dto';
 
 @ApiTags('Words')

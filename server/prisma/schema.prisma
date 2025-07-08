@@ -26,7 +26,12 @@ model User {
   updatedAt       DateTime           @updatedAt
   enrollments     Enrollment[]
   wordProgresses  WordTaskProgress[]
+  courses         Course[]
+  tasks           Task[]
   setting         Setting?
+  deleteAt        DateTime?
+  lastLoginAt     DateTime?
+  provider        String?
 }
 
 model Word {
@@ -41,6 +46,10 @@ model Word {
   progresses    WordTaskProgress[]
   totalProgress Int                @default(0)
   isLearned     Boolean            @default(false)
+  phonetic      String             @default("none")
+  audio         String             @default("none")
+  phoneticUS    String?
+  audioUS       String?
 }
 
 model Video {
@@ -58,14 +67,19 @@ model Video {
 }
 
 model Task {
-  id        Int      @id @default(autoincrement())
-  question  String
-  answer    String
-  options   String[]
-  type      TaskType @default(MULTIPLE_CHOICE)
-  score     Int?
-  createdAt DateTime @default(now())
-  language  Language @default(EN)
+  id          Int      @id @default(autoincrement())
+  question    String
+  answer      String
+  options     String[]
+  type        TaskType @default(MULTIPLE_CHOICE)
+  score       Int?
+  createdAt   DateTime @default(now())
+  language    Language @default(EN)
+  order       Int?
+  explanation String?
+
+  author   User? @relation(fields: [authorId], references: [id])
+  authorId Int?
 
   video   Video? @relation(fields: [videoId], references: [id])
   videoId Int?
@@ -89,6 +103,9 @@ model Course {
 
   enrollments Enrollment[]
   videos      Video[]
+
+  author   User? @relation(fields: [authorId], references: [id])
+  authorId Int?
 }
 
 model Enrollment {
@@ -119,7 +136,7 @@ model WordTaskProgress {
   user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   wordId Int
-  word   Word @relation(fields: [wordId], references: [id])
+  word   Word @relation(fields: [wordId], references: [id], onDelete: Cascade)
 
   taskType WordTaskType
   isPassed Boolean      @default(false)

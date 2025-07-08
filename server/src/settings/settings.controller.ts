@@ -1,18 +1,14 @@
 import {
   Controller,
   Get,
-  Post,
   Body,
   Patch,
-  Param,
-  Delete,
   Req,
 } from '@nestjs/common';
 import { SettingsService } from './settings.service';
 import { CreateSettingDto } from './dto/create-setting.dto';
 import { UpdateSettingDto } from './dto/update-setting.dto';
 import { ApiBearerAuth, ApiOperation, ApiResponse } from '@nestjs/swagger';
-import { CacheTTL } from '@nestjs/cache-manager';
 import { NoCache } from 'src/no-cache.decorator';
 
 @ApiBearerAuth('access-token')

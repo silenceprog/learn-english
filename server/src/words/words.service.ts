@@ -2,23 +2,38 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { UpdateWordDTO } from './dto/update-word.dto';
 import { DatabaseService } from 'src/database/database.service';
 import { CreateWordDto } from './dto/create-word.dto';
-import { Language, WordTaskType } from 'generated/prisma';
+import {  WordTaskType } from 'generated/prisma';
 import { PaginationDto } from './dto/pagination.dto';
+import { TranslateService } from 'src/translate/translate.service';
+
 
 @Injectable()
 export class WordsService {
-  constructor(private readonly databaseService: DatabaseService) {}
+  constructor(private readonly databaseService: DatabaseService,private readonly translateService: TranslateService) {}
   async createWord(userId: number, dto: CreateWordDto) {
     const taskTypes = Object.values(WordTaskType);
+    const setting = await this.databaseService.setting.findUnique({
+      where: { userId },
+    });
+
+     if (!setting) {
+      throw new NotFoundException('User settings not found');
+    }
+
+    const data = await this.translateService.wordTranslate(dto.text, setting.current_language, setting.global_language);
 
     return this.databaseService.word.create({
       data: {
         text: dto.text,
-        language: dto.language,
+        language: setting.current_language,
         translate: dto.translate,
         meaning: dto.meaning,
         example: dto.example,
         partOfSpeech: dto.partOfSpeech,
+        phonetic: data.phonetic,
+        audio: data.audio,
+        phoneticUS: data.phoneticUS,
+        audioUS: data.audioUS,
 
         progresses: {
           create: taskTypes.map((taskType) => ({

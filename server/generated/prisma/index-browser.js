@@ -125,7 +125,10 @@ exports.Prisma.UserScalarFieldEnum = {
   role: 'role',
   isEmailVerified: 'isEmailVerified',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  deleteAt: 'deleteAt',
+  lastLoginAt: 'lastLoginAt',
+  provider: 'provider'
 };
 
 exports.Prisma.WordScalarFieldEnum = {
@@ -138,7 +141,11 @@ exports.Prisma.WordScalarFieldEnum = {
   partOfSpeech: 'partOfSpeech',
   createdAt: 'createdAt',
   totalProgress: 'totalProgress',
-  isLearned: 'isLearned'
+  isLearned: 'isLearned',
+  phonetic: 'phonetic',
+  audio: 'audio',
+  phoneticUS: 'phoneticUS',
+  audioUS: 'audioUS'
 };
 
 exports.Prisma.VideoScalarFieldEnum = {
@@ -161,6 +168,9 @@ exports.Prisma.TaskScalarFieldEnum = {
   score: 'score',
   createdAt: 'createdAt',
   language: 'language',
+  order: 'order',
+  explanation: 'explanation',
+  authorId: 'authorId',
   videoId: 'videoId',
   courseId: 'courseId'
 };
@@ -174,7 +184,8 @@ exports.Prisma.CourseScalarFieldEnum = {
   isPublished: 'isPublished',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  tags: 'tags'
+  tags: 'tags',
+  authorId: 'authorId'
 };
 
 exports.Prisma.EnrollmentScalarFieldEnum = {
