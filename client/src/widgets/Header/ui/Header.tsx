@@ -11,6 +11,7 @@ import { DropDownUserMenu } from "@/widgets/Header/ui/DropDownUserMenu";
 import { useUserSettingsStore } from "@/states/requests/useUserSettings";
 import { useStates } from "@/states/useStates";
 import { useTranslation } from "next-i18next";
+import { CopyToken } from "@/widgets/Token/CopyToken";
 
 export function Header() {
   const { isLoggedIn, setIsLoggedIn } = useStates();
@@ -45,10 +46,11 @@ export function Header() {
 
   return (
     <Section className="border-b border-gray-200 sticky top-0 z-50 w-full bg-white">
-      <div className="flex justify-between h-16 items-center px-4">
+      <div className="flex justify-between h-16 items-center">
         <Link href="/" className="text-2xl font-bold text-blue-600">
           LinguaLearn
         </Link>
+        <CopyToken />
 
         {/*Desktop navigation*/}
         <nav className="hidden md:flex items-center gap-6">

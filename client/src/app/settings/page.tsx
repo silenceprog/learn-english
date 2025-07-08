@@ -177,6 +177,7 @@ export default function Settings() {
           onLanguageSelect={setSelectedStudyLanguage}
           whatIsIt="Мова, яку ви хочете вивчати або вдосконалювати"
         />
+
         <div>
           <div className="flex flex-row items-center">
             <Target className="w-4 h-4 mr-2" />
@@ -203,6 +204,7 @@ export default function Settings() {
             Оберіть одну або декілька цілей для персоналізації навчання
           </div>
         </div>
+
         <AddSelectLanguageBlock
           title="Поточний рівень знань"
           icon={<BookText />}
