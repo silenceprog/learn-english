@@ -1,10 +1,13 @@
 "use client";
-import { CopyToken } from "@/widgets/Token/CopyToken";
+import { MyWordsBlock } from "@/app/MyWordsBlock";
+import { Section } from "@/shared/ui/Section";
 
 export default function Home() {
   return (
     <>
-      <CopyToken />
+      <Section>
+        <MyWordsBlock />
+      </Section>
     </>
   );
 }

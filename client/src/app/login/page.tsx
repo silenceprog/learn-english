@@ -100,7 +100,7 @@ export default function Login() {
           />
         </div>
         <Button type="submit" className="w-full text-white cursor-pointer">
-          <div className="flex flex-row justify-center">
+          <div className="flex flex-row justify-center items-center">
             Увійти
             {isLoading ? <Loader2 className="animate-spin h-5 w-5 ml-2" /> : ""}
           </div>
