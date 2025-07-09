@@ -22,6 +22,7 @@ import { CreateWordDto } from './dto/create-word.dto';
 import { UpdateWordDTO } from './dto/update-word.dto';
 import { WordEntity } from './dto/word.entity';
 import { PaginationDto } from './dto/pagination.dto';
+import { WordTaskType } from 'generated/prisma';
 
 @ApiTags('Words')
 @ApiBearerAuth('access-token')
@@ -40,14 +41,29 @@ export class WordsController {
   @ApiOperation({ summary: 'Отримання слів побуквено' })
   @ApiResponse({ status: 200, type: WordEntity })
   @Get('search')
-  searchWords(@Req() req,  @Query('q') query: string) {
+  searchWords(@Req() req, @Query('q') query: string) {
     const userId = req.user.id;
-    return this.wordsService.searchWords(userId,query);
+    return this.wordsService.searchWords(userId, query);
   }
 
-  @ApiQuery({ name: 'page', required: false, type: Number,description:"Поточна сторінка" })
-  @ApiQuery({ name: 'limit', required: false, type: Number,description:"Кількість значень на одну сторінку" })
-  @ApiQuery({ name: 'type', required: false, type: String, description:"Тип значення" })
+  @ApiQuery({
+    name: 'page',
+    required: false,
+    type: Number,
+    description: 'Поточна сторінка',
+  })
+  @ApiQuery({
+    name: 'limit',
+    required: false,
+    type: Number,
+    description: 'Кількість значень на одну сторінку',
+  })
+  @ApiQuery({
+    name: 'type',
+    required: false,
+    type: String,
+    description: 'Тип значення',
+  })
   @Get('by-language')
   @ApiOperation({
     summary: 'Отримати слова за поточними налаштуваннями мови користувача',
@@ -55,6 +71,29 @@ export class WordsController {
   getWordsByUser(@Req() req, @Query() paginationDto: PaginationDto) {
     const userId = req.user.id;
     return this.wordsService.getWordsByUserLanguage(userId, paginationDto);
+  }
+
+  @ApiOperation({ summary: 'Зміна прогреса після виконання завдання' })
+  @Patch(':wordId/:taskType')
+  async completeTask(
+    @Param('wordId', ParseIntPipe) wordId: number,
+    @Param('taskType') taskType: WordTaskType,
+    @Req() req,
+    @Body() body: { isPassed: boolean; score?: number },
+  ) {
+    const userId = req.user.id;
+
+    await this.wordsService.updateTaskProgress({
+      userId,
+      wordId,
+      taskType,
+      isPassed: body.isPassed,
+      score: body.score ?? 0,
+    });
+
+    await this.wordsService.updateWordTotalProgress(userId, wordId);
+
+    return { message: 'Word progress updated' };
   }
 
   @ApiOperation({ summary: 'Отримання слова по айді' })

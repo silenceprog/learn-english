@@ -2,25 +2,31 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { UpdateWordDTO } from './dto/update-word.dto';
 import { DatabaseService } from 'src/database/database.service';
 import { CreateWordDto } from './dto/create-word.dto';
-import {  WordTaskType } from 'generated/prisma';
+import { WordTaskType } from 'generated/prisma';
 import { PaginationDto } from './dto/pagination.dto';
 import { TranslateService } from 'src/translate/translate.service';
 
-
 @Injectable()
 export class WordsService {
-  constructor(private readonly databaseService: DatabaseService,private readonly translateService: TranslateService) {}
+  constructor(
+    private readonly databaseService: DatabaseService,
+    private readonly translateService: TranslateService,
+  ) {}
   async createWord(userId: number, dto: CreateWordDto) {
     const taskTypes = Object.values(WordTaskType);
     const setting = await this.databaseService.setting.findUnique({
       where: { userId },
     });
 
-     if (!setting) {
+    if (!setting) {
       throw new NotFoundException('User settings not found');
     }
 
-    const data = await this.translateService.wordTranslate(dto.text, setting.current_language, setting.global_language);
+    const data = await this.translateService.wordTranslate(
+      dto.text,
+      setting.current_language,
+      setting.global_language,
+    );
 
     return this.databaseService.word.create({
       data: {
@@ -81,6 +87,63 @@ export class WordsService {
     return this.databaseService.word.findUnique({
       where: {
         id,
+      },
+    });
+  }
+
+  async updateWordTotalProgress(userId: number, wordId: number): Promise<void> {
+    const allTaskTypes = Object.keys(WordTaskType) as WordTaskType[];
+
+    const progresses = await this.databaseService.wordTaskProgress.findMany({
+      where: {
+        userId,
+        wordId,
+      },
+    });
+
+    const passedCount = progresses.filter((p) => p.isPassed).length;
+
+    const totalTypes = allTaskTypes.length;
+    const totalProgress = Math.round((passedCount / totalTypes) * 100);
+
+    const isLearned = passedCount === totalTypes;
+
+    await this.databaseService.word.update({
+      where: { id: wordId },
+      data: {
+        totalProgress,
+        isLearned,
+      },
+    });
+  }
+
+  async updateTaskProgress(data: {
+    userId: number;
+    wordId: number;
+    taskType: WordTaskType;
+    isPassed: boolean;
+    score: number;
+  }) {
+    await this.databaseService.wordTaskProgress.upsert({
+      where: {
+        userId_wordId_taskType: {
+          userId: data.userId,
+          wordId: data.wordId,
+          taskType: data.taskType,
+        },
+      },
+      update: {
+        isPassed: data.isPassed,
+        score: data.score,
+        attempts: { increment: 1 },
+      },
+      create: {
+        userId: data.userId,
+        wordId: data.wordId,
+        taskType: data.taskType,
+        isPassed: data.isPassed,
+        score: data.score,
+        attempts: 1,
       },
     });
   }
