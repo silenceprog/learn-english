@@ -23,6 +23,7 @@ import { UpdateWordDTO } from './dto/update-word.dto';
 import { WordEntity } from './dto/word.entity';
 import { PaginationDto } from './dto/pagination.dto';
 import { WordTaskType } from 'generated/prisma';
+import { UpdateProgressDto } from './dto/update-progress';
 
 @ApiTags('Words')
 @ApiBearerAuth('access-token')
@@ -79,7 +80,7 @@ export class WordsController {
     @Param('wordId', ParseIntPipe) wordId: number,
     @Param('taskType') taskType: WordTaskType,
     @Req() req,
-    @Body() body: { isPassed: boolean; score?: number },
+    @Body() body: UpdateProgressDto,
   ) {
     const userId = req.user.id;
 

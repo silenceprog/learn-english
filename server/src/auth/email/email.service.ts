@@ -1,39 +1,61 @@
-import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { Resend } from 'resend';
+import * as nodemailer from 'nodemailer';
 import { UsersService } from 'src/users/users.service';
 import * as bcrypt from 'bcryptjs';
+import { ChangePassword } from '../dto/change-password.dto';
+import { EmailSend } from '../dto/email-send';
+import { ConfigService } from '@nestjs/config';
+import { EmailSendDTO } from '../dto/email.dto';
 
 @Injectable()
 export class EmailService {
-  private resend: Resend;
-
   constructor(
     private readonly jwtService: JwtService,
     private userService: UsersService,
-  ) {
-    this.resend = new Resend(process.env.RESEND_API_KEY);
-  }
+    private configService: ConfigService,
+  ) {}
 
-  async sendEmailConfirmation(email: string) {
+  async sendEmailConfirmation(emailSend: EmailSend) {
+    const {email} = emailSend;
     const user = await this.userService.findByEmail(email);
     if (!user) {
-        throw new BadRequestException('Email not found');
+      throw new BadRequestException('Email not found');
     }
     const { access_token: token } = await this.generateTokenForEmail(email);
 
-    const confirmLink = `https://learn-english-chi-nine.vercel.app/confirm-email?token=${token}`;
+    const confirmLink = `${this.configService.get<string>('FRONTEND_URL')}/confirm-email?token=${token}`;
 
-    await this.sendEmail(
-      user.email,
-      'Confirm your email',
-      `<h1>Email Confirmation</h1><p>Click <a href="${confirmLink}">here</a> to confirm your email.</p>`,
-    );
+    const mailOptions = {
+      to: user.email,
+      subject: 'Confirm your email',
+      html: ` <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <h2>Confirm email</h2>
+          <p>Click the link below to confirm your email:</p>
+          <a href="${confirmLink}" style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px;">
+            Confirm email
+          </a>
+          <p style="color: #666;">
+            The link is valid for 1 hour.
+          </p>
+        </div>`,
+    };
 
-    return { message: 'Confirmation email sent' };
+   try {
+      await this.sendEmail(mailOptions);
+      console.log('Email sent successfully');
+    } catch (error) {
+      console.error('Error sending email:', error);
+      throw new Error('Failed to send email');
+    }
   }
 
-  async sendPasswordResetEmail(email: string) {
+  async sendPasswordResetEmail(forgotPassword: EmailSend) {
+    const { email } = forgotPassword;
     const user = await this.userService.findByEmail(email);
     if (!user) {
       return {
@@ -43,15 +65,45 @@ export class EmailService {
 
     const { access_token: token } = await this.generateTokenForEmail(email);
 
-    const resetLink = `https://learn-english-chi-nine.vercel.app/reset-password?token=${token}`;
+    const resetLink = `${this.configService.get<string>('FRONTEND_URL')}/reset-password?token=${token}`;
 
-    await this.sendEmail(
-      user.email,
-      'Reset your password',
-      `<h1>Password Reset</h1><p>Click <a href="${resetLink}">here</a> to reset your password.</p>`,
-    );
+    await this.sendEmail({
+      to: user.email,
+      subject: 'Reset your password',
+      html: ` 
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <h2>Password recovery</h2>
+          <p>You have requested a password recovery for your account.</p>
+          <p>Click the link below to create a new password:</p>
+          <a href="${resetLink}" style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px;">
+            Recover password
+          </a>
+          <p style="margin-top: 20px; color: #666;">
+           If you did not request a password reset, simply ignore this email.
+          </p>
+          <p style="color: #666;">
+            The link is valid for 1 hour.
+          </p>
+        </div>`,
+    });
 
     return { message: 'Password reset email sent' };
+  }
+
+  async changePassword(userId, changePassword: ChangePassword) {
+    const user = await this.userService.findById(userId);
+    if (!user) {
+      throw new BadRequestException('User not found');
+    }
+    const { oldPassword, newPassword } = changePassword;
+    const passwordMatch = await bcrypt.compare(oldPassword, user.password);
+    if (!passwordMatch) {
+      throw new BadRequestException('Wrong password');
+    }
+    const hashPassword = await bcrypt.hash(newPassword, 10);
+    return this.userService.updateUser(userId, {
+      password: hashPassword,
+    });
   }
 
   async confirmEmail(token: string) {
@@ -89,24 +141,32 @@ export class EmailService {
     }
   }
 
-  async sendEmail(to: string, subject: string, html: string) {
+  private emailTransport(): nodemailer.Transporter {
+     const transporter = nodemailer.createTransport({
+     service: 'gmail',
+      secure: false,
+      auth: {
+        user: this.configService.get<string>('EMAIL_USER'),
+        pass: this.configService.get<string>('EMAIL_PASSWORD'),
+      },
+    });
+    return transporter;
+  }
+
+  async sendEmail(emailSendDTO: EmailSendDTO) {
+    const { to, subject, html } = emailSendDTO;
+    const transport = this.emailTransport();
+    const options: nodemailer.SendMailOptions = {
+      from: this.configService.get<string>('EMAIL_USER'),
+      to,
+      subject,
+      html,
+    };
     try {
-      const { data, error } = await this.resend.emails.send({
-        from: 'Your App <noreply@yourdomain.com>',
-        to,
-        subject,
-        html,
-      });
-
-      if (error) {
-        console.error('Resend error:', error);
-        throw new Error('Failed to send email');
-      }
-
-      return data;
-    } catch (err) {
-      console.error('Email sending failed:', err);
-      throw err;
+      await transport.sendMail(options);
+      console.log('Email sent successufully');
+    } catch (error) {
+      console.log('Error sending mail:' + error);
     }
   }
 
@@ -115,7 +175,7 @@ export class EmailService {
     if (!user) throw new Error('User not found');
     const payload = { id: user.id, email: user.email, role: user.role };
     return {
-      access_token: this.jwtService.sign(payload),
+      access_token: this.jwtService.sign(payload, { expiresIn: '1h' }),
     };
   }
 }

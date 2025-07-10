@@ -1,7 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { Transform } from "class-transformer";
 import { IsArray, IsEnum, IsOptional, IsString } from "class-validator";
-import { Language } from "generated/prisma";
 
 export class CreateWordDto {
   @ApiProperty({ example: 'apple', description: 'Слово англійською або іншою мовою' })
