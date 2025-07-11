@@ -28,7 +28,7 @@ export function Header() {
   const { fetchSettings } = useUserSettingsStore();
   useEffect(() => {
     if (typeof window !== "undefined") {
-      const token = localStorage.getItem("access_token");
+      const token = localStorage.getItem("accessToken");
       if (token && isTokenValid(token)) {
         setIsLoggedIn(true);
         fetchSettings();

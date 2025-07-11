@@ -20,21 +20,21 @@ export function ShowWords({
       text: "accomplish",
       translate: "достигать, выполнять",
       example: '"She accomplished all her goals for the year."',
-      progress: 33,
+      totalProgress: 33,
       voice: "http../sdfsdf.ua",
     },
     {
       text: "accomplish",
       translate: "достигать, выполнять",
       example: '"She accomplished all her goals for the year."',
-      progress: 33,
+      totalProgress: 33,
       voice: "http../sdfsdf.ua",
     },
     {
       text: "accomplish",
       translate: "достигать, выполнять",
       example: '"She accomplished all her goals for the year."',
-      progress: 33,
+      totalProgress: 33,
       voice: "http../sdfsdf.ua",
     },
   ];
@@ -58,12 +58,13 @@ export function ShowWords({
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
           },
         });
 
         const data = await response.json();
         setWords(data.data);
+        console.log(data);
         getCountWords(data.total);
         maxPages(data.pages);
       } catch {
@@ -71,7 +72,7 @@ export function ShowWords({
       }
     };
     if (isLoggedIn) {
-      fetchWords();
+      fetchWords().then(() => console.error("Something went wrong"));
     }
   }, [isLoggedIn, wordsLimit, currentPage, currentTab]);
   return (
