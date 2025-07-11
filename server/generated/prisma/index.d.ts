@@ -79,7 +79,10 @@ export type Role = (typeof Role)[keyof typeof Role]
 export const TaskType: {
   MULTIPLE_CHOICE: 'MULTIPLE_CHOICE',
   FILL_IN_THE_BLANK: 'FILL_IN_THE_BLANK',
-  TRUE_FALSE: 'TRUE_FALSE'
+  TRUE_FALSE: 'TRUE_FALSE',
+  DRAG_AND_DROP: 'DRAG_AND_DROP',
+  AUDIO_CHOICE: 'AUDIO_CHOICE',
+  SPEAKING: 'SPEAKING'
 };
 
 export type TaskType = (typeof TaskType)[keyof typeof TaskType]
@@ -119,6 +122,30 @@ export const Level: {
 
 export type Level = (typeof Level)[keyof typeof Level]
 
+
+export const SkillType: {
+  VOCABULARY: 'VOCABULARY',
+  GRAMMAR: 'GRAMMAR',
+  LISTENING: 'LISTENING',
+  SPEAKING: 'SPEAKING',
+  READING: 'READING',
+  WRITING: 'WRITING',
+  PRONUNCIATION: 'PRONUNCIATION',
+  COMPREHENSION: 'COMPREHENSION'
+};
+
+export type SkillType = (typeof SkillType)[keyof typeof SkillType]
+
+
+export const DifficultyPreference: {
+  EASY: 'EASY',
+  MEDIUM: 'MEDIUM',
+  HARD: 'HARD',
+  ADAPTIVE: 'ADAPTIVE'
+};
+
+export type DifficultyPreference = (typeof DifficultyPreference)[keyof typeof DifficultyPreference]
+
 }
 
 export type WordTaskType = $Enums.WordTaskType
@@ -144,6 +171,14 @@ export const Purpose: typeof $Enums.Purpose
 export type Level = $Enums.Level
 
 export const Level: typeof $Enums.Level
+
+export type SkillType = $Enums.SkillType
+
+export const SkillType: typeof $Enums.SkillType
+
+export type DifficultyPreference = $Enums.DifficultyPreference
+
+export const DifficultyPreference: typeof $Enums.DifficultyPreference
 
 /**
  * ##  Prisma Client ʲˢ
@@ -1797,6 +1832,7 @@ export namespace Prisma {
     deleteAt: Date | null
     lastLoginAt: Date | null
     provider: string | null
+    refreshToken: string | null
   }
 
   export type UserMaxAggregateOutputType = {
@@ -1811,6 +1847,7 @@ export namespace Prisma {
     deleteAt: Date | null
     lastLoginAt: Date | null
     provider: string | null
+    refreshToken: string | null
   }
 
   export type UserCountAggregateOutputType = {
@@ -1825,6 +1862,7 @@ export namespace Prisma {
     deleteAt: number
     lastLoginAt: number
     provider: number
+    refreshToken: number
     _all: number
   }
 
@@ -1849,6 +1887,7 @@ export namespace Prisma {
     deleteAt?: true
     lastLoginAt?: true
     provider?: true
+    refreshToken?: true
   }
 
   export type UserMaxAggregateInputType = {
@@ -1863,6 +1902,7 @@ export namespace Prisma {
     deleteAt?: true
     lastLoginAt?: true
     provider?: true
+    refreshToken?: true
   }
 
   export type UserCountAggregateInputType = {
@@ -1877,6 +1917,7 @@ export namespace Prisma {
     deleteAt?: true
     lastLoginAt?: true
     provider?: true
+    refreshToken?: true
     _all?: true
   }
 
@@ -1978,6 +2019,7 @@ export namespace Prisma {
     deleteAt: Date | null
     lastLoginAt: Date | null
     provider: string | null
+    refreshToken: string | null
     _count: UserCountAggregateOutputType | null
     _avg: UserAvgAggregateOutputType | null
     _sum: UserSumAggregateOutputType | null
@@ -2011,6 +2053,7 @@ export namespace Prisma {
     deleteAt?: boolean
     lastLoginAt?: boolean
     provider?: boolean
+    refreshToken?: boolean
     enrollments?: boolean | User$enrollmentsArgs<ExtArgs>
     wordProgresses?: boolean | User$wordProgressesArgs<ExtArgs>
     courses?: boolean | User$coursesArgs<ExtArgs>
@@ -2031,6 +2074,7 @@ export namespace Prisma {
     deleteAt?: boolean
     lastLoginAt?: boolean
     provider?: boolean
+    refreshToken?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -2045,6 +2089,7 @@ export namespace Prisma {
     deleteAt?: boolean
     lastLoginAt?: boolean
     provider?: boolean
+    refreshToken?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
@@ -2059,9 +2104,10 @@ export namespace Prisma {
     deleteAt?: boolean
     lastLoginAt?: boolean
     provider?: boolean
+    refreshToken?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "username" | "password" | "role" | "isEmailVerified" | "createdAt" | "updatedAt" | "deleteAt" | "lastLoginAt" | "provider", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "username" | "password" | "role" | "isEmailVerified" | "createdAt" | "updatedAt" | "deleteAt" | "lastLoginAt" | "provider" | "refreshToken", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     enrollments?: boolean | User$enrollmentsArgs<ExtArgs>
     wordProgresses?: boolean | User$wordProgressesArgs<ExtArgs>
@@ -2094,6 +2140,7 @@ export namespace Prisma {
       deleteAt: Date | null
       lastLoginAt: Date | null
       provider: string | null
+      refreshToken: string | null
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -2533,6 +2580,7 @@ export namespace Prisma {
     readonly deleteAt: FieldRef<"User", 'DateTime'>
     readonly lastLoginAt: FieldRef<"User", 'DateTime'>
     readonly provider: FieldRef<"User", 'String'>
+    readonly refreshToken: FieldRef<"User", 'String'>
   }
     
 
@@ -11382,7 +11430,8 @@ export namespace Prisma {
     updatedAt: 'updatedAt',
     deleteAt: 'deleteAt',
     lastLoginAt: 'lastLoginAt',
-    provider: 'provider'
+    provider: 'provider',
+    refreshToken: 'refreshToken'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -11687,6 +11736,7 @@ export namespace Prisma {
     deleteAt?: DateTimeNullableFilter<"User"> | Date | string | null
     lastLoginAt?: DateTimeNullableFilter<"User"> | Date | string | null
     provider?: StringNullableFilter<"User"> | string | null
+    refreshToken?: StringNullableFilter<"User"> | string | null
     enrollments?: EnrollmentListRelationFilter
     wordProgresses?: WordTaskProgressListRelationFilter
     courses?: CourseListRelationFilter
@@ -11706,6 +11756,7 @@ export namespace Prisma {
     deleteAt?: SortOrderInput | SortOrder
     lastLoginAt?: SortOrderInput | SortOrder
     provider?: SortOrderInput | SortOrder
+    refreshToken?: SortOrderInput | SortOrder
     enrollments?: EnrollmentOrderByRelationAggregateInput
     wordProgresses?: WordTaskProgressOrderByRelationAggregateInput
     courses?: CourseOrderByRelationAggregateInput
@@ -11728,6 +11779,7 @@ export namespace Prisma {
     deleteAt?: DateTimeNullableFilter<"User"> | Date | string | null
     lastLoginAt?: DateTimeNullableFilter<"User"> | Date | string | null
     provider?: StringNullableFilter<"User"> | string | null
+    refreshToken?: StringNullableFilter<"User"> | string | null
     enrollments?: EnrollmentListRelationFilter
     wordProgresses?: WordTaskProgressListRelationFilter
     courses?: CourseListRelationFilter
@@ -11747,6 +11799,7 @@ export namespace Prisma {
     deleteAt?: SortOrderInput | SortOrder
     lastLoginAt?: SortOrderInput | SortOrder
     provider?: SortOrderInput | SortOrder
+    refreshToken?: SortOrderInput | SortOrder
     _count?: UserCountOrderByAggregateInput
     _avg?: UserAvgOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
@@ -11769,6 +11822,7 @@ export namespace Prisma {
     deleteAt?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
     lastLoginAt?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
     provider?: StringNullableWithAggregatesFilter<"User"> | string | null
+    refreshToken?: StringNullableWithAggregatesFilter<"User"> | string | null
   }
 
   export type WordWhereInput = {
@@ -12347,6 +12401,7 @@ export namespace Prisma {
     deleteAt?: Date | string | null
     lastLoginAt?: Date | string | null
     provider?: string | null
+    refreshToken?: string | null
     enrollments?: EnrollmentCreateNestedManyWithoutUserInput
     wordProgresses?: WordTaskProgressCreateNestedManyWithoutUserInput
     courses?: CourseCreateNestedManyWithoutAuthorInput
@@ -12366,6 +12421,7 @@ export namespace Prisma {
     deleteAt?: Date | string | null
     lastLoginAt?: Date | string | null
     provider?: string | null
+    refreshToken?: string | null
     enrollments?: EnrollmentUncheckedCreateNestedManyWithoutUserInput
     wordProgresses?: WordTaskProgressUncheckedCreateNestedManyWithoutUserInput
     courses?: CourseUncheckedCreateNestedManyWithoutAuthorInput
@@ -12384,6 +12440,7 @@ export namespace Prisma {
     deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     provider?: NullableStringFieldUpdateOperationsInput | string | null
+    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
     enrollments?: EnrollmentUpdateManyWithoutUserNestedInput
     wordProgresses?: WordTaskProgressUpdateManyWithoutUserNestedInput
     courses?: CourseUpdateManyWithoutAuthorNestedInput
@@ -12403,6 +12460,7 @@ export namespace Prisma {
     deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     provider?: NullableStringFieldUpdateOperationsInput | string | null
+    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
     enrollments?: EnrollmentUncheckedUpdateManyWithoutUserNestedInput
     wordProgresses?: WordTaskProgressUncheckedUpdateManyWithoutUserNestedInput
     courses?: CourseUncheckedUpdateManyWithoutAuthorNestedInput
@@ -12422,6 +12480,7 @@ export namespace Prisma {
     deleteAt?: Date | string | null
     lastLoginAt?: Date | string | null
     provider?: string | null
+    refreshToken?: string | null
   }
 
   export type UserUpdateManyMutationInput = {
@@ -12435,6 +12494,7 @@ export namespace Prisma {
     deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     provider?: NullableStringFieldUpdateOperationsInput | string | null
+    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type UserUncheckedUpdateManyInput = {
@@ -12449,6 +12509,7 @@ export namespace Prisma {
     deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     provider?: NullableStringFieldUpdateOperationsInput | string | null
+    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type WordCreateInput = {
@@ -13165,6 +13226,7 @@ export namespace Prisma {
     deleteAt?: SortOrder
     lastLoginAt?: SortOrder
     provider?: SortOrder
+    refreshToken?: SortOrder
   }
 
   export type UserAvgOrderByAggregateInput = {
@@ -13183,6 +13245,7 @@ export namespace Prisma {
     deleteAt?: SortOrder
     lastLoginAt?: SortOrder
     provider?: SortOrder
+    refreshToken?: SortOrder
   }
 
   export type UserMinOrderByAggregateInput = {
@@ -13197,6 +13260,7 @@ export namespace Prisma {
     deleteAt?: SortOrder
     lastLoginAt?: SortOrder
     provider?: SortOrder
+    refreshToken?: SortOrder
   }
 
   export type UserSumOrderByAggregateInput = {
@@ -15316,6 +15380,7 @@ export namespace Prisma {
     deleteAt?: Date | string | null
     lastLoginAt?: Date | string | null
     provider?: string | null
+    refreshToken?: string | null
     enrollments?: EnrollmentCreateNestedManyWithoutUserInput
     wordProgresses?: WordTaskProgressCreateNestedManyWithoutUserInput
     courses?: CourseCreateNestedManyWithoutAuthorInput
@@ -15334,6 +15399,7 @@ export namespace Prisma {
     deleteAt?: Date | string | null
     lastLoginAt?: Date | string | null
     provider?: string | null
+    refreshToken?: string | null
     enrollments?: EnrollmentUncheckedCreateNestedManyWithoutUserInput
     wordProgresses?: WordTaskProgressUncheckedCreateNestedManyWithoutUserInput
     courses?: CourseUncheckedCreateNestedManyWithoutAuthorInput
@@ -15427,6 +15493,7 @@ export namespace Prisma {
     deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     provider?: NullableStringFieldUpdateOperationsInput | string | null
+    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
     enrollments?: EnrollmentUpdateManyWithoutUserNestedInput
     wordProgresses?: WordTaskProgressUpdateManyWithoutUserNestedInput
     courses?: CourseUpdateManyWithoutAuthorNestedInput
@@ -15445,6 +15512,7 @@ export namespace Prisma {
     deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     provider?: NullableStringFieldUpdateOperationsInput | string | null
+    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
     enrollments?: EnrollmentUncheckedUpdateManyWithoutUserNestedInput
     wordProgresses?: WordTaskProgressUncheckedUpdateManyWithoutUserNestedInput
     courses?: CourseUncheckedUpdateManyWithoutAuthorNestedInput
@@ -15627,6 +15695,7 @@ export namespace Prisma {
     deleteAt?: Date | string | null
     lastLoginAt?: Date | string | null
     provider?: string | null
+    refreshToken?: string | null
     enrollments?: EnrollmentCreateNestedManyWithoutUserInput
     wordProgresses?: WordTaskProgressCreateNestedManyWithoutUserInput
     tasks?: TaskCreateNestedManyWithoutAuthorInput
@@ -15645,6 +15714,7 @@ export namespace Prisma {
     deleteAt?: Date | string | null
     lastLoginAt?: Date | string | null
     provider?: string | null
+    refreshToken?: string | null
     enrollments?: EnrollmentUncheckedCreateNestedManyWithoutUserInput
     wordProgresses?: WordTaskProgressUncheckedCreateNestedManyWithoutUserInput
     tasks?: TaskUncheckedCreateNestedManyWithoutAuthorInput
@@ -15740,6 +15810,7 @@ export namespace Prisma {
     deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     provider?: NullableStringFieldUpdateOperationsInput | string | null
+    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
     enrollments?: EnrollmentUpdateManyWithoutUserNestedInput
     wordProgresses?: WordTaskProgressUpdateManyWithoutUserNestedInput
     tasks?: TaskUpdateManyWithoutAuthorNestedInput
@@ -15758,6 +15829,7 @@ export namespace Prisma {
     deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     provider?: NullableStringFieldUpdateOperationsInput | string | null
+    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
     enrollments?: EnrollmentUncheckedUpdateManyWithoutUserNestedInput
     wordProgresses?: WordTaskProgressUncheckedUpdateManyWithoutUserNestedInput
     tasks?: TaskUncheckedUpdateManyWithoutAuthorNestedInput
@@ -15775,6 +15847,7 @@ export namespace Prisma {
     deleteAt?: Date | string | null
     lastLoginAt?: Date | string | null
     provider?: string | null
+    refreshToken?: string | null
     wordProgresses?: WordTaskProgressCreateNestedManyWithoutUserInput
     courses?: CourseCreateNestedManyWithoutAuthorInput
     tasks?: TaskCreateNestedManyWithoutAuthorInput
@@ -15793,6 +15866,7 @@ export namespace Prisma {
     deleteAt?: Date | string | null
     lastLoginAt?: Date | string | null
     provider?: string | null
+    refreshToken?: string | null
     wordProgresses?: WordTaskProgressUncheckedCreateNestedManyWithoutUserInput
     courses?: CourseUncheckedCreateNestedManyWithoutAuthorInput
     tasks?: TaskUncheckedCreateNestedManyWithoutAuthorInput
@@ -15860,6 +15934,7 @@ export namespace Prisma {
     deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     provider?: NullableStringFieldUpdateOperationsInput | string | null
+    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
     wordProgresses?: WordTaskProgressUpdateManyWithoutUserNestedInput
     courses?: CourseUpdateManyWithoutAuthorNestedInput
     tasks?: TaskUpdateManyWithoutAuthorNestedInput
@@ -15878,6 +15953,7 @@ export namespace Prisma {
     deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     provider?: NullableStringFieldUpdateOperationsInput | string | null
+    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
     wordProgresses?: WordTaskProgressUncheckedUpdateManyWithoutUserNestedInput
     courses?: CourseUncheckedUpdateManyWithoutAuthorNestedInput
     tasks?: TaskUncheckedUpdateManyWithoutAuthorNestedInput
@@ -15935,6 +16011,7 @@ export namespace Prisma {
     deleteAt?: Date | string | null
     lastLoginAt?: Date | string | null
     provider?: string | null
+    refreshToken?: string | null
     enrollments?: EnrollmentCreateNestedManyWithoutUserInput
     wordProgresses?: WordTaskProgressCreateNestedManyWithoutUserInput
     courses?: CourseCreateNestedManyWithoutAuthorInput
@@ -15953,6 +16030,7 @@ export namespace Prisma {
     deleteAt?: Date | string | null
     lastLoginAt?: Date | string | null
     provider?: string | null
+    refreshToken?: string | null
     enrollments?: EnrollmentUncheckedCreateNestedManyWithoutUserInput
     wordProgresses?: WordTaskProgressUncheckedCreateNestedManyWithoutUserInput
     courses?: CourseUncheckedCreateNestedManyWithoutAuthorInput
@@ -15986,6 +16064,7 @@ export namespace Prisma {
     deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     provider?: NullableStringFieldUpdateOperationsInput | string | null
+    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
     enrollments?: EnrollmentUpdateManyWithoutUserNestedInput
     wordProgresses?: WordTaskProgressUpdateManyWithoutUserNestedInput
     courses?: CourseUpdateManyWithoutAuthorNestedInput
@@ -16004,6 +16083,7 @@ export namespace Prisma {
     deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     provider?: NullableStringFieldUpdateOperationsInput | string | null
+    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
     enrollments?: EnrollmentUncheckedUpdateManyWithoutUserNestedInput
     wordProgresses?: WordTaskProgressUncheckedUpdateManyWithoutUserNestedInput
     courses?: CourseUncheckedUpdateManyWithoutAuthorNestedInput
@@ -16021,6 +16101,7 @@ export namespace Prisma {
     deleteAt?: Date | string | null
     lastLoginAt?: Date | string | null
     provider?: string | null
+    refreshToken?: string | null
     enrollments?: EnrollmentCreateNestedManyWithoutUserInput
     courses?: CourseCreateNestedManyWithoutAuthorInput
     tasks?: TaskCreateNestedManyWithoutAuthorInput
@@ -16039,6 +16120,7 @@ export namespace Prisma {
     deleteAt?: Date | string | null
     lastLoginAt?: Date | string | null
     provider?: string | null
+    refreshToken?: string | null
     enrollments?: EnrollmentUncheckedCreateNestedManyWithoutUserInput
     courses?: CourseUncheckedCreateNestedManyWithoutAuthorInput
     tasks?: TaskUncheckedCreateNestedManyWithoutAuthorInput
@@ -16110,6 +16192,7 @@ export namespace Prisma {
     deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     provider?: NullableStringFieldUpdateOperationsInput | string | null
+    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
     enrollments?: EnrollmentUpdateManyWithoutUserNestedInput
     courses?: CourseUpdateManyWithoutAuthorNestedInput
     tasks?: TaskUpdateManyWithoutAuthorNestedInput
@@ -16128,6 +16211,7 @@ export namespace Prisma {
     deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     provider?: NullableStringFieldUpdateOperationsInput | string | null
+    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
     enrollments?: EnrollmentUncheckedUpdateManyWithoutUserNestedInput
     courses?: CourseUncheckedUpdateManyWithoutAuthorNestedInput
     tasks?: TaskUncheckedUpdateManyWithoutAuthorNestedInput

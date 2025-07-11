@@ -128,7 +128,8 @@ exports.Prisma.UserScalarFieldEnum = {
   updatedAt: 'updatedAt',
   deleteAt: 'deleteAt',
   lastLoginAt: 'lastLoginAt',
-  provider: 'provider'
+  provider: 'provider',
+  refreshToken: 'refreshToken'
 };
 
 exports.Prisma.WordScalarFieldEnum = {
@@ -254,7 +255,10 @@ exports.Level = exports.$Enums.Level = {
 exports.TaskType = exports.$Enums.TaskType = {
   MULTIPLE_CHOICE: 'MULTIPLE_CHOICE',
   FILL_IN_THE_BLANK: 'FILL_IN_THE_BLANK',
-  TRUE_FALSE: 'TRUE_FALSE'
+  TRUE_FALSE: 'TRUE_FALSE',
+  DRAG_AND_DROP: 'DRAG_AND_DROP',
+  AUDIO_CHOICE: 'AUDIO_CHOICE',
+  SPEAKING: 'SPEAKING'
 };
 
 exports.Purpose = exports.$Enums.Purpose = {

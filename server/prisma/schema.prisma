@@ -32,6 +32,7 @@ model User {
   deleteAt        DateTime?
   lastLoginAt     DateTime?
   provider        String?
+  refreshToken    String?
 }
 
 model Word {
@@ -162,6 +163,9 @@ enum TaskType {
   MULTIPLE_CHOICE
   FILL_IN_THE_BLANK
   TRUE_FALSE
+  DRAG_AND_DROP
+  AUDIO_CHOICE
+  SPEAKING
 }
 
 enum Language {
@@ -188,4 +192,22 @@ enum Level {
   B2
   C1
   C2
+}
+
+enum SkillType {
+  VOCABULARY
+  GRAMMAR
+  LISTENING
+  SPEAKING
+  READING
+  WRITING
+  PRONUNCIATION
+  COMPREHENSION
+}
+
+enum DifficultyPreference {
+  EASY
+  MEDIUM
+  HARD
+  ADAPTIVE
 }
