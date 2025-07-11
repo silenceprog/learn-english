@@ -59,7 +59,7 @@ export class UsersService {
     return this.databaseService.user.findUnique({
       where: {
         id,
-      },
+      }
     });
   }
 
@@ -69,6 +69,13 @@ export class UsersService {
         id,
       },
       data: updateUserDto,
+    });
+  }
+
+   async updateRefreshToken(userId: number, refreshToken: string | null): Promise<void> {
+    await this.databaseService.user.update({
+      where: { id: userId },
+      data: { refreshToken },
     });
   }
 
