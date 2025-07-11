@@ -25,7 +25,7 @@ export const useUserSettingsStore = create<SettingsStore>((set) => ({
         "https://learn-english-6ufl.onrender.com/api/settings",
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
           },
         },
       );

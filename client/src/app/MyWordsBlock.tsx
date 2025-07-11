@@ -4,6 +4,7 @@ import { useState } from "react";
 import { ShowWords } from "@/app/ShowWords";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import Pagination from "@/app/Pagination";
+import CreateWordButton from "@/app/CreateWordButton";
 
 export function MyWordsBlock() {
   const [activeTab, setActiveTab] = useState<"ALL" | "LEARNING" | "LEARNED">(
@@ -65,6 +66,8 @@ export function MyWordsBlock() {
           >
             Изученные
           </Button>
+
+          <CreateWordButton />
         </div>
         <div>
           <DropdownMenu.Root>

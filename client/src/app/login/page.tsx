@@ -26,7 +26,6 @@ export default function Login() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-
     try {
       const response = await fetch(
         "https://learn-english-6ufl.onrender.com/api/auth/login",
@@ -52,8 +51,7 @@ export default function Login() {
       setSuccess("Login successful!");
       setIsLoggedIn(true);
       // Save token
-      localStorage.setItem("access_token", data.access_token);
-      localStorage.setItem("role", data.user_role);
+      localStorage.setItem("accessToken", data.accessToken);
       // Redirect to main page
       router.push("/");
     } catch (error) {
