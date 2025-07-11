@@ -5,7 +5,7 @@ export interface Word {
   text: string;
   translate: string;
   example: string;
-  progress: number;
+  totalProgress: number;
   voice: string;
 }
 interface Props {
@@ -27,8 +27,8 @@ export function ShowWord({ word }: Props) {
       <p className="text-xs text-gray-500 italic mb-2">{word.example}</p>
       <div className="w-full bg-gray-200 rounded-full h-1.5">
         <div
-          className={`h-1.5 rounded-full ${word.progress >= 80 ? "bg-lime-500" : "bg-blue-600"}`}
-          style={{ width: `${word.progress}%` }}
+          className={`h-1.5 rounded-full ${word.totalProgress >= 80 ? "bg-lime-500" : "bg-blue-600"}`}
+          style={{ width: `${word.totalProgress}%` }}
         ></div>
       </div>
     </div>
