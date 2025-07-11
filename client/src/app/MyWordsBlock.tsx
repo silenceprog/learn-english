@@ -14,7 +14,7 @@ export function MyWordsBlock() {
   const [maxPages, setMaxPages] = useState(1);
   const limits = [1, 2, 3, 5, 10];
   const [page, setPage] = useState(1);
-  const [wordsOnPage, setWordsOnPage] = useState(limits[0]);
+  const [wordsOnPage, setWordsOnPage] = useState(limits[4]);
   const nextPage = () => {
     if (page + 1 <= maxPages) {
       setPage(page + 1);

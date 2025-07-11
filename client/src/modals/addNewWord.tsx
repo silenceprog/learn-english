@@ -12,6 +12,12 @@ export default function AddNewWord() {
     meaning: "",
     example: "",
   });
+  function clearData() {
+    form.word = "";
+    form.translate = "";
+    form.meaning = "";
+    form.example = "";
+  }
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setForm((prevForm) => ({
@@ -36,7 +42,11 @@ export default function AddNewWord() {
       }),
     })
       .then((response) => response.json())
-      .then((data) => console.log("Response:", data))
+      .then((data) => {
+        console.log("Response:", data);
+        clearData();
+        setIsOpen(false);
+      })
       .catch((error) => console.error("Error:", error));
   };
   return (
