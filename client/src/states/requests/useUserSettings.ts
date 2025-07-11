@@ -29,7 +29,7 @@ export const useUserSettingsStore = create<SettingsStore>((set) => ({
           },
         },
       );
-      if (!res.ok) throw new Error("Failed to fetch settings");
+      if (!res.ok) console.error("Failed to fetch settings");
 
       const data = await res.json();
       set({ settings: data });
