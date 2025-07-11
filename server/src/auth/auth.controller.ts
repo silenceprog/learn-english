@@ -2,7 +2,6 @@ import {
   Body,
   Controller,
   Get,
-  Request,
   HttpCode,
   HttpStatus,
   Post,
@@ -13,7 +12,6 @@ import {
 import { AuthService } from './auth.service';
 import { Public } from './public.decorator';
 import { AuthGuard } from '@nestjs/passport';
-import { AccessToken } from './types/AccessToken';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { LoginUserDto } from './dto/login-user.dto';
 import { ApiBearerAuth, ApiOperation, ApiResponse } from '@nestjs/swagger';

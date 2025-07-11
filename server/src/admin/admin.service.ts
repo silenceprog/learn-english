@@ -1,30 +1,28 @@
 import { Injectable } from '@nestjs/common';
 import { DatabaseService } from 'src/database/database.service';
 
+
 @Injectable()
 export class AdminService {
-    constructor(private readonly databaseService: DatabaseService) { }
-    async getStatisticsUsers(){
+  constructor(private readonly databaseService: DatabaseService) {}
 
-    }
+  async deleteUser(id: number) {
+    return this.databaseService.user.delete({
+      where: {
+        id,
+      },
+    });
+  }
 
-    async getStatisticsTasks(){
+  async getStatisticsUsers() {}
 
-    }
+  async getStatisticsTasks() {}
 
-    async getStatisticsErrors(){
+  async getStatisticsErrors() {}
 
-    }
+  async setGlobalSettings() {}
 
-    async setGlobalSettings(){
+  async setAdaptiveSettings() {}
 
-    }
-
-    async setAdaptiveSettings(){
-
-    }
-
-    async setGameSettings(){
-
-    }
+  async setGameSettings() {}
 }

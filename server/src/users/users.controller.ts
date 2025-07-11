@@ -17,6 +17,7 @@ import { Role } from 'generated/prisma/client';
 import { Roles } from 'src/roles/roles.decorator';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { GetCurrentUserId } from 'src/decorators/get-current-user-id.decorator';
 
 
 @ApiTags('Users')
@@ -78,8 +79,8 @@ export class UsersController {
   @ApiOperation({ summary: 'Видалення користувача' })
   @ApiResponse({ status: 200 })
   @Roles(Role.OWNER)
-  @Delete(':id')
-  deleteUser(@Param('id', ParseIntPipe) id: number) {
-    return this.usersService.deleteUser(id);
+  @Delete()
+  deleteUser(@GetCurrentUserId() userId: number) {
+    return this.usersService.deleteUser(userId);
   }
 }
