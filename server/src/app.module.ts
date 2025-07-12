@@ -28,6 +28,7 @@ import { TranslateModule } from './translate/translate.module';
 import { CacheInterceptor, CacheModule } from '@nestjs/cache-manager';
 import { RedisOptions } from './app-options';
 import { APP_INTERCEPTOR } from '@nestjs/core';
+import { CronModule } from './safe-delete/cron.module';
 
 @Module({
   imports: [
@@ -61,6 +62,7 @@ import { APP_INTERCEPTOR } from '@nestjs/core';
     CoursesModule,
     SettingsModule,
     TranslateModule,
+    CronModule,
   ],
   controllers: [AppController, EmailController],
   providers: [
