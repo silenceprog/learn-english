@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export function DropDownUserMenu() {
   const logout = () => {
-    localStorage.removeItem("access_token");
+    localStorage.removeItem("accessToken");
     window.location.href = "/"; // або "/" — залежно від логіки
   };
   return (

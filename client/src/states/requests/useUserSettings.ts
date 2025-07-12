@@ -25,11 +25,11 @@ export const useUserSettingsStore = create<SettingsStore>((set) => ({
         "https://learn-english-6ufl.onrender.com/api/settings",
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
           },
         },
       );
-      if (!res.ok) throw new Error("Failed to fetch settings");
+      if (!res.ok) console.error("Failed to fetch settings");
 
       const data = await res.json();
       set({ settings: data });

@@ -6,7 +6,7 @@ export function CopyToken() {
   const [status, setStatus] = useState<"copied" | "not_found" | false>(false);
 
   const handleCopy = async () => {
-    const token = localStorage.getItem("access_token");
+    const token = localStorage.getItem("accessToken");
     if (!token) {
       setStatus("not_found");
       setTimeout(() => setStatus(false), 2000);
