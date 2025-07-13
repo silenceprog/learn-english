@@ -18,13 +18,13 @@ export class GeminiService {
     this.genAI = new GoogleGenAI({ apiKey: apiKey });
   }
 
-  async generateText(prompt: string): Promise<string | undefined> {
+  async generateText(model: string,prompt: string): Promise<string | undefined> {
     try {
       this.logger.log(
         `Generating text for prompt: "${prompt.substring(0, 50)}..."`,
       );
       const response = await this.genAI.models.generateContent({
-        model: 'gemini-2.5-pro',
+        model: model,
         contents: prompt,
       });
       this.logger.log('Text generation successful.');
@@ -34,7 +34,23 @@ export class GeminiService {
     }
   }
 
-  async generateFromImage(
+   async generateTextHistory(history,model: string,prompt: string): Promise<string | undefined> {
+    try {
+      this.logger.log(
+        `Generating text for prompt: "${prompt.substring(0, 50)}..."`,
+      );
+      const response = await this.genAI.models.generateContent({
+        model: model,
+        contents: [...history, { role: "user", parts: [{ text: prompt }] }],
+      });
+      this.logger.log('Text generation successful.');
+      return response.text;
+    } catch (error) {
+      throw new Error(`Ошибка генерации текста: ${error.message}`);
+    }
+  }
+
+  async generateFromImage(model: string,
     prompt: string,
     imageBuffer: Buffer,
   ): Promise<string | undefined> {
@@ -50,7 +66,7 @@ export class GeminiService {
       ];
 
       const response = await this.genAI.models.generateContent({
-        model: 'gemini-2.0-flash',
+        model: model,
         contents: contents,
       });
       this.logger.log('Image understanding successful.');
@@ -60,7 +76,7 @@ export class GeminiService {
     }
   }
 
-  async generateGroundedText(prompt: string): Promise<string | undefined> {
+  async generateGroundedText(model: string,prompt: string): Promise<string | undefined> {
     const groundingTool = {
       googleSearch: {},
     };
@@ -73,7 +89,7 @@ export class GeminiService {
         `Generating grounded text for prompt: "${prompt.substring(0, 50)}..."`,
       );
       const response = await this.genAI.models.generateContent({
-        model: 'gemini-2.0-flash',
+        model: model,
         contents: [{ role: 'user', parts: [{ text: prompt }] }],
         config,
       });
