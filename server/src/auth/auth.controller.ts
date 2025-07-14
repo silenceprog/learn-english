@@ -8,6 +8,8 @@ import {
   UseGuards,
   BadRequestException,
   Res,
+  Req,
+  Redirect,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { Public } from './public.decorator';
@@ -41,6 +43,36 @@ export class AuthController {
   @Post('/registration')
   regsistration(@Body() regDto: CreateUserDto) {
     return this.authService.registration(regDto);
+  }
+
+  @Public()
+  @Get('google/login')
+  @UseGuards(AuthGuard('google'))
+  async googleAuth() {
+
+  }
+
+  @Public()
+  @Get('google/redirect')
+  @UseGuards(AuthGuard('google'))
+  @Redirect('https://learn-english-chi-nine.vercel.app/auth/google/redirect', 302)
+  async googleAuthRedirect(@GetCurrentUser() user) {
+    return this.authService.login(user);
+  }
+
+  @Public()
+  @Get('github/login')
+  @UseGuards(AuthGuard('github'))
+  async githubAuth() {
+
+  }
+
+  @Public()
+  @Get('github/redirect')
+  @UseGuards(AuthGuard('google'))
+  @Redirect('https://learn-english-chi-nine.vercel.app/auth/github/redirect', 302)
+  async githubAuthRedirect(@GetCurrentUser() user) {
+    return this.authService.login(user);
   }
 
   @UseGuards(AuthGuard('jwt'))

@@ -21,6 +21,7 @@ model User {
   username        String             @unique
   password        String
   role            Role               @default(USER)
+  avatar          String?            @default("none")
   isEmailVerified Boolean            @default(false)
   createdAt       DateTime           @default(now())
   updatedAt       DateTime           @updatedAt

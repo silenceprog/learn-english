@@ -8,6 +8,9 @@ import { LocalStrategy } from './strategy/local.strategy';
 import { JwtStrategy } from './strategy/jwt.strategy';
 import { JwtRefreshStrategy } from './strategy/jwt.refresh.strategy';
 import { JwtRefreshGuard } from './jwt-refresh.guard';
+import { GoogleStrategy } from './strategy/google.strategy';
+import { GithubStrategy } from './strategy/github.strategy';
+import { DatabaseService } from 'src/database/database.service';
 
 @Module({
   imports: [
@@ -15,9 +18,9 @@ import { JwtRefreshGuard } from './jwt-refresh.guard';
     UsersModule,
     JwtModule.register({}),
   ],
-  providers: [AuthService, LocalStrategy, JwtStrategy,JwtRefreshStrategy,JwtRefreshGuard],
+  providers: [AuthService, LocalStrategy, JwtStrategy,JwtRefreshStrategy,JwtRefreshGuard,GoogleStrategy,GithubStrategy,DatabaseService],
   controllers: [AuthController],
-  exports: [AuthService, JwtModule,JwtRefreshGuard],
+  exports: [AuthService, JwtModule,JwtRefreshGuard,DatabaseService],
 })
 export class AuthModule {}
 //
