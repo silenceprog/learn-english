@@ -35,6 +35,7 @@ model User {
   provider        String?
   refreshToken    String?
 
+  words Word[]
 }
 
 model Word {
@@ -42,8 +43,10 @@ model Word {
   text          String
   language      Language
   translate     String[]
-  meaning       String[]
-  example       String?
+  definitions   String[]           @default([])
+  synonyms      String[]           @default([])
+  antonyms      String[]           @default([])
+  examples      String[]           @default([])
   partOfSpeech  String?
   createdAt     DateTime           @default(now())
   progresses    WordTaskProgress[]
@@ -53,6 +56,11 @@ model Word {
   audio         String             @default("none")
   phoneticUS    String?
   audioUS       String?
+
+  userId Int
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, text, language])
 }
 
 model Video {

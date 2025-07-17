@@ -1,6 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { Transform } from "class-transformer";
-import { IsArray, IsEnum, IsOptional, IsString } from "class-validator";
+import { IsArray, IsOptional, IsString } from "class-validator";
 
 export class CreateWordDto {
   @ApiProperty({ example: 'apple', description: 'Слово англійською або іншою мовою' })
@@ -11,17 +10,28 @@ export class CreateWordDto {
   @IsArray()
   translate: string[];
 
-  @ApiProperty({ example: ['a round fruit with shiny red or green skin that is fairly hard and white inside'], description: 'Значення слова', type: [String] })
-  @IsArray()
-  meaning: string[];
-
-  @ApiProperty({ example: 'I ate an apple in the morning.', description: 'Приклад використання', required: false })
-  @IsOptional()
-  @IsString()
-  example?: string;
-
   @ApiProperty({ example: 'noun', description: 'Частина мови', required: false })
   @IsOptional()
   @IsString()
   partOfSpeech?: string;
-  }
+
+  @ApiProperty({ example: ['a round fruit'], description: 'Визначення слова', type: [String], required: false })
+  @IsOptional()
+  @IsArray()
+  definitions?: string[];
+
+  @ApiProperty({ example: ['fruit'], description: 'Синоніми', type: [String], required: false })
+  @IsOptional()
+  @IsArray()
+  synonyms?: string[];
+
+  @ApiProperty({ example: [], description: 'Антоніми', type: [String], required: false })
+  @IsOptional()
+  @IsArray()
+  antonyms?: string[];
+
+  @ApiProperty({ example: ['I ate an apple in the morning.', 'She bought a red apple.'], description: 'Приклади використання', type: [String], required: false })
+  @IsOptional()
+  @IsArray()
+  examples?: string[];
+}

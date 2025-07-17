@@ -16,28 +16,21 @@ export class TranslateService {
       throw new BadRequestException('Unsupported language');
     }
 
-    const libreTranslateUrl = 'https://libretranslate.de/translate';
     const dictionaryUrl = `https://api.dictionaryapi.dev/api/v2/entries/${fromIso}/${text}`;
 
     try {
-      const libreRes = await firstValueFrom(
-        this.httpService.post(
-          libreTranslateUrl,
-          { q: text, source: fromIso, target: toIso, format: 'text' },
-          { headers: { 'Content-Type': 'application/json' } },
-        ),
-      );
-
       let phonetic = 'none';
       let audio = 'none';
       let phoneticUS = null;
       let audioUS = null;
+      let meanings;
 
       if (SupportedDictionaryLangs.includes(fromIso)) {
         const dictRes = await firstValueFrom(
           this.httpService.get(dictionaryUrl),
         );
-        const entry = dictRes.data[0]; 
+        const entry = dictRes.data[0];
+        meanings = entry.meanings;
 
         if (entry?.phonetics?.length) {
           for (const p of entry.phonetics) {
@@ -62,6 +55,7 @@ export class TranslateService {
         audio,
         phoneticUS,
         audioUS,
+        meanings,
       };
     } catch (error) {
       if (error.response?.status === 404) {

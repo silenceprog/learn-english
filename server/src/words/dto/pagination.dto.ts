@@ -24,6 +24,6 @@ export class PaginationDto {
   limit?: number;
 
   @IsOptional()
-  @IsIn(['learned', 'learning'])
-  type?: 'learned' | 'learning';
+  @IsIn(['ALL','LEARNED', 'LEARNING'])
+  type?: 'ALL' | 'LEARNED' | 'LEARNING';
 }

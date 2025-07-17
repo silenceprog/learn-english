@@ -24,6 +24,7 @@ import { WordEntity } from './dto/word.entity';
 import { PaginationDto } from './dto/pagination.dto';
 import { WordTaskType } from 'generated/prisma';
 import { UpdateProgressDto } from './dto/update-progress';
+import { GetCurrentUserId } from 'src/decorators/get-current-user-id.decorator';
 
 @ApiTags('Words')
 @ApiBearerAuth('access-token')
@@ -117,7 +118,7 @@ export class WordsController {
   @ApiOperation({ summary: 'Видалення слова' })
   @ApiResponse({ status: 200 })
   @Delete(':id')
-  deleteWord(@Param('id', ParseIntPipe) id: number) {
-    return this.wordsService.deleteWord(id);
+  deleteWord(@GetCurrentUserId() userId, @Param('id', ParseIntPipe) wordId: number) {
+    return this.wordsService.deleteUserWord(userId,wordId);
   }
 }

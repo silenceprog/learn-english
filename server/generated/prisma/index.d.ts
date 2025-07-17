@@ -1636,6 +1636,7 @@ export namespace Prisma {
     wordProgresses: number
     courses: number
     tasks: number
+    words: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -1643,6 +1644,7 @@ export namespace Prisma {
     wordProgresses?: boolean | UserCountOutputTypeCountWordProgressesArgs
     courses?: boolean | UserCountOutputTypeCountCoursesArgs
     tasks?: boolean | UserCountOutputTypeCountTasksArgs
+    words?: boolean | UserCountOutputTypeCountWordsArgs
   }
 
   // Custom InputTypes
@@ -1682,6 +1684,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountTasksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: TaskWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountWordsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: WordWhereInput
   }
 
 
@@ -2067,6 +2076,7 @@ export namespace Prisma {
     courses?: boolean | User$coursesArgs<ExtArgs>
     tasks?: boolean | User$tasksArgs<ExtArgs>
     setting?: boolean | User$settingArgs<ExtArgs>
+    words?: boolean | User$wordsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -2125,6 +2135,7 @@ export namespace Prisma {
     courses?: boolean | User$coursesArgs<ExtArgs>
     tasks?: boolean | User$tasksArgs<ExtArgs>
     setting?: boolean | User$settingArgs<ExtArgs>
+    words?: boolean | User$wordsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -2138,6 +2149,7 @@ export namespace Prisma {
       courses: Prisma.$CoursePayload<ExtArgs>[]
       tasks: Prisma.$TaskPayload<ExtArgs>[]
       setting: Prisma.$SettingPayload<ExtArgs> | null
+      words: Prisma.$WordPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -2552,6 +2564,7 @@ export namespace Prisma {
     courses<T extends User$coursesArgs<ExtArgs> = {}>(args?: Subset<T, User$coursesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CoursePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     tasks<T extends User$tasksArgs<ExtArgs> = {}>(args?: Subset<T, User$tasksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     setting<T extends User$settingArgs<ExtArgs> = {}>(args?: Subset<T, User$settingArgs<ExtArgs>>): Prisma__SettingClient<$Result.GetResult<Prisma.$SettingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    words<T extends User$wordsArgs<ExtArgs> = {}>(args?: Subset<T, User$wordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WordPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3097,6 +3110,30 @@ export namespace Prisma {
   }
 
   /**
+   * User.words
+   */
+  export type User$wordsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Word
+     */
+    select?: WordSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Word
+     */
+    omit?: WordOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WordInclude<ExtArgs> | null
+    where?: WordWhereInput
+    orderBy?: WordOrderByWithRelationInput | WordOrderByWithRelationInput[]
+    cursor?: WordWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: WordScalarFieldEnum | WordScalarFieldEnum[]
+  }
+
+  /**
    * User without action
    */
   export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3130,18 +3167,19 @@ export namespace Prisma {
   export type WordAvgAggregateOutputType = {
     id: number | null
     totalProgress: number | null
+    userId: number | null
   }
 
   export type WordSumAggregateOutputType = {
     id: number | null
     totalProgress: number | null
+    userId: number | null
   }
 
   export type WordMinAggregateOutputType = {
     id: number | null
     text: string | null
     language: $Enums.Language | null
-    example: string | null
     partOfSpeech: string | null
     createdAt: Date | null
     totalProgress: number | null
@@ -3150,13 +3188,13 @@ export namespace Prisma {
     audio: string | null
     phoneticUS: string | null
     audioUS: string | null
+    userId: number | null
   }
 
   export type WordMaxAggregateOutputType = {
     id: number | null
     text: string | null
     language: $Enums.Language | null
-    example: string | null
     partOfSpeech: string | null
     createdAt: Date | null
     totalProgress: number | null
@@ -3165,6 +3203,7 @@ export namespace Prisma {
     audio: string | null
     phoneticUS: string | null
     audioUS: string | null
+    userId: number | null
   }
 
   export type WordCountAggregateOutputType = {
@@ -3172,8 +3211,10 @@ export namespace Prisma {
     text: number
     language: number
     translate: number
-    meaning: number
-    example: number
+    definitions: number
+    synonyms: number
+    antonyms: number
+    examples: number
     partOfSpeech: number
     createdAt: number
     totalProgress: number
@@ -3182,6 +3223,7 @@ export namespace Prisma {
     audio: number
     phoneticUS: number
     audioUS: number
+    userId: number
     _all: number
   }
 
@@ -3189,18 +3231,19 @@ export namespace Prisma {
   export type WordAvgAggregateInputType = {
     id?: true
     totalProgress?: true
+    userId?: true
   }
 
   export type WordSumAggregateInputType = {
     id?: true
     totalProgress?: true
+    userId?: true
   }
 
   export type WordMinAggregateInputType = {
     id?: true
     text?: true
     language?: true
-    example?: true
     partOfSpeech?: true
     createdAt?: true
     totalProgress?: true
@@ -3209,13 +3252,13 @@ export namespace Prisma {
     audio?: true
     phoneticUS?: true
     audioUS?: true
+    userId?: true
   }
 
   export type WordMaxAggregateInputType = {
     id?: true
     text?: true
     language?: true
-    example?: true
     partOfSpeech?: true
     createdAt?: true
     totalProgress?: true
@@ -3224,6 +3267,7 @@ export namespace Prisma {
     audio?: true
     phoneticUS?: true
     audioUS?: true
+    userId?: true
   }
 
   export type WordCountAggregateInputType = {
@@ -3231,8 +3275,10 @@ export namespace Prisma {
     text?: true
     language?: true
     translate?: true
-    meaning?: true
-    example?: true
+    definitions?: true
+    synonyms?: true
+    antonyms?: true
+    examples?: true
     partOfSpeech?: true
     createdAt?: true
     totalProgress?: true
@@ -3241,6 +3287,7 @@ export namespace Prisma {
     audio?: true
     phoneticUS?: true
     audioUS?: true
+    userId?: true
     _all?: true
   }
 
@@ -3335,8 +3382,10 @@ export namespace Prisma {
     text: string
     language: $Enums.Language
     translate: string[]
-    meaning: string[]
-    example: string | null
+    definitions: string[]
+    synonyms: string[]
+    antonyms: string[]
+    examples: string[]
     partOfSpeech: string | null
     createdAt: Date
     totalProgress: number
@@ -3345,6 +3394,7 @@ export namespace Prisma {
     audio: string
     phoneticUS: string | null
     audioUS: string | null
+    userId: number
     _count: WordCountAggregateOutputType | null
     _avg: WordAvgAggregateOutputType | null
     _sum: WordSumAggregateOutputType | null
@@ -3371,8 +3421,10 @@ export namespace Prisma {
     text?: boolean
     language?: boolean
     translate?: boolean
-    meaning?: boolean
-    example?: boolean
+    definitions?: boolean
+    synonyms?: boolean
+    antonyms?: boolean
+    examples?: boolean
     partOfSpeech?: boolean
     createdAt?: boolean
     totalProgress?: boolean
@@ -3381,7 +3433,9 @@ export namespace Prisma {
     audio?: boolean
     phoneticUS?: boolean
     audioUS?: boolean
+    userId?: boolean
     progresses?: boolean | Word$progressesArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
     _count?: boolean | WordCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["word"]>
 
@@ -3390,8 +3444,10 @@ export namespace Prisma {
     text?: boolean
     language?: boolean
     translate?: boolean
-    meaning?: boolean
-    example?: boolean
+    definitions?: boolean
+    synonyms?: boolean
+    antonyms?: boolean
+    examples?: boolean
     partOfSpeech?: boolean
     createdAt?: boolean
     totalProgress?: boolean
@@ -3400,6 +3456,8 @@ export namespace Prisma {
     audio?: boolean
     phoneticUS?: boolean
     audioUS?: boolean
+    userId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["word"]>
 
   export type WordSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -3407,8 +3465,10 @@ export namespace Prisma {
     text?: boolean
     language?: boolean
     translate?: boolean
-    meaning?: boolean
-    example?: boolean
+    definitions?: boolean
+    synonyms?: boolean
+    antonyms?: boolean
+    examples?: boolean
     partOfSpeech?: boolean
     createdAt?: boolean
     totalProgress?: boolean
@@ -3417,6 +3477,8 @@ export namespace Prisma {
     audio?: boolean
     phoneticUS?: boolean
     audioUS?: boolean
+    userId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["word"]>
 
   export type WordSelectScalar = {
@@ -3424,8 +3486,10 @@ export namespace Prisma {
     text?: boolean
     language?: boolean
     translate?: boolean
-    meaning?: boolean
-    example?: boolean
+    definitions?: boolean
+    synonyms?: boolean
+    antonyms?: boolean
+    examples?: boolean
     partOfSpeech?: boolean
     createdAt?: boolean
     totalProgress?: boolean
@@ -3434,28 +3498,37 @@ export namespace Prisma {
     audio?: boolean
     phoneticUS?: boolean
     audioUS?: boolean
+    userId?: boolean
   }
 
-  export type WordOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "text" | "language" | "translate" | "meaning" | "example" | "partOfSpeech" | "createdAt" | "totalProgress" | "isLearned" | "phonetic" | "audio" | "phoneticUS" | "audioUS", ExtArgs["result"]["word"]>
+  export type WordOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "text" | "language" | "translate" | "definitions" | "synonyms" | "antonyms" | "examples" | "partOfSpeech" | "createdAt" | "totalProgress" | "isLearned" | "phonetic" | "audio" | "phoneticUS" | "audioUS" | "userId", ExtArgs["result"]["word"]>
   export type WordInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     progresses?: boolean | Word$progressesArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
     _count?: boolean | WordCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type WordIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type WordIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type WordIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type WordIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
 
   export type $WordPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Word"
     objects: {
       progresses: Prisma.$WordTaskProgressPayload<ExtArgs>[]
+      user: Prisma.$UserPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
       text: string
       language: $Enums.Language
       translate: string[]
-      meaning: string[]
-      example: string | null
+      definitions: string[]
+      synonyms: string[]
+      antonyms: string[]
+      examples: string[]
       partOfSpeech: string | null
       createdAt: Date
       totalProgress: number
@@ -3464,6 +3537,7 @@ export namespace Prisma {
       audio: string
       phoneticUS: string | null
       audioUS: string | null
+      userId: number
     }, ExtArgs["result"]["word"]>
     composites: {}
   }
@@ -3859,6 +3933,7 @@ export namespace Prisma {
   export interface Prisma__WordClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     progresses<T extends Word$progressesArgs<ExtArgs> = {}>(args?: Subset<T, Word$progressesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WordTaskProgressPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3892,8 +3967,10 @@ export namespace Prisma {
     readonly text: FieldRef<"Word", 'String'>
     readonly language: FieldRef<"Word", 'Language'>
     readonly translate: FieldRef<"Word", 'String[]'>
-    readonly meaning: FieldRef<"Word", 'String[]'>
-    readonly example: FieldRef<"Word", 'String'>
+    readonly definitions: FieldRef<"Word", 'String[]'>
+    readonly synonyms: FieldRef<"Word", 'String[]'>
+    readonly antonyms: FieldRef<"Word", 'String[]'>
+    readonly examples: FieldRef<"Word", 'String[]'>
     readonly partOfSpeech: FieldRef<"Word", 'String'>
     readonly createdAt: FieldRef<"Word", 'DateTime'>
     readonly totalProgress: FieldRef<"Word", 'Int'>
@@ -3902,6 +3979,7 @@ export namespace Prisma {
     readonly audio: FieldRef<"Word", 'String'>
     readonly phoneticUS: FieldRef<"Word", 'String'>
     readonly audioUS: FieldRef<"Word", 'String'>
+    readonly userId: FieldRef<"Word", 'Int'>
   }
     
 
@@ -4151,6 +4229,10 @@ export namespace Prisma {
      */
     data: WordCreateManyInput | WordCreateManyInput[]
     skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WordIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -4221,6 +4303,10 @@ export namespace Prisma {
      * Limit how many Words to update.
      */
     limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WordIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -11456,8 +11542,10 @@ export namespace Prisma {
     text: 'text',
     language: 'language',
     translate: 'translate',
-    meaning: 'meaning',
-    example: 'example',
+    definitions: 'definitions',
+    synonyms: 'synonyms',
+    antonyms: 'antonyms',
+    examples: 'examples',
     partOfSpeech: 'partOfSpeech',
     createdAt: 'createdAt',
     totalProgress: 'totalProgress',
@@ -11465,7 +11553,8 @@ export namespace Prisma {
     phonetic: 'phonetic',
     audio: 'audio',
     phoneticUS: 'phoneticUS',
-    audioUS: 'audioUS'
+    audioUS: 'audioUS',
+    userId: 'userId'
   };
 
   export type WordScalarFieldEnum = (typeof WordScalarFieldEnum)[keyof typeof WordScalarFieldEnum]
@@ -11757,6 +11846,7 @@ export namespace Prisma {
     courses?: CourseListRelationFilter
     tasks?: TaskListRelationFilter
     setting?: XOR<SettingNullableScalarRelationFilter, SettingWhereInput> | null
+    words?: WordListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -11778,6 +11868,7 @@ export namespace Prisma {
     courses?: CourseOrderByRelationAggregateInput
     tasks?: TaskOrderByRelationAggregateInput
     setting?: SettingOrderByWithRelationInput
+    words?: WordOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -11802,6 +11893,7 @@ export namespace Prisma {
     courses?: CourseListRelationFilter
     tasks?: TaskListRelationFilter
     setting?: XOR<SettingNullableScalarRelationFilter, SettingWhereInput> | null
+    words?: WordListRelationFilter
   }, "id" | "email" | "username">
 
   export type UserOrderByWithAggregationInput = {
@@ -11852,8 +11944,10 @@ export namespace Prisma {
     text?: StringFilter<"Word"> | string
     language?: EnumLanguageFilter<"Word"> | $Enums.Language
     translate?: StringNullableListFilter<"Word">
-    meaning?: StringNullableListFilter<"Word">
-    example?: StringNullableFilter<"Word"> | string | null
+    definitions?: StringNullableListFilter<"Word">
+    synonyms?: StringNullableListFilter<"Word">
+    antonyms?: StringNullableListFilter<"Word">
+    examples?: StringNullableListFilter<"Word">
     partOfSpeech?: StringNullableFilter<"Word"> | string | null
     createdAt?: DateTimeFilter<"Word"> | Date | string
     totalProgress?: IntFilter<"Word"> | number
@@ -11862,7 +11956,9 @@ export namespace Prisma {
     audio?: StringFilter<"Word"> | string
     phoneticUS?: StringNullableFilter<"Word"> | string | null
     audioUS?: StringNullableFilter<"Word"> | string | null
+    userId?: IntFilter<"Word"> | number
     progresses?: WordTaskProgressListRelationFilter
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
 
   export type WordOrderByWithRelationInput = {
@@ -11870,8 +11966,10 @@ export namespace Prisma {
     text?: SortOrder
     language?: SortOrder
     translate?: SortOrder
-    meaning?: SortOrder
-    example?: SortOrderInput | SortOrder
+    definitions?: SortOrder
+    synonyms?: SortOrder
+    antonyms?: SortOrder
+    examples?: SortOrder
     partOfSpeech?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     totalProgress?: SortOrder
@@ -11880,19 +11978,24 @@ export namespace Prisma {
     audio?: SortOrder
     phoneticUS?: SortOrderInput | SortOrder
     audioUS?: SortOrderInput | SortOrder
+    userId?: SortOrder
     progresses?: WordTaskProgressOrderByRelationAggregateInput
+    user?: UserOrderByWithRelationInput
   }
 
   export type WordWhereUniqueInput = Prisma.AtLeast<{
     id?: number
+    userId_text_language?: WordUserIdTextLanguageCompoundUniqueInput
     AND?: WordWhereInput | WordWhereInput[]
     OR?: WordWhereInput[]
     NOT?: WordWhereInput | WordWhereInput[]
     text?: StringFilter<"Word"> | string
     language?: EnumLanguageFilter<"Word"> | $Enums.Language
     translate?: StringNullableListFilter<"Word">
-    meaning?: StringNullableListFilter<"Word">
-    example?: StringNullableFilter<"Word"> | string | null
+    definitions?: StringNullableListFilter<"Word">
+    synonyms?: StringNullableListFilter<"Word">
+    antonyms?: StringNullableListFilter<"Word">
+    examples?: StringNullableListFilter<"Word">
     partOfSpeech?: StringNullableFilter<"Word"> | string | null
     createdAt?: DateTimeFilter<"Word"> | Date | string
     totalProgress?: IntFilter<"Word"> | number
@@ -11901,16 +12004,20 @@ export namespace Prisma {
     audio?: StringFilter<"Word"> | string
     phoneticUS?: StringNullableFilter<"Word"> | string | null
     audioUS?: StringNullableFilter<"Word"> | string | null
+    userId?: IntFilter<"Word"> | number
     progresses?: WordTaskProgressListRelationFilter
-  }, "id">
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id" | "userId_text_language">
 
   export type WordOrderByWithAggregationInput = {
     id?: SortOrder
     text?: SortOrder
     language?: SortOrder
     translate?: SortOrder
-    meaning?: SortOrder
-    example?: SortOrderInput | SortOrder
+    definitions?: SortOrder
+    synonyms?: SortOrder
+    antonyms?: SortOrder
+    examples?: SortOrder
     partOfSpeech?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     totalProgress?: SortOrder
@@ -11919,6 +12026,7 @@ export namespace Prisma {
     audio?: SortOrder
     phoneticUS?: SortOrderInput | SortOrder
     audioUS?: SortOrderInput | SortOrder
+    userId?: SortOrder
     _count?: WordCountOrderByAggregateInput
     _avg?: WordAvgOrderByAggregateInput
     _max?: WordMaxOrderByAggregateInput
@@ -11934,8 +12042,10 @@ export namespace Prisma {
     text?: StringWithAggregatesFilter<"Word"> | string
     language?: EnumLanguageWithAggregatesFilter<"Word"> | $Enums.Language
     translate?: StringNullableListFilter<"Word">
-    meaning?: StringNullableListFilter<"Word">
-    example?: StringNullableWithAggregatesFilter<"Word"> | string | null
+    definitions?: StringNullableListFilter<"Word">
+    synonyms?: StringNullableListFilter<"Word">
+    antonyms?: StringNullableListFilter<"Word">
+    examples?: StringNullableListFilter<"Word">
     partOfSpeech?: StringNullableWithAggregatesFilter<"Word"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Word"> | Date | string
     totalProgress?: IntWithAggregatesFilter<"Word"> | number
@@ -11944,6 +12054,7 @@ export namespace Prisma {
     audio?: StringWithAggregatesFilter<"Word"> | string
     phoneticUS?: StringNullableWithAggregatesFilter<"Word"> | string | null
     audioUS?: StringNullableWithAggregatesFilter<"Word"> | string | null
+    userId?: IntWithAggregatesFilter<"Word"> | number
   }
 
   export type VideoWhereInput = {
@@ -12427,6 +12538,7 @@ export namespace Prisma {
     courses?: CourseCreateNestedManyWithoutAuthorInput
     tasks?: TaskCreateNestedManyWithoutAuthorInput
     setting?: SettingCreateNestedOneWithoutUserInput
+    words?: WordCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -12448,6 +12560,7 @@ export namespace Prisma {
     courses?: CourseUncheckedCreateNestedManyWithoutAuthorInput
     tasks?: TaskUncheckedCreateNestedManyWithoutAuthorInput
     setting?: SettingUncheckedCreateNestedOneWithoutUserInput
+    words?: WordUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -12468,6 +12581,7 @@ export namespace Prisma {
     courses?: CourseUpdateManyWithoutAuthorNestedInput
     tasks?: TaskUpdateManyWithoutAuthorNestedInput
     setting?: SettingUpdateOneWithoutUserNestedInput
+    words?: WordUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -12489,6 +12603,7 @@ export namespace Prisma {
     courses?: CourseUncheckedUpdateManyWithoutAuthorNestedInput
     tasks?: TaskUncheckedUpdateManyWithoutAuthorNestedInput
     setting?: SettingUncheckedUpdateOneWithoutUserNestedInput
+    words?: WordUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -12542,8 +12657,10 @@ export namespace Prisma {
     text: string
     language: $Enums.Language
     translate?: WordCreatetranslateInput | string[]
-    meaning?: WordCreatemeaningInput | string[]
-    example?: string | null
+    definitions?: WordCreatedefinitionsInput | string[]
+    synonyms?: WordCreatesynonymsInput | string[]
+    antonyms?: WordCreateantonymsInput | string[]
+    examples?: WordCreateexamplesInput | string[]
     partOfSpeech?: string | null
     createdAt?: Date | string
     totalProgress?: number
@@ -12553,6 +12670,7 @@ export namespace Prisma {
     phoneticUS?: string | null
     audioUS?: string | null
     progresses?: WordTaskProgressCreateNestedManyWithoutWordInput
+    user: UserCreateNestedOneWithoutWordsInput
   }
 
   export type WordUncheckedCreateInput = {
@@ -12560,8 +12678,10 @@ export namespace Prisma {
     text: string
     language: $Enums.Language
     translate?: WordCreatetranslateInput | string[]
-    meaning?: WordCreatemeaningInput | string[]
-    example?: string | null
+    definitions?: WordCreatedefinitionsInput | string[]
+    synonyms?: WordCreatesynonymsInput | string[]
+    antonyms?: WordCreateantonymsInput | string[]
+    examples?: WordCreateexamplesInput | string[]
     partOfSpeech?: string | null
     createdAt?: Date | string
     totalProgress?: number
@@ -12570,6 +12690,7 @@ export namespace Prisma {
     audio?: string
     phoneticUS?: string | null
     audioUS?: string | null
+    userId: number
     progresses?: WordTaskProgressUncheckedCreateNestedManyWithoutWordInput
   }
 
@@ -12577,8 +12698,10 @@ export namespace Prisma {
     text?: StringFieldUpdateOperationsInput | string
     language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
     translate?: WordUpdatetranslateInput | string[]
-    meaning?: WordUpdatemeaningInput | string[]
-    example?: NullableStringFieldUpdateOperationsInput | string | null
+    definitions?: WordUpdatedefinitionsInput | string[]
+    synonyms?: WordUpdatesynonymsInput | string[]
+    antonyms?: WordUpdateantonymsInput | string[]
+    examples?: WordUpdateexamplesInput | string[]
     partOfSpeech?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     totalProgress?: IntFieldUpdateOperationsInput | number
@@ -12588,6 +12711,7 @@ export namespace Prisma {
     phoneticUS?: NullableStringFieldUpdateOperationsInput | string | null
     audioUS?: NullableStringFieldUpdateOperationsInput | string | null
     progresses?: WordTaskProgressUpdateManyWithoutWordNestedInput
+    user?: UserUpdateOneRequiredWithoutWordsNestedInput
   }
 
   export type WordUncheckedUpdateInput = {
@@ -12595,8 +12719,10 @@ export namespace Prisma {
     text?: StringFieldUpdateOperationsInput | string
     language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
     translate?: WordUpdatetranslateInput | string[]
-    meaning?: WordUpdatemeaningInput | string[]
-    example?: NullableStringFieldUpdateOperationsInput | string | null
+    definitions?: WordUpdatedefinitionsInput | string[]
+    synonyms?: WordUpdatesynonymsInput | string[]
+    antonyms?: WordUpdateantonymsInput | string[]
+    examples?: WordUpdateexamplesInput | string[]
     partOfSpeech?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     totalProgress?: IntFieldUpdateOperationsInput | number
@@ -12605,6 +12731,7 @@ export namespace Prisma {
     audio?: StringFieldUpdateOperationsInput | string
     phoneticUS?: NullableStringFieldUpdateOperationsInput | string | null
     audioUS?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: IntFieldUpdateOperationsInput | number
     progresses?: WordTaskProgressUncheckedUpdateManyWithoutWordNestedInput
   }
 
@@ -12613,8 +12740,10 @@ export namespace Prisma {
     text: string
     language: $Enums.Language
     translate?: WordCreatetranslateInput | string[]
-    meaning?: WordCreatemeaningInput | string[]
-    example?: string | null
+    definitions?: WordCreatedefinitionsInput | string[]
+    synonyms?: WordCreatesynonymsInput | string[]
+    antonyms?: WordCreateantonymsInput | string[]
+    examples?: WordCreateexamplesInput | string[]
     partOfSpeech?: string | null
     createdAt?: Date | string
     totalProgress?: number
@@ -12623,14 +12752,17 @@ export namespace Prisma {
     audio?: string
     phoneticUS?: string | null
     audioUS?: string | null
+    userId: number
   }
 
   export type WordUpdateManyMutationInput = {
     text?: StringFieldUpdateOperationsInput | string
     language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
     translate?: WordUpdatetranslateInput | string[]
-    meaning?: WordUpdatemeaningInput | string[]
-    example?: NullableStringFieldUpdateOperationsInput | string | null
+    definitions?: WordUpdatedefinitionsInput | string[]
+    synonyms?: WordUpdatesynonymsInput | string[]
+    antonyms?: WordUpdateantonymsInput | string[]
+    examples?: WordUpdateexamplesInput | string[]
     partOfSpeech?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     totalProgress?: IntFieldUpdateOperationsInput | number
@@ -12646,8 +12778,10 @@ export namespace Prisma {
     text?: StringFieldUpdateOperationsInput | string
     language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
     translate?: WordUpdatetranslateInput | string[]
-    meaning?: WordUpdatemeaningInput | string[]
-    example?: NullableStringFieldUpdateOperationsInput | string | null
+    definitions?: WordUpdatedefinitionsInput | string[]
+    synonyms?: WordUpdatesynonymsInput | string[]
+    antonyms?: WordUpdateantonymsInput | string[]
+    examples?: WordUpdateexamplesInput | string[]
     partOfSpeech?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     totalProgress?: IntFieldUpdateOperationsInput | number
@@ -12656,6 +12790,7 @@ export namespace Prisma {
     audio?: StringFieldUpdateOperationsInput | string
     phoneticUS?: NullableStringFieldUpdateOperationsInput | string | null
     audioUS?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: IntFieldUpdateOperationsInput | number
   }
 
   export type VideoCreateInput = {
@@ -13219,6 +13354,12 @@ export namespace Prisma {
     isNot?: SettingWhereInput | null
   }
 
+  export type WordListRelationFilter = {
+    every?: WordWhereInput
+    some?: WordWhereInput
+    none?: WordWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -13237,6 +13378,10 @@ export namespace Prisma {
   }
 
   export type TaskOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type WordOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -13409,13 +13554,26 @@ export namespace Prisma {
     isEmpty?: boolean
   }
 
+  export type UserScalarRelationFilter = {
+    is?: UserWhereInput
+    isNot?: UserWhereInput
+  }
+
+  export type WordUserIdTextLanguageCompoundUniqueInput = {
+    userId: number
+    text: string
+    language: $Enums.Language
+  }
+
   export type WordCountOrderByAggregateInput = {
     id?: SortOrder
     text?: SortOrder
     language?: SortOrder
     translate?: SortOrder
-    meaning?: SortOrder
-    example?: SortOrder
+    definitions?: SortOrder
+    synonyms?: SortOrder
+    antonyms?: SortOrder
+    examples?: SortOrder
     partOfSpeech?: SortOrder
     createdAt?: SortOrder
     totalProgress?: SortOrder
@@ -13424,18 +13582,19 @@ export namespace Prisma {
     audio?: SortOrder
     phoneticUS?: SortOrder
     audioUS?: SortOrder
+    userId?: SortOrder
   }
 
   export type WordAvgOrderByAggregateInput = {
     id?: SortOrder
     totalProgress?: SortOrder
+    userId?: SortOrder
   }
 
   export type WordMaxOrderByAggregateInput = {
     id?: SortOrder
     text?: SortOrder
     language?: SortOrder
-    example?: SortOrder
     partOfSpeech?: SortOrder
     createdAt?: SortOrder
     totalProgress?: SortOrder
@@ -13444,13 +13603,13 @@ export namespace Prisma {
     audio?: SortOrder
     phoneticUS?: SortOrder
     audioUS?: SortOrder
+    userId?: SortOrder
   }
 
   export type WordMinOrderByAggregateInput = {
     id?: SortOrder
     text?: SortOrder
     language?: SortOrder
-    example?: SortOrder
     partOfSpeech?: SortOrder
     createdAt?: SortOrder
     totalProgress?: SortOrder
@@ -13459,11 +13618,13 @@ export namespace Prisma {
     audio?: SortOrder
     phoneticUS?: SortOrder
     audioUS?: SortOrder
+    userId?: SortOrder
   }
 
   export type WordSumOrderByAggregateInput = {
     id?: SortOrder
     totalProgress?: SortOrder
+    userId?: SortOrder
   }
 
   export type EnumLanguageWithAggregatesFilter<$PrismaModel = never> = {
@@ -13742,11 +13903,6 @@ export namespace Prisma {
     not?: NestedFloatFilter<$PrismaModel> | number
   }
 
-  export type UserScalarRelationFilter = {
-    is?: UserWhereInput
-    isNot?: UserWhereInput
-  }
-
   export type CourseScalarRelationFilter = {
     is?: CourseWhereInput
     isNot?: CourseWhereInput
@@ -13962,6 +14118,13 @@ export namespace Prisma {
     connect?: SettingWhereUniqueInput
   }
 
+  export type WordCreateNestedManyWithoutUserInput = {
+    create?: XOR<WordCreateWithoutUserInput, WordUncheckedCreateWithoutUserInput> | WordCreateWithoutUserInput[] | WordUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: WordCreateOrConnectWithoutUserInput | WordCreateOrConnectWithoutUserInput[]
+    createMany?: WordCreateManyUserInputEnvelope
+    connect?: WordWhereUniqueInput | WordWhereUniqueInput[]
+  }
+
   export type EnrollmentUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<EnrollmentCreateWithoutUserInput, EnrollmentUncheckedCreateWithoutUserInput> | EnrollmentCreateWithoutUserInput[] | EnrollmentUncheckedCreateWithoutUserInput[]
     connectOrCreate?: EnrollmentCreateOrConnectWithoutUserInput | EnrollmentCreateOrConnectWithoutUserInput[]
@@ -13994,6 +14157,13 @@ export namespace Prisma {
     create?: XOR<SettingCreateWithoutUserInput, SettingUncheckedCreateWithoutUserInput>
     connectOrCreate?: SettingCreateOrConnectWithoutUserInput
     connect?: SettingWhereUniqueInput
+  }
+
+  export type WordUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<WordCreateWithoutUserInput, WordUncheckedCreateWithoutUserInput> | WordCreateWithoutUserInput[] | WordUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: WordCreateOrConnectWithoutUserInput | WordCreateOrConnectWithoutUserInput[]
+    createMany?: WordCreateManyUserInputEnvelope
+    connect?: WordWhereUniqueInput | WordWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -14086,6 +14256,20 @@ export namespace Prisma {
     update?: XOR<XOR<SettingUpdateToOneWithWhereWithoutUserInput, SettingUpdateWithoutUserInput>, SettingUncheckedUpdateWithoutUserInput>
   }
 
+  export type WordUpdateManyWithoutUserNestedInput = {
+    create?: XOR<WordCreateWithoutUserInput, WordUncheckedCreateWithoutUserInput> | WordCreateWithoutUserInput[] | WordUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: WordCreateOrConnectWithoutUserInput | WordCreateOrConnectWithoutUserInput[]
+    upsert?: WordUpsertWithWhereUniqueWithoutUserInput | WordUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: WordCreateManyUserInputEnvelope
+    set?: WordWhereUniqueInput | WordWhereUniqueInput[]
+    disconnect?: WordWhereUniqueInput | WordWhereUniqueInput[]
+    delete?: WordWhereUniqueInput | WordWhereUniqueInput[]
+    connect?: WordWhereUniqueInput | WordWhereUniqueInput[]
+    update?: WordUpdateWithWhereUniqueWithoutUserInput | WordUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: WordUpdateManyWithWhereWithoutUserInput | WordUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: WordScalarWhereInput | WordScalarWhereInput[]
+  }
+
   export type IntFieldUpdateOperationsInput = {
     set?: number
     increment?: number
@@ -14160,11 +14344,37 @@ export namespace Prisma {
     update?: XOR<XOR<SettingUpdateToOneWithWhereWithoutUserInput, SettingUpdateWithoutUserInput>, SettingUncheckedUpdateWithoutUserInput>
   }
 
+  export type WordUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<WordCreateWithoutUserInput, WordUncheckedCreateWithoutUserInput> | WordCreateWithoutUserInput[] | WordUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: WordCreateOrConnectWithoutUserInput | WordCreateOrConnectWithoutUserInput[]
+    upsert?: WordUpsertWithWhereUniqueWithoutUserInput | WordUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: WordCreateManyUserInputEnvelope
+    set?: WordWhereUniqueInput | WordWhereUniqueInput[]
+    disconnect?: WordWhereUniqueInput | WordWhereUniqueInput[]
+    delete?: WordWhereUniqueInput | WordWhereUniqueInput[]
+    connect?: WordWhereUniqueInput | WordWhereUniqueInput[]
+    update?: WordUpdateWithWhereUniqueWithoutUserInput | WordUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: WordUpdateManyWithWhereWithoutUserInput | WordUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: WordScalarWhereInput | WordScalarWhereInput[]
+  }
+
   export type WordCreatetranslateInput = {
     set: string[]
   }
 
-  export type WordCreatemeaningInput = {
+  export type WordCreatedefinitionsInput = {
+    set: string[]
+  }
+
+  export type WordCreatesynonymsInput = {
+    set: string[]
+  }
+
+  export type WordCreateantonymsInput = {
+    set: string[]
+  }
+
+  export type WordCreateexamplesInput = {
     set: string[]
   }
 
@@ -14173,6 +14383,12 @@ export namespace Prisma {
     connectOrCreate?: WordTaskProgressCreateOrConnectWithoutWordInput | WordTaskProgressCreateOrConnectWithoutWordInput[]
     createMany?: WordTaskProgressCreateManyWordInputEnvelope
     connect?: WordTaskProgressWhereUniqueInput | WordTaskProgressWhereUniqueInput[]
+  }
+
+  export type UserCreateNestedOneWithoutWordsInput = {
+    create?: XOR<UserCreateWithoutWordsInput, UserUncheckedCreateWithoutWordsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutWordsInput
+    connect?: UserWhereUniqueInput
   }
 
   export type WordTaskProgressUncheckedCreateNestedManyWithoutWordInput = {
@@ -14191,7 +14407,22 @@ export namespace Prisma {
     push?: string | string[]
   }
 
-  export type WordUpdatemeaningInput = {
+  export type WordUpdatedefinitionsInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type WordUpdatesynonymsInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type WordUpdateantonymsInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type WordUpdateexamplesInput = {
     set?: string[]
     push?: string | string[]
   }
@@ -14208,6 +14439,14 @@ export namespace Prisma {
     update?: WordTaskProgressUpdateWithWhereUniqueWithoutWordInput | WordTaskProgressUpdateWithWhereUniqueWithoutWordInput[]
     updateMany?: WordTaskProgressUpdateManyWithWhereWithoutWordInput | WordTaskProgressUpdateManyWithWhereWithoutWordInput[]
     deleteMany?: WordTaskProgressScalarWhereInput | WordTaskProgressScalarWhereInput[]
+  }
+
+  export type UserUpdateOneRequiredWithoutWordsNestedInput = {
+    create?: XOR<UserCreateWithoutWordsInput, UserUncheckedCreateWithoutWordsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutWordsInput
+    upsert?: UserUpsertWithoutWordsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutWordsInput, UserUpdateWithoutWordsInput>, UserUncheckedUpdateWithoutWordsInput>
   }
 
   export type WordTaskProgressUncheckedUpdateManyWithoutWordNestedInput = {
@@ -15077,6 +15316,55 @@ export namespace Prisma {
     create: XOR<SettingCreateWithoutUserInput, SettingUncheckedCreateWithoutUserInput>
   }
 
+  export type WordCreateWithoutUserInput = {
+    text: string
+    language: $Enums.Language
+    translate?: WordCreatetranslateInput | string[]
+    definitions?: WordCreatedefinitionsInput | string[]
+    synonyms?: WordCreatesynonymsInput | string[]
+    antonyms?: WordCreateantonymsInput | string[]
+    examples?: WordCreateexamplesInput | string[]
+    partOfSpeech?: string | null
+    createdAt?: Date | string
+    totalProgress?: number
+    isLearned?: boolean
+    phonetic?: string
+    audio?: string
+    phoneticUS?: string | null
+    audioUS?: string | null
+    progresses?: WordTaskProgressCreateNestedManyWithoutWordInput
+  }
+
+  export type WordUncheckedCreateWithoutUserInput = {
+    id?: number
+    text: string
+    language: $Enums.Language
+    translate?: WordCreatetranslateInput | string[]
+    definitions?: WordCreatedefinitionsInput | string[]
+    synonyms?: WordCreatesynonymsInput | string[]
+    antonyms?: WordCreateantonymsInput | string[]
+    examples?: WordCreateexamplesInput | string[]
+    partOfSpeech?: string | null
+    createdAt?: Date | string
+    totalProgress?: number
+    isLearned?: boolean
+    phonetic?: string
+    audio?: string
+    phoneticUS?: string | null
+    audioUS?: string | null
+    progresses?: WordTaskProgressUncheckedCreateNestedManyWithoutWordInput
+  }
+
+  export type WordCreateOrConnectWithoutUserInput = {
+    where: WordWhereUniqueInput
+    create: XOR<WordCreateWithoutUserInput, WordUncheckedCreateWithoutUserInput>
+  }
+
+  export type WordCreateManyUserInputEnvelope = {
+    data: WordCreateManyUserInput | WordCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
   export type EnrollmentUpsertWithWhereUniqueWithoutUserInput = {
     where: EnrollmentWhereUniqueInput
     update: XOR<EnrollmentUpdateWithoutUserInput, EnrollmentUncheckedUpdateWithoutUserInput>
@@ -15226,6 +15514,45 @@ export namespace Prisma {
     current_level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
   }
 
+  export type WordUpsertWithWhereUniqueWithoutUserInput = {
+    where: WordWhereUniqueInput
+    update: XOR<WordUpdateWithoutUserInput, WordUncheckedUpdateWithoutUserInput>
+    create: XOR<WordCreateWithoutUserInput, WordUncheckedCreateWithoutUserInput>
+  }
+
+  export type WordUpdateWithWhereUniqueWithoutUserInput = {
+    where: WordWhereUniqueInput
+    data: XOR<WordUpdateWithoutUserInput, WordUncheckedUpdateWithoutUserInput>
+  }
+
+  export type WordUpdateManyWithWhereWithoutUserInput = {
+    where: WordScalarWhereInput
+    data: XOR<WordUpdateManyMutationInput, WordUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type WordScalarWhereInput = {
+    AND?: WordScalarWhereInput | WordScalarWhereInput[]
+    OR?: WordScalarWhereInput[]
+    NOT?: WordScalarWhereInput | WordScalarWhereInput[]
+    id?: IntFilter<"Word"> | number
+    text?: StringFilter<"Word"> | string
+    language?: EnumLanguageFilter<"Word"> | $Enums.Language
+    translate?: StringNullableListFilter<"Word">
+    definitions?: StringNullableListFilter<"Word">
+    synonyms?: StringNullableListFilter<"Word">
+    antonyms?: StringNullableListFilter<"Word">
+    examples?: StringNullableListFilter<"Word">
+    partOfSpeech?: StringNullableFilter<"Word"> | string | null
+    createdAt?: DateTimeFilter<"Word"> | Date | string
+    totalProgress?: IntFilter<"Word"> | number
+    isLearned?: BoolFilter<"Word"> | boolean
+    phonetic?: StringFilter<"Word"> | string
+    audio?: StringFilter<"Word"> | string
+    phoneticUS?: StringNullableFilter<"Word"> | string | null
+    audioUS?: StringNullableFilter<"Word"> | string | null
+    userId?: IntFilter<"Word"> | number
+  }
+
   export type WordTaskProgressCreateWithoutWordInput = {
     taskType: $Enums.WordTaskType
     isPassed?: boolean
@@ -15253,6 +15580,52 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type UserCreateWithoutWordsInput = {
+    email: string
+    username: string
+    password: string
+    role?: $Enums.Role
+    avatar?: string | null
+    isEmailVerified?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    deleteAt?: Date | string | null
+    lastLoginAt?: Date | string | null
+    provider?: string | null
+    refreshToken?: string | null
+    enrollments?: EnrollmentCreateNestedManyWithoutUserInput
+    wordProgresses?: WordTaskProgressCreateNestedManyWithoutUserInput
+    courses?: CourseCreateNestedManyWithoutAuthorInput
+    tasks?: TaskCreateNestedManyWithoutAuthorInput
+    setting?: SettingCreateNestedOneWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutWordsInput = {
+    id?: number
+    email: string
+    username: string
+    password: string
+    role?: $Enums.Role
+    avatar?: string | null
+    isEmailVerified?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    deleteAt?: Date | string | null
+    lastLoginAt?: Date | string | null
+    provider?: string | null
+    refreshToken?: string | null
+    enrollments?: EnrollmentUncheckedCreateNestedManyWithoutUserInput
+    wordProgresses?: WordTaskProgressUncheckedCreateNestedManyWithoutUserInput
+    courses?: CourseUncheckedCreateNestedManyWithoutAuthorInput
+    tasks?: TaskUncheckedCreateNestedManyWithoutAuthorInput
+    setting?: SettingUncheckedCreateNestedOneWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutWordsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutWordsInput, UserUncheckedCreateWithoutWordsInput>
+  }
+
   export type WordTaskProgressUpsertWithWhereUniqueWithoutWordInput = {
     where: WordTaskProgressWhereUniqueInput
     update: XOR<WordTaskProgressUpdateWithoutWordInput, WordTaskProgressUncheckedUpdateWithoutWordInput>
@@ -15267,6 +15640,58 @@ export namespace Prisma {
   export type WordTaskProgressUpdateManyWithWhereWithoutWordInput = {
     where: WordTaskProgressScalarWhereInput
     data: XOR<WordTaskProgressUpdateManyMutationInput, WordTaskProgressUncheckedUpdateManyWithoutWordInput>
+  }
+
+  export type UserUpsertWithoutWordsInput = {
+    update: XOR<UserUpdateWithoutWordsInput, UserUncheckedUpdateWithoutWordsInput>
+    create: XOR<UserCreateWithoutWordsInput, UserUncheckedCreateWithoutWordsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutWordsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutWordsInput, UserUncheckedUpdateWithoutWordsInput>
+  }
+
+  export type UserUpdateWithoutWordsInput = {
+    email?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    provider?: NullableStringFieldUpdateOperationsInput | string | null
+    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    enrollments?: EnrollmentUpdateManyWithoutUserNestedInput
+    wordProgresses?: WordTaskProgressUpdateManyWithoutUserNestedInput
+    courses?: CourseUpdateManyWithoutAuthorNestedInput
+    tasks?: TaskUpdateManyWithoutAuthorNestedInput
+    setting?: SettingUpdateOneWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutWordsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    email?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    provider?: NullableStringFieldUpdateOperationsInput | string | null
+    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    enrollments?: EnrollmentUncheckedUpdateManyWithoutUserNestedInput
+    wordProgresses?: WordTaskProgressUncheckedUpdateManyWithoutUserNestedInput
+    courses?: CourseUncheckedUpdateManyWithoutAuthorNestedInput
+    tasks?: TaskUncheckedUpdateManyWithoutAuthorNestedInput
+    setting?: SettingUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type TaskCreateWithoutVideoInput = {
@@ -15415,6 +15840,7 @@ export namespace Prisma {
     wordProgresses?: WordTaskProgressCreateNestedManyWithoutUserInput
     courses?: CourseCreateNestedManyWithoutAuthorInput
     setting?: SettingCreateNestedOneWithoutUserInput
+    words?: WordCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutTasksInput = {
@@ -15435,6 +15861,7 @@ export namespace Prisma {
     wordProgresses?: WordTaskProgressUncheckedCreateNestedManyWithoutUserInput
     courses?: CourseUncheckedCreateNestedManyWithoutAuthorInput
     setting?: SettingUncheckedCreateNestedOneWithoutUserInput
+    words?: WordUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutTasksInput = {
@@ -15530,6 +15957,7 @@ export namespace Prisma {
     wordProgresses?: WordTaskProgressUpdateManyWithoutUserNestedInput
     courses?: CourseUpdateManyWithoutAuthorNestedInput
     setting?: SettingUpdateOneWithoutUserNestedInput
+    words?: WordUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutTasksInput = {
@@ -15550,6 +15978,7 @@ export namespace Prisma {
     wordProgresses?: WordTaskProgressUncheckedUpdateManyWithoutUserNestedInput
     courses?: CourseUncheckedUpdateManyWithoutAuthorNestedInput
     setting?: SettingUncheckedUpdateOneWithoutUserNestedInput
+    words?: WordUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type VideoUpsertWithoutTasksInput = {
@@ -15734,6 +16163,7 @@ export namespace Prisma {
     wordProgresses?: WordTaskProgressCreateNestedManyWithoutUserInput
     tasks?: TaskCreateNestedManyWithoutAuthorInput
     setting?: SettingCreateNestedOneWithoutUserInput
+    words?: WordCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutCoursesInput = {
@@ -15754,6 +16184,7 @@ export namespace Prisma {
     wordProgresses?: WordTaskProgressUncheckedCreateNestedManyWithoutUserInput
     tasks?: TaskUncheckedCreateNestedManyWithoutAuthorInput
     setting?: SettingUncheckedCreateNestedOneWithoutUserInput
+    words?: WordUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutCoursesInput = {
@@ -15851,6 +16282,7 @@ export namespace Prisma {
     wordProgresses?: WordTaskProgressUpdateManyWithoutUserNestedInput
     tasks?: TaskUpdateManyWithoutAuthorNestedInput
     setting?: SettingUpdateOneWithoutUserNestedInput
+    words?: WordUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCoursesInput = {
@@ -15871,6 +16303,7 @@ export namespace Prisma {
     wordProgresses?: WordTaskProgressUncheckedUpdateManyWithoutUserNestedInput
     tasks?: TaskUncheckedUpdateManyWithoutAuthorNestedInput
     setting?: SettingUncheckedUpdateOneWithoutUserNestedInput
+    words?: WordUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutEnrollmentsInput = {
@@ -15890,6 +16323,7 @@ export namespace Prisma {
     courses?: CourseCreateNestedManyWithoutAuthorInput
     tasks?: TaskCreateNestedManyWithoutAuthorInput
     setting?: SettingCreateNestedOneWithoutUserInput
+    words?: WordCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutEnrollmentsInput = {
@@ -15910,6 +16344,7 @@ export namespace Prisma {
     courses?: CourseUncheckedCreateNestedManyWithoutAuthorInput
     tasks?: TaskUncheckedCreateNestedManyWithoutAuthorInput
     setting?: SettingUncheckedCreateNestedOneWithoutUserInput
+    words?: WordUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutEnrollmentsInput = {
@@ -15979,6 +16414,7 @@ export namespace Prisma {
     courses?: CourseUpdateManyWithoutAuthorNestedInput
     tasks?: TaskUpdateManyWithoutAuthorNestedInput
     setting?: SettingUpdateOneWithoutUserNestedInput
+    words?: WordUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutEnrollmentsInput = {
@@ -15999,6 +16435,7 @@ export namespace Prisma {
     courses?: CourseUncheckedUpdateManyWithoutAuthorNestedInput
     tasks?: TaskUncheckedUpdateManyWithoutAuthorNestedInput
     setting?: SettingUncheckedUpdateOneWithoutUserNestedInput
+    words?: WordUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type CourseUpsertWithoutEnrollmentsInput = {
@@ -16058,6 +16495,7 @@ export namespace Prisma {
     wordProgresses?: WordTaskProgressCreateNestedManyWithoutUserInput
     courses?: CourseCreateNestedManyWithoutAuthorInput
     tasks?: TaskCreateNestedManyWithoutAuthorInput
+    words?: WordCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSettingInput = {
@@ -16078,6 +16516,7 @@ export namespace Prisma {
     wordProgresses?: WordTaskProgressUncheckedCreateNestedManyWithoutUserInput
     courses?: CourseUncheckedCreateNestedManyWithoutAuthorInput
     tasks?: TaskUncheckedCreateNestedManyWithoutAuthorInput
+    words?: WordUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSettingInput = {
@@ -16113,6 +16552,7 @@ export namespace Prisma {
     wordProgresses?: WordTaskProgressUpdateManyWithoutUserNestedInput
     courses?: CourseUpdateManyWithoutAuthorNestedInput
     tasks?: TaskUpdateManyWithoutAuthorNestedInput
+    words?: WordUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSettingInput = {
@@ -16133,6 +16573,7 @@ export namespace Prisma {
     wordProgresses?: WordTaskProgressUncheckedUpdateManyWithoutUserNestedInput
     courses?: CourseUncheckedUpdateManyWithoutAuthorNestedInput
     tasks?: TaskUncheckedUpdateManyWithoutAuthorNestedInput
+    words?: WordUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutWordProgressesInput = {
@@ -16152,6 +16593,7 @@ export namespace Prisma {
     courses?: CourseCreateNestedManyWithoutAuthorInput
     tasks?: TaskCreateNestedManyWithoutAuthorInput
     setting?: SettingCreateNestedOneWithoutUserInput
+    words?: WordCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutWordProgressesInput = {
@@ -16172,6 +16614,7 @@ export namespace Prisma {
     courses?: CourseUncheckedCreateNestedManyWithoutAuthorInput
     tasks?: TaskUncheckedCreateNestedManyWithoutAuthorInput
     setting?: SettingUncheckedCreateNestedOneWithoutUserInput
+    words?: WordUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutWordProgressesInput = {
@@ -16183,8 +16626,10 @@ export namespace Prisma {
     text: string
     language: $Enums.Language
     translate?: WordCreatetranslateInput | string[]
-    meaning?: WordCreatemeaningInput | string[]
-    example?: string | null
+    definitions?: WordCreatedefinitionsInput | string[]
+    synonyms?: WordCreatesynonymsInput | string[]
+    antonyms?: WordCreateantonymsInput | string[]
+    examples?: WordCreateexamplesInput | string[]
     partOfSpeech?: string | null
     createdAt?: Date | string
     totalProgress?: number
@@ -16193,6 +16638,7 @@ export namespace Prisma {
     audio?: string
     phoneticUS?: string | null
     audioUS?: string | null
+    user: UserCreateNestedOneWithoutWordsInput
   }
 
   export type WordUncheckedCreateWithoutProgressesInput = {
@@ -16200,8 +16646,10 @@ export namespace Prisma {
     text: string
     language: $Enums.Language
     translate?: WordCreatetranslateInput | string[]
-    meaning?: WordCreatemeaningInput | string[]
-    example?: string | null
+    definitions?: WordCreatedefinitionsInput | string[]
+    synonyms?: WordCreatesynonymsInput | string[]
+    antonyms?: WordCreateantonymsInput | string[]
+    examples?: WordCreateexamplesInput | string[]
     partOfSpeech?: string | null
     createdAt?: Date | string
     totalProgress?: number
@@ -16210,6 +16658,7 @@ export namespace Prisma {
     audio?: string
     phoneticUS?: string | null
     audioUS?: string | null
+    userId: number
   }
 
   export type WordCreateOrConnectWithoutProgressesInput = {
@@ -16245,6 +16694,7 @@ export namespace Prisma {
     courses?: CourseUpdateManyWithoutAuthorNestedInput
     tasks?: TaskUpdateManyWithoutAuthorNestedInput
     setting?: SettingUpdateOneWithoutUserNestedInput
+    words?: WordUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutWordProgressesInput = {
@@ -16265,6 +16715,7 @@ export namespace Prisma {
     courses?: CourseUncheckedUpdateManyWithoutAuthorNestedInput
     tasks?: TaskUncheckedUpdateManyWithoutAuthorNestedInput
     setting?: SettingUncheckedUpdateOneWithoutUserNestedInput
+    words?: WordUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type WordUpsertWithoutProgressesInput = {
@@ -16282,8 +16733,10 @@ export namespace Prisma {
     text?: StringFieldUpdateOperationsInput | string
     language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
     translate?: WordUpdatetranslateInput | string[]
-    meaning?: WordUpdatemeaningInput | string[]
-    example?: NullableStringFieldUpdateOperationsInput | string | null
+    definitions?: WordUpdatedefinitionsInput | string[]
+    synonyms?: WordUpdatesynonymsInput | string[]
+    antonyms?: WordUpdateantonymsInput | string[]
+    examples?: WordUpdateexamplesInput | string[]
     partOfSpeech?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     totalProgress?: IntFieldUpdateOperationsInput | number
@@ -16292,6 +16745,7 @@ export namespace Prisma {
     audio?: StringFieldUpdateOperationsInput | string
     phoneticUS?: NullableStringFieldUpdateOperationsInput | string | null
     audioUS?: NullableStringFieldUpdateOperationsInput | string | null
+    user?: UserUpdateOneRequiredWithoutWordsNestedInput
   }
 
   export type WordUncheckedUpdateWithoutProgressesInput = {
@@ -16299,8 +16753,10 @@ export namespace Prisma {
     text?: StringFieldUpdateOperationsInput | string
     language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
     translate?: WordUpdatetranslateInput | string[]
-    meaning?: WordUpdatemeaningInput | string[]
-    example?: NullableStringFieldUpdateOperationsInput | string | null
+    definitions?: WordUpdatedefinitionsInput | string[]
+    synonyms?: WordUpdatesynonymsInput | string[]
+    antonyms?: WordUpdateantonymsInput | string[]
+    examples?: WordUpdateexamplesInput | string[]
     partOfSpeech?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     totalProgress?: IntFieldUpdateOperationsInput | number
@@ -16309,6 +16765,7 @@ export namespace Prisma {
     audio?: StringFieldUpdateOperationsInput | string
     phoneticUS?: NullableStringFieldUpdateOperationsInput | string | null
     audioUS?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: IntFieldUpdateOperationsInput | number
   }
 
   export type EnrollmentCreateManyUserInput = {
@@ -16352,6 +16809,25 @@ export namespace Prisma {
     explanation?: string | null
     videoId?: number | null
     courseId?: number | null
+  }
+
+  export type WordCreateManyUserInput = {
+    id?: number
+    text: string
+    language: $Enums.Language
+    translate?: WordCreatetranslateInput | string[]
+    definitions?: WordCreatedefinitionsInput | string[]
+    synonyms?: WordCreatesynonymsInput | string[]
+    antonyms?: WordCreateantonymsInput | string[]
+    examples?: WordCreateexamplesInput | string[]
+    partOfSpeech?: string | null
+    createdAt?: Date | string
+    totalProgress?: number
+    isLearned?: boolean
+    phonetic?: string
+    audio?: string
+    phoneticUS?: string | null
+    audioUS?: string | null
   }
 
   export type EnrollmentUpdateWithoutUserInput = {
@@ -16483,6 +16959,64 @@ export namespace Prisma {
     explanation?: NullableStringFieldUpdateOperationsInput | string | null
     videoId?: NullableIntFieldUpdateOperationsInput | number | null
     courseId?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type WordUpdateWithoutUserInput = {
+    text?: StringFieldUpdateOperationsInput | string
+    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    translate?: WordUpdatetranslateInput | string[]
+    definitions?: WordUpdatedefinitionsInput | string[]
+    synonyms?: WordUpdatesynonymsInput | string[]
+    antonyms?: WordUpdateantonymsInput | string[]
+    examples?: WordUpdateexamplesInput | string[]
+    partOfSpeech?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    totalProgress?: IntFieldUpdateOperationsInput | number
+    isLearned?: BoolFieldUpdateOperationsInput | boolean
+    phonetic?: StringFieldUpdateOperationsInput | string
+    audio?: StringFieldUpdateOperationsInput | string
+    phoneticUS?: NullableStringFieldUpdateOperationsInput | string | null
+    audioUS?: NullableStringFieldUpdateOperationsInput | string | null
+    progresses?: WordTaskProgressUpdateManyWithoutWordNestedInput
+  }
+
+  export type WordUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    text?: StringFieldUpdateOperationsInput | string
+    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    translate?: WordUpdatetranslateInput | string[]
+    definitions?: WordUpdatedefinitionsInput | string[]
+    synonyms?: WordUpdatesynonymsInput | string[]
+    antonyms?: WordUpdateantonymsInput | string[]
+    examples?: WordUpdateexamplesInput | string[]
+    partOfSpeech?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    totalProgress?: IntFieldUpdateOperationsInput | number
+    isLearned?: BoolFieldUpdateOperationsInput | boolean
+    phonetic?: StringFieldUpdateOperationsInput | string
+    audio?: StringFieldUpdateOperationsInput | string
+    phoneticUS?: NullableStringFieldUpdateOperationsInput | string | null
+    audioUS?: NullableStringFieldUpdateOperationsInput | string | null
+    progresses?: WordTaskProgressUncheckedUpdateManyWithoutWordNestedInput
+  }
+
+  export type WordUncheckedUpdateManyWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    text?: StringFieldUpdateOperationsInput | string
+    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    translate?: WordUpdatetranslateInput | string[]
+    definitions?: WordUpdatedefinitionsInput | string[]
+    synonyms?: WordUpdatesynonymsInput | string[]
+    antonyms?: WordUpdateantonymsInput | string[]
+    examples?: WordUpdateexamplesInput | string[]
+    partOfSpeech?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    totalProgress?: IntFieldUpdateOperationsInput | number
+    isLearned?: BoolFieldUpdateOperationsInput | boolean
+    phonetic?: StringFieldUpdateOperationsInput | string
+    audio?: StringFieldUpdateOperationsInput | string
+    phoneticUS?: NullableStringFieldUpdateOperationsInput | string | null
+    audioUS?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type WordTaskProgressCreateManyWordInput = {

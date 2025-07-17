@@ -138,8 +138,10 @@ exports.Prisma.WordScalarFieldEnum = {
   text: 'text',
   language: 'language',
   translate: 'translate',
-  meaning: 'meaning',
-  example: 'example',
+  definitions: 'definitions',
+  synonyms: 'synonyms',
+  antonyms: 'antonyms',
+  examples: 'examples',
   partOfSpeech: 'partOfSpeech',
   createdAt: 'createdAt',
   totalProgress: 'totalProgress',
@@ -147,7 +149,8 @@ exports.Prisma.WordScalarFieldEnum = {
   phonetic: 'phonetic',
   audio: 'audio',
   phoneticUS: 'phoneticUS',
-  audioUS: 'audioUS'
+  audioUS: 'audioUS',
+  userId: 'userId'
 };
 
 exports.Prisma.VideoScalarFieldEnum = {
