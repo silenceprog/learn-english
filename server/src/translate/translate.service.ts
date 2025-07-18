@@ -1,12 +1,115 @@
 import { HttpService } from '@nestjs/axios';
-import { Injectable, BadRequestException } from '@nestjs/common';
+import {
+  Injectable,
+  BadRequestException,
+  NotFoundException,
+  HttpException,
+  HttpStatus,
+} from '@nestjs/common';
 import { LanguageMap, SupportedDictionaryLangs } from './utils/language-map';
 import { firstValueFrom } from 'rxjs';
 import { Language } from 'generated/prisma';
+import { DatabaseService } from 'src/database/database.service';
+import { AutocompleteResponse, DatamuseSuggestion } from './dto/autocomplete-response.dto';
 
 @Injectable()
 export class TranslateService {
-  constructor(private readonly httpService: HttpService) {}
+  constructor(
+    private readonly httpService: HttpService,
+    private readonly databaseService: DatabaseService,
+  ) {}
+
+  private readonly API_BASE_URL = 'https://api.datamuse.com';
+  private readonly MAX_SUGGESTIONS = 10;
+
+  async getSuggestions(query: string): Promise<AutocompleteResponse> {
+    if (!query || query.length < 2) {
+      return {
+        suggestions: [],
+        source: 'local',
+        query,
+      };
+    }
+
+    const normalizedQuery = query.toLowerCase().trim();
+    try {
+      const apiSuggestions = await this.fetchFromDatamuse(normalizedQuery);
+
+      return {
+        suggestions: apiSuggestions,
+        source: 'api',
+        query: normalizedQuery,
+      };
+    } catch (error) {
+      console.error('Datamuse API error:', error);
+
+      return {
+        suggestions: [],
+        source: 'local',
+        query: normalizedQuery,
+      };
+    }
+  }
+
+  private async fetchFromDatamuse(query: string): Promise<string[]> {
+    const url = `${this.API_BASE_URL}/sug`;
+    const params = {
+      s: query,
+      max: this.MAX_SUGGESTIONS,
+    };
+
+    try {
+      const response = await firstValueFrom(
+        this.httpService.get<DatamuseSuggestion[]>(url, { params }),
+      );
+
+      return response?.data?.map((item) => item.word) || [];
+    } catch (error) {
+      throw new HttpException(
+        'Failed to fetch suggestions from Datamuse API',
+        HttpStatus.SERVICE_UNAVAILABLE,
+      );
+    }
+  }
+
+  async getWordsStartingWith(query: string): Promise<string[]> {
+    try {
+      const url = `${this.API_BASE_URL}/words`;
+      const params = {
+        sp: `${query}*`,
+        max: this.MAX_SUGGESTIONS,
+      };
+
+      const response = await firstValueFrom(
+        this.httpService.get<DatamuseSuggestion[]>(url, { params }),
+      );
+
+      return response?.data?.map((item) => item.word) || [];
+    } catch (error) {
+      throw new HttpException(
+        'Failed to fetch suggestions from Datamuse API',
+        HttpStatus.SERVICE_UNAVAILABLE,
+      );
+    }
+  }
+
+  async getRelatedWords(query: string): Promise<string[]> {
+    try {
+      const url = `${this.API_BASE_URL}/words`;
+      const params = {
+        ml: query,
+        max: this.MAX_SUGGESTIONS,
+      };
+
+      const response = await firstValueFrom(
+        this.httpService.get<DatamuseSuggestion[]>(url, { params }),
+      );
+
+      return response?.data?.map((item) => item.word) || [];
+    } catch (error) {
+      return [];
+    }
+  }
 
   async wordTranslate(text: string, from: Language, to: Language) {
     const fromIso = LanguageMap[from];
@@ -64,5 +167,141 @@ export class TranslateService {
 
       throw new BadRequestException(error.message || 'Translation failed');
     }
+  }
+
+  public processMeanings(meanings: any[]): {
+    definitions: string[];
+    synonyms: string[];
+    antonyms: string[];
+    examples: string[];
+    partOfSpeech: string;
+  } {
+    const definitions: string[] = [];
+    const synonyms: Set<string> = new Set();
+    const antonyms: Set<string> = new Set();
+    const examples: Set<string> = new Set();
+    let partOfSpeech = '';
+
+    if (meanings && meanings.length > 0) {
+      partOfSpeech = meanings[0].partOfSpeech || '';
+
+      meanings.forEach((meaning) => {
+        if (meaning.synonyms && Array.isArray(meaning.synonyms)) {
+          meaning.synonyms.forEach((synonym: string) => synonyms.add(synonym));
+        }
+
+        if (meaning.antonyms && Array.isArray(meaning.antonyms)) {
+          meaning.antonyms.forEach((antonym: string) => antonyms.add(antonym));
+        }
+
+        if (meaning.definitions && Array.isArray(meaning.definitions)) {
+          meaning.definitions.forEach((def: any) => {
+            if (def.definition) {
+              definitions.push(def.definition);
+            }
+
+            if (def.example) {
+              examples.add(def.example);
+            }
+
+            if (def.synonyms && Array.isArray(def.synonyms)) {
+              def.synonyms.forEach((synonym: string) => synonyms.add(synonym));
+            }
+
+            if (def.antonyms && Array.isArray(def.antonyms)) {
+              def.antonyms.forEach((antonym: string) => antonyms.add(antonym));
+            }
+          });
+        }
+      });
+    }
+
+    return {
+      definitions,
+      synonyms: Array.from(synonyms),
+      antonyms: Array.from(antonyms),
+      examples: Array.from(examples),
+      partOfSpeech,
+    };
+  }
+
+  async updateWordMeanings(
+    wordId: number,
+    userId: number,
+    updateData: {
+      definitions?: string[];
+      synonyms?: string[];
+      antonyms?: string[];
+      examples?: string[];
+      partOfSpeech?: string;
+    },
+  ) {
+    const word = await this.databaseService.word.findFirst({
+      where: { id: wordId, userId: userId },
+    });
+
+    if (!word) {
+      throw new NotFoundException('Word not found or access denied');
+    }
+
+    return this.databaseService.word.update({
+      where: { id: wordId },
+      data: updateData,
+    });
+  }
+
+  async findWordsBySynonym(synonym: string, userId: number) {
+    return this.databaseService.word.findMany({
+      where: {
+        synonyms: {
+          has: synonym,
+        },
+        progresses: {
+          some: {
+            userId: userId,
+          },
+        },
+      },
+      include: {
+        progresses: {
+          where: {
+            userId: userId,
+          },
+        },
+      },
+    });
+  }
+
+  async getPartOfSpeechStats(userId: number) {
+    const words = await this.databaseService.word.findMany({
+      where: {
+        progresses: {
+          some: {
+            userId: userId,
+          },
+        },
+        partOfSpeech: {
+          not: null,
+        },
+      },
+      select: {
+        partOfSpeech: true,
+      },
+    });
+
+    const stats = words.reduce(
+      (acc, word) => {
+        if (word.partOfSpeech) {
+          acc[word.partOfSpeech] = (acc[word.partOfSpeech] || 0) + 1;
+        }
+        return acc;
+      },
+      {} as Record<string, number>,
+    );
+
+    return Object.entries(stats).map(([partOfSpeech, count]) => ({
+      partOfSpeech,
+      count,
+    }));
   }
 }

@@ -17,62 +17,6 @@ export class WordsService {
     private readonly translateService: TranslateService,
   ) {}
 
-  private processMeanings(meanings: any[]): {
-    definitions: string[];
-    synonyms: string[];
-    antonyms: string[];
-    examples: string[];
-    partOfSpeech: string;
-  } {
-    const definitions: string[] = [];
-    const synonyms: Set<string> = new Set();
-    const antonyms: Set<string> = new Set();
-    const examples: Set<string> = new Set();
-    let partOfSpeech = '';
-
-    if (meanings && meanings.length > 0) {
-      partOfSpeech = meanings[0].partOfSpeech || '';
-
-      meanings.forEach((meaning) => {
-        if (meaning.synonyms && Array.isArray(meaning.synonyms)) {
-          meaning.synonyms.forEach((synonym: string) => synonyms.add(synonym));
-        }
-
-        if (meaning.antonyms && Array.isArray(meaning.antonyms)) {
-          meaning.antonyms.forEach((antonym: string) => antonyms.add(antonym));
-        }
-
-        if (meaning.definitions && Array.isArray(meaning.definitions)) {
-          meaning.definitions.forEach((def: any) => {
-            if (def.definition) {
-              definitions.push(def.definition);
-            }
-
-            if (def.example) {
-              examples.add(def.example);
-            }
-
-            if (def.synonyms && Array.isArray(def.synonyms)) {
-              def.synonyms.forEach((synonym: string) => synonyms.add(synonym));
-            }
-
-            if (def.antonyms && Array.isArray(def.antonyms)) {
-              def.antonyms.forEach((antonym: string) => antonyms.add(antonym));
-            }
-          });
-        }
-      });
-    }
-
-    return {
-      definitions,
-      synonyms: Array.from(synonyms),
-      antonyms: Array.from(antonyms),
-      examples: Array.from(examples),
-      partOfSpeech,
-    };
-  }
-
   async createWord(userId: number, dto: CreateWordDto) {
     const taskTypes = Object.values(WordTaskType);
     const setting = await this.databaseService.setting.findUnique({
@@ -104,7 +48,7 @@ export class WordsService {
     );
 
     const processedMeanings = data.meanings
-      ? this.processMeanings(data.meanings)
+      ? this.translateService.processMeanings(data.meanings)
       : {
           definitions: [],
           synonyms: [],
@@ -165,86 +109,6 @@ export class WordsService {
     });
   }
 
-  async updateWordMeanings(
-    wordId: number,
-    userId: number,
-    updateData: {
-      definitions?: string[];
-      synonyms?: string[];
-      antonyms?: string[];
-      examples?: string[];
-      partOfSpeech?: string;
-    },
-  ) {
-    const word = await this.databaseService.word.findFirst({
-      where: { id: wordId, userId: userId },
-    });
-
-    if (!word) {
-      throw new NotFoundException('Word not found or access denied');
-    }
-
-    return this.databaseService.word.update({
-      where: { id: wordId },
-      data: updateData,
-    });
-  }
-
-  async findWordsBySynonym(synonym: string, userId: number) {
-    return this.databaseService.word.findMany({
-      where: {
-        synonyms: {
-          has: synonym,
-        },
-        progresses: {
-          some: {
-            userId: userId,
-          },
-        },
-      },
-      include: {
-        progresses: {
-          where: {
-            userId: userId,
-          },
-        },
-      },
-    });
-  }
-
-  async getPartOfSpeechStats(userId: number) {
-    const words = await this.databaseService.word.findMany({
-      where: {
-        progresses: {
-          some: {
-            userId: userId,
-          },
-        },
-        partOfSpeech: {
-          not: null,
-        },
-      },
-      select: {
-        partOfSpeech: true,
-      },
-    });
-
-    const stats = words.reduce(
-      (acc, word) => {
-        if (word.partOfSpeech) {
-          acc[word.partOfSpeech] = (acc[word.partOfSpeech] || 0) + 1;
-        }
-        return acc;
-      },
-      {} as Record<string, number>,
-    );
-
-    return Object.entries(stats).map(([partOfSpeech, count]) => ({
-      partOfSpeech,
-      count,
-    }));
-  }
-
   async searchWords(userId: number, query: string) {
     const setting = await this.databaseService.setting.findUnique({
       where: { userId },
@@ -275,63 +139,6 @@ export class WordsService {
     return this.databaseService.word.findUnique({
       where: {
         id,
-      },
-    });
-  }
-
-  async updateWordTotalProgress(userId: number, wordId: number): Promise<void> {
-    const allTaskTypes = Object.keys(WordTaskType) as WordTaskType[];
-
-    const progresses = await this.databaseService.wordTaskProgress.findMany({
-      where: {
-        userId,
-        wordId,
-      },
-    });
-
-    const passedCount = progresses.filter((p) => p.isPassed).length;
-
-    const totalTypes = allTaskTypes.length;
-    const totalProgress = Math.round((passedCount / totalTypes) * 100);
-
-    const isLearned = passedCount === totalTypes;
-
-    await this.databaseService.word.update({
-      where: { id: wordId },
-      data: {
-        totalProgress,
-        isLearned,
-      },
-    });
-  }
-
-  async updateTaskProgress(data: {
-    userId: number;
-    wordId: number;
-    taskType: WordTaskType;
-    isPassed: boolean;
-    score: number;
-  }) {
-    await this.databaseService.wordTaskProgress.upsert({
-      where: {
-        userId_wordId_taskType: {
-          userId: data.userId,
-          wordId: data.wordId,
-          taskType: data.taskType,
-        },
-      },
-      update: {
-        isPassed: data.isPassed,
-        score: data.score,
-        attempts: { increment: 1 },
-      },
-      create: {
-        userId: data.userId,
-        wordId: data.wordId,
-        taskType: data.taskType,
-        isPassed: data.isPassed,
-        score: data.score,
-        attempts: 1,
       },
     });
   }

@@ -25,12 +25,13 @@ import { PaginationDto } from './dto/pagination.dto';
 import { WordTaskType } from 'generated/prisma';
 import { UpdateProgressDto } from './dto/update-progress';
 import { GetCurrentUserId } from 'src/decorators/get-current-user-id.decorator';
+import { ProgressService } from 'src/progress/progress.service';
 
 @ApiTags('Words')
 @ApiBearerAuth('access-token')
 @Controller('words')
 export class WordsController {
-  constructor(private readonly wordsService: WordsService) {}
+  constructor(private readonly wordsService: WordsService,private readonly progresService: ProgressService) {}
 
   @ApiOperation({ summary: 'Створення слова' })
   @ApiResponse({ status: 201, type: CreateWordDto })
@@ -85,7 +86,7 @@ export class WordsController {
   ) {
     const userId = req.user.id;
 
-    await this.wordsService.updateTaskProgress({
+    await this.progresService.updateTaskProgress({
       userId,
       wordId,
       taskType,
@@ -93,7 +94,7 @@ export class WordsController {
       score: body.score ?? 0,
     });
 
-    await this.wordsService.updateWordTotalProgress(userId, wordId);
+    await this.progresService.updateWordTotalProgress(userId, wordId);
 
     return { message: 'Word progress updated' };
   }
