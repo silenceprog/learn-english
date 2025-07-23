@@ -21,7 +21,7 @@ export function ShowWord({ word }: Props) {
   const { fetchWords } = useDictionaryStore();
   async function deleteWord() {
     try {
-      await fetch(
+      const response = await fetch(
         `https://learn-english-6ufl.onrender.com/api/words/${word.id}`,
         {
           method: "DELETE",
@@ -32,11 +32,17 @@ export function ShowWord({ word }: Props) {
         },
       );
 
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        const errorMessage = errorData.message || `Помилка $response.status`;
+        throw new Error(errorMessage);
+      }
+
       addAlert("Слово видалено успішно", "success");
       fetchWords();
     } catch (err) {
-      if (typeof err === "string") {
-        addAlert(err, "error");
+      if (err instanceof Error) {
+        addAlert(err.message, "error");
       } else {
         addAlert("Something went wrong", "error");
       }
