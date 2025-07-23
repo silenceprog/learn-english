@@ -93,7 +93,10 @@ export const useDictionaryStore = create<DictionaryStore>((set, get) => ({
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
         },
       });
-
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.message || `HTTP Error: ${response.status}`);
+      }
       const data = await response.json();
       set({
         words: data.data,

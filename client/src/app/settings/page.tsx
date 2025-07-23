@@ -8,6 +8,7 @@ import {
   Globe,
   Languages,
   LineChart,
+  LockKeyhole,
   Rocket,
   Target,
   Trophy,
@@ -18,6 +19,8 @@ import { useUserSettingsStore } from "@/states/requests/useUserSettings";
 import AddSelectLanguageBlock from "@/app/settings/AddSelectLanguageBlock";
 import axios from "axios";
 import Flag from "react-world-flags";
+import { useAlertStore } from "@/states/alertStore";
+import InputField from "@/app/settings/InputField";
 
 export default function Settings() {
   const INTERFACE_LANGUAGES = [
@@ -97,6 +100,7 @@ export default function Settings() {
   ];
 
   const { settings, fetchSettings } = useUserSettingsStore();
+  const { addAlert } = useAlertStore();
 
   const [selectedInterfaceLanguage, setSelectedInterfaceLanguage] =
     useState<string>(settings.global_language);
@@ -140,6 +144,7 @@ export default function Settings() {
       // Тут можна додати обробку успішного збереження
       console.log("Налаштування збережено:", response.data);
       fetchSettings();
+      addAlert("Налаштування збережено", "success");
     } catch (error) {
       console.log(selectedGoals);
       console.error("Помилка при збереженні налаштувань:", error);
@@ -214,14 +219,22 @@ export default function Settings() {
           whatIsIt="Оцініть свій поточний рівень володіння мовою"
         />
         <div className="pt-6 border-t-1"></div>
-        <div className="flex flex-row items-center justify-between">
-          <span className="text-gray-400 font-extralight">
-            Оберіть одну або декілька цілей для персоналізації навчання
-          </span>
+        <div className="flex flex-row items-center justify-end">
           <Button onClick={handleSave} color="outline">
             Save
           </Button>
         </div>
+      </SettingsSection>
+      <SettingsSection
+        title="Безпека акаунту"
+        icon={<LockKeyhole />}
+        subTitle="Змініть пароль та підтвердіть електронну пошту"
+      >
+        <p className="text-lg font-medium mb-2">Зміна паролю</p>
+        <InputField
+          title="Поточний пароль"
+          placeholder="Введіть поточний пароль"
+        />
       </SettingsSection>
     </section>
   );

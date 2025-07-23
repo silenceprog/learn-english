@@ -25,7 +25,8 @@ export function Header() {
       return false;
     }
   }
-  const { fetchSettings } = useUserSettingsStore();
+  const { fetchSettings, settings } = useUserSettingsStore();
+  const { i18n } = useTranslation();
   useEffect(() => {
     if (typeof window !== "undefined") {
       const token = localStorage.getItem("accessToken");
@@ -40,6 +41,7 @@ export function Header() {
   useEffect(() => {
     if (isLoggedIn) {
       fetchSettings();
+      i18n.changeLanguage(settings.global_language);
     }
   }, [isLoggedIn]);
   const { t } = useTranslation();

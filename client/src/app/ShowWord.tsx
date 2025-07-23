@@ -1,10 +1,11 @@
-import { Volume2 } from "lucide-react";
+import { ChevronDown, ChevronUp, Volume2 } from "lucide-react";
 import { Button } from "@/shared/ui/Button";
 import { useAlertStore } from "@/states/alertStore";
 import {
   useDictionaryStore,
   Word,
 } from "@/states/requests/useGetDictionaryWords";
+import { useState } from "react";
 
 interface Props {
   word: Word;
@@ -19,6 +20,7 @@ const playAudio = (thisSong: string) => {
 export function ShowWord({ word }: Props) {
   const { addAlert } = useAlertStore();
   const { fetchWords } = useDictionaryStore();
+  const [chevronDown, setChevronDown] = useState(true);
   async function deleteWord() {
     try {
       const response = await fetch(
@@ -101,7 +103,33 @@ export function ShowWord({ word }: Props) {
           </div>
         </div>
       </div>
-      <p className="text-xs text-gray-500 italic mb-2">{word.examples}</p>
+      {chevronDown ? (
+        <div>
+          <p className="text-xs text-gray-500 italic mb-2">
+            {word.examples[0]}
+          </p>
+          <p className="text-xs text-gray-500 italic mb-2">
+            {word.examples[1]}
+          </p>
+        </div>
+      ) : (
+        word.examples.map((word, i) => (
+          <p key={i} className="text-xs text-gray-500 italic mb-2">
+            {word}
+          </p>
+        ))
+      )}
+      {word.examples.length >= 2 && (
+        <Button
+          color="outlineBlue"
+          className="flex flex-row justify-center items-center mb-1 "
+          onClick={() => {
+            setChevronDown(!chevronDown);
+          }}
+        >
+          More {chevronDown ? <ChevronDown /> : <ChevronUp />}
+        </Button>
+      )}
       <div className="w-full bg-gray-200 rounded-full h-1.5">
         <div
           className={`h-1.5 rounded-full ${word.totalProgress >= 80 ? "bg-lime-500" : "bg-blue-600"}`}

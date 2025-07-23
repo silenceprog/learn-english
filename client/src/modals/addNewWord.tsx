@@ -32,6 +32,23 @@ export default function AddNewWord() {
       [name]: value,
     }));
   };
+  const suggestionsRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        suggestionsRef.current &&
+        !suggestionsRef.current.contains(event.target as Node)
+      ) {
+        setSuppressSuggestions(false);
+        clearSuggestions();
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
   const [isLoading, setIsLoading] = useState(false);
   const addWord = async () => {
     setIsLoading(true);
@@ -132,7 +149,7 @@ export default function AddNewWord() {
               <label className="block text-sm font-medium w-1/5 text-right px-3">
                 Слово
               </label>
-              <div className="relative w-full">
+              <div className="relative w-full" ref={suggestionsRef}>
                 <input
                   type="text"
                   name="word"
