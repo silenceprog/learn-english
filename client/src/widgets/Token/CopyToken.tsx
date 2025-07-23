@@ -1,8 +1,10 @@
 "use client";
 import { useState } from "react";
 import { Button } from "@/shared/ui/Button";
+import { useAlertStore } from "@/states/alertStore";
 
 export function CopyToken() {
+  const { addAlert } = useAlertStore();
   const [status, setStatus] = useState<"copied" | "not_found" | false>(false);
 
   const handleCopy = async () => {
@@ -17,6 +19,7 @@ export function CopyToken() {
       await navigator.clipboard.writeText(token);
       setStatus("copied");
       setTimeout(() => setStatus(false), 2000);
+      addAlert("Copied to clipboard", "success");
     } catch (err) {
       console.error("Copy failed:", err);
     }

@@ -1,16 +1,24 @@
 import { Button } from "@/shared/ui/Button";
 import { RefreshCw } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ShowWords } from "@/app/ShowWords";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import Pagination from "@/app/Pagination";
 import CreateWordButton from "@/app/CreateWordButton";
+import { useDictionaryStore } from "@/states/requests/useGetDictionaryWords";
 
 export function MyWordsBlock() {
   const [activeTab, setActiveTab] = useState<"ALL" | "LEARNING" | "LEARNED">(
     "ALL",
   );
-  const [totalWords, setTotalWords] = useState(0);
+  const {
+    setCurrentTab,
+    fetchWords,
+    setWordsLimit,
+    totalWords,
+    setCurrentPage,
+    totalPages,
+  } = useDictionaryStore();
   const [maxPages, setMaxPages] = useState(1);
   const limits = [1, 2, 3, 5, 10];
   const [page, setPage] = useState(1);
@@ -25,6 +33,13 @@ export function MyWordsBlock() {
       setPage(page - 1);
     }
   };
+  useEffect(() => {
+    setCurrentTab(activeTab);
+    setWordsLimit(wordsOnPage);
+    setCurrentPage(page);
+    setMaxPages(totalPages);
+    fetchWords();
+  }, [activeTab, wordsOnPage, page, totalPages]);
   return (
     <div>
       <div className="text-xl font-bold text-blue-700 flex items-center justify-between">
@@ -92,13 +107,7 @@ export function MyWordsBlock() {
           </DropdownMenu.Root>
         </div>
       </div>
-      <ShowWords
-        currentTab={activeTab}
-        getCountWords={setTotalWords}
-        wordsLimit={wordsOnPage}
-        currentPage={page}
-        maxPages={setMaxPages}
-      />
+      <ShowWords />
       <Pagination
         page={page}
         nextPage={nextPage}

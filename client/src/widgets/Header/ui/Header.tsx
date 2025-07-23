@@ -43,7 +43,6 @@ export function Header() {
     }
   }, [isLoggedIn]);
   const { t } = useTranslation();
-
   return (
     <Section className="border-b border-gray-200 sticky top-0 z-50 w-full bg-white">
       <div className="flex justify-between h-16 items-center">
@@ -67,7 +66,7 @@ export function Header() {
             {t("practice")}
           </Link>
           <Link
-            href="#"
+            href="/dictionary"
             className="text-sm font-semibold hover:text-blue-600 transition-colors"
           >
             {t("dictionary")}

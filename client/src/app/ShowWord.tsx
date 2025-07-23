@@ -1,17 +1,11 @@
 import { Volume2 } from "lucide-react";
 import { Button } from "@/shared/ui/Button";
+import { useAlertStore } from "@/states/alertStore";
+import {
+  useDictionaryStore,
+  Word,
+} from "@/states/requests/useGetDictionaryWords";
 
-export interface Word {
-  text: string;
-  translate: string;
-  example: string;
-  totalProgress: number;
-  voice: string;
-  phonetic?: string;
-  phoneticUS?: string;
-  audio?: string;
-  audioUS?: string;
-}
 interface Props {
   word: Word;
 }
@@ -21,12 +15,43 @@ const playAudio = (thisSong: string) => {
     .play()
     .catch((err) => console.error("Не вдалося відтворити аудіо:", err));
 };
+
 export function ShowWord({ word }: Props) {
+  const { addAlert } = useAlertStore();
+  const { fetchWords } = useDictionaryStore();
+  async function deleteWord() {
+    try {
+      await fetch(
+        `https://learn-english-6ufl.onrender.com/api/words/${word.id}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        },
+      );
+
+      addAlert("Слово видалено успішно", "success");
+      fetchWords();
+    } catch (err) {
+      if (typeof err === "string") {
+        addAlert(err, "error");
+      } else {
+        addAlert("Something went wrong", "error");
+      }
+    }
+  }
   return (
     <div className="border rounded-lg p-4 bg-white shadow-sm">
-      <div className="flex justify-between items-start mb-2">
+      <div className="w-full mb-2">
         <div>
-          <h3 className="font-medium">{word.text}</h3>
+          <div className="flex flex-row justify-between">
+            <h3 className="font-medium">{word.text}</h3>
+            <Button size="sm" color="white" onClick={deleteWord}>
+              ❌
+            </Button>
+          </div>
           <p className="text-sm text-blue-700">{word.translate}</p>
           <div className="flex flex-row gap-5">
             {word.phonetic !== "none" && (
@@ -70,7 +95,7 @@ export function ShowWord({ word }: Props) {
           </div>
         </div>
       </div>
-      <p className="text-xs text-gray-500 italic mb-2">{word.example}</p>
+      <p className="text-xs text-gray-500 italic mb-2">{word.examples}</p>
       <div className="w-full bg-gray-200 rounded-full h-1.5">
         <div
           className={`h-1.5 rounded-full ${word.totalProgress >= 80 ? "bg-lime-500" : "bg-blue-600"}`}

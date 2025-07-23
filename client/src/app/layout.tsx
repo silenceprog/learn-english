@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/widgets/Header/ui/Header";
 import AddNewWord from "@/modals/addNewWord";
+import Alerts from "@/shared/ui/Alerts";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,6 +32,7 @@ export default function RootLayout({
       >
         <Header />
         <AddNewWord />
+        <Alerts />
         {children}
       </body>
     </html>
