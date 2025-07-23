@@ -21,6 +21,7 @@ import axios from "axios";
 import Flag from "react-world-flags";
 import { useAlertStore } from "@/states/alertStore";
 import InputField from "@/app/settings/InputField";
+import { useChangePassword } from "@/states/requests/useChangePassword";
 
 export default function Settings() {
   const INTERFACE_LANGUAGES = [
@@ -157,7 +158,7 @@ export default function Settings() {
       prev.includes(goal) ? prev.filter((i) => i !== goal) : [...prev, goal],
     );
   };
-
+  const { fetch } = useChangePassword();
   return (
     <section className="w-full max-w-2xl mx-auto p-4">
       <SettingsSection
@@ -234,7 +235,23 @@ export default function Settings() {
         <InputField
           title="Поточний пароль"
           placeholder="Введіть поточний пароль"
+          oldPassword={true}
         />
+        <InputField
+          title="Новий пароль"
+          placeholder="Введіть новий пароль"
+          newPassword={true}
+        />
+        <Button
+          className="w-full flex flex-row items-center justify-center gap-2"
+          color="outline"
+          onClick={() => {
+            fetch();
+          }}
+        >
+          <LockKeyhole />
+          Змінити
+        </Button>
       </SettingsSection>
     </section>
   );
