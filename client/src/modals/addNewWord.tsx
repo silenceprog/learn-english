@@ -2,7 +2,7 @@
 import { useAddWordModal } from "@/states/modals/useAddWordModal";
 import { Button } from "@/shared/ui/Button";
 import { IoIosCloseCircleOutline } from "react-icons/io";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useGetSuggestions } from "@/states/requests/useGetSuggestions";
 import { Loader2 } from "lucide-react";
 import { useAlertStore } from "@/states/alertStore";
@@ -12,6 +12,7 @@ export default function AddNewWord() {
   const { isOpen, setIsOpen } = useAddWordModal();
   const { addAlert } = useAlertStore();
   const { fetchWords } = useDictionaryStore();
+  const [suppressSuggestions, setSuppressSuggestions] = useState(false);
   const [form, setForm] = useState({
     word: "",
     translate: "",
@@ -80,17 +81,30 @@ export default function AddNewWord() {
   const { setInputtedChars, suggestions, clearSuggestions } =
     useGetSuggestions();
   const debounceTimeout = useRef<NodeJS.Timeout | null>(null);
-  const handleDebouncedInput = () => {
+  useEffect(() => {
+    if (suppressSuggestions) {
+      setSuppressSuggestions(false); // скидаємо прапорець
+      return;
+    }
     if (debounceTimeout.current) {
       clearTimeout(debounceTimeout.current);
     }
 
-    debounceTimeout.current = setTimeout(() => {
-      if (form.word.length > 2) {
+    if (form.word.length > 2) {
+      debounceTimeout.current = setTimeout(() => {
         setInputtedChars(form.word);
+      }, 300);
+    } else {
+      clearSuggestions(); // якщо менше 3 літер — очистити підказки
+    }
+
+    // Очищення при анмаунті
+    return () => {
+      if (debounceTimeout.current) {
+        clearTimeout(debounceTimeout.current);
       }
-    }, 300);
-  };
+    };
+  }, [form.word]);
   return (
     <div>
       {isOpen && (
@@ -100,7 +114,10 @@ export default function AddNewWord() {
               <div className="font-semibold text-xl">Добавить новое слово</div>
               <div>
                 <Button
-                  onClick={() => setIsOpen(false)}
+                  onClick={() => {
+                    setIsOpen(false);
+                    clearData();
+                  }}
                   size="sm"
                   color="white"
                 >
@@ -121,7 +138,6 @@ export default function AddNewWord() {
                   name="word"
                   value={form.word}
                   onChange={handleChange}
-                  onKeyDown={handleDebouncedInput}
                   required
                   className="w-full border rounded-md px-3 py-2"
                 />
@@ -136,6 +152,7 @@ export default function AddNewWord() {
                             ...prevForm,
                             word: s,
                           }));
+                          setSuppressSuggestions(true);
                           clearSuggestions();
                         }}
                       >
