@@ -1,12 +1,30 @@
-import { ApiProperty } from "@nestjs/swagger";
-import {  IsBoolean, IsNumber } from "class-validator";
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { IsBoolean, IsEnum, IsNumber, IsOptional, Min } from 'class-validator';
+import { CoreSkillType } from 'generated/prisma';
 
 export class UpdateProgressDto {
-  @ApiProperty({ example: true, description: 'Виконаність завдання' })
+  @ApiProperty({
+    description: 'Чи була відповідь правильною',
+    example: true,
+  })
   @IsBoolean()
-  isPassed: boolean;
+  correct: boolean;
 
-  @ApiProperty({ example: 30, description: 'Рахунок слова' })
+  @ApiProperty({
+    description: 'Час, витрачений на завдання (в секундах)',
+    minimum: 0,
+    example: 30,
+  })
   @IsNumber()
-  score: number;
-  }
+  @Min(0)
+  timeSpent: number;
+
+  @ApiPropertyOptional({
+    description: 'Тип навички, що тренується',
+    enum: CoreSkillType,
+    example: CoreSkillType.VOCABULARY,
+  })
+  @IsOptional()
+  @IsEnum(CoreSkillType)
+  skillType: CoreSkillType;
+}

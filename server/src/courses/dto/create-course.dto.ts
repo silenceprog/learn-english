@@ -1,29 +1,45 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsOptional, IsEnum, IsBoolean } from 'class-validator';
-import { Level } from 'generated/prisma';
+import { IsString, IsOptional, IsEnum, IsBoolean, IsArray, IsNumber } from 'class-validator';
+import { CEFRLevel, CoreSkillType, Level } from 'generated/prisma';
 
 export class CreateCourseDto {
-  @ApiProperty({ example: 'Англійська для початківців' })
   @IsString()
   title: string;
 
-  @ApiProperty({ example: 'Базовий курс для старту вивчення англійської', required: false })
   @IsOptional()
   @IsString()
   description?: string;
 
-  @ApiProperty({ example: 'https://example.com/image.png', required: false })
   @IsOptional()
   @IsString()
   imageUrl?: string;
 
-  @ApiProperty({ default: Level.NONE })
   @IsOptional()
-  @IsEnum(Level)
-  level?: Level;
+  @IsEnum(CEFRLevel)
+  level?: CEFRLevel;
 
-  @ApiProperty({ example: true, required: false })
+  @IsOptional()
+  @IsArray()
+  @IsEnum(CoreSkillType, { each: true })
+  targetSkills?: CoreSkillType[];
+
   @IsOptional()
   @IsBoolean()
   isPublished?: boolean;
+
+  @IsOptional()
+  @IsArray()
+  @IsString({ each: true })
+  tags?: string[];
+
+  @IsOptional()
+  @IsNumber()
+  estimatedHours?: number;
+
+  @IsOptional()
+  @IsNumber()
+  totalXP?: number;
+
+  @IsOptional()
+  @IsNumber()
+  authorId?: number;
 }

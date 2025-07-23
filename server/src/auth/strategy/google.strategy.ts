@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
-import { Level, Purpose } from 'generated/prisma';
+import { CEFRLevel, Level, Purpose } from 'generated/prisma';
 import { Strategy, VerifyCallback } from 'passport-google-oauth2';
 import { DatabaseService } from 'src/database/database.service';
 
@@ -56,7 +56,7 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
               global_language: 'UA',
               current_language: 'EN',
               purposes: [Purpose.NONE],
-              current_level: Level.NONE,
+              current_level: CEFRLevel.PRE_A1,
             },
           },
         },

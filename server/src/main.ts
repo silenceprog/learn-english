@@ -44,7 +44,7 @@ async function bootstrap() {
 
   app.enableCors({ 
     origin: ['http://localhost:3000', 'https://learn-english-chi-nine.vercel.app'],
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    methods: ['GET', 'POST', 'PATCH', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization']});
   app.use(helmet());
   app.setGlobalPrefix('api')

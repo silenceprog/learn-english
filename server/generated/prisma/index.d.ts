@@ -49,25 +49,46 @@ export type Enrollment = $Result.DefaultSelection<Prisma.$EnrollmentPayload>
  */
 export type Setting = $Result.DefaultSelection<Prisma.$SettingPayload>
 /**
+ * Model LanguageProgress
+ * 
+ */
+export type LanguageProgress = $Result.DefaultSelection<Prisma.$LanguageProgressPayload>
+/**
+ * Model SkillProgress
+ * 
+ */
+export type SkillProgress = $Result.DefaultSelection<Prisma.$SkillProgressPayload>
+/**
+ * Model SkillLevelRequirements
+ * 
+ */
+export type SkillLevelRequirements = $Result.DefaultSelection<Prisma.$SkillLevelRequirementsPayload>
+/**
  * Model WordTaskProgress
  * 
  */
 export type WordTaskProgress = $Result.DefaultSelection<Prisma.$WordTaskProgressPayload>
+/**
+ * Model DailyStats
+ * 
+ */
+export type DailyStats = $Result.DefaultSelection<Prisma.$DailyStatsPayload>
+/**
+ * Model Achievement
+ * 
+ */
+export type Achievement = $Result.DefaultSelection<Prisma.$AchievementPayload>
+/**
+ * Model UserAchievement
+ * 
+ */
+export type UserAchievement = $Result.DefaultSelection<Prisma.$UserAchievementPayload>
 
 /**
  * Enums
  */
 export namespace $Enums {
-  export const WordTaskType: {
-  TRANSLATION: 'TRANSLATION',
-  MATCHING: 'MATCHING',
-  LISTENING: 'LISTENING'
-};
-
-export type WordTaskType = (typeof WordTaskType)[keyof typeof WordTaskType]
-
-
-export const Role: {
+  export const Role: {
   OWNER: 'OWNER',
   USER: 'USER',
   ADMIN: 'ADMIN'
@@ -123,18 +144,41 @@ export const Level: {
 export type Level = (typeof Level)[keyof typeof Level]
 
 
-export const SkillType: {
-  VOCABULARY: 'VOCABULARY',
-  GRAMMAR: 'GRAMMAR',
-  LISTENING: 'LISTENING',
-  SPEAKING: 'SPEAKING',
-  READING: 'READING',
-  WRITING: 'WRITING',
-  PRONUNCIATION: 'PRONUNCIATION',
-  COMPREHENSION: 'COMPREHENSION'
+export const CEFRLevel: {
+  PRE_A1: 'PRE_A1',
+  A1: 'A1',
+  A2: 'A2',
+  B1: 'B1',
+  B2: 'B2',
+  C1: 'C1',
+  C2: 'C2'
 };
 
-export type SkillType = (typeof SkillType)[keyof typeof SkillType]
+export type CEFRLevel = (typeof CEFRLevel)[keyof typeof CEFRLevel]
+
+
+export const CoreSkillType: {
+  READING: 'READING',
+  LISTENING: 'LISTENING',
+  SPEAKING: 'SPEAKING',
+  WRITING: 'WRITING',
+  VOCABULARY: 'VOCABULARY'
+};
+
+export type CoreSkillType = (typeof CoreSkillType)[keyof typeof CoreSkillType]
+
+
+export const AchievementType: {
+  SKILL_LEVEL: 'SKILL_LEVEL',
+  OVERALL_LEVEL: 'OVERALL_LEVEL',
+  XP_MILESTONE: 'XP_MILESTONE',
+  STREAK_MASTER: 'STREAK_MASTER',
+  ACCURACY_EXPERT: 'ACCURACY_EXPERT',
+  VOCABULARY_GURU: 'VOCABULARY_GURU',
+  PERFECTIONIST: 'PERFECTIONIST'
+};
+
+export type AchievementType = (typeof AchievementType)[keyof typeof AchievementType]
 
 
 export const DifficultyPreference: {
@@ -147,10 +191,6 @@ export const DifficultyPreference: {
 export type DifficultyPreference = (typeof DifficultyPreference)[keyof typeof DifficultyPreference]
 
 }
-
-export type WordTaskType = $Enums.WordTaskType
-
-export const WordTaskType: typeof $Enums.WordTaskType
 
 export type Role = $Enums.Role
 
@@ -172,9 +212,17 @@ export type Level = $Enums.Level
 
 export const Level: typeof $Enums.Level
 
-export type SkillType = $Enums.SkillType
+export type CEFRLevel = $Enums.CEFRLevel
 
-export const SkillType: typeof $Enums.SkillType
+export const CEFRLevel: typeof $Enums.CEFRLevel
+
+export type CoreSkillType = $Enums.CoreSkillType
+
+export const CoreSkillType: typeof $Enums.CoreSkillType
+
+export type AchievementType = $Enums.AchievementType
+
+export const AchievementType: typeof $Enums.AchievementType
 
 export type DifficultyPreference = $Enums.DifficultyPreference
 
@@ -376,6 +424,36 @@ export class PrismaClient<
   get setting(): Prisma.SettingDelegate<ExtArgs, ClientOptions>;
 
   /**
+   * `prisma.languageProgress`: Exposes CRUD operations for the **LanguageProgress** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more LanguageProgresses
+    * const languageProgresses = await prisma.languageProgress.findMany()
+    * ```
+    */
+  get languageProgress(): Prisma.LanguageProgressDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.skillProgress`: Exposes CRUD operations for the **SkillProgress** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more SkillProgresses
+    * const skillProgresses = await prisma.skillProgress.findMany()
+    * ```
+    */
+  get skillProgress(): Prisma.SkillProgressDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.skillLevelRequirements`: Exposes CRUD operations for the **SkillLevelRequirements** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more SkillLevelRequirements
+    * const skillLevelRequirements = await prisma.skillLevelRequirements.findMany()
+    * ```
+    */
+  get skillLevelRequirements(): Prisma.SkillLevelRequirementsDelegate<ExtArgs, ClientOptions>;
+
+  /**
    * `prisma.wordTaskProgress`: Exposes CRUD operations for the **WordTaskProgress** model.
     * Example usage:
     * ```ts
@@ -384,6 +462,36 @@ export class PrismaClient<
     * ```
     */
   get wordTaskProgress(): Prisma.WordTaskProgressDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.dailyStats`: Exposes CRUD operations for the **DailyStats** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more DailyStats
+    * const dailyStats = await prisma.dailyStats.findMany()
+    * ```
+    */
+  get dailyStats(): Prisma.DailyStatsDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.achievement`: Exposes CRUD operations for the **Achievement** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Achievements
+    * const achievements = await prisma.achievement.findMany()
+    * ```
+    */
+  get achievement(): Prisma.AchievementDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.userAchievement`: Exposes CRUD operations for the **UserAchievement** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more UserAchievements
+    * const userAchievements = await prisma.userAchievement.findMany()
+    * ```
+    */
+  get userAchievement(): Prisma.UserAchievementDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -831,7 +939,13 @@ export namespace Prisma {
     Course: 'Course',
     Enrollment: 'Enrollment',
     Setting: 'Setting',
-    WordTaskProgress: 'WordTaskProgress'
+    LanguageProgress: 'LanguageProgress',
+    SkillProgress: 'SkillProgress',
+    SkillLevelRequirements: 'SkillLevelRequirements',
+    WordTaskProgress: 'WordTaskProgress',
+    DailyStats: 'DailyStats',
+    Achievement: 'Achievement',
+    UserAchievement: 'UserAchievement'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -850,7 +964,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "word" | "video" | "task" | "course" | "enrollment" | "setting" | "wordTaskProgress"
+      modelProps: "user" | "word" | "video" | "task" | "course" | "enrollment" | "setting" | "languageProgress" | "skillProgress" | "skillLevelRequirements" | "wordTaskProgress" | "dailyStats" | "achievement" | "userAchievement"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1372,6 +1486,228 @@ export namespace Prisma {
           }
         }
       }
+      LanguageProgress: {
+        payload: Prisma.$LanguageProgressPayload<ExtArgs>
+        fields: Prisma.LanguageProgressFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.LanguageProgressFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LanguageProgressPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.LanguageProgressFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LanguageProgressPayload>
+          }
+          findFirst: {
+            args: Prisma.LanguageProgressFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LanguageProgressPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.LanguageProgressFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LanguageProgressPayload>
+          }
+          findMany: {
+            args: Prisma.LanguageProgressFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LanguageProgressPayload>[]
+          }
+          create: {
+            args: Prisma.LanguageProgressCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LanguageProgressPayload>
+          }
+          createMany: {
+            args: Prisma.LanguageProgressCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.LanguageProgressCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LanguageProgressPayload>[]
+          }
+          delete: {
+            args: Prisma.LanguageProgressDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LanguageProgressPayload>
+          }
+          update: {
+            args: Prisma.LanguageProgressUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LanguageProgressPayload>
+          }
+          deleteMany: {
+            args: Prisma.LanguageProgressDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.LanguageProgressUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.LanguageProgressUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LanguageProgressPayload>[]
+          }
+          upsert: {
+            args: Prisma.LanguageProgressUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LanguageProgressPayload>
+          }
+          aggregate: {
+            args: Prisma.LanguageProgressAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateLanguageProgress>
+          }
+          groupBy: {
+            args: Prisma.LanguageProgressGroupByArgs<ExtArgs>
+            result: $Utils.Optional<LanguageProgressGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.LanguageProgressCountArgs<ExtArgs>
+            result: $Utils.Optional<LanguageProgressCountAggregateOutputType> | number
+          }
+        }
+      }
+      SkillProgress: {
+        payload: Prisma.$SkillProgressPayload<ExtArgs>
+        fields: Prisma.SkillProgressFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SkillProgressFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SkillProgressPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SkillProgressFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SkillProgressPayload>
+          }
+          findFirst: {
+            args: Prisma.SkillProgressFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SkillProgressPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SkillProgressFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SkillProgressPayload>
+          }
+          findMany: {
+            args: Prisma.SkillProgressFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SkillProgressPayload>[]
+          }
+          create: {
+            args: Prisma.SkillProgressCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SkillProgressPayload>
+          }
+          createMany: {
+            args: Prisma.SkillProgressCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.SkillProgressCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SkillProgressPayload>[]
+          }
+          delete: {
+            args: Prisma.SkillProgressDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SkillProgressPayload>
+          }
+          update: {
+            args: Prisma.SkillProgressUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SkillProgressPayload>
+          }
+          deleteMany: {
+            args: Prisma.SkillProgressDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SkillProgressUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.SkillProgressUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SkillProgressPayload>[]
+          }
+          upsert: {
+            args: Prisma.SkillProgressUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SkillProgressPayload>
+          }
+          aggregate: {
+            args: Prisma.SkillProgressAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSkillProgress>
+          }
+          groupBy: {
+            args: Prisma.SkillProgressGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SkillProgressGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SkillProgressCountArgs<ExtArgs>
+            result: $Utils.Optional<SkillProgressCountAggregateOutputType> | number
+          }
+        }
+      }
+      SkillLevelRequirements: {
+        payload: Prisma.$SkillLevelRequirementsPayload<ExtArgs>
+        fields: Prisma.SkillLevelRequirementsFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SkillLevelRequirementsFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SkillLevelRequirementsPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SkillLevelRequirementsFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SkillLevelRequirementsPayload>
+          }
+          findFirst: {
+            args: Prisma.SkillLevelRequirementsFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SkillLevelRequirementsPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SkillLevelRequirementsFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SkillLevelRequirementsPayload>
+          }
+          findMany: {
+            args: Prisma.SkillLevelRequirementsFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SkillLevelRequirementsPayload>[]
+          }
+          create: {
+            args: Prisma.SkillLevelRequirementsCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SkillLevelRequirementsPayload>
+          }
+          createMany: {
+            args: Prisma.SkillLevelRequirementsCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.SkillLevelRequirementsCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SkillLevelRequirementsPayload>[]
+          }
+          delete: {
+            args: Prisma.SkillLevelRequirementsDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SkillLevelRequirementsPayload>
+          }
+          update: {
+            args: Prisma.SkillLevelRequirementsUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SkillLevelRequirementsPayload>
+          }
+          deleteMany: {
+            args: Prisma.SkillLevelRequirementsDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SkillLevelRequirementsUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.SkillLevelRequirementsUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SkillLevelRequirementsPayload>[]
+          }
+          upsert: {
+            args: Prisma.SkillLevelRequirementsUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SkillLevelRequirementsPayload>
+          }
+          aggregate: {
+            args: Prisma.SkillLevelRequirementsAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSkillLevelRequirements>
+          }
+          groupBy: {
+            args: Prisma.SkillLevelRequirementsGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SkillLevelRequirementsGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SkillLevelRequirementsCountArgs<ExtArgs>
+            result: $Utils.Optional<SkillLevelRequirementsCountAggregateOutputType> | number
+          }
+        }
+      }
       WordTaskProgress: {
         payload: Prisma.$WordTaskProgressPayload<ExtArgs>
         fields: Prisma.WordTaskProgressFieldRefs
@@ -1443,6 +1779,228 @@ export namespace Prisma {
           count: {
             args: Prisma.WordTaskProgressCountArgs<ExtArgs>
             result: $Utils.Optional<WordTaskProgressCountAggregateOutputType> | number
+          }
+        }
+      }
+      DailyStats: {
+        payload: Prisma.$DailyStatsPayload<ExtArgs>
+        fields: Prisma.DailyStatsFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.DailyStatsFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DailyStatsPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.DailyStatsFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DailyStatsPayload>
+          }
+          findFirst: {
+            args: Prisma.DailyStatsFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DailyStatsPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.DailyStatsFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DailyStatsPayload>
+          }
+          findMany: {
+            args: Prisma.DailyStatsFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DailyStatsPayload>[]
+          }
+          create: {
+            args: Prisma.DailyStatsCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DailyStatsPayload>
+          }
+          createMany: {
+            args: Prisma.DailyStatsCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.DailyStatsCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DailyStatsPayload>[]
+          }
+          delete: {
+            args: Prisma.DailyStatsDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DailyStatsPayload>
+          }
+          update: {
+            args: Prisma.DailyStatsUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DailyStatsPayload>
+          }
+          deleteMany: {
+            args: Prisma.DailyStatsDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.DailyStatsUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.DailyStatsUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DailyStatsPayload>[]
+          }
+          upsert: {
+            args: Prisma.DailyStatsUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DailyStatsPayload>
+          }
+          aggregate: {
+            args: Prisma.DailyStatsAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateDailyStats>
+          }
+          groupBy: {
+            args: Prisma.DailyStatsGroupByArgs<ExtArgs>
+            result: $Utils.Optional<DailyStatsGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.DailyStatsCountArgs<ExtArgs>
+            result: $Utils.Optional<DailyStatsCountAggregateOutputType> | number
+          }
+        }
+      }
+      Achievement: {
+        payload: Prisma.$AchievementPayload<ExtArgs>
+        fields: Prisma.AchievementFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.AchievementFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AchievementPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.AchievementFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AchievementPayload>
+          }
+          findFirst: {
+            args: Prisma.AchievementFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AchievementPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.AchievementFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AchievementPayload>
+          }
+          findMany: {
+            args: Prisma.AchievementFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AchievementPayload>[]
+          }
+          create: {
+            args: Prisma.AchievementCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AchievementPayload>
+          }
+          createMany: {
+            args: Prisma.AchievementCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.AchievementCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AchievementPayload>[]
+          }
+          delete: {
+            args: Prisma.AchievementDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AchievementPayload>
+          }
+          update: {
+            args: Prisma.AchievementUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AchievementPayload>
+          }
+          deleteMany: {
+            args: Prisma.AchievementDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.AchievementUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.AchievementUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AchievementPayload>[]
+          }
+          upsert: {
+            args: Prisma.AchievementUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AchievementPayload>
+          }
+          aggregate: {
+            args: Prisma.AchievementAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAchievement>
+          }
+          groupBy: {
+            args: Prisma.AchievementGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AchievementGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.AchievementCountArgs<ExtArgs>
+            result: $Utils.Optional<AchievementCountAggregateOutputType> | number
+          }
+        }
+      }
+      UserAchievement: {
+        payload: Prisma.$UserAchievementPayload<ExtArgs>
+        fields: Prisma.UserAchievementFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.UserAchievementFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserAchievementPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.UserAchievementFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserAchievementPayload>
+          }
+          findFirst: {
+            args: Prisma.UserAchievementFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserAchievementPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.UserAchievementFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserAchievementPayload>
+          }
+          findMany: {
+            args: Prisma.UserAchievementFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserAchievementPayload>[]
+          }
+          create: {
+            args: Prisma.UserAchievementCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserAchievementPayload>
+          }
+          createMany: {
+            args: Prisma.UserAchievementCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.UserAchievementCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserAchievementPayload>[]
+          }
+          delete: {
+            args: Prisma.UserAchievementDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserAchievementPayload>
+          }
+          update: {
+            args: Prisma.UserAchievementUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserAchievementPayload>
+          }
+          deleteMany: {
+            args: Prisma.UserAchievementDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.UserAchievementUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.UserAchievementUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserAchievementPayload>[]
+          }
+          upsert: {
+            args: Prisma.UserAchievementUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserAchievementPayload>
+          }
+          aggregate: {
+            args: Prisma.UserAchievementAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateUserAchievement>
+          }
+          groupBy: {
+            args: Prisma.UserAchievementGroupByArgs<ExtArgs>
+            result: $Utils.Optional<UserAchievementGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.UserAchievementCountArgs<ExtArgs>
+            result: $Utils.Optional<UserAchievementCountAggregateOutputType> | number
           }
         }
       }
@@ -1537,7 +2095,13 @@ export namespace Prisma {
     course?: CourseOmit
     enrollment?: EnrollmentOmit
     setting?: SettingOmit
+    languageProgress?: LanguageProgressOmit
+    skillProgress?: SkillProgressOmit
+    skillLevelRequirements?: SkillLevelRequirementsOmit
     wordTaskProgress?: WordTaskProgressOmit
+    dailyStats?: DailyStatsOmit
+    achievement?: AchievementOmit
+    userAchievement?: UserAchievementOmit
   }
 
   /* Types for Logging */
@@ -1632,19 +2196,27 @@ export namespace Prisma {
    */
 
   export type UserCountOutputType = {
+    words: number
+    languageProgresses: number
+    skillProgresses: number
+    achievements: number
+    dailyStats: number
     enrollments: number
-    wordProgresses: number
     courses: number
     tasks: number
-    words: number
+    wordProgresses: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    words?: boolean | UserCountOutputTypeCountWordsArgs
+    languageProgresses?: boolean | UserCountOutputTypeCountLanguageProgressesArgs
+    skillProgresses?: boolean | UserCountOutputTypeCountSkillProgressesArgs
+    achievements?: boolean | UserCountOutputTypeCountAchievementsArgs
+    dailyStats?: boolean | UserCountOutputTypeCountDailyStatsArgs
     enrollments?: boolean | UserCountOutputTypeCountEnrollmentsArgs
-    wordProgresses?: boolean | UserCountOutputTypeCountWordProgressesArgs
     courses?: boolean | UserCountOutputTypeCountCoursesArgs
     tasks?: boolean | UserCountOutputTypeCountTasksArgs
-    words?: boolean | UserCountOutputTypeCountWordsArgs
+    wordProgresses?: boolean | UserCountOutputTypeCountWordProgressesArgs
   }
 
   // Custom InputTypes
@@ -1661,15 +2233,43 @@ export namespace Prisma {
   /**
    * UserCountOutputType without action
    */
-  export type UserCountOutputTypeCountEnrollmentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: EnrollmentWhereInput
+  export type UserCountOutputTypeCountWordsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: WordWhereInput
   }
 
   /**
    * UserCountOutputType without action
    */
-  export type UserCountOutputTypeCountWordProgressesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: WordTaskProgressWhereInput
+  export type UserCountOutputTypeCountLanguageProgressesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LanguageProgressWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountSkillProgressesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SkillProgressWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountAchievementsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserAchievementWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountDailyStatsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DailyStatsWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountEnrollmentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: EnrollmentWhereInput
   }
 
   /**
@@ -1689,8 +2289,8 @@ export namespace Prisma {
   /**
    * UserCountOutputType without action
    */
-  export type UserCountOutputTypeCountWordsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: WordWhereInput
+  export type UserCountOutputTypeCountWordProgressesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: WordTaskProgressWhereInput
   }
 
 
@@ -1761,14 +2361,14 @@ export namespace Prisma {
    */
 
   export type CourseCountOutputType = {
-    tasks: number
     enrollments: number
+    tasks: number
     videos: number
   }
 
   export type CourseCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    tasks?: boolean | CourseCountOutputTypeCountTasksArgs
     enrollments?: boolean | CourseCountOutputTypeCountEnrollmentsArgs
+    tasks?: boolean | CourseCountOutputTypeCountTasksArgs
     videos?: boolean | CourseCountOutputTypeCountVideosArgs
   }
 
@@ -1786,13 +2386,6 @@ export namespace Prisma {
   /**
    * CourseCountOutputType without action
    */
-  export type CourseCountOutputTypeCountTasksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: TaskWhereInput
-  }
-
-  /**
-   * CourseCountOutputType without action
-   */
   export type CourseCountOutputTypeCountEnrollmentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: EnrollmentWhereInput
   }
@@ -1800,8 +2393,77 @@ export namespace Prisma {
   /**
    * CourseCountOutputType without action
    */
+  export type CourseCountOutputTypeCountTasksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TaskWhereInput
+  }
+
+  /**
+   * CourseCountOutputType without action
+   */
   export type CourseCountOutputTypeCountVideosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: VideoWhereInput
+  }
+
+
+  /**
+   * Count Type LanguageProgressCountOutputType
+   */
+
+  export type LanguageProgressCountOutputType = {
+    skillProgresses: number
+  }
+
+  export type LanguageProgressCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    skillProgresses?: boolean | LanguageProgressCountOutputTypeCountSkillProgressesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * LanguageProgressCountOutputType without action
+   */
+  export type LanguageProgressCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LanguageProgressCountOutputType
+     */
+    select?: LanguageProgressCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * LanguageProgressCountOutputType without action
+   */
+  export type LanguageProgressCountOutputTypeCountSkillProgressesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SkillProgressWhereInput
+  }
+
+
+  /**
+   * Count Type AchievementCountOutputType
+   */
+
+  export type AchievementCountOutputType = {
+    users: number
+  }
+
+  export type AchievementCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    users?: boolean | AchievementCountOutputTypeCountUsersArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * AchievementCountOutputType without action
+   */
+  export type AchievementCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AchievementCountOutputType
+     */
+    select?: AchievementCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * AchievementCountOutputType without action
+   */
+  export type AchievementCountOutputTypeCountUsersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserAchievementWhereInput
   }
 
 
@@ -1823,10 +2485,18 @@ export namespace Prisma {
 
   export type UserAvgAggregateOutputType = {
     id: number | null
+    totalXP: number | null
+    currentStreak: number | null
+    longestStreak: number | null
+    totalLearningTime: number | null
   }
 
   export type UserSumAggregateOutputType = {
     id: number | null
+    totalXP: number | null
+    currentStreak: number | null
+    longestStreak: number | null
+    totalLearningTime: number | null
   }
 
   export type UserMinAggregateOutputType = {
@@ -1843,6 +2513,11 @@ export namespace Prisma {
     lastLoginAt: Date | null
     provider: string | null
     refreshToken: string | null
+    totalXP: number | null
+    currentStreak: number | null
+    longestStreak: number | null
+    totalLearningTime: number | null
+    lastActiveAt: Date | null
   }
 
   export type UserMaxAggregateOutputType = {
@@ -1859,6 +2534,11 @@ export namespace Prisma {
     lastLoginAt: Date | null
     provider: string | null
     refreshToken: string | null
+    totalXP: number | null
+    currentStreak: number | null
+    longestStreak: number | null
+    totalLearningTime: number | null
+    lastActiveAt: Date | null
   }
 
   export type UserCountAggregateOutputType = {
@@ -1875,16 +2555,29 @@ export namespace Prisma {
     lastLoginAt: number
     provider: number
     refreshToken: number
+    totalXP: number
+    currentStreak: number
+    longestStreak: number
+    totalLearningTime: number
+    lastActiveAt: number
     _all: number
   }
 
 
   export type UserAvgAggregateInputType = {
     id?: true
+    totalXP?: true
+    currentStreak?: true
+    longestStreak?: true
+    totalLearningTime?: true
   }
 
   export type UserSumAggregateInputType = {
     id?: true
+    totalXP?: true
+    currentStreak?: true
+    longestStreak?: true
+    totalLearningTime?: true
   }
 
   export type UserMinAggregateInputType = {
@@ -1901,6 +2594,11 @@ export namespace Prisma {
     lastLoginAt?: true
     provider?: true
     refreshToken?: true
+    totalXP?: true
+    currentStreak?: true
+    longestStreak?: true
+    totalLearningTime?: true
+    lastActiveAt?: true
   }
 
   export type UserMaxAggregateInputType = {
@@ -1917,6 +2615,11 @@ export namespace Prisma {
     lastLoginAt?: true
     provider?: true
     refreshToken?: true
+    totalXP?: true
+    currentStreak?: true
+    longestStreak?: true
+    totalLearningTime?: true
+    lastActiveAt?: true
   }
 
   export type UserCountAggregateInputType = {
@@ -1933,6 +2636,11 @@ export namespace Prisma {
     lastLoginAt?: true
     provider?: true
     refreshToken?: true
+    totalXP?: true
+    currentStreak?: true
+    longestStreak?: true
+    totalLearningTime?: true
+    lastActiveAt?: true
     _all?: true
   }
 
@@ -2036,6 +2744,11 @@ export namespace Prisma {
     lastLoginAt: Date | null
     provider: string | null
     refreshToken: string | null
+    totalXP: number
+    currentStreak: number
+    longestStreak: number
+    totalLearningTime: number
+    lastActiveAt: Date | null
     _count: UserCountAggregateOutputType | null
     _avg: UserAvgAggregateOutputType | null
     _sum: UserSumAggregateOutputType | null
@@ -2071,12 +2784,21 @@ export namespace Prisma {
     lastLoginAt?: boolean
     provider?: boolean
     refreshToken?: boolean
-    enrollments?: boolean | User$enrollmentsArgs<ExtArgs>
-    wordProgresses?: boolean | User$wordProgressesArgs<ExtArgs>
-    courses?: boolean | User$coursesArgs<ExtArgs>
-    tasks?: boolean | User$tasksArgs<ExtArgs>
+    totalXP?: boolean
+    currentStreak?: boolean
+    longestStreak?: boolean
+    totalLearningTime?: boolean
+    lastActiveAt?: boolean
     setting?: boolean | User$settingArgs<ExtArgs>
     words?: boolean | User$wordsArgs<ExtArgs>
+    languageProgresses?: boolean | User$languageProgressesArgs<ExtArgs>
+    skillProgresses?: boolean | User$skillProgressesArgs<ExtArgs>
+    achievements?: boolean | User$achievementsArgs<ExtArgs>
+    dailyStats?: boolean | User$dailyStatsArgs<ExtArgs>
+    enrollments?: boolean | User$enrollmentsArgs<ExtArgs>
+    courses?: boolean | User$coursesArgs<ExtArgs>
+    tasks?: boolean | User$tasksArgs<ExtArgs>
+    wordProgresses?: boolean | User$wordProgressesArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -2094,6 +2816,11 @@ export namespace Prisma {
     lastLoginAt?: boolean
     provider?: boolean
     refreshToken?: boolean
+    totalXP?: boolean
+    currentStreak?: boolean
+    longestStreak?: boolean
+    totalLearningTime?: boolean
+    lastActiveAt?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -2110,6 +2837,11 @@ export namespace Prisma {
     lastLoginAt?: boolean
     provider?: boolean
     refreshToken?: boolean
+    totalXP?: boolean
+    currentStreak?: boolean
+    longestStreak?: boolean
+    totalLearningTime?: boolean
+    lastActiveAt?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
@@ -2126,16 +2858,25 @@ export namespace Prisma {
     lastLoginAt?: boolean
     provider?: boolean
     refreshToken?: boolean
+    totalXP?: boolean
+    currentStreak?: boolean
+    longestStreak?: boolean
+    totalLearningTime?: boolean
+    lastActiveAt?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "username" | "password" | "role" | "avatar" | "isEmailVerified" | "createdAt" | "updatedAt" | "deleteAt" | "lastLoginAt" | "provider" | "refreshToken", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "username" | "password" | "role" | "avatar" | "isEmailVerified" | "createdAt" | "updatedAt" | "deleteAt" | "lastLoginAt" | "provider" | "refreshToken" | "totalXP" | "currentStreak" | "longestStreak" | "totalLearningTime" | "lastActiveAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    enrollments?: boolean | User$enrollmentsArgs<ExtArgs>
-    wordProgresses?: boolean | User$wordProgressesArgs<ExtArgs>
-    courses?: boolean | User$coursesArgs<ExtArgs>
-    tasks?: boolean | User$tasksArgs<ExtArgs>
     setting?: boolean | User$settingArgs<ExtArgs>
     words?: boolean | User$wordsArgs<ExtArgs>
+    languageProgresses?: boolean | User$languageProgressesArgs<ExtArgs>
+    skillProgresses?: boolean | User$skillProgressesArgs<ExtArgs>
+    achievements?: boolean | User$achievementsArgs<ExtArgs>
+    dailyStats?: boolean | User$dailyStatsArgs<ExtArgs>
+    enrollments?: boolean | User$enrollmentsArgs<ExtArgs>
+    courses?: boolean | User$coursesArgs<ExtArgs>
+    tasks?: boolean | User$tasksArgs<ExtArgs>
+    wordProgresses?: boolean | User$wordProgressesArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -2144,12 +2885,16 @@ export namespace Prisma {
   export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "User"
     objects: {
-      enrollments: Prisma.$EnrollmentPayload<ExtArgs>[]
-      wordProgresses: Prisma.$WordTaskProgressPayload<ExtArgs>[]
-      courses: Prisma.$CoursePayload<ExtArgs>[]
-      tasks: Prisma.$TaskPayload<ExtArgs>[]
       setting: Prisma.$SettingPayload<ExtArgs> | null
       words: Prisma.$WordPayload<ExtArgs>[]
+      languageProgresses: Prisma.$LanguageProgressPayload<ExtArgs>[]
+      skillProgresses: Prisma.$SkillProgressPayload<ExtArgs>[]
+      achievements: Prisma.$UserAchievementPayload<ExtArgs>[]
+      dailyStats: Prisma.$DailyStatsPayload<ExtArgs>[]
+      enrollments: Prisma.$EnrollmentPayload<ExtArgs>[]
+      courses: Prisma.$CoursePayload<ExtArgs>[]
+      tasks: Prisma.$TaskPayload<ExtArgs>[]
+      wordProgresses: Prisma.$WordTaskProgressPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -2165,6 +2910,11 @@ export namespace Prisma {
       lastLoginAt: Date | null
       provider: string | null
       refreshToken: string | null
+      totalXP: number
+      currentStreak: number
+      longestStreak: number
+      totalLearningTime: number
+      lastActiveAt: Date | null
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -2559,12 +3309,16 @@ export namespace Prisma {
    */
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    enrollments<T extends User$enrollmentsArgs<ExtArgs> = {}>(args?: Subset<T, User$enrollmentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EnrollmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    wordProgresses<T extends User$wordProgressesArgs<ExtArgs> = {}>(args?: Subset<T, User$wordProgressesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WordTaskProgressPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    courses<T extends User$coursesArgs<ExtArgs> = {}>(args?: Subset<T, User$coursesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CoursePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    tasks<T extends User$tasksArgs<ExtArgs> = {}>(args?: Subset<T, User$tasksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     setting<T extends User$settingArgs<ExtArgs> = {}>(args?: Subset<T, User$settingArgs<ExtArgs>>): Prisma__SettingClient<$Result.GetResult<Prisma.$SettingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     words<T extends User$wordsArgs<ExtArgs> = {}>(args?: Subset<T, User$wordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WordPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    languageProgresses<T extends User$languageProgressesArgs<ExtArgs> = {}>(args?: Subset<T, User$languageProgressesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LanguageProgressPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    skillProgresses<T extends User$skillProgressesArgs<ExtArgs> = {}>(args?: Subset<T, User$skillProgressesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SkillProgressPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    achievements<T extends User$achievementsArgs<ExtArgs> = {}>(args?: Subset<T, User$achievementsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserAchievementPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    dailyStats<T extends User$dailyStatsArgs<ExtArgs> = {}>(args?: Subset<T, User$dailyStatsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DailyStatsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    enrollments<T extends User$enrollmentsArgs<ExtArgs> = {}>(args?: Subset<T, User$enrollmentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EnrollmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    courses<T extends User$coursesArgs<ExtArgs> = {}>(args?: Subset<T, User$coursesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CoursePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    tasks<T extends User$tasksArgs<ExtArgs> = {}>(args?: Subset<T, User$tasksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    wordProgresses<T extends User$wordProgressesArgs<ExtArgs> = {}>(args?: Subset<T, User$wordProgressesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WordTaskProgressPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2607,6 +3361,11 @@ export namespace Prisma {
     readonly lastLoginAt: FieldRef<"User", 'DateTime'>
     readonly provider: FieldRef<"User", 'String'>
     readonly refreshToken: FieldRef<"User", 'String'>
+    readonly totalXP: FieldRef<"User", 'Int'>
+    readonly currentStreak: FieldRef<"User", 'Int'>
+    readonly longestStreak: FieldRef<"User", 'Int'>
+    readonly totalLearningTime: FieldRef<"User", 'Int'>
+    readonly lastActiveAt: FieldRef<"User", 'DateTime'>
   }
     
 
@@ -2995,6 +3754,145 @@ export namespace Prisma {
   }
 
   /**
+   * User.setting
+   */
+  export type User$settingArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Setting
+     */
+    select?: SettingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Setting
+     */
+    omit?: SettingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SettingInclude<ExtArgs> | null
+    where?: SettingWhereInput
+  }
+
+  /**
+   * User.words
+   */
+  export type User$wordsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Word
+     */
+    select?: WordSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Word
+     */
+    omit?: WordOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WordInclude<ExtArgs> | null
+    where?: WordWhereInput
+    orderBy?: WordOrderByWithRelationInput | WordOrderByWithRelationInput[]
+    cursor?: WordWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: WordScalarFieldEnum | WordScalarFieldEnum[]
+  }
+
+  /**
+   * User.languageProgresses
+   */
+  export type User$languageProgressesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LanguageProgress
+     */
+    select?: LanguageProgressSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LanguageProgress
+     */
+    omit?: LanguageProgressOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LanguageProgressInclude<ExtArgs> | null
+    where?: LanguageProgressWhereInput
+    orderBy?: LanguageProgressOrderByWithRelationInput | LanguageProgressOrderByWithRelationInput[]
+    cursor?: LanguageProgressWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: LanguageProgressScalarFieldEnum | LanguageProgressScalarFieldEnum[]
+  }
+
+  /**
+   * User.skillProgresses
+   */
+  export type User$skillProgressesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkillProgress
+     */
+    select?: SkillProgressSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkillProgress
+     */
+    omit?: SkillProgressOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SkillProgressInclude<ExtArgs> | null
+    where?: SkillProgressWhereInput
+    orderBy?: SkillProgressOrderByWithRelationInput | SkillProgressOrderByWithRelationInput[]
+    cursor?: SkillProgressWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SkillProgressScalarFieldEnum | SkillProgressScalarFieldEnum[]
+  }
+
+  /**
+   * User.achievements
+   */
+  export type User$achievementsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserAchievement
+     */
+    select?: UserAchievementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserAchievement
+     */
+    omit?: UserAchievementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserAchievementInclude<ExtArgs> | null
+    where?: UserAchievementWhereInput
+    orderBy?: UserAchievementOrderByWithRelationInput | UserAchievementOrderByWithRelationInput[]
+    cursor?: UserAchievementWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UserAchievementScalarFieldEnum | UserAchievementScalarFieldEnum[]
+  }
+
+  /**
+   * User.dailyStats
+   */
+  export type User$dailyStatsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DailyStats
+     */
+    select?: DailyStatsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DailyStats
+     */
+    omit?: DailyStatsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DailyStatsInclude<ExtArgs> | null
+    where?: DailyStatsWhereInput
+    orderBy?: DailyStatsOrderByWithRelationInput | DailyStatsOrderByWithRelationInput[]
+    cursor?: DailyStatsWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: DailyStatsScalarFieldEnum | DailyStatsScalarFieldEnum[]
+  }
+
+  /**
    * User.enrollments
    */
   export type User$enrollmentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3016,30 +3914,6 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: EnrollmentScalarFieldEnum | EnrollmentScalarFieldEnum[]
-  }
-
-  /**
-   * User.wordProgresses
-   */
-  export type User$wordProgressesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the WordTaskProgress
-     */
-    select?: WordTaskProgressSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the WordTaskProgress
-     */
-    omit?: WordTaskProgressOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: WordTaskProgressInclude<ExtArgs> | null
-    where?: WordTaskProgressWhereInput
-    orderBy?: WordTaskProgressOrderByWithRelationInput | WordTaskProgressOrderByWithRelationInput[]
-    cursor?: WordTaskProgressWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: WordTaskProgressScalarFieldEnum | WordTaskProgressScalarFieldEnum[]
   }
 
   /**
@@ -3091,46 +3965,27 @@ export namespace Prisma {
   }
 
   /**
-   * User.setting
+   * User.wordProgresses
    */
-  export type User$settingArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type User$wordProgressesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Setting
+     * Select specific fields to fetch from the WordTaskProgress
      */
-    select?: SettingSelect<ExtArgs> | null
+    select?: WordTaskProgressSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the Setting
+     * Omit specific fields from the WordTaskProgress
      */
-    omit?: SettingOmit<ExtArgs> | null
+    omit?: WordTaskProgressOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: SettingInclude<ExtArgs> | null
-    where?: SettingWhereInput
-  }
-
-  /**
-   * User.words
-   */
-  export type User$wordsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Word
-     */
-    select?: WordSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Word
-     */
-    omit?: WordOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: WordInclude<ExtArgs> | null
-    where?: WordWhereInput
-    orderBy?: WordOrderByWithRelationInput | WordOrderByWithRelationInput[]
-    cursor?: WordWhereUniqueInput
+    include?: WordTaskProgressInclude<ExtArgs> | null
+    where?: WordTaskProgressWhereInput
+    orderBy?: WordTaskProgressOrderByWithRelationInput | WordTaskProgressOrderByWithRelationInput[]
+    cursor?: WordTaskProgressWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: WordScalarFieldEnum | WordScalarFieldEnum[]
+    distinct?: WordTaskProgressScalarFieldEnum | WordTaskProgressScalarFieldEnum[]
   }
 
   /**
@@ -3434,8 +4289,8 @@ export namespace Prisma {
     phoneticUS?: boolean
     audioUS?: boolean
     userId?: boolean
-    progresses?: boolean | Word$progressesArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
+    progresses?: boolean | Word$progressesArgs<ExtArgs>
     _count?: boolean | WordCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["word"]>
 
@@ -3503,8 +4358,8 @@ export namespace Prisma {
 
   export type WordOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "text" | "language" | "translate" | "definitions" | "synonyms" | "antonyms" | "examples" | "partOfSpeech" | "createdAt" | "totalProgress" | "isLearned" | "phonetic" | "audio" | "phoneticUS" | "audioUS" | "userId", ExtArgs["result"]["word"]>
   export type WordInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    progresses?: boolean | Word$progressesArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
+    progresses?: boolean | Word$progressesArgs<ExtArgs>
     _count?: boolean | WordCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type WordIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3517,8 +4372,8 @@ export namespace Prisma {
   export type $WordPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Word"
     objects: {
-      progresses: Prisma.$WordTaskProgressPayload<ExtArgs>[]
       user: Prisma.$UserPayload<ExtArgs>
+      progresses: Prisma.$WordTaskProgressPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -3932,8 +4787,8 @@ export namespace Prisma {
    */
   export interface Prisma__WordClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    progresses<T extends Word$progressesArgs<ExtArgs> = {}>(args?: Subset<T, Word$progressesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WordTaskProgressPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    progresses<T extends Word$progressesArgs<ExtArgs> = {}>(args?: Subset<T, Word$progressesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WordTaskProgressPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4432,11 +5287,13 @@ export namespace Prisma {
 
   export type VideoAvgAggregateOutputType = {
     id: number | null
+    duration: number | null
     courseId: number | null
   }
 
   export type VideoSumAggregateOutputType = {
     id: number | null
+    duration: number | null
     courseId: number | null
   }
 
@@ -4445,9 +5302,11 @@ export namespace Prisma {
     title: string | null
     description: string | null
     url: string | null
-    level: $Enums.Level | null
-    createdAt: Date | null
+    language: $Enums.Language | null
+    level: $Enums.CEFRLevel | null
+    duration: number | null
     courseId: number | null
+    createdAt: Date | null
   }
 
   export type VideoMaxAggregateOutputType = {
@@ -4455,9 +5314,11 @@ export namespace Prisma {
     title: string | null
     description: string | null
     url: string | null
-    level: $Enums.Level | null
-    createdAt: Date | null
+    language: $Enums.Language | null
+    level: $Enums.CEFRLevel | null
+    duration: number | null
     courseId: number | null
+    createdAt: Date | null
   }
 
   export type VideoCountAggregateOutputType = {
@@ -4465,21 +5326,25 @@ export namespace Prisma {
     title: number
     description: number
     url: number
+    language: number
     level: number
-    createdAt: number
-    tags: number
+    duration: number
+    skillTypes: number
     courseId: number
+    createdAt: number
     _all: number
   }
 
 
   export type VideoAvgAggregateInputType = {
     id?: true
+    duration?: true
     courseId?: true
   }
 
   export type VideoSumAggregateInputType = {
     id?: true
+    duration?: true
     courseId?: true
   }
 
@@ -4488,9 +5353,11 @@ export namespace Prisma {
     title?: true
     description?: true
     url?: true
+    language?: true
     level?: true
-    createdAt?: true
+    duration?: true
     courseId?: true
+    createdAt?: true
   }
 
   export type VideoMaxAggregateInputType = {
@@ -4498,9 +5365,11 @@ export namespace Prisma {
     title?: true
     description?: true
     url?: true
+    language?: true
     level?: true
-    createdAt?: true
+    duration?: true
     courseId?: true
+    createdAt?: true
   }
 
   export type VideoCountAggregateInputType = {
@@ -4508,10 +5377,12 @@ export namespace Prisma {
     title?: true
     description?: true
     url?: true
+    language?: true
     level?: true
-    createdAt?: true
-    tags?: true
+    duration?: true
+    skillTypes?: true
     courseId?: true
+    createdAt?: true
     _all?: true
   }
 
@@ -4606,10 +5477,12 @@ export namespace Prisma {
     title: string
     description: string | null
     url: string
-    level: $Enums.Level | null
-    createdAt: Date
-    tags: string[]
+    language: $Enums.Language
+    level: $Enums.CEFRLevel
+    duration: number | null
+    skillTypes: $Enums.CoreSkillType[]
     courseId: number | null
+    createdAt: Date
     _count: VideoCountAggregateOutputType | null
     _avg: VideoAvgAggregateOutputType | null
     _sum: VideoSumAggregateOutputType | null
@@ -4636,10 +5509,12 @@ export namespace Prisma {
     title?: boolean
     description?: boolean
     url?: boolean
+    language?: boolean
     level?: boolean
-    createdAt?: boolean
-    tags?: boolean
+    duration?: boolean
+    skillTypes?: boolean
     courseId?: boolean
+    createdAt?: boolean
     tasks?: boolean | Video$tasksArgs<ExtArgs>
     course?: boolean | Video$courseArgs<ExtArgs>
     _count?: boolean | VideoCountOutputTypeDefaultArgs<ExtArgs>
@@ -4650,10 +5525,12 @@ export namespace Prisma {
     title?: boolean
     description?: boolean
     url?: boolean
+    language?: boolean
     level?: boolean
-    createdAt?: boolean
-    tags?: boolean
+    duration?: boolean
+    skillTypes?: boolean
     courseId?: boolean
+    createdAt?: boolean
     course?: boolean | Video$courseArgs<ExtArgs>
   }, ExtArgs["result"]["video"]>
 
@@ -4662,10 +5539,12 @@ export namespace Prisma {
     title?: boolean
     description?: boolean
     url?: boolean
+    language?: boolean
     level?: boolean
-    createdAt?: boolean
-    tags?: boolean
+    duration?: boolean
+    skillTypes?: boolean
     courseId?: boolean
+    createdAt?: boolean
     course?: boolean | Video$courseArgs<ExtArgs>
   }, ExtArgs["result"]["video"]>
 
@@ -4674,13 +5553,15 @@ export namespace Prisma {
     title?: boolean
     description?: boolean
     url?: boolean
+    language?: boolean
     level?: boolean
-    createdAt?: boolean
-    tags?: boolean
+    duration?: boolean
+    skillTypes?: boolean
     courseId?: boolean
+    createdAt?: boolean
   }
 
-  export type VideoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "url" | "level" | "createdAt" | "tags" | "courseId", ExtArgs["result"]["video"]>
+  export type VideoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "url" | "language" | "level" | "duration" | "skillTypes" | "courseId" | "createdAt", ExtArgs["result"]["video"]>
   export type VideoInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     tasks?: boolean | Video$tasksArgs<ExtArgs>
     course?: boolean | Video$courseArgs<ExtArgs>
@@ -4704,10 +5585,12 @@ export namespace Prisma {
       title: string
       description: string | null
       url: string
-      level: $Enums.Level | null
-      createdAt: Date
-      tags: string[]
+      language: $Enums.Language
+      level: $Enums.CEFRLevel
+      duration: number | null
+      skillTypes: $Enums.CoreSkillType[]
       courseId: number | null
+      createdAt: Date
     }, ExtArgs["result"]["video"]>
     composites: {}
   }
@@ -5137,10 +6020,12 @@ export namespace Prisma {
     readonly title: FieldRef<"Video", 'String'>
     readonly description: FieldRef<"Video", 'String'>
     readonly url: FieldRef<"Video", 'String'>
-    readonly level: FieldRef<"Video", 'Level'>
-    readonly createdAt: FieldRef<"Video", 'DateTime'>
-    readonly tags: FieldRef<"Video", 'String[]'>
+    readonly language: FieldRef<"Video", 'Language'>
+    readonly level: FieldRef<"Video", 'CEFRLevel'>
+    readonly duration: FieldRef<"Video", 'Int'>
+    readonly skillTypes: FieldRef<"Video", 'CoreSkillType[]'>
     readonly courseId: FieldRef<"Video", 'Int'>
+    readonly createdAt: FieldRef<"Video", 'DateTime'>
   }
     
 
@@ -5614,6 +6499,8 @@ export namespace Prisma {
     id: number | null
     score: number | null
     order: number | null
+    xpReward: number | null
+    timeLimit: number | null
     authorId: number | null
     videoId: number | null
     courseId: number | null
@@ -5623,6 +6510,8 @@ export namespace Prisma {
     id: number | null
     score: number | null
     order: number | null
+    xpReward: number | null
+    timeLimit: number | null
     authorId: number | null
     videoId: number | null
     courseId: number | null
@@ -5635,9 +6524,13 @@ export namespace Prisma {
     type: $Enums.TaskType | null
     score: number | null
     createdAt: Date | null
-    language: $Enums.Language | null
     order: number | null
     explanation: string | null
+    skillType: $Enums.CoreSkillType | null
+    language: $Enums.Language | null
+    cefrLevel: $Enums.CEFRLevel | null
+    xpReward: number | null
+    timeLimit: number | null
     authorId: number | null
     videoId: number | null
     courseId: number | null
@@ -5650,9 +6543,13 @@ export namespace Prisma {
     type: $Enums.TaskType | null
     score: number | null
     createdAt: Date | null
-    language: $Enums.Language | null
     order: number | null
     explanation: string | null
+    skillType: $Enums.CoreSkillType | null
+    language: $Enums.Language | null
+    cefrLevel: $Enums.CEFRLevel | null
+    xpReward: number | null
+    timeLimit: number | null
     authorId: number | null
     videoId: number | null
     courseId: number | null
@@ -5666,9 +6563,13 @@ export namespace Prisma {
     type: number
     score: number
     createdAt: number
-    language: number
     order: number
     explanation: number
+    skillType: number
+    language: number
+    cefrLevel: number
+    xpReward: number
+    timeLimit: number
     authorId: number
     videoId: number
     courseId: number
@@ -5680,6 +6581,8 @@ export namespace Prisma {
     id?: true
     score?: true
     order?: true
+    xpReward?: true
+    timeLimit?: true
     authorId?: true
     videoId?: true
     courseId?: true
@@ -5689,6 +6592,8 @@ export namespace Prisma {
     id?: true
     score?: true
     order?: true
+    xpReward?: true
+    timeLimit?: true
     authorId?: true
     videoId?: true
     courseId?: true
@@ -5701,9 +6606,13 @@ export namespace Prisma {
     type?: true
     score?: true
     createdAt?: true
-    language?: true
     order?: true
     explanation?: true
+    skillType?: true
+    language?: true
+    cefrLevel?: true
+    xpReward?: true
+    timeLimit?: true
     authorId?: true
     videoId?: true
     courseId?: true
@@ -5716,9 +6625,13 @@ export namespace Prisma {
     type?: true
     score?: true
     createdAt?: true
-    language?: true
     order?: true
     explanation?: true
+    skillType?: true
+    language?: true
+    cefrLevel?: true
+    xpReward?: true
+    timeLimit?: true
     authorId?: true
     videoId?: true
     courseId?: true
@@ -5732,9 +6645,13 @@ export namespace Prisma {
     type?: true
     score?: true
     createdAt?: true
-    language?: true
     order?: true
     explanation?: true
+    skillType?: true
+    language?: true
+    cefrLevel?: true
+    xpReward?: true
+    timeLimit?: true
     authorId?: true
     videoId?: true
     courseId?: true
@@ -5835,9 +6752,13 @@ export namespace Prisma {
     type: $Enums.TaskType
     score: number | null
     createdAt: Date
-    language: $Enums.Language
     order: number | null
     explanation: string | null
+    skillType: $Enums.CoreSkillType
+    language: $Enums.Language
+    cefrLevel: $Enums.CEFRLevel
+    xpReward: number
+    timeLimit: number | null
     authorId: number | null
     videoId: number | null
     courseId: number | null
@@ -5870,9 +6791,13 @@ export namespace Prisma {
     type?: boolean
     score?: boolean
     createdAt?: boolean
-    language?: boolean
     order?: boolean
     explanation?: boolean
+    skillType?: boolean
+    language?: boolean
+    cefrLevel?: boolean
+    xpReward?: boolean
+    timeLimit?: boolean
     authorId?: boolean
     videoId?: boolean
     courseId?: boolean
@@ -5889,9 +6814,13 @@ export namespace Prisma {
     type?: boolean
     score?: boolean
     createdAt?: boolean
-    language?: boolean
     order?: boolean
     explanation?: boolean
+    skillType?: boolean
+    language?: boolean
+    cefrLevel?: boolean
+    xpReward?: boolean
+    timeLimit?: boolean
     authorId?: boolean
     videoId?: boolean
     courseId?: boolean
@@ -5908,9 +6837,13 @@ export namespace Prisma {
     type?: boolean
     score?: boolean
     createdAt?: boolean
-    language?: boolean
     order?: boolean
     explanation?: boolean
+    skillType?: boolean
+    language?: boolean
+    cefrLevel?: boolean
+    xpReward?: boolean
+    timeLimit?: boolean
     authorId?: boolean
     videoId?: boolean
     courseId?: boolean
@@ -5927,15 +6860,19 @@ export namespace Prisma {
     type?: boolean
     score?: boolean
     createdAt?: boolean
-    language?: boolean
     order?: boolean
     explanation?: boolean
+    skillType?: boolean
+    language?: boolean
+    cefrLevel?: boolean
+    xpReward?: boolean
+    timeLimit?: boolean
     authorId?: boolean
     videoId?: boolean
     courseId?: boolean
   }
 
-  export type TaskOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "question" | "answer" | "options" | "type" | "score" | "createdAt" | "language" | "order" | "explanation" | "authorId" | "videoId" | "courseId", ExtArgs["result"]["task"]>
+  export type TaskOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "question" | "answer" | "options" | "type" | "score" | "createdAt" | "order" | "explanation" | "skillType" | "language" | "cefrLevel" | "xpReward" | "timeLimit" | "authorId" | "videoId" | "courseId", ExtArgs["result"]["task"]>
   export type TaskInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     author?: boolean | Task$authorArgs<ExtArgs>
     video?: boolean | Task$videoArgs<ExtArgs>
@@ -5967,9 +6904,13 @@ export namespace Prisma {
       type: $Enums.TaskType
       score: number | null
       createdAt: Date
-      language: $Enums.Language
       order: number | null
       explanation: string | null
+      skillType: $Enums.CoreSkillType
+      language: $Enums.Language
+      cefrLevel: $Enums.CEFRLevel
+      xpReward: number
+      timeLimit: number | null
       authorId: number | null
       videoId: number | null
       courseId: number | null
@@ -6406,9 +7347,13 @@ export namespace Prisma {
     readonly type: FieldRef<"Task", 'TaskType'>
     readonly score: FieldRef<"Task", 'Int'>
     readonly createdAt: FieldRef<"Task", 'DateTime'>
-    readonly language: FieldRef<"Task", 'Language'>
     readonly order: FieldRef<"Task", 'Int'>
     readonly explanation: FieldRef<"Task", 'String'>
+    readonly skillType: FieldRef<"Task", 'CoreSkillType'>
+    readonly language: FieldRef<"Task", 'Language'>
+    readonly cefrLevel: FieldRef<"Task", 'CEFRLevel'>
+    readonly xpReward: FieldRef<"Task", 'Int'>
+    readonly timeLimit: FieldRef<"Task", 'Int'>
     readonly authorId: FieldRef<"Task", 'Int'>
     readonly videoId: FieldRef<"Task", 'Int'>
     readonly courseId: FieldRef<"Task", 'Int'>
@@ -6897,11 +7842,15 @@ export namespace Prisma {
 
   export type CourseAvgAggregateOutputType = {
     id: number | null
+    estimatedHours: number | null
+    totalXP: number | null
     authorId: number | null
   }
 
   export type CourseSumAggregateOutputType = {
     id: number | null
+    estimatedHours: number | null
+    totalXP: number | null
     authorId: number | null
   }
 
@@ -6910,10 +7859,12 @@ export namespace Prisma {
     title: string | null
     description: string | null
     imageUrl: string | null
-    level: $Enums.Level | null
+    level: $Enums.CEFRLevel | null
     isPublished: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
+    estimatedHours: number | null
+    totalXP: number | null
     authorId: number | null
   }
 
@@ -6922,10 +7873,12 @@ export namespace Prisma {
     title: string | null
     description: string | null
     imageUrl: string | null
-    level: $Enums.Level | null
+    level: $Enums.CEFRLevel | null
     isPublished: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
+    estimatedHours: number | null
+    totalXP: number | null
     authorId: number | null
   }
 
@@ -6935,10 +7888,13 @@ export namespace Prisma {
     description: number
     imageUrl: number
     level: number
+    targetSkills: number
     isPublished: number
     createdAt: number
     updatedAt: number
     tags: number
+    estimatedHours: number
+    totalXP: number
     authorId: number
     _all: number
   }
@@ -6946,11 +7902,15 @@ export namespace Prisma {
 
   export type CourseAvgAggregateInputType = {
     id?: true
+    estimatedHours?: true
+    totalXP?: true
     authorId?: true
   }
 
   export type CourseSumAggregateInputType = {
     id?: true
+    estimatedHours?: true
+    totalXP?: true
     authorId?: true
   }
 
@@ -6963,6 +7923,8 @@ export namespace Prisma {
     isPublished?: true
     createdAt?: true
     updatedAt?: true
+    estimatedHours?: true
+    totalXP?: true
     authorId?: true
   }
 
@@ -6975,6 +7937,8 @@ export namespace Prisma {
     isPublished?: true
     createdAt?: true
     updatedAt?: true
+    estimatedHours?: true
+    totalXP?: true
     authorId?: true
   }
 
@@ -6984,10 +7948,13 @@ export namespace Prisma {
     description?: true
     imageUrl?: true
     level?: true
+    targetSkills?: true
     isPublished?: true
     createdAt?: true
     updatedAt?: true
     tags?: true
+    estimatedHours?: true
+    totalXP?: true
     authorId?: true
     _all?: true
   }
@@ -7083,11 +8050,14 @@ export namespace Prisma {
     title: string
     description: string | null
     imageUrl: string | null
-    level: $Enums.Level
+    level: $Enums.CEFRLevel
+    targetSkills: $Enums.CoreSkillType[]
     isPublished: boolean
     createdAt: Date
     updatedAt: Date
     tags: string[]
+    estimatedHours: number | null
+    totalXP: number
     authorId: number | null
     _count: CourseCountAggregateOutputType | null
     _avg: CourseAvgAggregateOutputType | null
@@ -7116,13 +8086,16 @@ export namespace Prisma {
     description?: boolean
     imageUrl?: boolean
     level?: boolean
+    targetSkills?: boolean
     isPublished?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     tags?: boolean
+    estimatedHours?: boolean
+    totalXP?: boolean
     authorId?: boolean
-    tasks?: boolean | Course$tasksArgs<ExtArgs>
     enrollments?: boolean | Course$enrollmentsArgs<ExtArgs>
+    tasks?: boolean | Course$tasksArgs<ExtArgs>
     videos?: boolean | Course$videosArgs<ExtArgs>
     author?: boolean | Course$authorArgs<ExtArgs>
     _count?: boolean | CourseCountOutputTypeDefaultArgs<ExtArgs>
@@ -7134,10 +8107,13 @@ export namespace Prisma {
     description?: boolean
     imageUrl?: boolean
     level?: boolean
+    targetSkills?: boolean
     isPublished?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     tags?: boolean
+    estimatedHours?: boolean
+    totalXP?: boolean
     authorId?: boolean
     author?: boolean | Course$authorArgs<ExtArgs>
   }, ExtArgs["result"]["course"]>
@@ -7148,10 +8124,13 @@ export namespace Prisma {
     description?: boolean
     imageUrl?: boolean
     level?: boolean
+    targetSkills?: boolean
     isPublished?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     tags?: boolean
+    estimatedHours?: boolean
+    totalXP?: boolean
     authorId?: boolean
     author?: boolean | Course$authorArgs<ExtArgs>
   }, ExtArgs["result"]["course"]>
@@ -7162,17 +8141,20 @@ export namespace Prisma {
     description?: boolean
     imageUrl?: boolean
     level?: boolean
+    targetSkills?: boolean
     isPublished?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     tags?: boolean
+    estimatedHours?: boolean
+    totalXP?: boolean
     authorId?: boolean
   }
 
-  export type CourseOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "imageUrl" | "level" | "isPublished" | "createdAt" | "updatedAt" | "tags" | "authorId", ExtArgs["result"]["course"]>
+  export type CourseOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "imageUrl" | "level" | "targetSkills" | "isPublished" | "createdAt" | "updatedAt" | "tags" | "estimatedHours" | "totalXP" | "authorId", ExtArgs["result"]["course"]>
   export type CourseInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    tasks?: boolean | Course$tasksArgs<ExtArgs>
     enrollments?: boolean | Course$enrollmentsArgs<ExtArgs>
+    tasks?: boolean | Course$tasksArgs<ExtArgs>
     videos?: boolean | Course$videosArgs<ExtArgs>
     author?: boolean | Course$authorArgs<ExtArgs>
     _count?: boolean | CourseCountOutputTypeDefaultArgs<ExtArgs>
@@ -7187,8 +8169,8 @@ export namespace Prisma {
   export type $CoursePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Course"
     objects: {
-      tasks: Prisma.$TaskPayload<ExtArgs>[]
       enrollments: Prisma.$EnrollmentPayload<ExtArgs>[]
+      tasks: Prisma.$TaskPayload<ExtArgs>[]
       videos: Prisma.$VideoPayload<ExtArgs>[]
       author: Prisma.$UserPayload<ExtArgs> | null
     }
@@ -7197,11 +8179,14 @@ export namespace Prisma {
       title: string
       description: string | null
       imageUrl: string | null
-      level: $Enums.Level
+      level: $Enums.CEFRLevel
+      targetSkills: $Enums.CoreSkillType[]
       isPublished: boolean
       createdAt: Date
       updatedAt: Date
       tags: string[]
+      estimatedHours: number | null
+      totalXP: number
       authorId: number | null
     }, ExtArgs["result"]["course"]>
     composites: {}
@@ -7597,8 +8582,8 @@ export namespace Prisma {
    */
   export interface Prisma__CourseClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    tasks<T extends Course$tasksArgs<ExtArgs> = {}>(args?: Subset<T, Course$tasksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     enrollments<T extends Course$enrollmentsArgs<ExtArgs> = {}>(args?: Subset<T, Course$enrollmentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EnrollmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    tasks<T extends Course$tasksArgs<ExtArgs> = {}>(args?: Subset<T, Course$tasksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     videos<T extends Course$videosArgs<ExtArgs> = {}>(args?: Subset<T, Course$videosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VideoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     author<T extends Course$authorArgs<ExtArgs> = {}>(args?: Subset<T, Course$authorArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
@@ -7634,11 +8619,14 @@ export namespace Prisma {
     readonly title: FieldRef<"Course", 'String'>
     readonly description: FieldRef<"Course", 'String'>
     readonly imageUrl: FieldRef<"Course", 'String'>
-    readonly level: FieldRef<"Course", 'Level'>
+    readonly level: FieldRef<"Course", 'CEFRLevel'>
+    readonly targetSkills: FieldRef<"Course", 'CoreSkillType[]'>
     readonly isPublished: FieldRef<"Course", 'Boolean'>
     readonly createdAt: FieldRef<"Course", 'DateTime'>
     readonly updatedAt: FieldRef<"Course", 'DateTime'>
     readonly tags: FieldRef<"Course", 'String[]'>
+    readonly estimatedHours: FieldRef<"Course", 'Int'>
+    readonly totalXP: FieldRef<"Course", 'Int'>
     readonly authorId: FieldRef<"Course", 'Int'>
   }
     
@@ -8036,30 +9024,6 @@ export namespace Prisma {
   }
 
   /**
-   * Course.tasks
-   */
-  export type Course$tasksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Task
-     */
-    select?: TaskSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Task
-     */
-    omit?: TaskOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: TaskInclude<ExtArgs> | null
-    where?: TaskWhereInput
-    orderBy?: TaskOrderByWithRelationInput | TaskOrderByWithRelationInput[]
-    cursor?: TaskWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: TaskScalarFieldEnum | TaskScalarFieldEnum[]
-  }
-
-  /**
    * Course.enrollments
    */
   export type Course$enrollmentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -8081,6 +9045,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: EnrollmentScalarFieldEnum | EnrollmentScalarFieldEnum[]
+  }
+
+  /**
+   * Course.tasks
+   */
+  export type Course$tasksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Task
+     */
+    select?: TaskSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Task
+     */
+    omit?: TaskOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TaskInclude<ExtArgs> | null
+    where?: TaskWhereInput
+    orderBy?: TaskOrderByWithRelationInput | TaskOrderByWithRelationInput[]
+    cursor?: TaskWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: TaskScalarFieldEnum | TaskScalarFieldEnum[]
   }
 
   /**
@@ -9272,11 +10260,17 @@ export namespace Prisma {
   export type SettingAvgAggregateOutputType = {
     id: number | null
     userId: number | null
+    dailyXPGoal: number | null
+    dailyTimeGoal: number | null
+    weeklyGoal: number | null
   }
 
   export type SettingSumAggregateOutputType = {
     id: number | null
     userId: number | null
+    dailyXPGoal: number | null
+    dailyTimeGoal: number | null
+    weeklyGoal: number | null
   }
 
   export type SettingMinAggregateOutputType = {
@@ -9284,7 +10278,10 @@ export namespace Prisma {
     userId: number | null
     global_language: $Enums.Language | null
     current_language: $Enums.Language | null
-    current_level: $Enums.Level | null
+    current_level: $Enums.CEFRLevel | null
+    dailyXPGoal: number | null
+    dailyTimeGoal: number | null
+    weeklyGoal: number | null
   }
 
   export type SettingMaxAggregateOutputType = {
@@ -9292,7 +10289,10 @@ export namespace Prisma {
     userId: number | null
     global_language: $Enums.Language | null
     current_language: $Enums.Language | null
-    current_level: $Enums.Level | null
+    current_level: $Enums.CEFRLevel | null
+    dailyXPGoal: number | null
+    dailyTimeGoal: number | null
+    weeklyGoal: number | null
   }
 
   export type SettingCountAggregateOutputType = {
@@ -9302,6 +10302,9 @@ export namespace Prisma {
     current_language: number
     purposes: number
     current_level: number
+    dailyXPGoal: number
+    dailyTimeGoal: number
+    weeklyGoal: number
     _all: number
   }
 
@@ -9309,11 +10312,17 @@ export namespace Prisma {
   export type SettingAvgAggregateInputType = {
     id?: true
     userId?: true
+    dailyXPGoal?: true
+    dailyTimeGoal?: true
+    weeklyGoal?: true
   }
 
   export type SettingSumAggregateInputType = {
     id?: true
     userId?: true
+    dailyXPGoal?: true
+    dailyTimeGoal?: true
+    weeklyGoal?: true
   }
 
   export type SettingMinAggregateInputType = {
@@ -9322,6 +10331,9 @@ export namespace Prisma {
     global_language?: true
     current_language?: true
     current_level?: true
+    dailyXPGoal?: true
+    dailyTimeGoal?: true
+    weeklyGoal?: true
   }
 
   export type SettingMaxAggregateInputType = {
@@ -9330,6 +10342,9 @@ export namespace Prisma {
     global_language?: true
     current_language?: true
     current_level?: true
+    dailyXPGoal?: true
+    dailyTimeGoal?: true
+    weeklyGoal?: true
   }
 
   export type SettingCountAggregateInputType = {
@@ -9339,6 +10354,9 @@ export namespace Prisma {
     current_language?: true
     purposes?: true
     current_level?: true
+    dailyXPGoal?: true
+    dailyTimeGoal?: true
+    weeklyGoal?: true
     _all?: true
   }
 
@@ -9434,7 +10452,10 @@ export namespace Prisma {
     global_language: $Enums.Language
     current_language: $Enums.Language
     purposes: $Enums.Purpose[]
-    current_level: $Enums.Level
+    current_level: $Enums.CEFRLevel
+    dailyXPGoal: number
+    dailyTimeGoal: number
+    weeklyGoal: number
     _count: SettingCountAggregateOutputType | null
     _avg: SettingAvgAggregateOutputType | null
     _sum: SettingSumAggregateOutputType | null
@@ -9463,6 +10484,9 @@ export namespace Prisma {
     current_language?: boolean
     purposes?: boolean
     current_level?: boolean
+    dailyXPGoal?: boolean
+    dailyTimeGoal?: boolean
+    weeklyGoal?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["setting"]>
 
@@ -9473,6 +10497,9 @@ export namespace Prisma {
     current_language?: boolean
     purposes?: boolean
     current_level?: boolean
+    dailyXPGoal?: boolean
+    dailyTimeGoal?: boolean
+    weeklyGoal?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["setting"]>
 
@@ -9483,6 +10510,9 @@ export namespace Prisma {
     current_language?: boolean
     purposes?: boolean
     current_level?: boolean
+    dailyXPGoal?: boolean
+    dailyTimeGoal?: boolean
+    weeklyGoal?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["setting"]>
 
@@ -9493,9 +10523,12 @@ export namespace Prisma {
     current_language?: boolean
     purposes?: boolean
     current_level?: boolean
+    dailyXPGoal?: boolean
+    dailyTimeGoal?: boolean
+    weeklyGoal?: boolean
   }
 
-  export type SettingOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "global_language" | "current_language" | "purposes" | "current_level", ExtArgs["result"]["setting"]>
+  export type SettingOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "global_language" | "current_language" | "purposes" | "current_level" | "dailyXPGoal" | "dailyTimeGoal" | "weeklyGoal", ExtArgs["result"]["setting"]>
   export type SettingInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
   }
@@ -9517,7 +10550,10 @@ export namespace Prisma {
       global_language: $Enums.Language
       current_language: $Enums.Language
       purposes: $Enums.Purpose[]
-      current_level: $Enums.Level
+      current_level: $Enums.CEFRLevel
+      dailyXPGoal: number
+      dailyTimeGoal: number
+      weeklyGoal: number
     }, ExtArgs["result"]["setting"]>
     composites: {}
   }
@@ -9947,7 +10983,10 @@ export namespace Prisma {
     readonly global_language: FieldRef<"Setting", 'Language'>
     readonly current_language: FieldRef<"Setting", 'Language'>
     readonly purposes: FieldRef<"Setting", 'Purpose[]'>
-    readonly current_level: FieldRef<"Setting", 'Level'>
+    readonly current_level: FieldRef<"Setting", 'CEFRLevel'>
+    readonly dailyXPGoal: FieldRef<"Setting", 'Int'>
+    readonly dailyTimeGoal: FieldRef<"Setting", 'Int'>
+    readonly weeklyGoal: FieldRef<"Setting", 'Int'>
   }
     
 
@@ -10363,6 +11402,3657 @@ export namespace Prisma {
 
 
   /**
+   * Model LanguageProgress
+   */
+
+  export type AggregateLanguageProgress = {
+    _count: LanguageProgressCountAggregateOutputType | null
+    _avg: LanguageProgressAvgAggregateOutputType | null
+    _sum: LanguageProgressSumAggregateOutputType | null
+    _min: LanguageProgressMinAggregateOutputType | null
+    _max: LanguageProgressMaxAggregateOutputType | null
+  }
+
+  export type LanguageProgressAvgAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    overallProgress: number | null
+    totalXP: number | null
+    totalTime: number | null
+  }
+
+  export type LanguageProgressSumAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    overallProgress: number | null
+    totalXP: number | null
+    totalTime: number | null
+  }
+
+  export type LanguageProgressMinAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    language: $Enums.Language | null
+    overallCEFR: $Enums.CEFRLevel | null
+    overallProgress: number | null
+    totalXP: number | null
+    totalTime: number | null
+    lastActiveAt: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type LanguageProgressMaxAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    language: $Enums.Language | null
+    overallCEFR: $Enums.CEFRLevel | null
+    overallProgress: number | null
+    totalXP: number | null
+    totalTime: number | null
+    lastActiveAt: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type LanguageProgressCountAggregateOutputType = {
+    id: number
+    userId: number
+    language: number
+    overallCEFR: number
+    overallProgress: number
+    totalXP: number
+    totalTime: number
+    lastActiveAt: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type LanguageProgressAvgAggregateInputType = {
+    id?: true
+    userId?: true
+    overallProgress?: true
+    totalXP?: true
+    totalTime?: true
+  }
+
+  export type LanguageProgressSumAggregateInputType = {
+    id?: true
+    userId?: true
+    overallProgress?: true
+    totalXP?: true
+    totalTime?: true
+  }
+
+  export type LanguageProgressMinAggregateInputType = {
+    id?: true
+    userId?: true
+    language?: true
+    overallCEFR?: true
+    overallProgress?: true
+    totalXP?: true
+    totalTime?: true
+    lastActiveAt?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type LanguageProgressMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    language?: true
+    overallCEFR?: true
+    overallProgress?: true
+    totalXP?: true
+    totalTime?: true
+    lastActiveAt?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type LanguageProgressCountAggregateInputType = {
+    id?: true
+    userId?: true
+    language?: true
+    overallCEFR?: true
+    overallProgress?: true
+    totalXP?: true
+    totalTime?: true
+    lastActiveAt?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type LanguageProgressAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which LanguageProgress to aggregate.
+     */
+    where?: LanguageProgressWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LanguageProgresses to fetch.
+     */
+    orderBy?: LanguageProgressOrderByWithRelationInput | LanguageProgressOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: LanguageProgressWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LanguageProgresses from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LanguageProgresses.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned LanguageProgresses
+    **/
+    _count?: true | LanguageProgressCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: LanguageProgressAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: LanguageProgressSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: LanguageProgressMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: LanguageProgressMaxAggregateInputType
+  }
+
+  export type GetLanguageProgressAggregateType<T extends LanguageProgressAggregateArgs> = {
+        [P in keyof T & keyof AggregateLanguageProgress]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateLanguageProgress[P]>
+      : GetScalarType<T[P], AggregateLanguageProgress[P]>
+  }
+
+
+
+
+  export type LanguageProgressGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: LanguageProgressWhereInput
+    orderBy?: LanguageProgressOrderByWithAggregationInput | LanguageProgressOrderByWithAggregationInput[]
+    by: LanguageProgressScalarFieldEnum[] | LanguageProgressScalarFieldEnum
+    having?: LanguageProgressScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: LanguageProgressCountAggregateInputType | true
+    _avg?: LanguageProgressAvgAggregateInputType
+    _sum?: LanguageProgressSumAggregateInputType
+    _min?: LanguageProgressMinAggregateInputType
+    _max?: LanguageProgressMaxAggregateInputType
+  }
+
+  export type LanguageProgressGroupByOutputType = {
+    id: number
+    userId: number
+    language: $Enums.Language
+    overallCEFR: $Enums.CEFRLevel
+    overallProgress: number
+    totalXP: number
+    totalTime: number
+    lastActiveAt: Date | null
+    createdAt: Date
+    updatedAt: Date
+    _count: LanguageProgressCountAggregateOutputType | null
+    _avg: LanguageProgressAvgAggregateOutputType | null
+    _sum: LanguageProgressSumAggregateOutputType | null
+    _min: LanguageProgressMinAggregateOutputType | null
+    _max: LanguageProgressMaxAggregateOutputType | null
+  }
+
+  type GetLanguageProgressGroupByPayload<T extends LanguageProgressGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<LanguageProgressGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof LanguageProgressGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], LanguageProgressGroupByOutputType[P]>
+            : GetScalarType<T[P], LanguageProgressGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type LanguageProgressSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    language?: boolean
+    overallCEFR?: boolean
+    overallProgress?: boolean
+    totalXP?: boolean
+    totalTime?: boolean
+    lastActiveAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    skillProgresses?: boolean | LanguageProgress$skillProgressesArgs<ExtArgs>
+    _count?: boolean | LanguageProgressCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["languageProgress"]>
+
+  export type LanguageProgressSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    language?: boolean
+    overallCEFR?: boolean
+    overallProgress?: boolean
+    totalXP?: boolean
+    totalTime?: boolean
+    lastActiveAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["languageProgress"]>
+
+  export type LanguageProgressSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    language?: boolean
+    overallCEFR?: boolean
+    overallProgress?: boolean
+    totalXP?: boolean
+    totalTime?: boolean
+    lastActiveAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["languageProgress"]>
+
+  export type LanguageProgressSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    language?: boolean
+    overallCEFR?: boolean
+    overallProgress?: boolean
+    totalXP?: boolean
+    totalTime?: boolean
+    lastActiveAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type LanguageProgressOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "language" | "overallCEFR" | "overallProgress" | "totalXP" | "totalTime" | "lastActiveAt" | "createdAt" | "updatedAt", ExtArgs["result"]["languageProgress"]>
+  export type LanguageProgressInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    skillProgresses?: boolean | LanguageProgress$skillProgressesArgs<ExtArgs>
+    _count?: boolean | LanguageProgressCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type LanguageProgressIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type LanguageProgressIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $LanguageProgressPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "LanguageProgress"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+      skillProgresses: Prisma.$SkillProgressPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      userId: number
+      language: $Enums.Language
+      overallCEFR: $Enums.CEFRLevel
+      overallProgress: number
+      totalXP: number
+      totalTime: number
+      lastActiveAt: Date | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["languageProgress"]>
+    composites: {}
+  }
+
+  type LanguageProgressGetPayload<S extends boolean | null | undefined | LanguageProgressDefaultArgs> = $Result.GetResult<Prisma.$LanguageProgressPayload, S>
+
+  type LanguageProgressCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<LanguageProgressFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: LanguageProgressCountAggregateInputType | true
+    }
+
+  export interface LanguageProgressDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['LanguageProgress'], meta: { name: 'LanguageProgress' } }
+    /**
+     * Find zero or one LanguageProgress that matches the filter.
+     * @param {LanguageProgressFindUniqueArgs} args - Arguments to find a LanguageProgress
+     * @example
+     * // Get one LanguageProgress
+     * const languageProgress = await prisma.languageProgress.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends LanguageProgressFindUniqueArgs>(args: SelectSubset<T, LanguageProgressFindUniqueArgs<ExtArgs>>): Prisma__LanguageProgressClient<$Result.GetResult<Prisma.$LanguageProgressPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one LanguageProgress that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {LanguageProgressFindUniqueOrThrowArgs} args - Arguments to find a LanguageProgress
+     * @example
+     * // Get one LanguageProgress
+     * const languageProgress = await prisma.languageProgress.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends LanguageProgressFindUniqueOrThrowArgs>(args: SelectSubset<T, LanguageProgressFindUniqueOrThrowArgs<ExtArgs>>): Prisma__LanguageProgressClient<$Result.GetResult<Prisma.$LanguageProgressPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first LanguageProgress that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LanguageProgressFindFirstArgs} args - Arguments to find a LanguageProgress
+     * @example
+     * // Get one LanguageProgress
+     * const languageProgress = await prisma.languageProgress.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends LanguageProgressFindFirstArgs>(args?: SelectSubset<T, LanguageProgressFindFirstArgs<ExtArgs>>): Prisma__LanguageProgressClient<$Result.GetResult<Prisma.$LanguageProgressPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first LanguageProgress that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LanguageProgressFindFirstOrThrowArgs} args - Arguments to find a LanguageProgress
+     * @example
+     * // Get one LanguageProgress
+     * const languageProgress = await prisma.languageProgress.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends LanguageProgressFindFirstOrThrowArgs>(args?: SelectSubset<T, LanguageProgressFindFirstOrThrowArgs<ExtArgs>>): Prisma__LanguageProgressClient<$Result.GetResult<Prisma.$LanguageProgressPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more LanguageProgresses that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LanguageProgressFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all LanguageProgresses
+     * const languageProgresses = await prisma.languageProgress.findMany()
+     * 
+     * // Get first 10 LanguageProgresses
+     * const languageProgresses = await prisma.languageProgress.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const languageProgressWithIdOnly = await prisma.languageProgress.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends LanguageProgressFindManyArgs>(args?: SelectSubset<T, LanguageProgressFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LanguageProgressPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a LanguageProgress.
+     * @param {LanguageProgressCreateArgs} args - Arguments to create a LanguageProgress.
+     * @example
+     * // Create one LanguageProgress
+     * const LanguageProgress = await prisma.languageProgress.create({
+     *   data: {
+     *     // ... data to create a LanguageProgress
+     *   }
+     * })
+     * 
+     */
+    create<T extends LanguageProgressCreateArgs>(args: SelectSubset<T, LanguageProgressCreateArgs<ExtArgs>>): Prisma__LanguageProgressClient<$Result.GetResult<Prisma.$LanguageProgressPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many LanguageProgresses.
+     * @param {LanguageProgressCreateManyArgs} args - Arguments to create many LanguageProgresses.
+     * @example
+     * // Create many LanguageProgresses
+     * const languageProgress = await prisma.languageProgress.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends LanguageProgressCreateManyArgs>(args?: SelectSubset<T, LanguageProgressCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many LanguageProgresses and returns the data saved in the database.
+     * @param {LanguageProgressCreateManyAndReturnArgs} args - Arguments to create many LanguageProgresses.
+     * @example
+     * // Create many LanguageProgresses
+     * const languageProgress = await prisma.languageProgress.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many LanguageProgresses and only return the `id`
+     * const languageProgressWithIdOnly = await prisma.languageProgress.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends LanguageProgressCreateManyAndReturnArgs>(args?: SelectSubset<T, LanguageProgressCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LanguageProgressPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a LanguageProgress.
+     * @param {LanguageProgressDeleteArgs} args - Arguments to delete one LanguageProgress.
+     * @example
+     * // Delete one LanguageProgress
+     * const LanguageProgress = await prisma.languageProgress.delete({
+     *   where: {
+     *     // ... filter to delete one LanguageProgress
+     *   }
+     * })
+     * 
+     */
+    delete<T extends LanguageProgressDeleteArgs>(args: SelectSubset<T, LanguageProgressDeleteArgs<ExtArgs>>): Prisma__LanguageProgressClient<$Result.GetResult<Prisma.$LanguageProgressPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one LanguageProgress.
+     * @param {LanguageProgressUpdateArgs} args - Arguments to update one LanguageProgress.
+     * @example
+     * // Update one LanguageProgress
+     * const languageProgress = await prisma.languageProgress.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends LanguageProgressUpdateArgs>(args: SelectSubset<T, LanguageProgressUpdateArgs<ExtArgs>>): Prisma__LanguageProgressClient<$Result.GetResult<Prisma.$LanguageProgressPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more LanguageProgresses.
+     * @param {LanguageProgressDeleteManyArgs} args - Arguments to filter LanguageProgresses to delete.
+     * @example
+     * // Delete a few LanguageProgresses
+     * const { count } = await prisma.languageProgress.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends LanguageProgressDeleteManyArgs>(args?: SelectSubset<T, LanguageProgressDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more LanguageProgresses.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LanguageProgressUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many LanguageProgresses
+     * const languageProgress = await prisma.languageProgress.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends LanguageProgressUpdateManyArgs>(args: SelectSubset<T, LanguageProgressUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more LanguageProgresses and returns the data updated in the database.
+     * @param {LanguageProgressUpdateManyAndReturnArgs} args - Arguments to update many LanguageProgresses.
+     * @example
+     * // Update many LanguageProgresses
+     * const languageProgress = await prisma.languageProgress.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more LanguageProgresses and only return the `id`
+     * const languageProgressWithIdOnly = await prisma.languageProgress.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends LanguageProgressUpdateManyAndReturnArgs>(args: SelectSubset<T, LanguageProgressUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LanguageProgressPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one LanguageProgress.
+     * @param {LanguageProgressUpsertArgs} args - Arguments to update or create a LanguageProgress.
+     * @example
+     * // Update or create a LanguageProgress
+     * const languageProgress = await prisma.languageProgress.upsert({
+     *   create: {
+     *     // ... data to create a LanguageProgress
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the LanguageProgress we want to update
+     *   }
+     * })
+     */
+    upsert<T extends LanguageProgressUpsertArgs>(args: SelectSubset<T, LanguageProgressUpsertArgs<ExtArgs>>): Prisma__LanguageProgressClient<$Result.GetResult<Prisma.$LanguageProgressPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of LanguageProgresses.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LanguageProgressCountArgs} args - Arguments to filter LanguageProgresses to count.
+     * @example
+     * // Count the number of LanguageProgresses
+     * const count = await prisma.languageProgress.count({
+     *   where: {
+     *     // ... the filter for the LanguageProgresses we want to count
+     *   }
+     * })
+    **/
+    count<T extends LanguageProgressCountArgs>(
+      args?: Subset<T, LanguageProgressCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], LanguageProgressCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a LanguageProgress.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LanguageProgressAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends LanguageProgressAggregateArgs>(args: Subset<T, LanguageProgressAggregateArgs>): Prisma.PrismaPromise<GetLanguageProgressAggregateType<T>>
+
+    /**
+     * Group by LanguageProgress.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {LanguageProgressGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends LanguageProgressGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: LanguageProgressGroupByArgs['orderBy'] }
+        : { orderBy?: LanguageProgressGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, LanguageProgressGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetLanguageProgressGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the LanguageProgress model
+   */
+  readonly fields: LanguageProgressFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for LanguageProgress.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__LanguageProgressClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    skillProgresses<T extends LanguageProgress$skillProgressesArgs<ExtArgs> = {}>(args?: Subset<T, LanguageProgress$skillProgressesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SkillProgressPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the LanguageProgress model
+   */
+  interface LanguageProgressFieldRefs {
+    readonly id: FieldRef<"LanguageProgress", 'Int'>
+    readonly userId: FieldRef<"LanguageProgress", 'Int'>
+    readonly language: FieldRef<"LanguageProgress", 'Language'>
+    readonly overallCEFR: FieldRef<"LanguageProgress", 'CEFRLevel'>
+    readonly overallProgress: FieldRef<"LanguageProgress", 'Float'>
+    readonly totalXP: FieldRef<"LanguageProgress", 'Int'>
+    readonly totalTime: FieldRef<"LanguageProgress", 'Int'>
+    readonly lastActiveAt: FieldRef<"LanguageProgress", 'DateTime'>
+    readonly createdAt: FieldRef<"LanguageProgress", 'DateTime'>
+    readonly updatedAt: FieldRef<"LanguageProgress", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * LanguageProgress findUnique
+   */
+  export type LanguageProgressFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LanguageProgress
+     */
+    select?: LanguageProgressSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LanguageProgress
+     */
+    omit?: LanguageProgressOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LanguageProgressInclude<ExtArgs> | null
+    /**
+     * Filter, which LanguageProgress to fetch.
+     */
+    where: LanguageProgressWhereUniqueInput
+  }
+
+  /**
+   * LanguageProgress findUniqueOrThrow
+   */
+  export type LanguageProgressFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LanguageProgress
+     */
+    select?: LanguageProgressSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LanguageProgress
+     */
+    omit?: LanguageProgressOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LanguageProgressInclude<ExtArgs> | null
+    /**
+     * Filter, which LanguageProgress to fetch.
+     */
+    where: LanguageProgressWhereUniqueInput
+  }
+
+  /**
+   * LanguageProgress findFirst
+   */
+  export type LanguageProgressFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LanguageProgress
+     */
+    select?: LanguageProgressSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LanguageProgress
+     */
+    omit?: LanguageProgressOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LanguageProgressInclude<ExtArgs> | null
+    /**
+     * Filter, which LanguageProgress to fetch.
+     */
+    where?: LanguageProgressWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LanguageProgresses to fetch.
+     */
+    orderBy?: LanguageProgressOrderByWithRelationInput | LanguageProgressOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for LanguageProgresses.
+     */
+    cursor?: LanguageProgressWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LanguageProgresses from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LanguageProgresses.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of LanguageProgresses.
+     */
+    distinct?: LanguageProgressScalarFieldEnum | LanguageProgressScalarFieldEnum[]
+  }
+
+  /**
+   * LanguageProgress findFirstOrThrow
+   */
+  export type LanguageProgressFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LanguageProgress
+     */
+    select?: LanguageProgressSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LanguageProgress
+     */
+    omit?: LanguageProgressOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LanguageProgressInclude<ExtArgs> | null
+    /**
+     * Filter, which LanguageProgress to fetch.
+     */
+    where?: LanguageProgressWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LanguageProgresses to fetch.
+     */
+    orderBy?: LanguageProgressOrderByWithRelationInput | LanguageProgressOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for LanguageProgresses.
+     */
+    cursor?: LanguageProgressWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LanguageProgresses from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LanguageProgresses.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of LanguageProgresses.
+     */
+    distinct?: LanguageProgressScalarFieldEnum | LanguageProgressScalarFieldEnum[]
+  }
+
+  /**
+   * LanguageProgress findMany
+   */
+  export type LanguageProgressFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LanguageProgress
+     */
+    select?: LanguageProgressSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LanguageProgress
+     */
+    omit?: LanguageProgressOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LanguageProgressInclude<ExtArgs> | null
+    /**
+     * Filter, which LanguageProgresses to fetch.
+     */
+    where?: LanguageProgressWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of LanguageProgresses to fetch.
+     */
+    orderBy?: LanguageProgressOrderByWithRelationInput | LanguageProgressOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing LanguageProgresses.
+     */
+    cursor?: LanguageProgressWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` LanguageProgresses from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` LanguageProgresses.
+     */
+    skip?: number
+    distinct?: LanguageProgressScalarFieldEnum | LanguageProgressScalarFieldEnum[]
+  }
+
+  /**
+   * LanguageProgress create
+   */
+  export type LanguageProgressCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LanguageProgress
+     */
+    select?: LanguageProgressSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LanguageProgress
+     */
+    omit?: LanguageProgressOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LanguageProgressInclude<ExtArgs> | null
+    /**
+     * The data needed to create a LanguageProgress.
+     */
+    data: XOR<LanguageProgressCreateInput, LanguageProgressUncheckedCreateInput>
+  }
+
+  /**
+   * LanguageProgress createMany
+   */
+  export type LanguageProgressCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many LanguageProgresses.
+     */
+    data: LanguageProgressCreateManyInput | LanguageProgressCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * LanguageProgress createManyAndReturn
+   */
+  export type LanguageProgressCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LanguageProgress
+     */
+    select?: LanguageProgressSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the LanguageProgress
+     */
+    omit?: LanguageProgressOmit<ExtArgs> | null
+    /**
+     * The data used to create many LanguageProgresses.
+     */
+    data: LanguageProgressCreateManyInput | LanguageProgressCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LanguageProgressIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * LanguageProgress update
+   */
+  export type LanguageProgressUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LanguageProgress
+     */
+    select?: LanguageProgressSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LanguageProgress
+     */
+    omit?: LanguageProgressOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LanguageProgressInclude<ExtArgs> | null
+    /**
+     * The data needed to update a LanguageProgress.
+     */
+    data: XOR<LanguageProgressUpdateInput, LanguageProgressUncheckedUpdateInput>
+    /**
+     * Choose, which LanguageProgress to update.
+     */
+    where: LanguageProgressWhereUniqueInput
+  }
+
+  /**
+   * LanguageProgress updateMany
+   */
+  export type LanguageProgressUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update LanguageProgresses.
+     */
+    data: XOR<LanguageProgressUpdateManyMutationInput, LanguageProgressUncheckedUpdateManyInput>
+    /**
+     * Filter which LanguageProgresses to update
+     */
+    where?: LanguageProgressWhereInput
+    /**
+     * Limit how many LanguageProgresses to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * LanguageProgress updateManyAndReturn
+   */
+  export type LanguageProgressUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LanguageProgress
+     */
+    select?: LanguageProgressSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the LanguageProgress
+     */
+    omit?: LanguageProgressOmit<ExtArgs> | null
+    /**
+     * The data used to update LanguageProgresses.
+     */
+    data: XOR<LanguageProgressUpdateManyMutationInput, LanguageProgressUncheckedUpdateManyInput>
+    /**
+     * Filter which LanguageProgresses to update
+     */
+    where?: LanguageProgressWhereInput
+    /**
+     * Limit how many LanguageProgresses to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LanguageProgressIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * LanguageProgress upsert
+   */
+  export type LanguageProgressUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LanguageProgress
+     */
+    select?: LanguageProgressSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LanguageProgress
+     */
+    omit?: LanguageProgressOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LanguageProgressInclude<ExtArgs> | null
+    /**
+     * The filter to search for the LanguageProgress to update in case it exists.
+     */
+    where: LanguageProgressWhereUniqueInput
+    /**
+     * In case the LanguageProgress found by the `where` argument doesn't exist, create a new LanguageProgress with this data.
+     */
+    create: XOR<LanguageProgressCreateInput, LanguageProgressUncheckedCreateInput>
+    /**
+     * In case the LanguageProgress was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<LanguageProgressUpdateInput, LanguageProgressUncheckedUpdateInput>
+  }
+
+  /**
+   * LanguageProgress delete
+   */
+  export type LanguageProgressDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LanguageProgress
+     */
+    select?: LanguageProgressSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LanguageProgress
+     */
+    omit?: LanguageProgressOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LanguageProgressInclude<ExtArgs> | null
+    /**
+     * Filter which LanguageProgress to delete.
+     */
+    where: LanguageProgressWhereUniqueInput
+  }
+
+  /**
+   * LanguageProgress deleteMany
+   */
+  export type LanguageProgressDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which LanguageProgresses to delete
+     */
+    where?: LanguageProgressWhereInput
+    /**
+     * Limit how many LanguageProgresses to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * LanguageProgress.skillProgresses
+   */
+  export type LanguageProgress$skillProgressesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkillProgress
+     */
+    select?: SkillProgressSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkillProgress
+     */
+    omit?: SkillProgressOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SkillProgressInclude<ExtArgs> | null
+    where?: SkillProgressWhereInput
+    orderBy?: SkillProgressOrderByWithRelationInput | SkillProgressOrderByWithRelationInput[]
+    cursor?: SkillProgressWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SkillProgressScalarFieldEnum | SkillProgressScalarFieldEnum[]
+  }
+
+  /**
+   * LanguageProgress without action
+   */
+  export type LanguageProgressDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LanguageProgress
+     */
+    select?: LanguageProgressSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LanguageProgress
+     */
+    omit?: LanguageProgressOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LanguageProgressInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model SkillProgress
+   */
+
+  export type AggregateSkillProgress = {
+    _count: SkillProgressCountAggregateOutputType | null
+    _avg: SkillProgressAvgAggregateOutputType | null
+    _sum: SkillProgressSumAggregateOutputType | null
+    _min: SkillProgressMinAggregateOutputType | null
+    _max: SkillProgressMaxAggregateOutputType | null
+  }
+
+  export type SkillProgressAvgAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    languageProgressId: number | null
+    levelProgress: number | null
+    xpEarned: number | null
+    totalPracticed: number | null
+    correctAnswers: number | null
+    totalAnswers: number | null
+    currentAccuracy: number | null
+    timeSpent: number | null
+    totalWordsStudied: number | null
+    wordsLearned: number | null
+    wordsReviewing: number | null
+  }
+
+  export type SkillProgressSumAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    languageProgressId: number | null
+    levelProgress: number | null
+    xpEarned: number | null
+    totalPracticed: number | null
+    correctAnswers: number | null
+    totalAnswers: number | null
+    currentAccuracy: number | null
+    timeSpent: number | null
+    totalWordsStudied: number | null
+    wordsLearned: number | null
+    wordsReviewing: number | null
+  }
+
+  export type SkillProgressMinAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    languageProgressId: number | null
+    skillType: $Enums.CoreSkillType | null
+    cefrLevel: $Enums.CEFRLevel | null
+    levelProgress: number | null
+    xpEarned: number | null
+    totalPracticed: number | null
+    correctAnswers: number | null
+    totalAnswers: number | null
+    currentAccuracy: number | null
+    timeSpent: number | null
+    totalWordsStudied: number | null
+    wordsLearned: number | null
+    wordsReviewing: number | null
+    lastPracticed: Date | null
+    updatedAt: Date | null
+  }
+
+  export type SkillProgressMaxAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    languageProgressId: number | null
+    skillType: $Enums.CoreSkillType | null
+    cefrLevel: $Enums.CEFRLevel | null
+    levelProgress: number | null
+    xpEarned: number | null
+    totalPracticed: number | null
+    correctAnswers: number | null
+    totalAnswers: number | null
+    currentAccuracy: number | null
+    timeSpent: number | null
+    totalWordsStudied: number | null
+    wordsLearned: number | null
+    wordsReviewing: number | null
+    lastPracticed: Date | null
+    updatedAt: Date | null
+  }
+
+  export type SkillProgressCountAggregateOutputType = {
+    id: number
+    userId: number
+    languageProgressId: number
+    skillType: number
+    cefrLevel: number
+    levelProgress: number
+    xpEarned: number
+    totalPracticed: number
+    correctAnswers: number
+    totalAnswers: number
+    currentAccuracy: number
+    timeSpent: number
+    totalWordsStudied: number
+    wordsLearned: number
+    wordsReviewing: number
+    lastPracticed: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type SkillProgressAvgAggregateInputType = {
+    id?: true
+    userId?: true
+    languageProgressId?: true
+    levelProgress?: true
+    xpEarned?: true
+    totalPracticed?: true
+    correctAnswers?: true
+    totalAnswers?: true
+    currentAccuracy?: true
+    timeSpent?: true
+    totalWordsStudied?: true
+    wordsLearned?: true
+    wordsReviewing?: true
+  }
+
+  export type SkillProgressSumAggregateInputType = {
+    id?: true
+    userId?: true
+    languageProgressId?: true
+    levelProgress?: true
+    xpEarned?: true
+    totalPracticed?: true
+    correctAnswers?: true
+    totalAnswers?: true
+    currentAccuracy?: true
+    timeSpent?: true
+    totalWordsStudied?: true
+    wordsLearned?: true
+    wordsReviewing?: true
+  }
+
+  export type SkillProgressMinAggregateInputType = {
+    id?: true
+    userId?: true
+    languageProgressId?: true
+    skillType?: true
+    cefrLevel?: true
+    levelProgress?: true
+    xpEarned?: true
+    totalPracticed?: true
+    correctAnswers?: true
+    totalAnswers?: true
+    currentAccuracy?: true
+    timeSpent?: true
+    totalWordsStudied?: true
+    wordsLearned?: true
+    wordsReviewing?: true
+    lastPracticed?: true
+    updatedAt?: true
+  }
+
+  export type SkillProgressMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    languageProgressId?: true
+    skillType?: true
+    cefrLevel?: true
+    levelProgress?: true
+    xpEarned?: true
+    totalPracticed?: true
+    correctAnswers?: true
+    totalAnswers?: true
+    currentAccuracy?: true
+    timeSpent?: true
+    totalWordsStudied?: true
+    wordsLearned?: true
+    wordsReviewing?: true
+    lastPracticed?: true
+    updatedAt?: true
+  }
+
+  export type SkillProgressCountAggregateInputType = {
+    id?: true
+    userId?: true
+    languageProgressId?: true
+    skillType?: true
+    cefrLevel?: true
+    levelProgress?: true
+    xpEarned?: true
+    totalPracticed?: true
+    correctAnswers?: true
+    totalAnswers?: true
+    currentAccuracy?: true
+    timeSpent?: true
+    totalWordsStudied?: true
+    wordsLearned?: true
+    wordsReviewing?: true
+    lastPracticed?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type SkillProgressAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SkillProgress to aggregate.
+     */
+    where?: SkillProgressWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SkillProgresses to fetch.
+     */
+    orderBy?: SkillProgressOrderByWithRelationInput | SkillProgressOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SkillProgressWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SkillProgresses from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SkillProgresses.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned SkillProgresses
+    **/
+    _count?: true | SkillProgressCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: SkillProgressAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: SkillProgressSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SkillProgressMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SkillProgressMaxAggregateInputType
+  }
+
+  export type GetSkillProgressAggregateType<T extends SkillProgressAggregateArgs> = {
+        [P in keyof T & keyof AggregateSkillProgress]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSkillProgress[P]>
+      : GetScalarType<T[P], AggregateSkillProgress[P]>
+  }
+
+
+
+
+  export type SkillProgressGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SkillProgressWhereInput
+    orderBy?: SkillProgressOrderByWithAggregationInput | SkillProgressOrderByWithAggregationInput[]
+    by: SkillProgressScalarFieldEnum[] | SkillProgressScalarFieldEnum
+    having?: SkillProgressScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SkillProgressCountAggregateInputType | true
+    _avg?: SkillProgressAvgAggregateInputType
+    _sum?: SkillProgressSumAggregateInputType
+    _min?: SkillProgressMinAggregateInputType
+    _max?: SkillProgressMaxAggregateInputType
+  }
+
+  export type SkillProgressGroupByOutputType = {
+    id: number
+    userId: number
+    languageProgressId: number
+    skillType: $Enums.CoreSkillType
+    cefrLevel: $Enums.CEFRLevel
+    levelProgress: number
+    xpEarned: number
+    totalPracticed: number
+    correctAnswers: number
+    totalAnswers: number
+    currentAccuracy: number
+    timeSpent: number
+    totalWordsStudied: number
+    wordsLearned: number
+    wordsReviewing: number
+    lastPracticed: Date | null
+    updatedAt: Date
+    _count: SkillProgressCountAggregateOutputType | null
+    _avg: SkillProgressAvgAggregateOutputType | null
+    _sum: SkillProgressSumAggregateOutputType | null
+    _min: SkillProgressMinAggregateOutputType | null
+    _max: SkillProgressMaxAggregateOutputType | null
+  }
+
+  type GetSkillProgressGroupByPayload<T extends SkillProgressGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SkillProgressGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SkillProgressGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SkillProgressGroupByOutputType[P]>
+            : GetScalarType<T[P], SkillProgressGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SkillProgressSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    languageProgressId?: boolean
+    skillType?: boolean
+    cefrLevel?: boolean
+    levelProgress?: boolean
+    xpEarned?: boolean
+    totalPracticed?: boolean
+    correctAnswers?: boolean
+    totalAnswers?: boolean
+    currentAccuracy?: boolean
+    timeSpent?: boolean
+    totalWordsStudied?: boolean
+    wordsLearned?: boolean
+    wordsReviewing?: boolean
+    lastPracticed?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    languageProgress?: boolean | LanguageProgressDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["skillProgress"]>
+
+  export type SkillProgressSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    languageProgressId?: boolean
+    skillType?: boolean
+    cefrLevel?: boolean
+    levelProgress?: boolean
+    xpEarned?: boolean
+    totalPracticed?: boolean
+    correctAnswers?: boolean
+    totalAnswers?: boolean
+    currentAccuracy?: boolean
+    timeSpent?: boolean
+    totalWordsStudied?: boolean
+    wordsLearned?: boolean
+    wordsReviewing?: boolean
+    lastPracticed?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    languageProgress?: boolean | LanguageProgressDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["skillProgress"]>
+
+  export type SkillProgressSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    languageProgressId?: boolean
+    skillType?: boolean
+    cefrLevel?: boolean
+    levelProgress?: boolean
+    xpEarned?: boolean
+    totalPracticed?: boolean
+    correctAnswers?: boolean
+    totalAnswers?: boolean
+    currentAccuracy?: boolean
+    timeSpent?: boolean
+    totalWordsStudied?: boolean
+    wordsLearned?: boolean
+    wordsReviewing?: boolean
+    lastPracticed?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    languageProgress?: boolean | LanguageProgressDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["skillProgress"]>
+
+  export type SkillProgressSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    languageProgressId?: boolean
+    skillType?: boolean
+    cefrLevel?: boolean
+    levelProgress?: boolean
+    xpEarned?: boolean
+    totalPracticed?: boolean
+    correctAnswers?: boolean
+    totalAnswers?: boolean
+    currentAccuracy?: boolean
+    timeSpent?: boolean
+    totalWordsStudied?: boolean
+    wordsLearned?: boolean
+    wordsReviewing?: boolean
+    lastPracticed?: boolean
+    updatedAt?: boolean
+  }
+
+  export type SkillProgressOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "languageProgressId" | "skillType" | "cefrLevel" | "levelProgress" | "xpEarned" | "totalPracticed" | "correctAnswers" | "totalAnswers" | "currentAccuracy" | "timeSpent" | "totalWordsStudied" | "wordsLearned" | "wordsReviewing" | "lastPracticed" | "updatedAt", ExtArgs["result"]["skillProgress"]>
+  export type SkillProgressInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    languageProgress?: boolean | LanguageProgressDefaultArgs<ExtArgs>
+  }
+  export type SkillProgressIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    languageProgress?: boolean | LanguageProgressDefaultArgs<ExtArgs>
+  }
+  export type SkillProgressIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    languageProgress?: boolean | LanguageProgressDefaultArgs<ExtArgs>
+  }
+
+  export type $SkillProgressPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "SkillProgress"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+      languageProgress: Prisma.$LanguageProgressPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      userId: number
+      languageProgressId: number
+      skillType: $Enums.CoreSkillType
+      cefrLevel: $Enums.CEFRLevel
+      levelProgress: number
+      xpEarned: number
+      totalPracticed: number
+      correctAnswers: number
+      totalAnswers: number
+      currentAccuracy: number
+      timeSpent: number
+      totalWordsStudied: number
+      wordsLearned: number
+      wordsReviewing: number
+      lastPracticed: Date | null
+      updatedAt: Date
+    }, ExtArgs["result"]["skillProgress"]>
+    composites: {}
+  }
+
+  type SkillProgressGetPayload<S extends boolean | null | undefined | SkillProgressDefaultArgs> = $Result.GetResult<Prisma.$SkillProgressPayload, S>
+
+  type SkillProgressCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<SkillProgressFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: SkillProgressCountAggregateInputType | true
+    }
+
+  export interface SkillProgressDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['SkillProgress'], meta: { name: 'SkillProgress' } }
+    /**
+     * Find zero or one SkillProgress that matches the filter.
+     * @param {SkillProgressFindUniqueArgs} args - Arguments to find a SkillProgress
+     * @example
+     * // Get one SkillProgress
+     * const skillProgress = await prisma.skillProgress.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SkillProgressFindUniqueArgs>(args: SelectSubset<T, SkillProgressFindUniqueArgs<ExtArgs>>): Prisma__SkillProgressClient<$Result.GetResult<Prisma.$SkillProgressPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one SkillProgress that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {SkillProgressFindUniqueOrThrowArgs} args - Arguments to find a SkillProgress
+     * @example
+     * // Get one SkillProgress
+     * const skillProgress = await prisma.skillProgress.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SkillProgressFindUniqueOrThrowArgs>(args: SelectSubset<T, SkillProgressFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SkillProgressClient<$Result.GetResult<Prisma.$SkillProgressPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SkillProgress that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SkillProgressFindFirstArgs} args - Arguments to find a SkillProgress
+     * @example
+     * // Get one SkillProgress
+     * const skillProgress = await prisma.skillProgress.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SkillProgressFindFirstArgs>(args?: SelectSubset<T, SkillProgressFindFirstArgs<ExtArgs>>): Prisma__SkillProgressClient<$Result.GetResult<Prisma.$SkillProgressPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SkillProgress that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SkillProgressFindFirstOrThrowArgs} args - Arguments to find a SkillProgress
+     * @example
+     * // Get one SkillProgress
+     * const skillProgress = await prisma.skillProgress.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SkillProgressFindFirstOrThrowArgs>(args?: SelectSubset<T, SkillProgressFindFirstOrThrowArgs<ExtArgs>>): Prisma__SkillProgressClient<$Result.GetResult<Prisma.$SkillProgressPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more SkillProgresses that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SkillProgressFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all SkillProgresses
+     * const skillProgresses = await prisma.skillProgress.findMany()
+     * 
+     * // Get first 10 SkillProgresses
+     * const skillProgresses = await prisma.skillProgress.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const skillProgressWithIdOnly = await prisma.skillProgress.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends SkillProgressFindManyArgs>(args?: SelectSubset<T, SkillProgressFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SkillProgressPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a SkillProgress.
+     * @param {SkillProgressCreateArgs} args - Arguments to create a SkillProgress.
+     * @example
+     * // Create one SkillProgress
+     * const SkillProgress = await prisma.skillProgress.create({
+     *   data: {
+     *     // ... data to create a SkillProgress
+     *   }
+     * })
+     * 
+     */
+    create<T extends SkillProgressCreateArgs>(args: SelectSubset<T, SkillProgressCreateArgs<ExtArgs>>): Prisma__SkillProgressClient<$Result.GetResult<Prisma.$SkillProgressPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many SkillProgresses.
+     * @param {SkillProgressCreateManyArgs} args - Arguments to create many SkillProgresses.
+     * @example
+     * // Create many SkillProgresses
+     * const skillProgress = await prisma.skillProgress.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SkillProgressCreateManyArgs>(args?: SelectSubset<T, SkillProgressCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many SkillProgresses and returns the data saved in the database.
+     * @param {SkillProgressCreateManyAndReturnArgs} args - Arguments to create many SkillProgresses.
+     * @example
+     * // Create many SkillProgresses
+     * const skillProgress = await prisma.skillProgress.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many SkillProgresses and only return the `id`
+     * const skillProgressWithIdOnly = await prisma.skillProgress.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends SkillProgressCreateManyAndReturnArgs>(args?: SelectSubset<T, SkillProgressCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SkillProgressPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a SkillProgress.
+     * @param {SkillProgressDeleteArgs} args - Arguments to delete one SkillProgress.
+     * @example
+     * // Delete one SkillProgress
+     * const SkillProgress = await prisma.skillProgress.delete({
+     *   where: {
+     *     // ... filter to delete one SkillProgress
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SkillProgressDeleteArgs>(args: SelectSubset<T, SkillProgressDeleteArgs<ExtArgs>>): Prisma__SkillProgressClient<$Result.GetResult<Prisma.$SkillProgressPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one SkillProgress.
+     * @param {SkillProgressUpdateArgs} args - Arguments to update one SkillProgress.
+     * @example
+     * // Update one SkillProgress
+     * const skillProgress = await prisma.skillProgress.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SkillProgressUpdateArgs>(args: SelectSubset<T, SkillProgressUpdateArgs<ExtArgs>>): Prisma__SkillProgressClient<$Result.GetResult<Prisma.$SkillProgressPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more SkillProgresses.
+     * @param {SkillProgressDeleteManyArgs} args - Arguments to filter SkillProgresses to delete.
+     * @example
+     * // Delete a few SkillProgresses
+     * const { count } = await prisma.skillProgress.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SkillProgressDeleteManyArgs>(args?: SelectSubset<T, SkillProgressDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SkillProgresses.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SkillProgressUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many SkillProgresses
+     * const skillProgress = await prisma.skillProgress.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SkillProgressUpdateManyArgs>(args: SelectSubset<T, SkillProgressUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SkillProgresses and returns the data updated in the database.
+     * @param {SkillProgressUpdateManyAndReturnArgs} args - Arguments to update many SkillProgresses.
+     * @example
+     * // Update many SkillProgresses
+     * const skillProgress = await prisma.skillProgress.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more SkillProgresses and only return the `id`
+     * const skillProgressWithIdOnly = await prisma.skillProgress.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends SkillProgressUpdateManyAndReturnArgs>(args: SelectSubset<T, SkillProgressUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SkillProgressPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one SkillProgress.
+     * @param {SkillProgressUpsertArgs} args - Arguments to update or create a SkillProgress.
+     * @example
+     * // Update or create a SkillProgress
+     * const skillProgress = await prisma.skillProgress.upsert({
+     *   create: {
+     *     // ... data to create a SkillProgress
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the SkillProgress we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SkillProgressUpsertArgs>(args: SelectSubset<T, SkillProgressUpsertArgs<ExtArgs>>): Prisma__SkillProgressClient<$Result.GetResult<Prisma.$SkillProgressPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of SkillProgresses.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SkillProgressCountArgs} args - Arguments to filter SkillProgresses to count.
+     * @example
+     * // Count the number of SkillProgresses
+     * const count = await prisma.skillProgress.count({
+     *   where: {
+     *     // ... the filter for the SkillProgresses we want to count
+     *   }
+     * })
+    **/
+    count<T extends SkillProgressCountArgs>(
+      args?: Subset<T, SkillProgressCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SkillProgressCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a SkillProgress.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SkillProgressAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SkillProgressAggregateArgs>(args: Subset<T, SkillProgressAggregateArgs>): Prisma.PrismaPromise<GetSkillProgressAggregateType<T>>
+
+    /**
+     * Group by SkillProgress.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SkillProgressGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SkillProgressGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SkillProgressGroupByArgs['orderBy'] }
+        : { orderBy?: SkillProgressGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SkillProgressGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSkillProgressGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the SkillProgress model
+   */
+  readonly fields: SkillProgressFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for SkillProgress.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SkillProgressClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    languageProgress<T extends LanguageProgressDefaultArgs<ExtArgs> = {}>(args?: Subset<T, LanguageProgressDefaultArgs<ExtArgs>>): Prisma__LanguageProgressClient<$Result.GetResult<Prisma.$LanguageProgressPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the SkillProgress model
+   */
+  interface SkillProgressFieldRefs {
+    readonly id: FieldRef<"SkillProgress", 'Int'>
+    readonly userId: FieldRef<"SkillProgress", 'Int'>
+    readonly languageProgressId: FieldRef<"SkillProgress", 'Int'>
+    readonly skillType: FieldRef<"SkillProgress", 'CoreSkillType'>
+    readonly cefrLevel: FieldRef<"SkillProgress", 'CEFRLevel'>
+    readonly levelProgress: FieldRef<"SkillProgress", 'Float'>
+    readonly xpEarned: FieldRef<"SkillProgress", 'Int'>
+    readonly totalPracticed: FieldRef<"SkillProgress", 'Int'>
+    readonly correctAnswers: FieldRef<"SkillProgress", 'Int'>
+    readonly totalAnswers: FieldRef<"SkillProgress", 'Int'>
+    readonly currentAccuracy: FieldRef<"SkillProgress", 'Float'>
+    readonly timeSpent: FieldRef<"SkillProgress", 'Int'>
+    readonly totalWordsStudied: FieldRef<"SkillProgress", 'Int'>
+    readonly wordsLearned: FieldRef<"SkillProgress", 'Int'>
+    readonly wordsReviewing: FieldRef<"SkillProgress", 'Int'>
+    readonly lastPracticed: FieldRef<"SkillProgress", 'DateTime'>
+    readonly updatedAt: FieldRef<"SkillProgress", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * SkillProgress findUnique
+   */
+  export type SkillProgressFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkillProgress
+     */
+    select?: SkillProgressSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkillProgress
+     */
+    omit?: SkillProgressOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SkillProgressInclude<ExtArgs> | null
+    /**
+     * Filter, which SkillProgress to fetch.
+     */
+    where: SkillProgressWhereUniqueInput
+  }
+
+  /**
+   * SkillProgress findUniqueOrThrow
+   */
+  export type SkillProgressFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkillProgress
+     */
+    select?: SkillProgressSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkillProgress
+     */
+    omit?: SkillProgressOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SkillProgressInclude<ExtArgs> | null
+    /**
+     * Filter, which SkillProgress to fetch.
+     */
+    where: SkillProgressWhereUniqueInput
+  }
+
+  /**
+   * SkillProgress findFirst
+   */
+  export type SkillProgressFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkillProgress
+     */
+    select?: SkillProgressSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkillProgress
+     */
+    omit?: SkillProgressOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SkillProgressInclude<ExtArgs> | null
+    /**
+     * Filter, which SkillProgress to fetch.
+     */
+    where?: SkillProgressWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SkillProgresses to fetch.
+     */
+    orderBy?: SkillProgressOrderByWithRelationInput | SkillProgressOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SkillProgresses.
+     */
+    cursor?: SkillProgressWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SkillProgresses from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SkillProgresses.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SkillProgresses.
+     */
+    distinct?: SkillProgressScalarFieldEnum | SkillProgressScalarFieldEnum[]
+  }
+
+  /**
+   * SkillProgress findFirstOrThrow
+   */
+  export type SkillProgressFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkillProgress
+     */
+    select?: SkillProgressSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkillProgress
+     */
+    omit?: SkillProgressOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SkillProgressInclude<ExtArgs> | null
+    /**
+     * Filter, which SkillProgress to fetch.
+     */
+    where?: SkillProgressWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SkillProgresses to fetch.
+     */
+    orderBy?: SkillProgressOrderByWithRelationInput | SkillProgressOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SkillProgresses.
+     */
+    cursor?: SkillProgressWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SkillProgresses from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SkillProgresses.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SkillProgresses.
+     */
+    distinct?: SkillProgressScalarFieldEnum | SkillProgressScalarFieldEnum[]
+  }
+
+  /**
+   * SkillProgress findMany
+   */
+  export type SkillProgressFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkillProgress
+     */
+    select?: SkillProgressSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkillProgress
+     */
+    omit?: SkillProgressOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SkillProgressInclude<ExtArgs> | null
+    /**
+     * Filter, which SkillProgresses to fetch.
+     */
+    where?: SkillProgressWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SkillProgresses to fetch.
+     */
+    orderBy?: SkillProgressOrderByWithRelationInput | SkillProgressOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing SkillProgresses.
+     */
+    cursor?: SkillProgressWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SkillProgresses from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SkillProgresses.
+     */
+    skip?: number
+    distinct?: SkillProgressScalarFieldEnum | SkillProgressScalarFieldEnum[]
+  }
+
+  /**
+   * SkillProgress create
+   */
+  export type SkillProgressCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkillProgress
+     */
+    select?: SkillProgressSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkillProgress
+     */
+    omit?: SkillProgressOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SkillProgressInclude<ExtArgs> | null
+    /**
+     * The data needed to create a SkillProgress.
+     */
+    data: XOR<SkillProgressCreateInput, SkillProgressUncheckedCreateInput>
+  }
+
+  /**
+   * SkillProgress createMany
+   */
+  export type SkillProgressCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many SkillProgresses.
+     */
+    data: SkillProgressCreateManyInput | SkillProgressCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * SkillProgress createManyAndReturn
+   */
+  export type SkillProgressCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkillProgress
+     */
+    select?: SkillProgressSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkillProgress
+     */
+    omit?: SkillProgressOmit<ExtArgs> | null
+    /**
+     * The data used to create many SkillProgresses.
+     */
+    data: SkillProgressCreateManyInput | SkillProgressCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SkillProgressIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * SkillProgress update
+   */
+  export type SkillProgressUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkillProgress
+     */
+    select?: SkillProgressSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkillProgress
+     */
+    omit?: SkillProgressOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SkillProgressInclude<ExtArgs> | null
+    /**
+     * The data needed to update a SkillProgress.
+     */
+    data: XOR<SkillProgressUpdateInput, SkillProgressUncheckedUpdateInput>
+    /**
+     * Choose, which SkillProgress to update.
+     */
+    where: SkillProgressWhereUniqueInput
+  }
+
+  /**
+   * SkillProgress updateMany
+   */
+  export type SkillProgressUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update SkillProgresses.
+     */
+    data: XOR<SkillProgressUpdateManyMutationInput, SkillProgressUncheckedUpdateManyInput>
+    /**
+     * Filter which SkillProgresses to update
+     */
+    where?: SkillProgressWhereInput
+    /**
+     * Limit how many SkillProgresses to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * SkillProgress updateManyAndReturn
+   */
+  export type SkillProgressUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkillProgress
+     */
+    select?: SkillProgressSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkillProgress
+     */
+    omit?: SkillProgressOmit<ExtArgs> | null
+    /**
+     * The data used to update SkillProgresses.
+     */
+    data: XOR<SkillProgressUpdateManyMutationInput, SkillProgressUncheckedUpdateManyInput>
+    /**
+     * Filter which SkillProgresses to update
+     */
+    where?: SkillProgressWhereInput
+    /**
+     * Limit how many SkillProgresses to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SkillProgressIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * SkillProgress upsert
+   */
+  export type SkillProgressUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkillProgress
+     */
+    select?: SkillProgressSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkillProgress
+     */
+    omit?: SkillProgressOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SkillProgressInclude<ExtArgs> | null
+    /**
+     * The filter to search for the SkillProgress to update in case it exists.
+     */
+    where: SkillProgressWhereUniqueInput
+    /**
+     * In case the SkillProgress found by the `where` argument doesn't exist, create a new SkillProgress with this data.
+     */
+    create: XOR<SkillProgressCreateInput, SkillProgressUncheckedCreateInput>
+    /**
+     * In case the SkillProgress was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SkillProgressUpdateInput, SkillProgressUncheckedUpdateInput>
+  }
+
+  /**
+   * SkillProgress delete
+   */
+  export type SkillProgressDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkillProgress
+     */
+    select?: SkillProgressSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkillProgress
+     */
+    omit?: SkillProgressOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SkillProgressInclude<ExtArgs> | null
+    /**
+     * Filter which SkillProgress to delete.
+     */
+    where: SkillProgressWhereUniqueInput
+  }
+
+  /**
+   * SkillProgress deleteMany
+   */
+  export type SkillProgressDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SkillProgresses to delete
+     */
+    where?: SkillProgressWhereInput
+    /**
+     * Limit how many SkillProgresses to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * SkillProgress without action
+   */
+  export type SkillProgressDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkillProgress
+     */
+    select?: SkillProgressSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkillProgress
+     */
+    omit?: SkillProgressOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SkillProgressInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model SkillLevelRequirements
+   */
+
+  export type AggregateSkillLevelRequirements = {
+    _count: SkillLevelRequirementsCountAggregateOutputType | null
+    _avg: SkillLevelRequirementsAvgAggregateOutputType | null
+    _sum: SkillLevelRequirementsSumAggregateOutputType | null
+    _min: SkillLevelRequirementsMinAggregateOutputType | null
+    _max: SkillLevelRequirementsMaxAggregateOutputType | null
+  }
+
+  export type SkillLevelRequirementsAvgAggregateOutputType = {
+    id: number | null
+    minXP: number | null
+    minAccuracy: number | null
+    minPracticed: number | null
+    minTimeSpent: number | null
+    minWordsLearned: number | null
+    weightInOverall: number | null
+  }
+
+  export type SkillLevelRequirementsSumAggregateOutputType = {
+    id: number | null
+    minXP: number | null
+    minAccuracy: number | null
+    minPracticed: number | null
+    minTimeSpent: number | null
+    minWordsLearned: number | null
+    weightInOverall: number | null
+  }
+
+  export type SkillLevelRequirementsMinAggregateOutputType = {
+    id: number | null
+    skillType: $Enums.CoreSkillType | null
+    cefrLevel: $Enums.CEFRLevel | null
+    minXP: number | null
+    minAccuracy: number | null
+    minPracticed: number | null
+    minTimeSpent: number | null
+    minWordsLearned: number | null
+    weightInOverall: number | null
+    displayName: string | null
+    description: string | null
+    color: string | null
+  }
+
+  export type SkillLevelRequirementsMaxAggregateOutputType = {
+    id: number | null
+    skillType: $Enums.CoreSkillType | null
+    cefrLevel: $Enums.CEFRLevel | null
+    minXP: number | null
+    minAccuracy: number | null
+    minPracticed: number | null
+    minTimeSpent: number | null
+    minWordsLearned: number | null
+    weightInOverall: number | null
+    displayName: string | null
+    description: string | null
+    color: string | null
+  }
+
+  export type SkillLevelRequirementsCountAggregateOutputType = {
+    id: number
+    skillType: number
+    cefrLevel: number
+    minXP: number
+    minAccuracy: number
+    minPracticed: number
+    minTimeSpent: number
+    minWordsLearned: number
+    weightInOverall: number
+    displayName: number
+    description: number
+    color: number
+    _all: number
+  }
+
+
+  export type SkillLevelRequirementsAvgAggregateInputType = {
+    id?: true
+    minXP?: true
+    minAccuracy?: true
+    minPracticed?: true
+    minTimeSpent?: true
+    minWordsLearned?: true
+    weightInOverall?: true
+  }
+
+  export type SkillLevelRequirementsSumAggregateInputType = {
+    id?: true
+    minXP?: true
+    minAccuracy?: true
+    minPracticed?: true
+    minTimeSpent?: true
+    minWordsLearned?: true
+    weightInOverall?: true
+  }
+
+  export type SkillLevelRequirementsMinAggregateInputType = {
+    id?: true
+    skillType?: true
+    cefrLevel?: true
+    minXP?: true
+    minAccuracy?: true
+    minPracticed?: true
+    minTimeSpent?: true
+    minWordsLearned?: true
+    weightInOverall?: true
+    displayName?: true
+    description?: true
+    color?: true
+  }
+
+  export type SkillLevelRequirementsMaxAggregateInputType = {
+    id?: true
+    skillType?: true
+    cefrLevel?: true
+    minXP?: true
+    minAccuracy?: true
+    minPracticed?: true
+    minTimeSpent?: true
+    minWordsLearned?: true
+    weightInOverall?: true
+    displayName?: true
+    description?: true
+    color?: true
+  }
+
+  export type SkillLevelRequirementsCountAggregateInputType = {
+    id?: true
+    skillType?: true
+    cefrLevel?: true
+    minXP?: true
+    minAccuracy?: true
+    minPracticed?: true
+    minTimeSpent?: true
+    minWordsLearned?: true
+    weightInOverall?: true
+    displayName?: true
+    description?: true
+    color?: true
+    _all?: true
+  }
+
+  export type SkillLevelRequirementsAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SkillLevelRequirements to aggregate.
+     */
+    where?: SkillLevelRequirementsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SkillLevelRequirements to fetch.
+     */
+    orderBy?: SkillLevelRequirementsOrderByWithRelationInput | SkillLevelRequirementsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SkillLevelRequirementsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SkillLevelRequirements from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SkillLevelRequirements.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned SkillLevelRequirements
+    **/
+    _count?: true | SkillLevelRequirementsCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: SkillLevelRequirementsAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: SkillLevelRequirementsSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SkillLevelRequirementsMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SkillLevelRequirementsMaxAggregateInputType
+  }
+
+  export type GetSkillLevelRequirementsAggregateType<T extends SkillLevelRequirementsAggregateArgs> = {
+        [P in keyof T & keyof AggregateSkillLevelRequirements]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSkillLevelRequirements[P]>
+      : GetScalarType<T[P], AggregateSkillLevelRequirements[P]>
+  }
+
+
+
+
+  export type SkillLevelRequirementsGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SkillLevelRequirementsWhereInput
+    orderBy?: SkillLevelRequirementsOrderByWithAggregationInput | SkillLevelRequirementsOrderByWithAggregationInput[]
+    by: SkillLevelRequirementsScalarFieldEnum[] | SkillLevelRequirementsScalarFieldEnum
+    having?: SkillLevelRequirementsScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SkillLevelRequirementsCountAggregateInputType | true
+    _avg?: SkillLevelRequirementsAvgAggregateInputType
+    _sum?: SkillLevelRequirementsSumAggregateInputType
+    _min?: SkillLevelRequirementsMinAggregateInputType
+    _max?: SkillLevelRequirementsMaxAggregateInputType
+  }
+
+  export type SkillLevelRequirementsGroupByOutputType = {
+    id: number
+    skillType: $Enums.CoreSkillType
+    cefrLevel: $Enums.CEFRLevel
+    minXP: number
+    minAccuracy: number
+    minPracticed: number
+    minTimeSpent: number
+    minWordsLearned: number | null
+    weightInOverall: number
+    displayName: string
+    description: string
+    color: string
+    _count: SkillLevelRequirementsCountAggregateOutputType | null
+    _avg: SkillLevelRequirementsAvgAggregateOutputType | null
+    _sum: SkillLevelRequirementsSumAggregateOutputType | null
+    _min: SkillLevelRequirementsMinAggregateOutputType | null
+    _max: SkillLevelRequirementsMaxAggregateOutputType | null
+  }
+
+  type GetSkillLevelRequirementsGroupByPayload<T extends SkillLevelRequirementsGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SkillLevelRequirementsGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SkillLevelRequirementsGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SkillLevelRequirementsGroupByOutputType[P]>
+            : GetScalarType<T[P], SkillLevelRequirementsGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SkillLevelRequirementsSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    skillType?: boolean
+    cefrLevel?: boolean
+    minXP?: boolean
+    minAccuracy?: boolean
+    minPracticed?: boolean
+    minTimeSpent?: boolean
+    minWordsLearned?: boolean
+    weightInOverall?: boolean
+    displayName?: boolean
+    description?: boolean
+    color?: boolean
+  }, ExtArgs["result"]["skillLevelRequirements"]>
+
+  export type SkillLevelRequirementsSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    skillType?: boolean
+    cefrLevel?: boolean
+    minXP?: boolean
+    minAccuracy?: boolean
+    minPracticed?: boolean
+    minTimeSpent?: boolean
+    minWordsLearned?: boolean
+    weightInOverall?: boolean
+    displayName?: boolean
+    description?: boolean
+    color?: boolean
+  }, ExtArgs["result"]["skillLevelRequirements"]>
+
+  export type SkillLevelRequirementsSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    skillType?: boolean
+    cefrLevel?: boolean
+    minXP?: boolean
+    minAccuracy?: boolean
+    minPracticed?: boolean
+    minTimeSpent?: boolean
+    minWordsLearned?: boolean
+    weightInOverall?: boolean
+    displayName?: boolean
+    description?: boolean
+    color?: boolean
+  }, ExtArgs["result"]["skillLevelRequirements"]>
+
+  export type SkillLevelRequirementsSelectScalar = {
+    id?: boolean
+    skillType?: boolean
+    cefrLevel?: boolean
+    minXP?: boolean
+    minAccuracy?: boolean
+    minPracticed?: boolean
+    minTimeSpent?: boolean
+    minWordsLearned?: boolean
+    weightInOverall?: boolean
+    displayName?: boolean
+    description?: boolean
+    color?: boolean
+  }
+
+  export type SkillLevelRequirementsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "skillType" | "cefrLevel" | "minXP" | "minAccuracy" | "minPracticed" | "minTimeSpent" | "minWordsLearned" | "weightInOverall" | "displayName" | "description" | "color", ExtArgs["result"]["skillLevelRequirements"]>
+
+  export type $SkillLevelRequirementsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "SkillLevelRequirements"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      skillType: $Enums.CoreSkillType
+      cefrLevel: $Enums.CEFRLevel
+      minXP: number
+      minAccuracy: number
+      minPracticed: number
+      minTimeSpent: number
+      minWordsLearned: number | null
+      weightInOverall: number
+      displayName: string
+      description: string
+      color: string
+    }, ExtArgs["result"]["skillLevelRequirements"]>
+    composites: {}
+  }
+
+  type SkillLevelRequirementsGetPayload<S extends boolean | null | undefined | SkillLevelRequirementsDefaultArgs> = $Result.GetResult<Prisma.$SkillLevelRequirementsPayload, S>
+
+  type SkillLevelRequirementsCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<SkillLevelRequirementsFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: SkillLevelRequirementsCountAggregateInputType | true
+    }
+
+  export interface SkillLevelRequirementsDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['SkillLevelRequirements'], meta: { name: 'SkillLevelRequirements' } }
+    /**
+     * Find zero or one SkillLevelRequirements that matches the filter.
+     * @param {SkillLevelRequirementsFindUniqueArgs} args - Arguments to find a SkillLevelRequirements
+     * @example
+     * // Get one SkillLevelRequirements
+     * const skillLevelRequirements = await prisma.skillLevelRequirements.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SkillLevelRequirementsFindUniqueArgs>(args: SelectSubset<T, SkillLevelRequirementsFindUniqueArgs<ExtArgs>>): Prisma__SkillLevelRequirementsClient<$Result.GetResult<Prisma.$SkillLevelRequirementsPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one SkillLevelRequirements that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {SkillLevelRequirementsFindUniqueOrThrowArgs} args - Arguments to find a SkillLevelRequirements
+     * @example
+     * // Get one SkillLevelRequirements
+     * const skillLevelRequirements = await prisma.skillLevelRequirements.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SkillLevelRequirementsFindUniqueOrThrowArgs>(args: SelectSubset<T, SkillLevelRequirementsFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SkillLevelRequirementsClient<$Result.GetResult<Prisma.$SkillLevelRequirementsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SkillLevelRequirements that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SkillLevelRequirementsFindFirstArgs} args - Arguments to find a SkillLevelRequirements
+     * @example
+     * // Get one SkillLevelRequirements
+     * const skillLevelRequirements = await prisma.skillLevelRequirements.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SkillLevelRequirementsFindFirstArgs>(args?: SelectSubset<T, SkillLevelRequirementsFindFirstArgs<ExtArgs>>): Prisma__SkillLevelRequirementsClient<$Result.GetResult<Prisma.$SkillLevelRequirementsPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SkillLevelRequirements that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SkillLevelRequirementsFindFirstOrThrowArgs} args - Arguments to find a SkillLevelRequirements
+     * @example
+     * // Get one SkillLevelRequirements
+     * const skillLevelRequirements = await prisma.skillLevelRequirements.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SkillLevelRequirementsFindFirstOrThrowArgs>(args?: SelectSubset<T, SkillLevelRequirementsFindFirstOrThrowArgs<ExtArgs>>): Prisma__SkillLevelRequirementsClient<$Result.GetResult<Prisma.$SkillLevelRequirementsPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more SkillLevelRequirements that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SkillLevelRequirementsFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all SkillLevelRequirements
+     * const skillLevelRequirements = await prisma.skillLevelRequirements.findMany()
+     * 
+     * // Get first 10 SkillLevelRequirements
+     * const skillLevelRequirements = await prisma.skillLevelRequirements.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const skillLevelRequirementsWithIdOnly = await prisma.skillLevelRequirements.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends SkillLevelRequirementsFindManyArgs>(args?: SelectSubset<T, SkillLevelRequirementsFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SkillLevelRequirementsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a SkillLevelRequirements.
+     * @param {SkillLevelRequirementsCreateArgs} args - Arguments to create a SkillLevelRequirements.
+     * @example
+     * // Create one SkillLevelRequirements
+     * const SkillLevelRequirements = await prisma.skillLevelRequirements.create({
+     *   data: {
+     *     // ... data to create a SkillLevelRequirements
+     *   }
+     * })
+     * 
+     */
+    create<T extends SkillLevelRequirementsCreateArgs>(args: SelectSubset<T, SkillLevelRequirementsCreateArgs<ExtArgs>>): Prisma__SkillLevelRequirementsClient<$Result.GetResult<Prisma.$SkillLevelRequirementsPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many SkillLevelRequirements.
+     * @param {SkillLevelRequirementsCreateManyArgs} args - Arguments to create many SkillLevelRequirements.
+     * @example
+     * // Create many SkillLevelRequirements
+     * const skillLevelRequirements = await prisma.skillLevelRequirements.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SkillLevelRequirementsCreateManyArgs>(args?: SelectSubset<T, SkillLevelRequirementsCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many SkillLevelRequirements and returns the data saved in the database.
+     * @param {SkillLevelRequirementsCreateManyAndReturnArgs} args - Arguments to create many SkillLevelRequirements.
+     * @example
+     * // Create many SkillLevelRequirements
+     * const skillLevelRequirements = await prisma.skillLevelRequirements.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many SkillLevelRequirements and only return the `id`
+     * const skillLevelRequirementsWithIdOnly = await prisma.skillLevelRequirements.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends SkillLevelRequirementsCreateManyAndReturnArgs>(args?: SelectSubset<T, SkillLevelRequirementsCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SkillLevelRequirementsPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a SkillLevelRequirements.
+     * @param {SkillLevelRequirementsDeleteArgs} args - Arguments to delete one SkillLevelRequirements.
+     * @example
+     * // Delete one SkillLevelRequirements
+     * const SkillLevelRequirements = await prisma.skillLevelRequirements.delete({
+     *   where: {
+     *     // ... filter to delete one SkillLevelRequirements
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SkillLevelRequirementsDeleteArgs>(args: SelectSubset<T, SkillLevelRequirementsDeleteArgs<ExtArgs>>): Prisma__SkillLevelRequirementsClient<$Result.GetResult<Prisma.$SkillLevelRequirementsPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one SkillLevelRequirements.
+     * @param {SkillLevelRequirementsUpdateArgs} args - Arguments to update one SkillLevelRequirements.
+     * @example
+     * // Update one SkillLevelRequirements
+     * const skillLevelRequirements = await prisma.skillLevelRequirements.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SkillLevelRequirementsUpdateArgs>(args: SelectSubset<T, SkillLevelRequirementsUpdateArgs<ExtArgs>>): Prisma__SkillLevelRequirementsClient<$Result.GetResult<Prisma.$SkillLevelRequirementsPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more SkillLevelRequirements.
+     * @param {SkillLevelRequirementsDeleteManyArgs} args - Arguments to filter SkillLevelRequirements to delete.
+     * @example
+     * // Delete a few SkillLevelRequirements
+     * const { count } = await prisma.skillLevelRequirements.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SkillLevelRequirementsDeleteManyArgs>(args?: SelectSubset<T, SkillLevelRequirementsDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SkillLevelRequirements.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SkillLevelRequirementsUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many SkillLevelRequirements
+     * const skillLevelRequirements = await prisma.skillLevelRequirements.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SkillLevelRequirementsUpdateManyArgs>(args: SelectSubset<T, SkillLevelRequirementsUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SkillLevelRequirements and returns the data updated in the database.
+     * @param {SkillLevelRequirementsUpdateManyAndReturnArgs} args - Arguments to update many SkillLevelRequirements.
+     * @example
+     * // Update many SkillLevelRequirements
+     * const skillLevelRequirements = await prisma.skillLevelRequirements.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more SkillLevelRequirements and only return the `id`
+     * const skillLevelRequirementsWithIdOnly = await prisma.skillLevelRequirements.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends SkillLevelRequirementsUpdateManyAndReturnArgs>(args: SelectSubset<T, SkillLevelRequirementsUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SkillLevelRequirementsPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one SkillLevelRequirements.
+     * @param {SkillLevelRequirementsUpsertArgs} args - Arguments to update or create a SkillLevelRequirements.
+     * @example
+     * // Update or create a SkillLevelRequirements
+     * const skillLevelRequirements = await prisma.skillLevelRequirements.upsert({
+     *   create: {
+     *     // ... data to create a SkillLevelRequirements
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the SkillLevelRequirements we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SkillLevelRequirementsUpsertArgs>(args: SelectSubset<T, SkillLevelRequirementsUpsertArgs<ExtArgs>>): Prisma__SkillLevelRequirementsClient<$Result.GetResult<Prisma.$SkillLevelRequirementsPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of SkillLevelRequirements.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SkillLevelRequirementsCountArgs} args - Arguments to filter SkillLevelRequirements to count.
+     * @example
+     * // Count the number of SkillLevelRequirements
+     * const count = await prisma.skillLevelRequirements.count({
+     *   where: {
+     *     // ... the filter for the SkillLevelRequirements we want to count
+     *   }
+     * })
+    **/
+    count<T extends SkillLevelRequirementsCountArgs>(
+      args?: Subset<T, SkillLevelRequirementsCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SkillLevelRequirementsCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a SkillLevelRequirements.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SkillLevelRequirementsAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SkillLevelRequirementsAggregateArgs>(args: Subset<T, SkillLevelRequirementsAggregateArgs>): Prisma.PrismaPromise<GetSkillLevelRequirementsAggregateType<T>>
+
+    /**
+     * Group by SkillLevelRequirements.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SkillLevelRequirementsGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SkillLevelRequirementsGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SkillLevelRequirementsGroupByArgs['orderBy'] }
+        : { orderBy?: SkillLevelRequirementsGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SkillLevelRequirementsGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSkillLevelRequirementsGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the SkillLevelRequirements model
+   */
+  readonly fields: SkillLevelRequirementsFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for SkillLevelRequirements.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SkillLevelRequirementsClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the SkillLevelRequirements model
+   */
+  interface SkillLevelRequirementsFieldRefs {
+    readonly id: FieldRef<"SkillLevelRequirements", 'Int'>
+    readonly skillType: FieldRef<"SkillLevelRequirements", 'CoreSkillType'>
+    readonly cefrLevel: FieldRef<"SkillLevelRequirements", 'CEFRLevel'>
+    readonly minXP: FieldRef<"SkillLevelRequirements", 'Int'>
+    readonly minAccuracy: FieldRef<"SkillLevelRequirements", 'Float'>
+    readonly minPracticed: FieldRef<"SkillLevelRequirements", 'Int'>
+    readonly minTimeSpent: FieldRef<"SkillLevelRequirements", 'Int'>
+    readonly minWordsLearned: FieldRef<"SkillLevelRequirements", 'Int'>
+    readonly weightInOverall: FieldRef<"SkillLevelRequirements", 'Float'>
+    readonly displayName: FieldRef<"SkillLevelRequirements", 'String'>
+    readonly description: FieldRef<"SkillLevelRequirements", 'String'>
+    readonly color: FieldRef<"SkillLevelRequirements", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * SkillLevelRequirements findUnique
+   */
+  export type SkillLevelRequirementsFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkillLevelRequirements
+     */
+    select?: SkillLevelRequirementsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkillLevelRequirements
+     */
+    omit?: SkillLevelRequirementsOmit<ExtArgs> | null
+    /**
+     * Filter, which SkillLevelRequirements to fetch.
+     */
+    where: SkillLevelRequirementsWhereUniqueInput
+  }
+
+  /**
+   * SkillLevelRequirements findUniqueOrThrow
+   */
+  export type SkillLevelRequirementsFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkillLevelRequirements
+     */
+    select?: SkillLevelRequirementsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkillLevelRequirements
+     */
+    omit?: SkillLevelRequirementsOmit<ExtArgs> | null
+    /**
+     * Filter, which SkillLevelRequirements to fetch.
+     */
+    where: SkillLevelRequirementsWhereUniqueInput
+  }
+
+  /**
+   * SkillLevelRequirements findFirst
+   */
+  export type SkillLevelRequirementsFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkillLevelRequirements
+     */
+    select?: SkillLevelRequirementsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkillLevelRequirements
+     */
+    omit?: SkillLevelRequirementsOmit<ExtArgs> | null
+    /**
+     * Filter, which SkillLevelRequirements to fetch.
+     */
+    where?: SkillLevelRequirementsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SkillLevelRequirements to fetch.
+     */
+    orderBy?: SkillLevelRequirementsOrderByWithRelationInput | SkillLevelRequirementsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SkillLevelRequirements.
+     */
+    cursor?: SkillLevelRequirementsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SkillLevelRequirements from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SkillLevelRequirements.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SkillLevelRequirements.
+     */
+    distinct?: SkillLevelRequirementsScalarFieldEnum | SkillLevelRequirementsScalarFieldEnum[]
+  }
+
+  /**
+   * SkillLevelRequirements findFirstOrThrow
+   */
+  export type SkillLevelRequirementsFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkillLevelRequirements
+     */
+    select?: SkillLevelRequirementsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkillLevelRequirements
+     */
+    omit?: SkillLevelRequirementsOmit<ExtArgs> | null
+    /**
+     * Filter, which SkillLevelRequirements to fetch.
+     */
+    where?: SkillLevelRequirementsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SkillLevelRequirements to fetch.
+     */
+    orderBy?: SkillLevelRequirementsOrderByWithRelationInput | SkillLevelRequirementsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SkillLevelRequirements.
+     */
+    cursor?: SkillLevelRequirementsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SkillLevelRequirements from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SkillLevelRequirements.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SkillLevelRequirements.
+     */
+    distinct?: SkillLevelRequirementsScalarFieldEnum | SkillLevelRequirementsScalarFieldEnum[]
+  }
+
+  /**
+   * SkillLevelRequirements findMany
+   */
+  export type SkillLevelRequirementsFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkillLevelRequirements
+     */
+    select?: SkillLevelRequirementsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkillLevelRequirements
+     */
+    omit?: SkillLevelRequirementsOmit<ExtArgs> | null
+    /**
+     * Filter, which SkillLevelRequirements to fetch.
+     */
+    where?: SkillLevelRequirementsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SkillLevelRequirements to fetch.
+     */
+    orderBy?: SkillLevelRequirementsOrderByWithRelationInput | SkillLevelRequirementsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing SkillLevelRequirements.
+     */
+    cursor?: SkillLevelRequirementsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SkillLevelRequirements from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SkillLevelRequirements.
+     */
+    skip?: number
+    distinct?: SkillLevelRequirementsScalarFieldEnum | SkillLevelRequirementsScalarFieldEnum[]
+  }
+
+  /**
+   * SkillLevelRequirements create
+   */
+  export type SkillLevelRequirementsCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkillLevelRequirements
+     */
+    select?: SkillLevelRequirementsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkillLevelRequirements
+     */
+    omit?: SkillLevelRequirementsOmit<ExtArgs> | null
+    /**
+     * The data needed to create a SkillLevelRequirements.
+     */
+    data: XOR<SkillLevelRequirementsCreateInput, SkillLevelRequirementsUncheckedCreateInput>
+  }
+
+  /**
+   * SkillLevelRequirements createMany
+   */
+  export type SkillLevelRequirementsCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many SkillLevelRequirements.
+     */
+    data: SkillLevelRequirementsCreateManyInput | SkillLevelRequirementsCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * SkillLevelRequirements createManyAndReturn
+   */
+  export type SkillLevelRequirementsCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkillLevelRequirements
+     */
+    select?: SkillLevelRequirementsSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkillLevelRequirements
+     */
+    omit?: SkillLevelRequirementsOmit<ExtArgs> | null
+    /**
+     * The data used to create many SkillLevelRequirements.
+     */
+    data: SkillLevelRequirementsCreateManyInput | SkillLevelRequirementsCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * SkillLevelRequirements update
+   */
+  export type SkillLevelRequirementsUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkillLevelRequirements
+     */
+    select?: SkillLevelRequirementsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkillLevelRequirements
+     */
+    omit?: SkillLevelRequirementsOmit<ExtArgs> | null
+    /**
+     * The data needed to update a SkillLevelRequirements.
+     */
+    data: XOR<SkillLevelRequirementsUpdateInput, SkillLevelRequirementsUncheckedUpdateInput>
+    /**
+     * Choose, which SkillLevelRequirements to update.
+     */
+    where: SkillLevelRequirementsWhereUniqueInput
+  }
+
+  /**
+   * SkillLevelRequirements updateMany
+   */
+  export type SkillLevelRequirementsUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update SkillLevelRequirements.
+     */
+    data: XOR<SkillLevelRequirementsUpdateManyMutationInput, SkillLevelRequirementsUncheckedUpdateManyInput>
+    /**
+     * Filter which SkillLevelRequirements to update
+     */
+    where?: SkillLevelRequirementsWhereInput
+    /**
+     * Limit how many SkillLevelRequirements to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * SkillLevelRequirements updateManyAndReturn
+   */
+  export type SkillLevelRequirementsUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkillLevelRequirements
+     */
+    select?: SkillLevelRequirementsSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkillLevelRequirements
+     */
+    omit?: SkillLevelRequirementsOmit<ExtArgs> | null
+    /**
+     * The data used to update SkillLevelRequirements.
+     */
+    data: XOR<SkillLevelRequirementsUpdateManyMutationInput, SkillLevelRequirementsUncheckedUpdateManyInput>
+    /**
+     * Filter which SkillLevelRequirements to update
+     */
+    where?: SkillLevelRequirementsWhereInput
+    /**
+     * Limit how many SkillLevelRequirements to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * SkillLevelRequirements upsert
+   */
+  export type SkillLevelRequirementsUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkillLevelRequirements
+     */
+    select?: SkillLevelRequirementsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkillLevelRequirements
+     */
+    omit?: SkillLevelRequirementsOmit<ExtArgs> | null
+    /**
+     * The filter to search for the SkillLevelRequirements to update in case it exists.
+     */
+    where: SkillLevelRequirementsWhereUniqueInput
+    /**
+     * In case the SkillLevelRequirements found by the `where` argument doesn't exist, create a new SkillLevelRequirements with this data.
+     */
+    create: XOR<SkillLevelRequirementsCreateInput, SkillLevelRequirementsUncheckedCreateInput>
+    /**
+     * In case the SkillLevelRequirements was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SkillLevelRequirementsUpdateInput, SkillLevelRequirementsUncheckedUpdateInput>
+  }
+
+  /**
+   * SkillLevelRequirements delete
+   */
+  export type SkillLevelRequirementsDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkillLevelRequirements
+     */
+    select?: SkillLevelRequirementsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkillLevelRequirements
+     */
+    omit?: SkillLevelRequirementsOmit<ExtArgs> | null
+    /**
+     * Filter which SkillLevelRequirements to delete.
+     */
+    where: SkillLevelRequirementsWhereUniqueInput
+  }
+
+  /**
+   * SkillLevelRequirements deleteMany
+   */
+  export type SkillLevelRequirementsDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SkillLevelRequirements to delete
+     */
+    where?: SkillLevelRequirementsWhereInput
+    /**
+     * Limit how many SkillLevelRequirements to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * SkillLevelRequirements without action
+   */
+  export type SkillLevelRequirementsDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkillLevelRequirements
+     */
+    select?: SkillLevelRequirementsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkillLevelRequirements
+     */
+    omit?: SkillLevelRequirementsOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Model WordTaskProgress
    */
 
@@ -10376,96 +15066,160 @@ export namespace Prisma {
 
   export type WordTaskProgressAvgAggregateOutputType = {
     id: number | null
-    userId: number | null
     wordId: number | null
+    userId: number | null
     score: number | null
     attempts: number | null
+    correctCount: number | null
+    reviewInterval: number | null
+    easeFactor: number | null
+    timeSpent: number | null
   }
 
   export type WordTaskProgressSumAggregateOutputType = {
     id: number | null
-    userId: number | null
     wordId: number | null
+    userId: number | null
     score: number | null
     attempts: number | null
+    correctCount: number | null
+    reviewInterval: number | null
+    easeFactor: number | null
+    timeSpent: number | null
   }
 
   export type WordTaskProgressMinAggregateOutputType = {
     id: number | null
-    userId: number | null
     wordId: number | null
-    taskType: $Enums.WordTaskType | null
+    userId: number | null
+    skillType: $Enums.CoreSkillType | null
     isPassed: boolean | null
     score: number | null
     attempts: number | null
+    correctCount: number | null
+    nextReviewAt: Date | null
+    reviewInterval: number | null
+    easeFactor: number | null
+    lastAttempt: Date | null
+    timeSpent: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
   }
 
   export type WordTaskProgressMaxAggregateOutputType = {
     id: number | null
-    userId: number | null
     wordId: number | null
-    taskType: $Enums.WordTaskType | null
+    userId: number | null
+    skillType: $Enums.CoreSkillType | null
     isPassed: boolean | null
     score: number | null
     attempts: number | null
+    correctCount: number | null
+    nextReviewAt: Date | null
+    reviewInterval: number | null
+    easeFactor: number | null
+    lastAttempt: Date | null
+    timeSpent: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
   }
 
   export type WordTaskProgressCountAggregateOutputType = {
     id: number
-    userId: number
     wordId: number
-    taskType: number
+    userId: number
+    skillType: number
     isPassed: number
     score: number
     attempts: number
+    correctCount: number
+    nextReviewAt: number
+    reviewInterval: number
+    easeFactor: number
+    lastAttempt: number
+    timeSpent: number
+    createdAt: number
+    updatedAt: number
     _all: number
   }
 
 
   export type WordTaskProgressAvgAggregateInputType = {
     id?: true
-    userId?: true
     wordId?: true
+    userId?: true
     score?: true
     attempts?: true
+    correctCount?: true
+    reviewInterval?: true
+    easeFactor?: true
+    timeSpent?: true
   }
 
   export type WordTaskProgressSumAggregateInputType = {
     id?: true
-    userId?: true
     wordId?: true
+    userId?: true
     score?: true
     attempts?: true
+    correctCount?: true
+    reviewInterval?: true
+    easeFactor?: true
+    timeSpent?: true
   }
 
   export type WordTaskProgressMinAggregateInputType = {
     id?: true
-    userId?: true
     wordId?: true
-    taskType?: true
+    userId?: true
+    skillType?: true
     isPassed?: true
     score?: true
     attempts?: true
+    correctCount?: true
+    nextReviewAt?: true
+    reviewInterval?: true
+    easeFactor?: true
+    lastAttempt?: true
+    timeSpent?: true
+    createdAt?: true
+    updatedAt?: true
   }
 
   export type WordTaskProgressMaxAggregateInputType = {
     id?: true
-    userId?: true
     wordId?: true
-    taskType?: true
+    userId?: true
+    skillType?: true
     isPassed?: true
     score?: true
     attempts?: true
+    correctCount?: true
+    nextReviewAt?: true
+    reviewInterval?: true
+    easeFactor?: true
+    lastAttempt?: true
+    timeSpent?: true
+    createdAt?: true
+    updatedAt?: true
   }
 
   export type WordTaskProgressCountAggregateInputType = {
     id?: true
-    userId?: true
     wordId?: true
-    taskType?: true
+    userId?: true
+    skillType?: true
     isPassed?: true
     score?: true
     attempts?: true
+    correctCount?: true
+    nextReviewAt?: true
+    reviewInterval?: true
+    easeFactor?: true
+    lastAttempt?: true
+    timeSpent?: true
+    createdAt?: true
+    updatedAt?: true
     _all?: true
   }
 
@@ -10557,12 +15311,20 @@ export namespace Prisma {
 
   export type WordTaskProgressGroupByOutputType = {
     id: number
-    userId: number
     wordId: number
-    taskType: $Enums.WordTaskType
+    userId: number
+    skillType: $Enums.CoreSkillType
     isPassed: boolean
     score: number
     attempts: number
+    correctCount: number
+    nextReviewAt: Date | null
+    reviewInterval: number
+    easeFactor: number
+    lastAttempt: Date | null
+    timeSpent: number
+    createdAt: Date
+    updatedAt: Date
     _count: WordTaskProgressCountAggregateOutputType | null
     _avg: WordTaskProgressAvgAggregateOutputType | null
     _sum: WordTaskProgressSumAggregateOutputType | null
@@ -10586,78 +15348,118 @@ export namespace Prisma {
 
   export type WordTaskProgressSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    userId?: boolean
     wordId?: boolean
-    taskType?: boolean
+    userId?: boolean
+    skillType?: boolean
     isPassed?: boolean
     score?: boolean
     attempts?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    correctCount?: boolean
+    nextReviewAt?: boolean
+    reviewInterval?: boolean
+    easeFactor?: boolean
+    lastAttempt?: boolean
+    timeSpent?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
     word?: boolean | WordDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["wordTaskProgress"]>
 
   export type WordTaskProgressSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    userId?: boolean
     wordId?: boolean
-    taskType?: boolean
+    userId?: boolean
+    skillType?: boolean
     isPassed?: boolean
     score?: boolean
     attempts?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    correctCount?: boolean
+    nextReviewAt?: boolean
+    reviewInterval?: boolean
+    easeFactor?: boolean
+    lastAttempt?: boolean
+    timeSpent?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
     word?: boolean | WordDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["wordTaskProgress"]>
 
   export type WordTaskProgressSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    userId?: boolean
     wordId?: boolean
-    taskType?: boolean
+    userId?: boolean
+    skillType?: boolean
     isPassed?: boolean
     score?: boolean
     attempts?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
+    correctCount?: boolean
+    nextReviewAt?: boolean
+    reviewInterval?: boolean
+    easeFactor?: boolean
+    lastAttempt?: boolean
+    timeSpent?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
     word?: boolean | WordDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["wordTaskProgress"]>
 
   export type WordTaskProgressSelectScalar = {
     id?: boolean
-    userId?: boolean
     wordId?: boolean
-    taskType?: boolean
+    userId?: boolean
+    skillType?: boolean
     isPassed?: boolean
     score?: boolean
     attempts?: boolean
+    correctCount?: boolean
+    nextReviewAt?: boolean
+    reviewInterval?: boolean
+    easeFactor?: boolean
+    lastAttempt?: boolean
+    timeSpent?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
   }
 
-  export type WordTaskProgressOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "wordId" | "taskType" | "isPassed" | "score" | "attempts", ExtArgs["result"]["wordTaskProgress"]>
+  export type WordTaskProgressOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "wordId" | "userId" | "skillType" | "isPassed" | "score" | "attempts" | "correctCount" | "nextReviewAt" | "reviewInterval" | "easeFactor" | "lastAttempt" | "timeSpent" | "createdAt" | "updatedAt", ExtArgs["result"]["wordTaskProgress"]>
   export type WordTaskProgressInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
     word?: boolean | WordDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }
   export type WordTaskProgressIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
     word?: boolean | WordDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }
   export type WordTaskProgressIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
     word?: boolean | WordDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }
 
   export type $WordTaskProgressPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "WordTaskProgress"
     objects: {
-      user: Prisma.$UserPayload<ExtArgs>
       word: Prisma.$WordPayload<ExtArgs>
+      user: Prisma.$UserPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
-      userId: number
       wordId: number
-      taskType: $Enums.WordTaskType
+      userId: number
+      skillType: $Enums.CoreSkillType
       isPassed: boolean
       score: number
       attempts: number
+      correctCount: number
+      nextReviewAt: Date | null
+      reviewInterval: number
+      easeFactor: number
+      lastAttempt: Date | null
+      timeSpent: number
+      createdAt: Date
+      updatedAt: Date
     }, ExtArgs["result"]["wordTaskProgress"]>
     composites: {}
   }
@@ -11052,8 +15854,8 @@ export namespace Prisma {
    */
   export interface Prisma__WordTaskProgressClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     word<T extends WordDefaultArgs<ExtArgs> = {}>(args?: Subset<T, WordDefaultArgs<ExtArgs>>): Prisma__WordClient<$Result.GetResult<Prisma.$WordPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -11084,12 +15886,20 @@ export namespace Prisma {
    */
   interface WordTaskProgressFieldRefs {
     readonly id: FieldRef<"WordTaskProgress", 'Int'>
-    readonly userId: FieldRef<"WordTaskProgress", 'Int'>
     readonly wordId: FieldRef<"WordTaskProgress", 'Int'>
-    readonly taskType: FieldRef<"WordTaskProgress", 'WordTaskType'>
+    readonly userId: FieldRef<"WordTaskProgress", 'Int'>
+    readonly skillType: FieldRef<"WordTaskProgress", 'CoreSkillType'>
     readonly isPassed: FieldRef<"WordTaskProgress", 'Boolean'>
     readonly score: FieldRef<"WordTaskProgress", 'Int'>
     readonly attempts: FieldRef<"WordTaskProgress", 'Int'>
+    readonly correctCount: FieldRef<"WordTaskProgress", 'Int'>
+    readonly nextReviewAt: FieldRef<"WordTaskProgress", 'DateTime'>
+    readonly reviewInterval: FieldRef<"WordTaskProgress", 'Int'>
+    readonly easeFactor: FieldRef<"WordTaskProgress", 'Float'>
+    readonly lastAttempt: FieldRef<"WordTaskProgress", 'DateTime'>
+    readonly timeSpent: FieldRef<"WordTaskProgress", 'Int'>
+    readonly createdAt: FieldRef<"WordTaskProgress", 'DateTime'>
+    readonly updatedAt: FieldRef<"WordTaskProgress", 'DateTime'>
   }
     
 
@@ -11505,6 +16315,3532 @@ export namespace Prisma {
 
 
   /**
+   * Model DailyStats
+   */
+
+  export type AggregateDailyStats = {
+    _count: DailyStatsCountAggregateOutputType | null
+    _avg: DailyStatsAvgAggregateOutputType | null
+    _sum: DailyStatsSumAggregateOutputType | null
+    _min: DailyStatsMinAggregateOutputType | null
+    _max: DailyStatsMaxAggregateOutputType | null
+  }
+
+  export type DailyStatsAvgAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    totalXP: number | null
+    totalTime: number | null
+    tasksCompleted: number | null
+    averageAccuracy: number | null
+    newWordsLearned: number | null
+    wordsReviewed: number | null
+  }
+
+  export type DailyStatsSumAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    totalXP: number | null
+    totalTime: number | null
+    tasksCompleted: number | null
+    averageAccuracy: number | null
+    newWordsLearned: number | null
+    wordsReviewed: number | null
+  }
+
+  export type DailyStatsMinAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    language: $Enums.Language | null
+    date: Date | null
+    totalXP: number | null
+    totalTime: number | null
+    tasksCompleted: number | null
+    averageAccuracy: number | null
+    newWordsLearned: number | null
+    wordsReviewed: number | null
+  }
+
+  export type DailyStatsMaxAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    language: $Enums.Language | null
+    date: Date | null
+    totalXP: number | null
+    totalTime: number | null
+    tasksCompleted: number | null
+    averageAccuracy: number | null
+    newWordsLearned: number | null
+    wordsReviewed: number | null
+  }
+
+  export type DailyStatsCountAggregateOutputType = {
+    id: number
+    userId: number
+    language: number
+    date: number
+    totalXP: number
+    totalTime: number
+    tasksCompleted: number
+    averageAccuracy: number
+    skillsStats: number
+    newWordsLearned: number
+    wordsReviewed: number
+    _all: number
+  }
+
+
+  export type DailyStatsAvgAggregateInputType = {
+    id?: true
+    userId?: true
+    totalXP?: true
+    totalTime?: true
+    tasksCompleted?: true
+    averageAccuracy?: true
+    newWordsLearned?: true
+    wordsReviewed?: true
+  }
+
+  export type DailyStatsSumAggregateInputType = {
+    id?: true
+    userId?: true
+    totalXP?: true
+    totalTime?: true
+    tasksCompleted?: true
+    averageAccuracy?: true
+    newWordsLearned?: true
+    wordsReviewed?: true
+  }
+
+  export type DailyStatsMinAggregateInputType = {
+    id?: true
+    userId?: true
+    language?: true
+    date?: true
+    totalXP?: true
+    totalTime?: true
+    tasksCompleted?: true
+    averageAccuracy?: true
+    newWordsLearned?: true
+    wordsReviewed?: true
+  }
+
+  export type DailyStatsMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    language?: true
+    date?: true
+    totalXP?: true
+    totalTime?: true
+    tasksCompleted?: true
+    averageAccuracy?: true
+    newWordsLearned?: true
+    wordsReviewed?: true
+  }
+
+  export type DailyStatsCountAggregateInputType = {
+    id?: true
+    userId?: true
+    language?: true
+    date?: true
+    totalXP?: true
+    totalTime?: true
+    tasksCompleted?: true
+    averageAccuracy?: true
+    skillsStats?: true
+    newWordsLearned?: true
+    wordsReviewed?: true
+    _all?: true
+  }
+
+  export type DailyStatsAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which DailyStats to aggregate.
+     */
+    where?: DailyStatsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DailyStats to fetch.
+     */
+    orderBy?: DailyStatsOrderByWithRelationInput | DailyStatsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: DailyStatsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DailyStats from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DailyStats.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned DailyStats
+    **/
+    _count?: true | DailyStatsCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: DailyStatsAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: DailyStatsSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: DailyStatsMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: DailyStatsMaxAggregateInputType
+  }
+
+  export type GetDailyStatsAggregateType<T extends DailyStatsAggregateArgs> = {
+        [P in keyof T & keyof AggregateDailyStats]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateDailyStats[P]>
+      : GetScalarType<T[P], AggregateDailyStats[P]>
+  }
+
+
+
+
+  export type DailyStatsGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DailyStatsWhereInput
+    orderBy?: DailyStatsOrderByWithAggregationInput | DailyStatsOrderByWithAggregationInput[]
+    by: DailyStatsScalarFieldEnum[] | DailyStatsScalarFieldEnum
+    having?: DailyStatsScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: DailyStatsCountAggregateInputType | true
+    _avg?: DailyStatsAvgAggregateInputType
+    _sum?: DailyStatsSumAggregateInputType
+    _min?: DailyStatsMinAggregateInputType
+    _max?: DailyStatsMaxAggregateInputType
+  }
+
+  export type DailyStatsGroupByOutputType = {
+    id: number
+    userId: number
+    language: $Enums.Language
+    date: Date
+    totalXP: number
+    totalTime: number
+    tasksCompleted: number
+    averageAccuracy: number
+    skillsStats: JsonValue
+    newWordsLearned: number
+    wordsReviewed: number
+    _count: DailyStatsCountAggregateOutputType | null
+    _avg: DailyStatsAvgAggregateOutputType | null
+    _sum: DailyStatsSumAggregateOutputType | null
+    _min: DailyStatsMinAggregateOutputType | null
+    _max: DailyStatsMaxAggregateOutputType | null
+  }
+
+  type GetDailyStatsGroupByPayload<T extends DailyStatsGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<DailyStatsGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof DailyStatsGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], DailyStatsGroupByOutputType[P]>
+            : GetScalarType<T[P], DailyStatsGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type DailyStatsSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    language?: boolean
+    date?: boolean
+    totalXP?: boolean
+    totalTime?: boolean
+    tasksCompleted?: boolean
+    averageAccuracy?: boolean
+    skillsStats?: boolean
+    newWordsLearned?: boolean
+    wordsReviewed?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["dailyStats"]>
+
+  export type DailyStatsSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    language?: boolean
+    date?: boolean
+    totalXP?: boolean
+    totalTime?: boolean
+    tasksCompleted?: boolean
+    averageAccuracy?: boolean
+    skillsStats?: boolean
+    newWordsLearned?: boolean
+    wordsReviewed?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["dailyStats"]>
+
+  export type DailyStatsSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    language?: boolean
+    date?: boolean
+    totalXP?: boolean
+    totalTime?: boolean
+    tasksCompleted?: boolean
+    averageAccuracy?: boolean
+    skillsStats?: boolean
+    newWordsLearned?: boolean
+    wordsReviewed?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["dailyStats"]>
+
+  export type DailyStatsSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    language?: boolean
+    date?: boolean
+    totalXP?: boolean
+    totalTime?: boolean
+    tasksCompleted?: boolean
+    averageAccuracy?: boolean
+    skillsStats?: boolean
+    newWordsLearned?: boolean
+    wordsReviewed?: boolean
+  }
+
+  export type DailyStatsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "language" | "date" | "totalXP" | "totalTime" | "tasksCompleted" | "averageAccuracy" | "skillsStats" | "newWordsLearned" | "wordsReviewed", ExtArgs["result"]["dailyStats"]>
+  export type DailyStatsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type DailyStatsIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type DailyStatsIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $DailyStatsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "DailyStats"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      userId: number
+      language: $Enums.Language
+      date: Date
+      totalXP: number
+      totalTime: number
+      tasksCompleted: number
+      averageAccuracy: number
+      skillsStats: Prisma.JsonValue
+      newWordsLearned: number
+      wordsReviewed: number
+    }, ExtArgs["result"]["dailyStats"]>
+    composites: {}
+  }
+
+  type DailyStatsGetPayload<S extends boolean | null | undefined | DailyStatsDefaultArgs> = $Result.GetResult<Prisma.$DailyStatsPayload, S>
+
+  type DailyStatsCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<DailyStatsFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: DailyStatsCountAggregateInputType | true
+    }
+
+  export interface DailyStatsDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['DailyStats'], meta: { name: 'DailyStats' } }
+    /**
+     * Find zero or one DailyStats that matches the filter.
+     * @param {DailyStatsFindUniqueArgs} args - Arguments to find a DailyStats
+     * @example
+     * // Get one DailyStats
+     * const dailyStats = await prisma.dailyStats.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends DailyStatsFindUniqueArgs>(args: SelectSubset<T, DailyStatsFindUniqueArgs<ExtArgs>>): Prisma__DailyStatsClient<$Result.GetResult<Prisma.$DailyStatsPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one DailyStats that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {DailyStatsFindUniqueOrThrowArgs} args - Arguments to find a DailyStats
+     * @example
+     * // Get one DailyStats
+     * const dailyStats = await prisma.dailyStats.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends DailyStatsFindUniqueOrThrowArgs>(args: SelectSubset<T, DailyStatsFindUniqueOrThrowArgs<ExtArgs>>): Prisma__DailyStatsClient<$Result.GetResult<Prisma.$DailyStatsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first DailyStats that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DailyStatsFindFirstArgs} args - Arguments to find a DailyStats
+     * @example
+     * // Get one DailyStats
+     * const dailyStats = await prisma.dailyStats.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends DailyStatsFindFirstArgs>(args?: SelectSubset<T, DailyStatsFindFirstArgs<ExtArgs>>): Prisma__DailyStatsClient<$Result.GetResult<Prisma.$DailyStatsPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first DailyStats that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DailyStatsFindFirstOrThrowArgs} args - Arguments to find a DailyStats
+     * @example
+     * // Get one DailyStats
+     * const dailyStats = await prisma.dailyStats.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends DailyStatsFindFirstOrThrowArgs>(args?: SelectSubset<T, DailyStatsFindFirstOrThrowArgs<ExtArgs>>): Prisma__DailyStatsClient<$Result.GetResult<Prisma.$DailyStatsPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more DailyStats that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DailyStatsFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all DailyStats
+     * const dailyStats = await prisma.dailyStats.findMany()
+     * 
+     * // Get first 10 DailyStats
+     * const dailyStats = await prisma.dailyStats.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const dailyStatsWithIdOnly = await prisma.dailyStats.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends DailyStatsFindManyArgs>(args?: SelectSubset<T, DailyStatsFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DailyStatsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a DailyStats.
+     * @param {DailyStatsCreateArgs} args - Arguments to create a DailyStats.
+     * @example
+     * // Create one DailyStats
+     * const DailyStats = await prisma.dailyStats.create({
+     *   data: {
+     *     // ... data to create a DailyStats
+     *   }
+     * })
+     * 
+     */
+    create<T extends DailyStatsCreateArgs>(args: SelectSubset<T, DailyStatsCreateArgs<ExtArgs>>): Prisma__DailyStatsClient<$Result.GetResult<Prisma.$DailyStatsPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many DailyStats.
+     * @param {DailyStatsCreateManyArgs} args - Arguments to create many DailyStats.
+     * @example
+     * // Create many DailyStats
+     * const dailyStats = await prisma.dailyStats.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends DailyStatsCreateManyArgs>(args?: SelectSubset<T, DailyStatsCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many DailyStats and returns the data saved in the database.
+     * @param {DailyStatsCreateManyAndReturnArgs} args - Arguments to create many DailyStats.
+     * @example
+     * // Create many DailyStats
+     * const dailyStats = await prisma.dailyStats.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many DailyStats and only return the `id`
+     * const dailyStatsWithIdOnly = await prisma.dailyStats.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends DailyStatsCreateManyAndReturnArgs>(args?: SelectSubset<T, DailyStatsCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DailyStatsPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a DailyStats.
+     * @param {DailyStatsDeleteArgs} args - Arguments to delete one DailyStats.
+     * @example
+     * // Delete one DailyStats
+     * const DailyStats = await prisma.dailyStats.delete({
+     *   where: {
+     *     // ... filter to delete one DailyStats
+     *   }
+     * })
+     * 
+     */
+    delete<T extends DailyStatsDeleteArgs>(args: SelectSubset<T, DailyStatsDeleteArgs<ExtArgs>>): Prisma__DailyStatsClient<$Result.GetResult<Prisma.$DailyStatsPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one DailyStats.
+     * @param {DailyStatsUpdateArgs} args - Arguments to update one DailyStats.
+     * @example
+     * // Update one DailyStats
+     * const dailyStats = await prisma.dailyStats.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends DailyStatsUpdateArgs>(args: SelectSubset<T, DailyStatsUpdateArgs<ExtArgs>>): Prisma__DailyStatsClient<$Result.GetResult<Prisma.$DailyStatsPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more DailyStats.
+     * @param {DailyStatsDeleteManyArgs} args - Arguments to filter DailyStats to delete.
+     * @example
+     * // Delete a few DailyStats
+     * const { count } = await prisma.dailyStats.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends DailyStatsDeleteManyArgs>(args?: SelectSubset<T, DailyStatsDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more DailyStats.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DailyStatsUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many DailyStats
+     * const dailyStats = await prisma.dailyStats.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends DailyStatsUpdateManyArgs>(args: SelectSubset<T, DailyStatsUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more DailyStats and returns the data updated in the database.
+     * @param {DailyStatsUpdateManyAndReturnArgs} args - Arguments to update many DailyStats.
+     * @example
+     * // Update many DailyStats
+     * const dailyStats = await prisma.dailyStats.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more DailyStats and only return the `id`
+     * const dailyStatsWithIdOnly = await prisma.dailyStats.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends DailyStatsUpdateManyAndReturnArgs>(args: SelectSubset<T, DailyStatsUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DailyStatsPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one DailyStats.
+     * @param {DailyStatsUpsertArgs} args - Arguments to update or create a DailyStats.
+     * @example
+     * // Update or create a DailyStats
+     * const dailyStats = await prisma.dailyStats.upsert({
+     *   create: {
+     *     // ... data to create a DailyStats
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the DailyStats we want to update
+     *   }
+     * })
+     */
+    upsert<T extends DailyStatsUpsertArgs>(args: SelectSubset<T, DailyStatsUpsertArgs<ExtArgs>>): Prisma__DailyStatsClient<$Result.GetResult<Prisma.$DailyStatsPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of DailyStats.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DailyStatsCountArgs} args - Arguments to filter DailyStats to count.
+     * @example
+     * // Count the number of DailyStats
+     * const count = await prisma.dailyStats.count({
+     *   where: {
+     *     // ... the filter for the DailyStats we want to count
+     *   }
+     * })
+    **/
+    count<T extends DailyStatsCountArgs>(
+      args?: Subset<T, DailyStatsCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], DailyStatsCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a DailyStats.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DailyStatsAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends DailyStatsAggregateArgs>(args: Subset<T, DailyStatsAggregateArgs>): Prisma.PrismaPromise<GetDailyStatsAggregateType<T>>
+
+    /**
+     * Group by DailyStats.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DailyStatsGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends DailyStatsGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: DailyStatsGroupByArgs['orderBy'] }
+        : { orderBy?: DailyStatsGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, DailyStatsGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetDailyStatsGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the DailyStats model
+   */
+  readonly fields: DailyStatsFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for DailyStats.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__DailyStatsClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the DailyStats model
+   */
+  interface DailyStatsFieldRefs {
+    readonly id: FieldRef<"DailyStats", 'Int'>
+    readonly userId: FieldRef<"DailyStats", 'Int'>
+    readonly language: FieldRef<"DailyStats", 'Language'>
+    readonly date: FieldRef<"DailyStats", 'DateTime'>
+    readonly totalXP: FieldRef<"DailyStats", 'Int'>
+    readonly totalTime: FieldRef<"DailyStats", 'Int'>
+    readonly tasksCompleted: FieldRef<"DailyStats", 'Int'>
+    readonly averageAccuracy: FieldRef<"DailyStats", 'Float'>
+    readonly skillsStats: FieldRef<"DailyStats", 'Json'>
+    readonly newWordsLearned: FieldRef<"DailyStats", 'Int'>
+    readonly wordsReviewed: FieldRef<"DailyStats", 'Int'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * DailyStats findUnique
+   */
+  export type DailyStatsFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DailyStats
+     */
+    select?: DailyStatsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DailyStats
+     */
+    omit?: DailyStatsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DailyStatsInclude<ExtArgs> | null
+    /**
+     * Filter, which DailyStats to fetch.
+     */
+    where: DailyStatsWhereUniqueInput
+  }
+
+  /**
+   * DailyStats findUniqueOrThrow
+   */
+  export type DailyStatsFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DailyStats
+     */
+    select?: DailyStatsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DailyStats
+     */
+    omit?: DailyStatsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DailyStatsInclude<ExtArgs> | null
+    /**
+     * Filter, which DailyStats to fetch.
+     */
+    where: DailyStatsWhereUniqueInput
+  }
+
+  /**
+   * DailyStats findFirst
+   */
+  export type DailyStatsFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DailyStats
+     */
+    select?: DailyStatsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DailyStats
+     */
+    omit?: DailyStatsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DailyStatsInclude<ExtArgs> | null
+    /**
+     * Filter, which DailyStats to fetch.
+     */
+    where?: DailyStatsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DailyStats to fetch.
+     */
+    orderBy?: DailyStatsOrderByWithRelationInput | DailyStatsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for DailyStats.
+     */
+    cursor?: DailyStatsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DailyStats from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DailyStats.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DailyStats.
+     */
+    distinct?: DailyStatsScalarFieldEnum | DailyStatsScalarFieldEnum[]
+  }
+
+  /**
+   * DailyStats findFirstOrThrow
+   */
+  export type DailyStatsFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DailyStats
+     */
+    select?: DailyStatsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DailyStats
+     */
+    omit?: DailyStatsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DailyStatsInclude<ExtArgs> | null
+    /**
+     * Filter, which DailyStats to fetch.
+     */
+    where?: DailyStatsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DailyStats to fetch.
+     */
+    orderBy?: DailyStatsOrderByWithRelationInput | DailyStatsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for DailyStats.
+     */
+    cursor?: DailyStatsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DailyStats from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DailyStats.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DailyStats.
+     */
+    distinct?: DailyStatsScalarFieldEnum | DailyStatsScalarFieldEnum[]
+  }
+
+  /**
+   * DailyStats findMany
+   */
+  export type DailyStatsFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DailyStats
+     */
+    select?: DailyStatsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DailyStats
+     */
+    omit?: DailyStatsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DailyStatsInclude<ExtArgs> | null
+    /**
+     * Filter, which DailyStats to fetch.
+     */
+    where?: DailyStatsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DailyStats to fetch.
+     */
+    orderBy?: DailyStatsOrderByWithRelationInput | DailyStatsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing DailyStats.
+     */
+    cursor?: DailyStatsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DailyStats from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DailyStats.
+     */
+    skip?: number
+    distinct?: DailyStatsScalarFieldEnum | DailyStatsScalarFieldEnum[]
+  }
+
+  /**
+   * DailyStats create
+   */
+  export type DailyStatsCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DailyStats
+     */
+    select?: DailyStatsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DailyStats
+     */
+    omit?: DailyStatsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DailyStatsInclude<ExtArgs> | null
+    /**
+     * The data needed to create a DailyStats.
+     */
+    data: XOR<DailyStatsCreateInput, DailyStatsUncheckedCreateInput>
+  }
+
+  /**
+   * DailyStats createMany
+   */
+  export type DailyStatsCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many DailyStats.
+     */
+    data: DailyStatsCreateManyInput | DailyStatsCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * DailyStats createManyAndReturn
+   */
+  export type DailyStatsCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DailyStats
+     */
+    select?: DailyStatsSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the DailyStats
+     */
+    omit?: DailyStatsOmit<ExtArgs> | null
+    /**
+     * The data used to create many DailyStats.
+     */
+    data: DailyStatsCreateManyInput | DailyStatsCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DailyStatsIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * DailyStats update
+   */
+  export type DailyStatsUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DailyStats
+     */
+    select?: DailyStatsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DailyStats
+     */
+    omit?: DailyStatsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DailyStatsInclude<ExtArgs> | null
+    /**
+     * The data needed to update a DailyStats.
+     */
+    data: XOR<DailyStatsUpdateInput, DailyStatsUncheckedUpdateInput>
+    /**
+     * Choose, which DailyStats to update.
+     */
+    where: DailyStatsWhereUniqueInput
+  }
+
+  /**
+   * DailyStats updateMany
+   */
+  export type DailyStatsUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update DailyStats.
+     */
+    data: XOR<DailyStatsUpdateManyMutationInput, DailyStatsUncheckedUpdateManyInput>
+    /**
+     * Filter which DailyStats to update
+     */
+    where?: DailyStatsWhereInput
+    /**
+     * Limit how many DailyStats to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * DailyStats updateManyAndReturn
+   */
+  export type DailyStatsUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DailyStats
+     */
+    select?: DailyStatsSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the DailyStats
+     */
+    omit?: DailyStatsOmit<ExtArgs> | null
+    /**
+     * The data used to update DailyStats.
+     */
+    data: XOR<DailyStatsUpdateManyMutationInput, DailyStatsUncheckedUpdateManyInput>
+    /**
+     * Filter which DailyStats to update
+     */
+    where?: DailyStatsWhereInput
+    /**
+     * Limit how many DailyStats to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DailyStatsIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * DailyStats upsert
+   */
+  export type DailyStatsUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DailyStats
+     */
+    select?: DailyStatsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DailyStats
+     */
+    omit?: DailyStatsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DailyStatsInclude<ExtArgs> | null
+    /**
+     * The filter to search for the DailyStats to update in case it exists.
+     */
+    where: DailyStatsWhereUniqueInput
+    /**
+     * In case the DailyStats found by the `where` argument doesn't exist, create a new DailyStats with this data.
+     */
+    create: XOR<DailyStatsCreateInput, DailyStatsUncheckedCreateInput>
+    /**
+     * In case the DailyStats was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<DailyStatsUpdateInput, DailyStatsUncheckedUpdateInput>
+  }
+
+  /**
+   * DailyStats delete
+   */
+  export type DailyStatsDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DailyStats
+     */
+    select?: DailyStatsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DailyStats
+     */
+    omit?: DailyStatsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DailyStatsInclude<ExtArgs> | null
+    /**
+     * Filter which DailyStats to delete.
+     */
+    where: DailyStatsWhereUniqueInput
+  }
+
+  /**
+   * DailyStats deleteMany
+   */
+  export type DailyStatsDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which DailyStats to delete
+     */
+    where?: DailyStatsWhereInput
+    /**
+     * Limit how many DailyStats to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * DailyStats without action
+   */
+  export type DailyStatsDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DailyStats
+     */
+    select?: DailyStatsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DailyStats
+     */
+    omit?: DailyStatsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DailyStatsInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Achievement
+   */
+
+  export type AggregateAchievement = {
+    _count: AchievementCountAggregateOutputType | null
+    _avg: AchievementAvgAggregateOutputType | null
+    _sum: AchievementSumAggregateOutputType | null
+    _min: AchievementMinAggregateOutputType | null
+    _max: AchievementMaxAggregateOutputType | null
+  }
+
+  export type AchievementAvgAggregateOutputType = {
+    id: number | null
+    requiredXP: number | null
+    requiredStreak: number | null
+    requiredAccuracy: number | null
+    xpReward: number | null
+  }
+
+  export type AchievementSumAggregateOutputType = {
+    id: number | null
+    requiredXP: number | null
+    requiredStreak: number | null
+    requiredAccuracy: number | null
+    xpReward: number | null
+  }
+
+  export type AchievementMinAggregateOutputType = {
+    id: number | null
+    name: string | null
+    description: string | null
+    type: $Enums.AchievementType | null
+    requiredSkill: $Enums.CoreSkillType | null
+    requiredLevel: $Enums.CEFRLevel | null
+    requiredOverall: $Enums.CEFRLevel | null
+    requiredXP: number | null
+    requiredStreak: number | null
+    requiredAccuracy: number | null
+    xpReward: number | null
+    badge: string | null
+    isActive: boolean | null
+  }
+
+  export type AchievementMaxAggregateOutputType = {
+    id: number | null
+    name: string | null
+    description: string | null
+    type: $Enums.AchievementType | null
+    requiredSkill: $Enums.CoreSkillType | null
+    requiredLevel: $Enums.CEFRLevel | null
+    requiredOverall: $Enums.CEFRLevel | null
+    requiredXP: number | null
+    requiredStreak: number | null
+    requiredAccuracy: number | null
+    xpReward: number | null
+    badge: string | null
+    isActive: boolean | null
+  }
+
+  export type AchievementCountAggregateOutputType = {
+    id: number
+    name: number
+    description: number
+    type: number
+    requiredSkill: number
+    requiredLevel: number
+    requiredOverall: number
+    requiredXP: number
+    requiredStreak: number
+    requiredAccuracy: number
+    xpReward: number
+    badge: number
+    isActive: number
+    _all: number
+  }
+
+
+  export type AchievementAvgAggregateInputType = {
+    id?: true
+    requiredXP?: true
+    requiredStreak?: true
+    requiredAccuracy?: true
+    xpReward?: true
+  }
+
+  export type AchievementSumAggregateInputType = {
+    id?: true
+    requiredXP?: true
+    requiredStreak?: true
+    requiredAccuracy?: true
+    xpReward?: true
+  }
+
+  export type AchievementMinAggregateInputType = {
+    id?: true
+    name?: true
+    description?: true
+    type?: true
+    requiredSkill?: true
+    requiredLevel?: true
+    requiredOverall?: true
+    requiredXP?: true
+    requiredStreak?: true
+    requiredAccuracy?: true
+    xpReward?: true
+    badge?: true
+    isActive?: true
+  }
+
+  export type AchievementMaxAggregateInputType = {
+    id?: true
+    name?: true
+    description?: true
+    type?: true
+    requiredSkill?: true
+    requiredLevel?: true
+    requiredOverall?: true
+    requiredXP?: true
+    requiredStreak?: true
+    requiredAccuracy?: true
+    xpReward?: true
+    badge?: true
+    isActive?: true
+  }
+
+  export type AchievementCountAggregateInputType = {
+    id?: true
+    name?: true
+    description?: true
+    type?: true
+    requiredSkill?: true
+    requiredLevel?: true
+    requiredOverall?: true
+    requiredXP?: true
+    requiredStreak?: true
+    requiredAccuracy?: true
+    xpReward?: true
+    badge?: true
+    isActive?: true
+    _all?: true
+  }
+
+  export type AchievementAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Achievement to aggregate.
+     */
+    where?: AchievementWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Achievements to fetch.
+     */
+    orderBy?: AchievementOrderByWithRelationInput | AchievementOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: AchievementWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Achievements from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Achievements.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Achievements
+    **/
+    _count?: true | AchievementCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: AchievementAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: AchievementSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: AchievementMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: AchievementMaxAggregateInputType
+  }
+
+  export type GetAchievementAggregateType<T extends AchievementAggregateArgs> = {
+        [P in keyof T & keyof AggregateAchievement]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateAchievement[P]>
+      : GetScalarType<T[P], AggregateAchievement[P]>
+  }
+
+
+
+
+  export type AchievementGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AchievementWhereInput
+    orderBy?: AchievementOrderByWithAggregationInput | AchievementOrderByWithAggregationInput[]
+    by: AchievementScalarFieldEnum[] | AchievementScalarFieldEnum
+    having?: AchievementScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: AchievementCountAggregateInputType | true
+    _avg?: AchievementAvgAggregateInputType
+    _sum?: AchievementSumAggregateInputType
+    _min?: AchievementMinAggregateInputType
+    _max?: AchievementMaxAggregateInputType
+  }
+
+  export type AchievementGroupByOutputType = {
+    id: number
+    name: string
+    description: string
+    type: $Enums.AchievementType
+    requiredSkill: $Enums.CoreSkillType | null
+    requiredLevel: $Enums.CEFRLevel | null
+    requiredOverall: $Enums.CEFRLevel | null
+    requiredXP: number | null
+    requiredStreak: number | null
+    requiredAccuracy: number | null
+    xpReward: number
+    badge: string | null
+    isActive: boolean
+    _count: AchievementCountAggregateOutputType | null
+    _avg: AchievementAvgAggregateOutputType | null
+    _sum: AchievementSumAggregateOutputType | null
+    _min: AchievementMinAggregateOutputType | null
+    _max: AchievementMaxAggregateOutputType | null
+  }
+
+  type GetAchievementGroupByPayload<T extends AchievementGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<AchievementGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof AchievementGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], AchievementGroupByOutputType[P]>
+            : GetScalarType<T[P], AchievementGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type AchievementSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    type?: boolean
+    requiredSkill?: boolean
+    requiredLevel?: boolean
+    requiredOverall?: boolean
+    requiredXP?: boolean
+    requiredStreak?: boolean
+    requiredAccuracy?: boolean
+    xpReward?: boolean
+    badge?: boolean
+    isActive?: boolean
+    users?: boolean | Achievement$usersArgs<ExtArgs>
+    _count?: boolean | AchievementCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["achievement"]>
+
+  export type AchievementSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    type?: boolean
+    requiredSkill?: boolean
+    requiredLevel?: boolean
+    requiredOverall?: boolean
+    requiredXP?: boolean
+    requiredStreak?: boolean
+    requiredAccuracy?: boolean
+    xpReward?: boolean
+    badge?: boolean
+    isActive?: boolean
+  }, ExtArgs["result"]["achievement"]>
+
+  export type AchievementSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    type?: boolean
+    requiredSkill?: boolean
+    requiredLevel?: boolean
+    requiredOverall?: boolean
+    requiredXP?: boolean
+    requiredStreak?: boolean
+    requiredAccuracy?: boolean
+    xpReward?: boolean
+    badge?: boolean
+    isActive?: boolean
+  }, ExtArgs["result"]["achievement"]>
+
+  export type AchievementSelectScalar = {
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    type?: boolean
+    requiredSkill?: boolean
+    requiredLevel?: boolean
+    requiredOverall?: boolean
+    requiredXP?: boolean
+    requiredStreak?: boolean
+    requiredAccuracy?: boolean
+    xpReward?: boolean
+    badge?: boolean
+    isActive?: boolean
+  }
+
+  export type AchievementOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "type" | "requiredSkill" | "requiredLevel" | "requiredOverall" | "requiredXP" | "requiredStreak" | "requiredAccuracy" | "xpReward" | "badge" | "isActive", ExtArgs["result"]["achievement"]>
+  export type AchievementInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    users?: boolean | Achievement$usersArgs<ExtArgs>
+    _count?: boolean | AchievementCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type AchievementIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type AchievementIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $AchievementPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Achievement"
+    objects: {
+      users: Prisma.$UserAchievementPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      name: string
+      description: string
+      type: $Enums.AchievementType
+      requiredSkill: $Enums.CoreSkillType | null
+      requiredLevel: $Enums.CEFRLevel | null
+      requiredOverall: $Enums.CEFRLevel | null
+      requiredXP: number | null
+      requiredStreak: number | null
+      requiredAccuracy: number | null
+      xpReward: number
+      badge: string | null
+      isActive: boolean
+    }, ExtArgs["result"]["achievement"]>
+    composites: {}
+  }
+
+  type AchievementGetPayload<S extends boolean | null | undefined | AchievementDefaultArgs> = $Result.GetResult<Prisma.$AchievementPayload, S>
+
+  type AchievementCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<AchievementFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: AchievementCountAggregateInputType | true
+    }
+
+  export interface AchievementDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Achievement'], meta: { name: 'Achievement' } }
+    /**
+     * Find zero or one Achievement that matches the filter.
+     * @param {AchievementFindUniqueArgs} args - Arguments to find a Achievement
+     * @example
+     * // Get one Achievement
+     * const achievement = await prisma.achievement.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends AchievementFindUniqueArgs>(args: SelectSubset<T, AchievementFindUniqueArgs<ExtArgs>>): Prisma__AchievementClient<$Result.GetResult<Prisma.$AchievementPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Achievement that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {AchievementFindUniqueOrThrowArgs} args - Arguments to find a Achievement
+     * @example
+     * // Get one Achievement
+     * const achievement = await prisma.achievement.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends AchievementFindUniqueOrThrowArgs>(args: SelectSubset<T, AchievementFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AchievementClient<$Result.GetResult<Prisma.$AchievementPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Achievement that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AchievementFindFirstArgs} args - Arguments to find a Achievement
+     * @example
+     * // Get one Achievement
+     * const achievement = await prisma.achievement.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends AchievementFindFirstArgs>(args?: SelectSubset<T, AchievementFindFirstArgs<ExtArgs>>): Prisma__AchievementClient<$Result.GetResult<Prisma.$AchievementPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Achievement that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AchievementFindFirstOrThrowArgs} args - Arguments to find a Achievement
+     * @example
+     * // Get one Achievement
+     * const achievement = await prisma.achievement.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends AchievementFindFirstOrThrowArgs>(args?: SelectSubset<T, AchievementFindFirstOrThrowArgs<ExtArgs>>): Prisma__AchievementClient<$Result.GetResult<Prisma.$AchievementPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Achievements that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AchievementFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Achievements
+     * const achievements = await prisma.achievement.findMany()
+     * 
+     * // Get first 10 Achievements
+     * const achievements = await prisma.achievement.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const achievementWithIdOnly = await prisma.achievement.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends AchievementFindManyArgs>(args?: SelectSubset<T, AchievementFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AchievementPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Achievement.
+     * @param {AchievementCreateArgs} args - Arguments to create a Achievement.
+     * @example
+     * // Create one Achievement
+     * const Achievement = await prisma.achievement.create({
+     *   data: {
+     *     // ... data to create a Achievement
+     *   }
+     * })
+     * 
+     */
+    create<T extends AchievementCreateArgs>(args: SelectSubset<T, AchievementCreateArgs<ExtArgs>>): Prisma__AchievementClient<$Result.GetResult<Prisma.$AchievementPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Achievements.
+     * @param {AchievementCreateManyArgs} args - Arguments to create many Achievements.
+     * @example
+     * // Create many Achievements
+     * const achievement = await prisma.achievement.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends AchievementCreateManyArgs>(args?: SelectSubset<T, AchievementCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Achievements and returns the data saved in the database.
+     * @param {AchievementCreateManyAndReturnArgs} args - Arguments to create many Achievements.
+     * @example
+     * // Create many Achievements
+     * const achievement = await prisma.achievement.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Achievements and only return the `id`
+     * const achievementWithIdOnly = await prisma.achievement.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends AchievementCreateManyAndReturnArgs>(args?: SelectSubset<T, AchievementCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AchievementPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Achievement.
+     * @param {AchievementDeleteArgs} args - Arguments to delete one Achievement.
+     * @example
+     * // Delete one Achievement
+     * const Achievement = await prisma.achievement.delete({
+     *   where: {
+     *     // ... filter to delete one Achievement
+     *   }
+     * })
+     * 
+     */
+    delete<T extends AchievementDeleteArgs>(args: SelectSubset<T, AchievementDeleteArgs<ExtArgs>>): Prisma__AchievementClient<$Result.GetResult<Prisma.$AchievementPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Achievement.
+     * @param {AchievementUpdateArgs} args - Arguments to update one Achievement.
+     * @example
+     * // Update one Achievement
+     * const achievement = await prisma.achievement.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends AchievementUpdateArgs>(args: SelectSubset<T, AchievementUpdateArgs<ExtArgs>>): Prisma__AchievementClient<$Result.GetResult<Prisma.$AchievementPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Achievements.
+     * @param {AchievementDeleteManyArgs} args - Arguments to filter Achievements to delete.
+     * @example
+     * // Delete a few Achievements
+     * const { count } = await prisma.achievement.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends AchievementDeleteManyArgs>(args?: SelectSubset<T, AchievementDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Achievements.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AchievementUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Achievements
+     * const achievement = await prisma.achievement.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends AchievementUpdateManyArgs>(args: SelectSubset<T, AchievementUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Achievements and returns the data updated in the database.
+     * @param {AchievementUpdateManyAndReturnArgs} args - Arguments to update many Achievements.
+     * @example
+     * // Update many Achievements
+     * const achievement = await prisma.achievement.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Achievements and only return the `id`
+     * const achievementWithIdOnly = await prisma.achievement.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends AchievementUpdateManyAndReturnArgs>(args: SelectSubset<T, AchievementUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AchievementPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Achievement.
+     * @param {AchievementUpsertArgs} args - Arguments to update or create a Achievement.
+     * @example
+     * // Update or create a Achievement
+     * const achievement = await prisma.achievement.upsert({
+     *   create: {
+     *     // ... data to create a Achievement
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Achievement we want to update
+     *   }
+     * })
+     */
+    upsert<T extends AchievementUpsertArgs>(args: SelectSubset<T, AchievementUpsertArgs<ExtArgs>>): Prisma__AchievementClient<$Result.GetResult<Prisma.$AchievementPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Achievements.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AchievementCountArgs} args - Arguments to filter Achievements to count.
+     * @example
+     * // Count the number of Achievements
+     * const count = await prisma.achievement.count({
+     *   where: {
+     *     // ... the filter for the Achievements we want to count
+     *   }
+     * })
+    **/
+    count<T extends AchievementCountArgs>(
+      args?: Subset<T, AchievementCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], AchievementCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Achievement.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AchievementAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends AchievementAggregateArgs>(args: Subset<T, AchievementAggregateArgs>): Prisma.PrismaPromise<GetAchievementAggregateType<T>>
+
+    /**
+     * Group by Achievement.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AchievementGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends AchievementGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: AchievementGroupByArgs['orderBy'] }
+        : { orderBy?: AchievementGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, AchievementGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAchievementGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Achievement model
+   */
+  readonly fields: AchievementFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Achievement.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__AchievementClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    users<T extends Achievement$usersArgs<ExtArgs> = {}>(args?: Subset<T, Achievement$usersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserAchievementPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Achievement model
+   */
+  interface AchievementFieldRefs {
+    readonly id: FieldRef<"Achievement", 'Int'>
+    readonly name: FieldRef<"Achievement", 'String'>
+    readonly description: FieldRef<"Achievement", 'String'>
+    readonly type: FieldRef<"Achievement", 'AchievementType'>
+    readonly requiredSkill: FieldRef<"Achievement", 'CoreSkillType'>
+    readonly requiredLevel: FieldRef<"Achievement", 'CEFRLevel'>
+    readonly requiredOverall: FieldRef<"Achievement", 'CEFRLevel'>
+    readonly requiredXP: FieldRef<"Achievement", 'Int'>
+    readonly requiredStreak: FieldRef<"Achievement", 'Int'>
+    readonly requiredAccuracy: FieldRef<"Achievement", 'Float'>
+    readonly xpReward: FieldRef<"Achievement", 'Int'>
+    readonly badge: FieldRef<"Achievement", 'String'>
+    readonly isActive: FieldRef<"Achievement", 'Boolean'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Achievement findUnique
+   */
+  export type AchievementFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Achievement
+     */
+    select?: AchievementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Achievement
+     */
+    omit?: AchievementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AchievementInclude<ExtArgs> | null
+    /**
+     * Filter, which Achievement to fetch.
+     */
+    where: AchievementWhereUniqueInput
+  }
+
+  /**
+   * Achievement findUniqueOrThrow
+   */
+  export type AchievementFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Achievement
+     */
+    select?: AchievementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Achievement
+     */
+    omit?: AchievementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AchievementInclude<ExtArgs> | null
+    /**
+     * Filter, which Achievement to fetch.
+     */
+    where: AchievementWhereUniqueInput
+  }
+
+  /**
+   * Achievement findFirst
+   */
+  export type AchievementFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Achievement
+     */
+    select?: AchievementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Achievement
+     */
+    omit?: AchievementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AchievementInclude<ExtArgs> | null
+    /**
+     * Filter, which Achievement to fetch.
+     */
+    where?: AchievementWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Achievements to fetch.
+     */
+    orderBy?: AchievementOrderByWithRelationInput | AchievementOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Achievements.
+     */
+    cursor?: AchievementWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Achievements from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Achievements.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Achievements.
+     */
+    distinct?: AchievementScalarFieldEnum | AchievementScalarFieldEnum[]
+  }
+
+  /**
+   * Achievement findFirstOrThrow
+   */
+  export type AchievementFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Achievement
+     */
+    select?: AchievementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Achievement
+     */
+    omit?: AchievementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AchievementInclude<ExtArgs> | null
+    /**
+     * Filter, which Achievement to fetch.
+     */
+    where?: AchievementWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Achievements to fetch.
+     */
+    orderBy?: AchievementOrderByWithRelationInput | AchievementOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Achievements.
+     */
+    cursor?: AchievementWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Achievements from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Achievements.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Achievements.
+     */
+    distinct?: AchievementScalarFieldEnum | AchievementScalarFieldEnum[]
+  }
+
+  /**
+   * Achievement findMany
+   */
+  export type AchievementFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Achievement
+     */
+    select?: AchievementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Achievement
+     */
+    omit?: AchievementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AchievementInclude<ExtArgs> | null
+    /**
+     * Filter, which Achievements to fetch.
+     */
+    where?: AchievementWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Achievements to fetch.
+     */
+    orderBy?: AchievementOrderByWithRelationInput | AchievementOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Achievements.
+     */
+    cursor?: AchievementWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Achievements from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Achievements.
+     */
+    skip?: number
+    distinct?: AchievementScalarFieldEnum | AchievementScalarFieldEnum[]
+  }
+
+  /**
+   * Achievement create
+   */
+  export type AchievementCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Achievement
+     */
+    select?: AchievementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Achievement
+     */
+    omit?: AchievementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AchievementInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Achievement.
+     */
+    data: XOR<AchievementCreateInput, AchievementUncheckedCreateInput>
+  }
+
+  /**
+   * Achievement createMany
+   */
+  export type AchievementCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Achievements.
+     */
+    data: AchievementCreateManyInput | AchievementCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Achievement createManyAndReturn
+   */
+  export type AchievementCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Achievement
+     */
+    select?: AchievementSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Achievement
+     */
+    omit?: AchievementOmit<ExtArgs> | null
+    /**
+     * The data used to create many Achievements.
+     */
+    data: AchievementCreateManyInput | AchievementCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Achievement update
+   */
+  export type AchievementUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Achievement
+     */
+    select?: AchievementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Achievement
+     */
+    omit?: AchievementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AchievementInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Achievement.
+     */
+    data: XOR<AchievementUpdateInput, AchievementUncheckedUpdateInput>
+    /**
+     * Choose, which Achievement to update.
+     */
+    where: AchievementWhereUniqueInput
+  }
+
+  /**
+   * Achievement updateMany
+   */
+  export type AchievementUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Achievements.
+     */
+    data: XOR<AchievementUpdateManyMutationInput, AchievementUncheckedUpdateManyInput>
+    /**
+     * Filter which Achievements to update
+     */
+    where?: AchievementWhereInput
+    /**
+     * Limit how many Achievements to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Achievement updateManyAndReturn
+   */
+  export type AchievementUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Achievement
+     */
+    select?: AchievementSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Achievement
+     */
+    omit?: AchievementOmit<ExtArgs> | null
+    /**
+     * The data used to update Achievements.
+     */
+    data: XOR<AchievementUpdateManyMutationInput, AchievementUncheckedUpdateManyInput>
+    /**
+     * Filter which Achievements to update
+     */
+    where?: AchievementWhereInput
+    /**
+     * Limit how many Achievements to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Achievement upsert
+   */
+  export type AchievementUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Achievement
+     */
+    select?: AchievementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Achievement
+     */
+    omit?: AchievementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AchievementInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Achievement to update in case it exists.
+     */
+    where: AchievementWhereUniqueInput
+    /**
+     * In case the Achievement found by the `where` argument doesn't exist, create a new Achievement with this data.
+     */
+    create: XOR<AchievementCreateInput, AchievementUncheckedCreateInput>
+    /**
+     * In case the Achievement was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<AchievementUpdateInput, AchievementUncheckedUpdateInput>
+  }
+
+  /**
+   * Achievement delete
+   */
+  export type AchievementDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Achievement
+     */
+    select?: AchievementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Achievement
+     */
+    omit?: AchievementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AchievementInclude<ExtArgs> | null
+    /**
+     * Filter which Achievement to delete.
+     */
+    where: AchievementWhereUniqueInput
+  }
+
+  /**
+   * Achievement deleteMany
+   */
+  export type AchievementDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Achievements to delete
+     */
+    where?: AchievementWhereInput
+    /**
+     * Limit how many Achievements to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Achievement.users
+   */
+  export type Achievement$usersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserAchievement
+     */
+    select?: UserAchievementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserAchievement
+     */
+    omit?: UserAchievementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserAchievementInclude<ExtArgs> | null
+    where?: UserAchievementWhereInput
+    orderBy?: UserAchievementOrderByWithRelationInput | UserAchievementOrderByWithRelationInput[]
+    cursor?: UserAchievementWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UserAchievementScalarFieldEnum | UserAchievementScalarFieldEnum[]
+  }
+
+  /**
+   * Achievement without action
+   */
+  export type AchievementDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Achievement
+     */
+    select?: AchievementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Achievement
+     */
+    omit?: AchievementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AchievementInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model UserAchievement
+   */
+
+  export type AggregateUserAchievement = {
+    _count: UserAchievementCountAggregateOutputType | null
+    _avg: UserAchievementAvgAggregateOutputType | null
+    _sum: UserAchievementSumAggregateOutputType | null
+    _min: UserAchievementMinAggregateOutputType | null
+    _max: UserAchievementMaxAggregateOutputType | null
+  }
+
+  export type UserAchievementAvgAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    achievementId: number | null
+  }
+
+  export type UserAchievementSumAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    achievementId: number | null
+  }
+
+  export type UserAchievementMinAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    achievementId: number | null
+    unlockedAt: Date | null
+    language: $Enums.Language | null
+  }
+
+  export type UserAchievementMaxAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    achievementId: number | null
+    unlockedAt: Date | null
+    language: $Enums.Language | null
+  }
+
+  export type UserAchievementCountAggregateOutputType = {
+    id: number
+    userId: number
+    achievementId: number
+    unlockedAt: number
+    language: number
+    _all: number
+  }
+
+
+  export type UserAchievementAvgAggregateInputType = {
+    id?: true
+    userId?: true
+    achievementId?: true
+  }
+
+  export type UserAchievementSumAggregateInputType = {
+    id?: true
+    userId?: true
+    achievementId?: true
+  }
+
+  export type UserAchievementMinAggregateInputType = {
+    id?: true
+    userId?: true
+    achievementId?: true
+    unlockedAt?: true
+    language?: true
+  }
+
+  export type UserAchievementMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    achievementId?: true
+    unlockedAt?: true
+    language?: true
+  }
+
+  export type UserAchievementCountAggregateInputType = {
+    id?: true
+    userId?: true
+    achievementId?: true
+    unlockedAt?: true
+    language?: true
+    _all?: true
+  }
+
+  export type UserAchievementAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UserAchievement to aggregate.
+     */
+    where?: UserAchievementWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserAchievements to fetch.
+     */
+    orderBy?: UserAchievementOrderByWithRelationInput | UserAchievementOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: UserAchievementWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserAchievements from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserAchievements.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned UserAchievements
+    **/
+    _count?: true | UserAchievementCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: UserAchievementAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: UserAchievementSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: UserAchievementMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: UserAchievementMaxAggregateInputType
+  }
+
+  export type GetUserAchievementAggregateType<T extends UserAchievementAggregateArgs> = {
+        [P in keyof T & keyof AggregateUserAchievement]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateUserAchievement[P]>
+      : GetScalarType<T[P], AggregateUserAchievement[P]>
+  }
+
+
+
+
+  export type UserAchievementGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserAchievementWhereInput
+    orderBy?: UserAchievementOrderByWithAggregationInput | UserAchievementOrderByWithAggregationInput[]
+    by: UserAchievementScalarFieldEnum[] | UserAchievementScalarFieldEnum
+    having?: UserAchievementScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: UserAchievementCountAggregateInputType | true
+    _avg?: UserAchievementAvgAggregateInputType
+    _sum?: UserAchievementSumAggregateInputType
+    _min?: UserAchievementMinAggregateInputType
+    _max?: UserAchievementMaxAggregateInputType
+  }
+
+  export type UserAchievementGroupByOutputType = {
+    id: number
+    userId: number
+    achievementId: number
+    unlockedAt: Date
+    language: $Enums.Language | null
+    _count: UserAchievementCountAggregateOutputType | null
+    _avg: UserAchievementAvgAggregateOutputType | null
+    _sum: UserAchievementSumAggregateOutputType | null
+    _min: UserAchievementMinAggregateOutputType | null
+    _max: UserAchievementMaxAggregateOutputType | null
+  }
+
+  type GetUserAchievementGroupByPayload<T extends UserAchievementGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<UserAchievementGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof UserAchievementGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], UserAchievementGroupByOutputType[P]>
+            : GetScalarType<T[P], UserAchievementGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type UserAchievementSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    achievementId?: boolean
+    unlockedAt?: boolean
+    language?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    achievement?: boolean | AchievementDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userAchievement"]>
+
+  export type UserAchievementSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    achievementId?: boolean
+    unlockedAt?: boolean
+    language?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    achievement?: boolean | AchievementDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userAchievement"]>
+
+  export type UserAchievementSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    achievementId?: boolean
+    unlockedAt?: boolean
+    language?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    achievement?: boolean | AchievementDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userAchievement"]>
+
+  export type UserAchievementSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    achievementId?: boolean
+    unlockedAt?: boolean
+    language?: boolean
+  }
+
+  export type UserAchievementOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "achievementId" | "unlockedAt" | "language", ExtArgs["result"]["userAchievement"]>
+  export type UserAchievementInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    achievement?: boolean | AchievementDefaultArgs<ExtArgs>
+  }
+  export type UserAchievementIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    achievement?: boolean | AchievementDefaultArgs<ExtArgs>
+  }
+  export type UserAchievementIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    achievement?: boolean | AchievementDefaultArgs<ExtArgs>
+  }
+
+  export type $UserAchievementPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "UserAchievement"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+      achievement: Prisma.$AchievementPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      userId: number
+      achievementId: number
+      unlockedAt: Date
+      language: $Enums.Language | null
+    }, ExtArgs["result"]["userAchievement"]>
+    composites: {}
+  }
+
+  type UserAchievementGetPayload<S extends boolean | null | undefined | UserAchievementDefaultArgs> = $Result.GetResult<Prisma.$UserAchievementPayload, S>
+
+  type UserAchievementCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<UserAchievementFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: UserAchievementCountAggregateInputType | true
+    }
+
+  export interface UserAchievementDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['UserAchievement'], meta: { name: 'UserAchievement' } }
+    /**
+     * Find zero or one UserAchievement that matches the filter.
+     * @param {UserAchievementFindUniqueArgs} args - Arguments to find a UserAchievement
+     * @example
+     * // Get one UserAchievement
+     * const userAchievement = await prisma.userAchievement.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends UserAchievementFindUniqueArgs>(args: SelectSubset<T, UserAchievementFindUniqueArgs<ExtArgs>>): Prisma__UserAchievementClient<$Result.GetResult<Prisma.$UserAchievementPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one UserAchievement that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {UserAchievementFindUniqueOrThrowArgs} args - Arguments to find a UserAchievement
+     * @example
+     * // Get one UserAchievement
+     * const userAchievement = await prisma.userAchievement.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends UserAchievementFindUniqueOrThrowArgs>(args: SelectSubset<T, UserAchievementFindUniqueOrThrowArgs<ExtArgs>>): Prisma__UserAchievementClient<$Result.GetResult<Prisma.$UserAchievementPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first UserAchievement that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserAchievementFindFirstArgs} args - Arguments to find a UserAchievement
+     * @example
+     * // Get one UserAchievement
+     * const userAchievement = await prisma.userAchievement.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends UserAchievementFindFirstArgs>(args?: SelectSubset<T, UserAchievementFindFirstArgs<ExtArgs>>): Prisma__UserAchievementClient<$Result.GetResult<Prisma.$UserAchievementPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first UserAchievement that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserAchievementFindFirstOrThrowArgs} args - Arguments to find a UserAchievement
+     * @example
+     * // Get one UserAchievement
+     * const userAchievement = await prisma.userAchievement.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends UserAchievementFindFirstOrThrowArgs>(args?: SelectSubset<T, UserAchievementFindFirstOrThrowArgs<ExtArgs>>): Prisma__UserAchievementClient<$Result.GetResult<Prisma.$UserAchievementPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more UserAchievements that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserAchievementFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all UserAchievements
+     * const userAchievements = await prisma.userAchievement.findMany()
+     * 
+     * // Get first 10 UserAchievements
+     * const userAchievements = await prisma.userAchievement.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const userAchievementWithIdOnly = await prisma.userAchievement.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends UserAchievementFindManyArgs>(args?: SelectSubset<T, UserAchievementFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserAchievementPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a UserAchievement.
+     * @param {UserAchievementCreateArgs} args - Arguments to create a UserAchievement.
+     * @example
+     * // Create one UserAchievement
+     * const UserAchievement = await prisma.userAchievement.create({
+     *   data: {
+     *     // ... data to create a UserAchievement
+     *   }
+     * })
+     * 
+     */
+    create<T extends UserAchievementCreateArgs>(args: SelectSubset<T, UserAchievementCreateArgs<ExtArgs>>): Prisma__UserAchievementClient<$Result.GetResult<Prisma.$UserAchievementPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many UserAchievements.
+     * @param {UserAchievementCreateManyArgs} args - Arguments to create many UserAchievements.
+     * @example
+     * // Create many UserAchievements
+     * const userAchievement = await prisma.userAchievement.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends UserAchievementCreateManyArgs>(args?: SelectSubset<T, UserAchievementCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many UserAchievements and returns the data saved in the database.
+     * @param {UserAchievementCreateManyAndReturnArgs} args - Arguments to create many UserAchievements.
+     * @example
+     * // Create many UserAchievements
+     * const userAchievement = await prisma.userAchievement.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many UserAchievements and only return the `id`
+     * const userAchievementWithIdOnly = await prisma.userAchievement.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends UserAchievementCreateManyAndReturnArgs>(args?: SelectSubset<T, UserAchievementCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserAchievementPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a UserAchievement.
+     * @param {UserAchievementDeleteArgs} args - Arguments to delete one UserAchievement.
+     * @example
+     * // Delete one UserAchievement
+     * const UserAchievement = await prisma.userAchievement.delete({
+     *   where: {
+     *     // ... filter to delete one UserAchievement
+     *   }
+     * })
+     * 
+     */
+    delete<T extends UserAchievementDeleteArgs>(args: SelectSubset<T, UserAchievementDeleteArgs<ExtArgs>>): Prisma__UserAchievementClient<$Result.GetResult<Prisma.$UserAchievementPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one UserAchievement.
+     * @param {UserAchievementUpdateArgs} args - Arguments to update one UserAchievement.
+     * @example
+     * // Update one UserAchievement
+     * const userAchievement = await prisma.userAchievement.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends UserAchievementUpdateArgs>(args: SelectSubset<T, UserAchievementUpdateArgs<ExtArgs>>): Prisma__UserAchievementClient<$Result.GetResult<Prisma.$UserAchievementPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more UserAchievements.
+     * @param {UserAchievementDeleteManyArgs} args - Arguments to filter UserAchievements to delete.
+     * @example
+     * // Delete a few UserAchievements
+     * const { count } = await prisma.userAchievement.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends UserAchievementDeleteManyArgs>(args?: SelectSubset<T, UserAchievementDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more UserAchievements.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserAchievementUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many UserAchievements
+     * const userAchievement = await prisma.userAchievement.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends UserAchievementUpdateManyArgs>(args: SelectSubset<T, UserAchievementUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more UserAchievements and returns the data updated in the database.
+     * @param {UserAchievementUpdateManyAndReturnArgs} args - Arguments to update many UserAchievements.
+     * @example
+     * // Update many UserAchievements
+     * const userAchievement = await prisma.userAchievement.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more UserAchievements and only return the `id`
+     * const userAchievementWithIdOnly = await prisma.userAchievement.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends UserAchievementUpdateManyAndReturnArgs>(args: SelectSubset<T, UserAchievementUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserAchievementPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one UserAchievement.
+     * @param {UserAchievementUpsertArgs} args - Arguments to update or create a UserAchievement.
+     * @example
+     * // Update or create a UserAchievement
+     * const userAchievement = await prisma.userAchievement.upsert({
+     *   create: {
+     *     // ... data to create a UserAchievement
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the UserAchievement we want to update
+     *   }
+     * })
+     */
+    upsert<T extends UserAchievementUpsertArgs>(args: SelectSubset<T, UserAchievementUpsertArgs<ExtArgs>>): Prisma__UserAchievementClient<$Result.GetResult<Prisma.$UserAchievementPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of UserAchievements.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserAchievementCountArgs} args - Arguments to filter UserAchievements to count.
+     * @example
+     * // Count the number of UserAchievements
+     * const count = await prisma.userAchievement.count({
+     *   where: {
+     *     // ... the filter for the UserAchievements we want to count
+     *   }
+     * })
+    **/
+    count<T extends UserAchievementCountArgs>(
+      args?: Subset<T, UserAchievementCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], UserAchievementCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a UserAchievement.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserAchievementAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends UserAchievementAggregateArgs>(args: Subset<T, UserAchievementAggregateArgs>): Prisma.PrismaPromise<GetUserAchievementAggregateType<T>>
+
+    /**
+     * Group by UserAchievement.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserAchievementGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends UserAchievementGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: UserAchievementGroupByArgs['orderBy'] }
+        : { orderBy?: UserAchievementGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, UserAchievementGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUserAchievementGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the UserAchievement model
+   */
+  readonly fields: UserAchievementFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for UserAchievement.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__UserAchievementClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    achievement<T extends AchievementDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AchievementDefaultArgs<ExtArgs>>): Prisma__AchievementClient<$Result.GetResult<Prisma.$AchievementPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the UserAchievement model
+   */
+  interface UserAchievementFieldRefs {
+    readonly id: FieldRef<"UserAchievement", 'Int'>
+    readonly userId: FieldRef<"UserAchievement", 'Int'>
+    readonly achievementId: FieldRef<"UserAchievement", 'Int'>
+    readonly unlockedAt: FieldRef<"UserAchievement", 'DateTime'>
+    readonly language: FieldRef<"UserAchievement", 'Language'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * UserAchievement findUnique
+   */
+  export type UserAchievementFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserAchievement
+     */
+    select?: UserAchievementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserAchievement
+     */
+    omit?: UserAchievementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserAchievementInclude<ExtArgs> | null
+    /**
+     * Filter, which UserAchievement to fetch.
+     */
+    where: UserAchievementWhereUniqueInput
+  }
+
+  /**
+   * UserAchievement findUniqueOrThrow
+   */
+  export type UserAchievementFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserAchievement
+     */
+    select?: UserAchievementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserAchievement
+     */
+    omit?: UserAchievementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserAchievementInclude<ExtArgs> | null
+    /**
+     * Filter, which UserAchievement to fetch.
+     */
+    where: UserAchievementWhereUniqueInput
+  }
+
+  /**
+   * UserAchievement findFirst
+   */
+  export type UserAchievementFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserAchievement
+     */
+    select?: UserAchievementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserAchievement
+     */
+    omit?: UserAchievementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserAchievementInclude<ExtArgs> | null
+    /**
+     * Filter, which UserAchievement to fetch.
+     */
+    where?: UserAchievementWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserAchievements to fetch.
+     */
+    orderBy?: UserAchievementOrderByWithRelationInput | UserAchievementOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UserAchievements.
+     */
+    cursor?: UserAchievementWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserAchievements from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserAchievements.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserAchievements.
+     */
+    distinct?: UserAchievementScalarFieldEnum | UserAchievementScalarFieldEnum[]
+  }
+
+  /**
+   * UserAchievement findFirstOrThrow
+   */
+  export type UserAchievementFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserAchievement
+     */
+    select?: UserAchievementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserAchievement
+     */
+    omit?: UserAchievementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserAchievementInclude<ExtArgs> | null
+    /**
+     * Filter, which UserAchievement to fetch.
+     */
+    where?: UserAchievementWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserAchievements to fetch.
+     */
+    orderBy?: UserAchievementOrderByWithRelationInput | UserAchievementOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UserAchievements.
+     */
+    cursor?: UserAchievementWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserAchievements from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserAchievements.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserAchievements.
+     */
+    distinct?: UserAchievementScalarFieldEnum | UserAchievementScalarFieldEnum[]
+  }
+
+  /**
+   * UserAchievement findMany
+   */
+  export type UserAchievementFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserAchievement
+     */
+    select?: UserAchievementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserAchievement
+     */
+    omit?: UserAchievementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserAchievementInclude<ExtArgs> | null
+    /**
+     * Filter, which UserAchievements to fetch.
+     */
+    where?: UserAchievementWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserAchievements to fetch.
+     */
+    orderBy?: UserAchievementOrderByWithRelationInput | UserAchievementOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing UserAchievements.
+     */
+    cursor?: UserAchievementWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserAchievements from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserAchievements.
+     */
+    skip?: number
+    distinct?: UserAchievementScalarFieldEnum | UserAchievementScalarFieldEnum[]
+  }
+
+  /**
+   * UserAchievement create
+   */
+  export type UserAchievementCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserAchievement
+     */
+    select?: UserAchievementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserAchievement
+     */
+    omit?: UserAchievementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserAchievementInclude<ExtArgs> | null
+    /**
+     * The data needed to create a UserAchievement.
+     */
+    data: XOR<UserAchievementCreateInput, UserAchievementUncheckedCreateInput>
+  }
+
+  /**
+   * UserAchievement createMany
+   */
+  export type UserAchievementCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many UserAchievements.
+     */
+    data: UserAchievementCreateManyInput | UserAchievementCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * UserAchievement createManyAndReturn
+   */
+  export type UserAchievementCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserAchievement
+     */
+    select?: UserAchievementSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserAchievement
+     */
+    omit?: UserAchievementOmit<ExtArgs> | null
+    /**
+     * The data used to create many UserAchievements.
+     */
+    data: UserAchievementCreateManyInput | UserAchievementCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserAchievementIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * UserAchievement update
+   */
+  export type UserAchievementUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserAchievement
+     */
+    select?: UserAchievementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserAchievement
+     */
+    omit?: UserAchievementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserAchievementInclude<ExtArgs> | null
+    /**
+     * The data needed to update a UserAchievement.
+     */
+    data: XOR<UserAchievementUpdateInput, UserAchievementUncheckedUpdateInput>
+    /**
+     * Choose, which UserAchievement to update.
+     */
+    where: UserAchievementWhereUniqueInput
+  }
+
+  /**
+   * UserAchievement updateMany
+   */
+  export type UserAchievementUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update UserAchievements.
+     */
+    data: XOR<UserAchievementUpdateManyMutationInput, UserAchievementUncheckedUpdateManyInput>
+    /**
+     * Filter which UserAchievements to update
+     */
+    where?: UserAchievementWhereInput
+    /**
+     * Limit how many UserAchievements to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * UserAchievement updateManyAndReturn
+   */
+  export type UserAchievementUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserAchievement
+     */
+    select?: UserAchievementSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserAchievement
+     */
+    omit?: UserAchievementOmit<ExtArgs> | null
+    /**
+     * The data used to update UserAchievements.
+     */
+    data: XOR<UserAchievementUpdateManyMutationInput, UserAchievementUncheckedUpdateManyInput>
+    /**
+     * Filter which UserAchievements to update
+     */
+    where?: UserAchievementWhereInput
+    /**
+     * Limit how many UserAchievements to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserAchievementIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * UserAchievement upsert
+   */
+  export type UserAchievementUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserAchievement
+     */
+    select?: UserAchievementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserAchievement
+     */
+    omit?: UserAchievementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserAchievementInclude<ExtArgs> | null
+    /**
+     * The filter to search for the UserAchievement to update in case it exists.
+     */
+    where: UserAchievementWhereUniqueInput
+    /**
+     * In case the UserAchievement found by the `where` argument doesn't exist, create a new UserAchievement with this data.
+     */
+    create: XOR<UserAchievementCreateInput, UserAchievementUncheckedCreateInput>
+    /**
+     * In case the UserAchievement was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<UserAchievementUpdateInput, UserAchievementUncheckedUpdateInput>
+  }
+
+  /**
+   * UserAchievement delete
+   */
+  export type UserAchievementDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserAchievement
+     */
+    select?: UserAchievementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserAchievement
+     */
+    omit?: UserAchievementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserAchievementInclude<ExtArgs> | null
+    /**
+     * Filter which UserAchievement to delete.
+     */
+    where: UserAchievementWhereUniqueInput
+  }
+
+  /**
+   * UserAchievement deleteMany
+   */
+  export type UserAchievementDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UserAchievements to delete
+     */
+    where?: UserAchievementWhereInput
+    /**
+     * Limit how many UserAchievements to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * UserAchievement without action
+   */
+  export type UserAchievementDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserAchievement
+     */
+    select?: UserAchievementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserAchievement
+     */
+    omit?: UserAchievementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserAchievementInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -11531,7 +19867,12 @@ export namespace Prisma {
     deleteAt: 'deleteAt',
     lastLoginAt: 'lastLoginAt',
     provider: 'provider',
-    refreshToken: 'refreshToken'
+    refreshToken: 'refreshToken',
+    totalXP: 'totalXP',
+    currentStreak: 'currentStreak',
+    longestStreak: 'longestStreak',
+    totalLearningTime: 'totalLearningTime',
+    lastActiveAt: 'lastActiveAt'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -11565,10 +19906,12 @@ export namespace Prisma {
     title: 'title',
     description: 'description',
     url: 'url',
+    language: 'language',
     level: 'level',
-    createdAt: 'createdAt',
-    tags: 'tags',
-    courseId: 'courseId'
+    duration: 'duration',
+    skillTypes: 'skillTypes',
+    courseId: 'courseId',
+    createdAt: 'createdAt'
   };
 
   export type VideoScalarFieldEnum = (typeof VideoScalarFieldEnum)[keyof typeof VideoScalarFieldEnum]
@@ -11582,9 +19925,13 @@ export namespace Prisma {
     type: 'type',
     score: 'score',
     createdAt: 'createdAt',
-    language: 'language',
     order: 'order',
     explanation: 'explanation',
+    skillType: 'skillType',
+    language: 'language',
+    cefrLevel: 'cefrLevel',
+    xpReward: 'xpReward',
+    timeLimit: 'timeLimit',
     authorId: 'authorId',
     videoId: 'videoId',
     courseId: 'courseId'
@@ -11599,10 +19946,13 @@ export namespace Prisma {
     description: 'description',
     imageUrl: 'imageUrl',
     level: 'level',
+    targetSkills: 'targetSkills',
     isPublished: 'isPublished',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
     tags: 'tags',
+    estimatedHours: 'estimatedHours',
+    totalXP: 'totalXP',
     authorId: 'authorId'
   };
 
@@ -11626,23 +19976,138 @@ export namespace Prisma {
     global_language: 'global_language',
     current_language: 'current_language',
     purposes: 'purposes',
-    current_level: 'current_level'
+    current_level: 'current_level',
+    dailyXPGoal: 'dailyXPGoal',
+    dailyTimeGoal: 'dailyTimeGoal',
+    weeklyGoal: 'weeklyGoal'
   };
 
   export type SettingScalarFieldEnum = (typeof SettingScalarFieldEnum)[keyof typeof SettingScalarFieldEnum]
 
 
-  export const WordTaskProgressScalarFieldEnum: {
+  export const LanguageProgressScalarFieldEnum: {
     id: 'id',
     userId: 'userId',
+    language: 'language',
+    overallCEFR: 'overallCEFR',
+    overallProgress: 'overallProgress',
+    totalXP: 'totalXP',
+    totalTime: 'totalTime',
+    lastActiveAt: 'lastActiveAt',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type LanguageProgressScalarFieldEnum = (typeof LanguageProgressScalarFieldEnum)[keyof typeof LanguageProgressScalarFieldEnum]
+
+
+  export const SkillProgressScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    languageProgressId: 'languageProgressId',
+    skillType: 'skillType',
+    cefrLevel: 'cefrLevel',
+    levelProgress: 'levelProgress',
+    xpEarned: 'xpEarned',
+    totalPracticed: 'totalPracticed',
+    correctAnswers: 'correctAnswers',
+    totalAnswers: 'totalAnswers',
+    currentAccuracy: 'currentAccuracy',
+    timeSpent: 'timeSpent',
+    totalWordsStudied: 'totalWordsStudied',
+    wordsLearned: 'wordsLearned',
+    wordsReviewing: 'wordsReviewing',
+    lastPracticed: 'lastPracticed',
+    updatedAt: 'updatedAt'
+  };
+
+  export type SkillProgressScalarFieldEnum = (typeof SkillProgressScalarFieldEnum)[keyof typeof SkillProgressScalarFieldEnum]
+
+
+  export const SkillLevelRequirementsScalarFieldEnum: {
+    id: 'id',
+    skillType: 'skillType',
+    cefrLevel: 'cefrLevel',
+    minXP: 'minXP',
+    minAccuracy: 'minAccuracy',
+    minPracticed: 'minPracticed',
+    minTimeSpent: 'minTimeSpent',
+    minWordsLearned: 'minWordsLearned',
+    weightInOverall: 'weightInOverall',
+    displayName: 'displayName',
+    description: 'description',
+    color: 'color'
+  };
+
+  export type SkillLevelRequirementsScalarFieldEnum = (typeof SkillLevelRequirementsScalarFieldEnum)[keyof typeof SkillLevelRequirementsScalarFieldEnum]
+
+
+  export const WordTaskProgressScalarFieldEnum: {
+    id: 'id',
     wordId: 'wordId',
-    taskType: 'taskType',
+    userId: 'userId',
+    skillType: 'skillType',
     isPassed: 'isPassed',
     score: 'score',
-    attempts: 'attempts'
+    attempts: 'attempts',
+    correctCount: 'correctCount',
+    nextReviewAt: 'nextReviewAt',
+    reviewInterval: 'reviewInterval',
+    easeFactor: 'easeFactor',
+    lastAttempt: 'lastAttempt',
+    timeSpent: 'timeSpent',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
   };
 
   export type WordTaskProgressScalarFieldEnum = (typeof WordTaskProgressScalarFieldEnum)[keyof typeof WordTaskProgressScalarFieldEnum]
+
+
+  export const DailyStatsScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    language: 'language',
+    date: 'date',
+    totalXP: 'totalXP',
+    totalTime: 'totalTime',
+    tasksCompleted: 'tasksCompleted',
+    averageAccuracy: 'averageAccuracy',
+    skillsStats: 'skillsStats',
+    newWordsLearned: 'newWordsLearned',
+    wordsReviewed: 'wordsReviewed'
+  };
+
+  export type DailyStatsScalarFieldEnum = (typeof DailyStatsScalarFieldEnum)[keyof typeof DailyStatsScalarFieldEnum]
+
+
+  export const AchievementScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    description: 'description',
+    type: 'type',
+    requiredSkill: 'requiredSkill',
+    requiredLevel: 'requiredLevel',
+    requiredOverall: 'requiredOverall',
+    requiredXP: 'requiredXP',
+    requiredStreak: 'requiredStreak',
+    requiredAccuracy: 'requiredAccuracy',
+    xpReward: 'xpReward',
+    badge: 'badge',
+    isActive: 'isActive'
+  };
+
+  export type AchievementScalarFieldEnum = (typeof AchievementScalarFieldEnum)[keyof typeof AchievementScalarFieldEnum]
+
+
+  export const UserAchievementScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    achievementId: 'achievementId',
+    unlockedAt: 'unlockedAt',
+    language: 'language'
+  };
+
+  export type UserAchievementScalarFieldEnum = (typeof UserAchievementScalarFieldEnum)[keyof typeof UserAchievementScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -11651,6 +20116,13 @@ export namespace Prisma {
   };
 
   export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+  export const JsonNullValueInput: {
+    JsonNull: typeof JsonNull
+  };
+
+  export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
   export const QueryMode: {
@@ -11667,6 +20139,15 @@ export namespace Prisma {
   };
 
   export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+  export const JsonNullValueFilter: {
+    DbNull: typeof DbNull,
+    JsonNull: typeof JsonNull,
+    AnyNull: typeof AnyNull
+  };
+
+  export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 
 
   /**
@@ -11752,16 +20233,30 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'Level'
+   * Reference to a field of type 'CEFRLevel'
    */
-  export type EnumLevelFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Level'>
+  export type EnumCEFRLevelFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CEFRLevel'>
     
 
 
   /**
-   * Reference to a field of type 'Level[]'
+   * Reference to a field of type 'CEFRLevel[]'
    */
-  export type ListEnumLevelFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Level[]'>
+  export type ListEnumCEFRLevelFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CEFRLevel[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'CoreSkillType[]'
+   */
+  export type ListEnumCoreSkillTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CoreSkillType[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'CoreSkillType'
+   */
+  export type EnumCoreSkillTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CoreSkillType'>
     
 
 
@@ -11808,16 +20303,30 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'WordTaskType'
+   * Reference to a field of type 'Json'
    */
-  export type EnumWordTaskTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'WordTaskType'>
+  export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
     
 
 
   /**
-   * Reference to a field of type 'WordTaskType[]'
+   * Reference to a field of type 'QueryMode'
    */
-  export type ListEnumWordTaskTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'WordTaskType[]'>
+  export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
+    
+
+
+  /**
+   * Reference to a field of type 'AchievementType'
+   */
+  export type EnumAchievementTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AchievementType'>
+    
+
+
+  /**
+   * Reference to a field of type 'AchievementType[]'
+   */
+  export type ListEnumAchievementTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AchievementType[]'>
     
   /**
    * Deep Input Types
@@ -11841,12 +20350,21 @@ export namespace Prisma {
     lastLoginAt?: DateTimeNullableFilter<"User"> | Date | string | null
     provider?: StringNullableFilter<"User"> | string | null
     refreshToken?: StringNullableFilter<"User"> | string | null
-    enrollments?: EnrollmentListRelationFilter
-    wordProgresses?: WordTaskProgressListRelationFilter
-    courses?: CourseListRelationFilter
-    tasks?: TaskListRelationFilter
+    totalXP?: IntFilter<"User"> | number
+    currentStreak?: IntFilter<"User"> | number
+    longestStreak?: IntFilter<"User"> | number
+    totalLearningTime?: IntFilter<"User"> | number
+    lastActiveAt?: DateTimeNullableFilter<"User"> | Date | string | null
     setting?: XOR<SettingNullableScalarRelationFilter, SettingWhereInput> | null
     words?: WordListRelationFilter
+    languageProgresses?: LanguageProgressListRelationFilter
+    skillProgresses?: SkillProgressListRelationFilter
+    achievements?: UserAchievementListRelationFilter
+    dailyStats?: DailyStatsListRelationFilter
+    enrollments?: EnrollmentListRelationFilter
+    courses?: CourseListRelationFilter
+    tasks?: TaskListRelationFilter
+    wordProgresses?: WordTaskProgressListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -11863,12 +20381,21 @@ export namespace Prisma {
     lastLoginAt?: SortOrderInput | SortOrder
     provider?: SortOrderInput | SortOrder
     refreshToken?: SortOrderInput | SortOrder
-    enrollments?: EnrollmentOrderByRelationAggregateInput
-    wordProgresses?: WordTaskProgressOrderByRelationAggregateInput
-    courses?: CourseOrderByRelationAggregateInput
-    tasks?: TaskOrderByRelationAggregateInput
+    totalXP?: SortOrder
+    currentStreak?: SortOrder
+    longestStreak?: SortOrder
+    totalLearningTime?: SortOrder
+    lastActiveAt?: SortOrderInput | SortOrder
     setting?: SettingOrderByWithRelationInput
     words?: WordOrderByRelationAggregateInput
+    languageProgresses?: LanguageProgressOrderByRelationAggregateInput
+    skillProgresses?: SkillProgressOrderByRelationAggregateInput
+    achievements?: UserAchievementOrderByRelationAggregateInput
+    dailyStats?: DailyStatsOrderByRelationAggregateInput
+    enrollments?: EnrollmentOrderByRelationAggregateInput
+    courses?: CourseOrderByRelationAggregateInput
+    tasks?: TaskOrderByRelationAggregateInput
+    wordProgresses?: WordTaskProgressOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -11888,12 +20415,21 @@ export namespace Prisma {
     lastLoginAt?: DateTimeNullableFilter<"User"> | Date | string | null
     provider?: StringNullableFilter<"User"> | string | null
     refreshToken?: StringNullableFilter<"User"> | string | null
-    enrollments?: EnrollmentListRelationFilter
-    wordProgresses?: WordTaskProgressListRelationFilter
-    courses?: CourseListRelationFilter
-    tasks?: TaskListRelationFilter
+    totalXP?: IntFilter<"User"> | number
+    currentStreak?: IntFilter<"User"> | number
+    longestStreak?: IntFilter<"User"> | number
+    totalLearningTime?: IntFilter<"User"> | number
+    lastActiveAt?: DateTimeNullableFilter<"User"> | Date | string | null
     setting?: XOR<SettingNullableScalarRelationFilter, SettingWhereInput> | null
     words?: WordListRelationFilter
+    languageProgresses?: LanguageProgressListRelationFilter
+    skillProgresses?: SkillProgressListRelationFilter
+    achievements?: UserAchievementListRelationFilter
+    dailyStats?: DailyStatsListRelationFilter
+    enrollments?: EnrollmentListRelationFilter
+    courses?: CourseListRelationFilter
+    tasks?: TaskListRelationFilter
+    wordProgresses?: WordTaskProgressListRelationFilter
   }, "id" | "email" | "username">
 
   export type UserOrderByWithAggregationInput = {
@@ -11910,6 +20446,11 @@ export namespace Prisma {
     lastLoginAt?: SortOrderInput | SortOrder
     provider?: SortOrderInput | SortOrder
     refreshToken?: SortOrderInput | SortOrder
+    totalXP?: SortOrder
+    currentStreak?: SortOrder
+    longestStreak?: SortOrder
+    totalLearningTime?: SortOrder
+    lastActiveAt?: SortOrderInput | SortOrder
     _count?: UserCountOrderByAggregateInput
     _avg?: UserAvgOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
@@ -11934,6 +20475,11 @@ export namespace Prisma {
     lastLoginAt?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
     provider?: StringNullableWithAggregatesFilter<"User"> | string | null
     refreshToken?: StringNullableWithAggregatesFilter<"User"> | string | null
+    totalXP?: IntWithAggregatesFilter<"User"> | number
+    currentStreak?: IntWithAggregatesFilter<"User"> | number
+    longestStreak?: IntWithAggregatesFilter<"User"> | number
+    totalLearningTime?: IntWithAggregatesFilter<"User"> | number
+    lastActiveAt?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
   }
 
   export type WordWhereInput = {
@@ -11957,8 +20503,8 @@ export namespace Prisma {
     phoneticUS?: StringNullableFilter<"Word"> | string | null
     audioUS?: StringNullableFilter<"Word"> | string | null
     userId?: IntFilter<"Word"> | number
-    progresses?: WordTaskProgressListRelationFilter
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    progresses?: WordTaskProgressListRelationFilter
   }
 
   export type WordOrderByWithRelationInput = {
@@ -11979,8 +20525,8 @@ export namespace Prisma {
     phoneticUS?: SortOrderInput | SortOrder
     audioUS?: SortOrderInput | SortOrder
     userId?: SortOrder
-    progresses?: WordTaskProgressOrderByRelationAggregateInput
     user?: UserOrderByWithRelationInput
+    progresses?: WordTaskProgressOrderByRelationAggregateInput
   }
 
   export type WordWhereUniqueInput = Prisma.AtLeast<{
@@ -12005,8 +20551,8 @@ export namespace Prisma {
     phoneticUS?: StringNullableFilter<"Word"> | string | null
     audioUS?: StringNullableFilter<"Word"> | string | null
     userId?: IntFilter<"Word"> | number
-    progresses?: WordTaskProgressListRelationFilter
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    progresses?: WordTaskProgressListRelationFilter
   }, "id" | "userId_text_language">
 
   export type WordOrderByWithAggregationInput = {
@@ -12065,10 +20611,12 @@ export namespace Prisma {
     title?: StringFilter<"Video"> | string
     description?: StringNullableFilter<"Video"> | string | null
     url?: StringFilter<"Video"> | string
-    level?: EnumLevelNullableFilter<"Video"> | $Enums.Level | null
-    createdAt?: DateTimeFilter<"Video"> | Date | string
-    tags?: StringNullableListFilter<"Video">
+    language?: EnumLanguageFilter<"Video"> | $Enums.Language
+    level?: EnumCEFRLevelFilter<"Video"> | $Enums.CEFRLevel
+    duration?: IntNullableFilter<"Video"> | number | null
+    skillTypes?: EnumCoreSkillTypeNullableListFilter<"Video">
     courseId?: IntNullableFilter<"Video"> | number | null
+    createdAt?: DateTimeFilter<"Video"> | Date | string
     tasks?: TaskListRelationFilter
     course?: XOR<CourseNullableScalarRelationFilter, CourseWhereInput> | null
   }
@@ -12078,10 +20626,12 @@ export namespace Prisma {
     title?: SortOrder
     description?: SortOrderInput | SortOrder
     url?: SortOrder
-    level?: SortOrderInput | SortOrder
-    createdAt?: SortOrder
-    tags?: SortOrder
+    language?: SortOrder
+    level?: SortOrder
+    duration?: SortOrderInput | SortOrder
+    skillTypes?: SortOrder
     courseId?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
     tasks?: TaskOrderByRelationAggregateInput
     course?: CourseOrderByWithRelationInput
   }
@@ -12094,10 +20644,12 @@ export namespace Prisma {
     NOT?: VideoWhereInput | VideoWhereInput[]
     title?: StringFilter<"Video"> | string
     description?: StringNullableFilter<"Video"> | string | null
-    level?: EnumLevelNullableFilter<"Video"> | $Enums.Level | null
-    createdAt?: DateTimeFilter<"Video"> | Date | string
-    tags?: StringNullableListFilter<"Video">
+    language?: EnumLanguageFilter<"Video"> | $Enums.Language
+    level?: EnumCEFRLevelFilter<"Video"> | $Enums.CEFRLevel
+    duration?: IntNullableFilter<"Video"> | number | null
+    skillTypes?: EnumCoreSkillTypeNullableListFilter<"Video">
     courseId?: IntNullableFilter<"Video"> | number | null
+    createdAt?: DateTimeFilter<"Video"> | Date | string
     tasks?: TaskListRelationFilter
     course?: XOR<CourseNullableScalarRelationFilter, CourseWhereInput> | null
   }, "id" | "url">
@@ -12107,10 +20659,12 @@ export namespace Prisma {
     title?: SortOrder
     description?: SortOrderInput | SortOrder
     url?: SortOrder
-    level?: SortOrderInput | SortOrder
-    createdAt?: SortOrder
-    tags?: SortOrder
+    language?: SortOrder
+    level?: SortOrder
+    duration?: SortOrderInput | SortOrder
+    skillTypes?: SortOrder
     courseId?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
     _count?: VideoCountOrderByAggregateInput
     _avg?: VideoAvgOrderByAggregateInput
     _max?: VideoMaxOrderByAggregateInput
@@ -12126,10 +20680,12 @@ export namespace Prisma {
     title?: StringWithAggregatesFilter<"Video"> | string
     description?: StringNullableWithAggregatesFilter<"Video"> | string | null
     url?: StringWithAggregatesFilter<"Video"> | string
-    level?: EnumLevelNullableWithAggregatesFilter<"Video"> | $Enums.Level | null
-    createdAt?: DateTimeWithAggregatesFilter<"Video"> | Date | string
-    tags?: StringNullableListFilter<"Video">
+    language?: EnumLanguageWithAggregatesFilter<"Video"> | $Enums.Language
+    level?: EnumCEFRLevelWithAggregatesFilter<"Video"> | $Enums.CEFRLevel
+    duration?: IntNullableWithAggregatesFilter<"Video"> | number | null
+    skillTypes?: EnumCoreSkillTypeNullableListFilter<"Video">
     courseId?: IntNullableWithAggregatesFilter<"Video"> | number | null
+    createdAt?: DateTimeWithAggregatesFilter<"Video"> | Date | string
   }
 
   export type TaskWhereInput = {
@@ -12143,9 +20699,13 @@ export namespace Prisma {
     type?: EnumTaskTypeFilter<"Task"> | $Enums.TaskType
     score?: IntNullableFilter<"Task"> | number | null
     createdAt?: DateTimeFilter<"Task"> | Date | string
-    language?: EnumLanguageFilter<"Task"> | $Enums.Language
     order?: IntNullableFilter<"Task"> | number | null
     explanation?: StringNullableFilter<"Task"> | string | null
+    skillType?: EnumCoreSkillTypeFilter<"Task"> | $Enums.CoreSkillType
+    language?: EnumLanguageFilter<"Task"> | $Enums.Language
+    cefrLevel?: EnumCEFRLevelFilter<"Task"> | $Enums.CEFRLevel
+    xpReward?: IntFilter<"Task"> | number
+    timeLimit?: IntNullableFilter<"Task"> | number | null
     authorId?: IntNullableFilter<"Task"> | number | null
     videoId?: IntNullableFilter<"Task"> | number | null
     courseId?: IntNullableFilter<"Task"> | number | null
@@ -12162,9 +20722,13 @@ export namespace Prisma {
     type?: SortOrder
     score?: SortOrderInput | SortOrder
     createdAt?: SortOrder
-    language?: SortOrder
     order?: SortOrderInput | SortOrder
     explanation?: SortOrderInput | SortOrder
+    skillType?: SortOrder
+    language?: SortOrder
+    cefrLevel?: SortOrder
+    xpReward?: SortOrder
+    timeLimit?: SortOrderInput | SortOrder
     authorId?: SortOrderInput | SortOrder
     videoId?: SortOrderInput | SortOrder
     courseId?: SortOrderInput | SortOrder
@@ -12184,9 +20748,13 @@ export namespace Prisma {
     type?: EnumTaskTypeFilter<"Task"> | $Enums.TaskType
     score?: IntNullableFilter<"Task"> | number | null
     createdAt?: DateTimeFilter<"Task"> | Date | string
-    language?: EnumLanguageFilter<"Task"> | $Enums.Language
     order?: IntNullableFilter<"Task"> | number | null
     explanation?: StringNullableFilter<"Task"> | string | null
+    skillType?: EnumCoreSkillTypeFilter<"Task"> | $Enums.CoreSkillType
+    language?: EnumLanguageFilter<"Task"> | $Enums.Language
+    cefrLevel?: EnumCEFRLevelFilter<"Task"> | $Enums.CEFRLevel
+    xpReward?: IntFilter<"Task"> | number
+    timeLimit?: IntNullableFilter<"Task"> | number | null
     authorId?: IntNullableFilter<"Task"> | number | null
     videoId?: IntNullableFilter<"Task"> | number | null
     courseId?: IntNullableFilter<"Task"> | number | null
@@ -12203,9 +20771,13 @@ export namespace Prisma {
     type?: SortOrder
     score?: SortOrderInput | SortOrder
     createdAt?: SortOrder
-    language?: SortOrder
     order?: SortOrderInput | SortOrder
     explanation?: SortOrderInput | SortOrder
+    skillType?: SortOrder
+    language?: SortOrder
+    cefrLevel?: SortOrder
+    xpReward?: SortOrder
+    timeLimit?: SortOrderInput | SortOrder
     authorId?: SortOrderInput | SortOrder
     videoId?: SortOrderInput | SortOrder
     courseId?: SortOrderInput | SortOrder
@@ -12227,9 +20799,13 @@ export namespace Prisma {
     type?: EnumTaskTypeWithAggregatesFilter<"Task"> | $Enums.TaskType
     score?: IntNullableWithAggregatesFilter<"Task"> | number | null
     createdAt?: DateTimeWithAggregatesFilter<"Task"> | Date | string
-    language?: EnumLanguageWithAggregatesFilter<"Task"> | $Enums.Language
     order?: IntNullableWithAggregatesFilter<"Task"> | number | null
     explanation?: StringNullableWithAggregatesFilter<"Task"> | string | null
+    skillType?: EnumCoreSkillTypeWithAggregatesFilter<"Task"> | $Enums.CoreSkillType
+    language?: EnumLanguageWithAggregatesFilter<"Task"> | $Enums.Language
+    cefrLevel?: EnumCEFRLevelWithAggregatesFilter<"Task"> | $Enums.CEFRLevel
+    xpReward?: IntWithAggregatesFilter<"Task"> | number
+    timeLimit?: IntNullableWithAggregatesFilter<"Task"> | number | null
     authorId?: IntNullableWithAggregatesFilter<"Task"> | number | null
     videoId?: IntNullableWithAggregatesFilter<"Task"> | number | null
     courseId?: IntNullableWithAggregatesFilter<"Task"> | number | null
@@ -12243,14 +20819,17 @@ export namespace Prisma {
     title?: StringFilter<"Course"> | string
     description?: StringNullableFilter<"Course"> | string | null
     imageUrl?: StringNullableFilter<"Course"> | string | null
-    level?: EnumLevelFilter<"Course"> | $Enums.Level
+    level?: EnumCEFRLevelFilter<"Course"> | $Enums.CEFRLevel
+    targetSkills?: EnumCoreSkillTypeNullableListFilter<"Course">
     isPublished?: BoolFilter<"Course"> | boolean
     createdAt?: DateTimeFilter<"Course"> | Date | string
     updatedAt?: DateTimeFilter<"Course"> | Date | string
     tags?: StringNullableListFilter<"Course">
+    estimatedHours?: IntNullableFilter<"Course"> | number | null
+    totalXP?: IntFilter<"Course"> | number
     authorId?: IntNullableFilter<"Course"> | number | null
-    tasks?: TaskListRelationFilter
     enrollments?: EnrollmentListRelationFilter
+    tasks?: TaskListRelationFilter
     videos?: VideoListRelationFilter
     author?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
   }
@@ -12261,13 +20840,16 @@ export namespace Prisma {
     description?: SortOrderInput | SortOrder
     imageUrl?: SortOrderInput | SortOrder
     level?: SortOrder
+    targetSkills?: SortOrder
     isPublished?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     tags?: SortOrder
+    estimatedHours?: SortOrderInput | SortOrder
+    totalXP?: SortOrder
     authorId?: SortOrderInput | SortOrder
-    tasks?: TaskOrderByRelationAggregateInput
     enrollments?: EnrollmentOrderByRelationAggregateInput
+    tasks?: TaskOrderByRelationAggregateInput
     videos?: VideoOrderByRelationAggregateInput
     author?: UserOrderByWithRelationInput
   }
@@ -12280,14 +20862,17 @@ export namespace Prisma {
     title?: StringFilter<"Course"> | string
     description?: StringNullableFilter<"Course"> | string | null
     imageUrl?: StringNullableFilter<"Course"> | string | null
-    level?: EnumLevelFilter<"Course"> | $Enums.Level
+    level?: EnumCEFRLevelFilter<"Course"> | $Enums.CEFRLevel
+    targetSkills?: EnumCoreSkillTypeNullableListFilter<"Course">
     isPublished?: BoolFilter<"Course"> | boolean
     createdAt?: DateTimeFilter<"Course"> | Date | string
     updatedAt?: DateTimeFilter<"Course"> | Date | string
     tags?: StringNullableListFilter<"Course">
+    estimatedHours?: IntNullableFilter<"Course"> | number | null
+    totalXP?: IntFilter<"Course"> | number
     authorId?: IntNullableFilter<"Course"> | number | null
-    tasks?: TaskListRelationFilter
     enrollments?: EnrollmentListRelationFilter
+    tasks?: TaskListRelationFilter
     videos?: VideoListRelationFilter
     author?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
   }, "id">
@@ -12298,10 +20883,13 @@ export namespace Prisma {
     description?: SortOrderInput | SortOrder
     imageUrl?: SortOrderInput | SortOrder
     level?: SortOrder
+    targetSkills?: SortOrder
     isPublished?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     tags?: SortOrder
+    estimatedHours?: SortOrderInput | SortOrder
+    totalXP?: SortOrder
     authorId?: SortOrderInput | SortOrder
     _count?: CourseCountOrderByAggregateInput
     _avg?: CourseAvgOrderByAggregateInput
@@ -12318,11 +20906,14 @@ export namespace Prisma {
     title?: StringWithAggregatesFilter<"Course"> | string
     description?: StringNullableWithAggregatesFilter<"Course"> | string | null
     imageUrl?: StringNullableWithAggregatesFilter<"Course"> | string | null
-    level?: EnumLevelWithAggregatesFilter<"Course"> | $Enums.Level
+    level?: EnumCEFRLevelWithAggregatesFilter<"Course"> | $Enums.CEFRLevel
+    targetSkills?: EnumCoreSkillTypeNullableListFilter<"Course">
     isPublished?: BoolWithAggregatesFilter<"Course"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"Course"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Course"> | Date | string
     tags?: StringNullableListFilter<"Course">
+    estimatedHours?: IntNullableWithAggregatesFilter<"Course"> | number | null
+    totalXP?: IntWithAggregatesFilter<"Course"> | number
     authorId?: IntNullableWithAggregatesFilter<"Course"> | number | null
   }
 
@@ -12396,7 +20987,10 @@ export namespace Prisma {
     global_language?: EnumLanguageFilter<"Setting"> | $Enums.Language
     current_language?: EnumLanguageFilter<"Setting"> | $Enums.Language
     purposes?: EnumPurposeNullableListFilter<"Setting">
-    current_level?: EnumLevelFilter<"Setting"> | $Enums.Level
+    current_level?: EnumCEFRLevelFilter<"Setting"> | $Enums.CEFRLevel
+    dailyXPGoal?: IntFilter<"Setting"> | number
+    dailyTimeGoal?: IntFilter<"Setting"> | number
+    weeklyGoal?: IntFilter<"Setting"> | number
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
 
@@ -12407,6 +21001,9 @@ export namespace Prisma {
     current_language?: SortOrder
     purposes?: SortOrder
     current_level?: SortOrder
+    dailyXPGoal?: SortOrder
+    dailyTimeGoal?: SortOrder
+    weeklyGoal?: SortOrder
     user?: UserOrderByWithRelationInput
   }
 
@@ -12419,7 +21016,10 @@ export namespace Prisma {
     global_language?: EnumLanguageFilter<"Setting"> | $Enums.Language
     current_language?: EnumLanguageFilter<"Setting"> | $Enums.Language
     purposes?: EnumPurposeNullableListFilter<"Setting">
-    current_level?: EnumLevelFilter<"Setting"> | $Enums.Level
+    current_level?: EnumCEFRLevelFilter<"Setting"> | $Enums.CEFRLevel
+    dailyXPGoal?: IntFilter<"Setting"> | number
+    dailyTimeGoal?: IntFilter<"Setting"> | number
+    weeklyGoal?: IntFilter<"Setting"> | number
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "id" | "userId">
 
@@ -12430,6 +21030,9 @@ export namespace Prisma {
     current_language?: SortOrder
     purposes?: SortOrder
     current_level?: SortOrder
+    dailyXPGoal?: SortOrder
+    dailyTimeGoal?: SortOrder
+    weeklyGoal?: SortOrder
     _count?: SettingCountOrderByAggregateInput
     _avg?: SettingAvgOrderByAggregateInput
     _max?: SettingMaxOrderByAggregateInput
@@ -12446,7 +21049,307 @@ export namespace Prisma {
     global_language?: EnumLanguageWithAggregatesFilter<"Setting"> | $Enums.Language
     current_language?: EnumLanguageWithAggregatesFilter<"Setting"> | $Enums.Language
     purposes?: EnumPurposeNullableListFilter<"Setting">
-    current_level?: EnumLevelWithAggregatesFilter<"Setting"> | $Enums.Level
+    current_level?: EnumCEFRLevelWithAggregatesFilter<"Setting"> | $Enums.CEFRLevel
+    dailyXPGoal?: IntWithAggregatesFilter<"Setting"> | number
+    dailyTimeGoal?: IntWithAggregatesFilter<"Setting"> | number
+    weeklyGoal?: IntWithAggregatesFilter<"Setting"> | number
+  }
+
+  export type LanguageProgressWhereInput = {
+    AND?: LanguageProgressWhereInput | LanguageProgressWhereInput[]
+    OR?: LanguageProgressWhereInput[]
+    NOT?: LanguageProgressWhereInput | LanguageProgressWhereInput[]
+    id?: IntFilter<"LanguageProgress"> | number
+    userId?: IntFilter<"LanguageProgress"> | number
+    language?: EnumLanguageFilter<"LanguageProgress"> | $Enums.Language
+    overallCEFR?: EnumCEFRLevelFilter<"LanguageProgress"> | $Enums.CEFRLevel
+    overallProgress?: FloatFilter<"LanguageProgress"> | number
+    totalXP?: IntFilter<"LanguageProgress"> | number
+    totalTime?: IntFilter<"LanguageProgress"> | number
+    lastActiveAt?: DateTimeNullableFilter<"LanguageProgress"> | Date | string | null
+    createdAt?: DateTimeFilter<"LanguageProgress"> | Date | string
+    updatedAt?: DateTimeFilter<"LanguageProgress"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    skillProgresses?: SkillProgressListRelationFilter
+  }
+
+  export type LanguageProgressOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    language?: SortOrder
+    overallCEFR?: SortOrder
+    overallProgress?: SortOrder
+    totalXP?: SortOrder
+    totalTime?: SortOrder
+    lastActiveAt?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+    skillProgresses?: SkillProgressOrderByRelationAggregateInput
+  }
+
+  export type LanguageProgressWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    userId_language?: LanguageProgressUserIdLanguageCompoundUniqueInput
+    AND?: LanguageProgressWhereInput | LanguageProgressWhereInput[]
+    OR?: LanguageProgressWhereInput[]
+    NOT?: LanguageProgressWhereInput | LanguageProgressWhereInput[]
+    userId?: IntFilter<"LanguageProgress"> | number
+    language?: EnumLanguageFilter<"LanguageProgress"> | $Enums.Language
+    overallCEFR?: EnumCEFRLevelFilter<"LanguageProgress"> | $Enums.CEFRLevel
+    overallProgress?: FloatFilter<"LanguageProgress"> | number
+    totalXP?: IntFilter<"LanguageProgress"> | number
+    totalTime?: IntFilter<"LanguageProgress"> | number
+    lastActiveAt?: DateTimeNullableFilter<"LanguageProgress"> | Date | string | null
+    createdAt?: DateTimeFilter<"LanguageProgress"> | Date | string
+    updatedAt?: DateTimeFilter<"LanguageProgress"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    skillProgresses?: SkillProgressListRelationFilter
+  }, "id" | "userId_language">
+
+  export type LanguageProgressOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    language?: SortOrder
+    overallCEFR?: SortOrder
+    overallProgress?: SortOrder
+    totalXP?: SortOrder
+    totalTime?: SortOrder
+    lastActiveAt?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: LanguageProgressCountOrderByAggregateInput
+    _avg?: LanguageProgressAvgOrderByAggregateInput
+    _max?: LanguageProgressMaxOrderByAggregateInput
+    _min?: LanguageProgressMinOrderByAggregateInput
+    _sum?: LanguageProgressSumOrderByAggregateInput
+  }
+
+  export type LanguageProgressScalarWhereWithAggregatesInput = {
+    AND?: LanguageProgressScalarWhereWithAggregatesInput | LanguageProgressScalarWhereWithAggregatesInput[]
+    OR?: LanguageProgressScalarWhereWithAggregatesInput[]
+    NOT?: LanguageProgressScalarWhereWithAggregatesInput | LanguageProgressScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"LanguageProgress"> | number
+    userId?: IntWithAggregatesFilter<"LanguageProgress"> | number
+    language?: EnumLanguageWithAggregatesFilter<"LanguageProgress"> | $Enums.Language
+    overallCEFR?: EnumCEFRLevelWithAggregatesFilter<"LanguageProgress"> | $Enums.CEFRLevel
+    overallProgress?: FloatWithAggregatesFilter<"LanguageProgress"> | number
+    totalXP?: IntWithAggregatesFilter<"LanguageProgress"> | number
+    totalTime?: IntWithAggregatesFilter<"LanguageProgress"> | number
+    lastActiveAt?: DateTimeNullableWithAggregatesFilter<"LanguageProgress"> | Date | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"LanguageProgress"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"LanguageProgress"> | Date | string
+  }
+
+  export type SkillProgressWhereInput = {
+    AND?: SkillProgressWhereInput | SkillProgressWhereInput[]
+    OR?: SkillProgressWhereInput[]
+    NOT?: SkillProgressWhereInput | SkillProgressWhereInput[]
+    id?: IntFilter<"SkillProgress"> | number
+    userId?: IntFilter<"SkillProgress"> | number
+    languageProgressId?: IntFilter<"SkillProgress"> | number
+    skillType?: EnumCoreSkillTypeFilter<"SkillProgress"> | $Enums.CoreSkillType
+    cefrLevel?: EnumCEFRLevelFilter<"SkillProgress"> | $Enums.CEFRLevel
+    levelProgress?: FloatFilter<"SkillProgress"> | number
+    xpEarned?: IntFilter<"SkillProgress"> | number
+    totalPracticed?: IntFilter<"SkillProgress"> | number
+    correctAnswers?: IntFilter<"SkillProgress"> | number
+    totalAnswers?: IntFilter<"SkillProgress"> | number
+    currentAccuracy?: FloatFilter<"SkillProgress"> | number
+    timeSpent?: IntFilter<"SkillProgress"> | number
+    totalWordsStudied?: IntFilter<"SkillProgress"> | number
+    wordsLearned?: IntFilter<"SkillProgress"> | number
+    wordsReviewing?: IntFilter<"SkillProgress"> | number
+    lastPracticed?: DateTimeNullableFilter<"SkillProgress"> | Date | string | null
+    updatedAt?: DateTimeFilter<"SkillProgress"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    languageProgress?: XOR<LanguageProgressScalarRelationFilter, LanguageProgressWhereInput>
+  }
+
+  export type SkillProgressOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    languageProgressId?: SortOrder
+    skillType?: SortOrder
+    cefrLevel?: SortOrder
+    levelProgress?: SortOrder
+    xpEarned?: SortOrder
+    totalPracticed?: SortOrder
+    correctAnswers?: SortOrder
+    totalAnswers?: SortOrder
+    currentAccuracy?: SortOrder
+    timeSpent?: SortOrder
+    totalWordsStudied?: SortOrder
+    wordsLearned?: SortOrder
+    wordsReviewing?: SortOrder
+    lastPracticed?: SortOrderInput | SortOrder
+    updatedAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+    languageProgress?: LanguageProgressOrderByWithRelationInput
+  }
+
+  export type SkillProgressWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    userId_languageProgressId_skillType?: SkillProgressUserIdLanguageProgressIdSkillTypeCompoundUniqueInput
+    AND?: SkillProgressWhereInput | SkillProgressWhereInput[]
+    OR?: SkillProgressWhereInput[]
+    NOT?: SkillProgressWhereInput | SkillProgressWhereInput[]
+    userId?: IntFilter<"SkillProgress"> | number
+    languageProgressId?: IntFilter<"SkillProgress"> | number
+    skillType?: EnumCoreSkillTypeFilter<"SkillProgress"> | $Enums.CoreSkillType
+    cefrLevel?: EnumCEFRLevelFilter<"SkillProgress"> | $Enums.CEFRLevel
+    levelProgress?: FloatFilter<"SkillProgress"> | number
+    xpEarned?: IntFilter<"SkillProgress"> | number
+    totalPracticed?: IntFilter<"SkillProgress"> | number
+    correctAnswers?: IntFilter<"SkillProgress"> | number
+    totalAnswers?: IntFilter<"SkillProgress"> | number
+    currentAccuracy?: FloatFilter<"SkillProgress"> | number
+    timeSpent?: IntFilter<"SkillProgress"> | number
+    totalWordsStudied?: IntFilter<"SkillProgress"> | number
+    wordsLearned?: IntFilter<"SkillProgress"> | number
+    wordsReviewing?: IntFilter<"SkillProgress"> | number
+    lastPracticed?: DateTimeNullableFilter<"SkillProgress"> | Date | string | null
+    updatedAt?: DateTimeFilter<"SkillProgress"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    languageProgress?: XOR<LanguageProgressScalarRelationFilter, LanguageProgressWhereInput>
+  }, "id" | "userId_languageProgressId_skillType">
+
+  export type SkillProgressOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    languageProgressId?: SortOrder
+    skillType?: SortOrder
+    cefrLevel?: SortOrder
+    levelProgress?: SortOrder
+    xpEarned?: SortOrder
+    totalPracticed?: SortOrder
+    correctAnswers?: SortOrder
+    totalAnswers?: SortOrder
+    currentAccuracy?: SortOrder
+    timeSpent?: SortOrder
+    totalWordsStudied?: SortOrder
+    wordsLearned?: SortOrder
+    wordsReviewing?: SortOrder
+    lastPracticed?: SortOrderInput | SortOrder
+    updatedAt?: SortOrder
+    _count?: SkillProgressCountOrderByAggregateInput
+    _avg?: SkillProgressAvgOrderByAggregateInput
+    _max?: SkillProgressMaxOrderByAggregateInput
+    _min?: SkillProgressMinOrderByAggregateInput
+    _sum?: SkillProgressSumOrderByAggregateInput
+  }
+
+  export type SkillProgressScalarWhereWithAggregatesInput = {
+    AND?: SkillProgressScalarWhereWithAggregatesInput | SkillProgressScalarWhereWithAggregatesInput[]
+    OR?: SkillProgressScalarWhereWithAggregatesInput[]
+    NOT?: SkillProgressScalarWhereWithAggregatesInput | SkillProgressScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"SkillProgress"> | number
+    userId?: IntWithAggregatesFilter<"SkillProgress"> | number
+    languageProgressId?: IntWithAggregatesFilter<"SkillProgress"> | number
+    skillType?: EnumCoreSkillTypeWithAggregatesFilter<"SkillProgress"> | $Enums.CoreSkillType
+    cefrLevel?: EnumCEFRLevelWithAggregatesFilter<"SkillProgress"> | $Enums.CEFRLevel
+    levelProgress?: FloatWithAggregatesFilter<"SkillProgress"> | number
+    xpEarned?: IntWithAggregatesFilter<"SkillProgress"> | number
+    totalPracticed?: IntWithAggregatesFilter<"SkillProgress"> | number
+    correctAnswers?: IntWithAggregatesFilter<"SkillProgress"> | number
+    totalAnswers?: IntWithAggregatesFilter<"SkillProgress"> | number
+    currentAccuracy?: FloatWithAggregatesFilter<"SkillProgress"> | number
+    timeSpent?: IntWithAggregatesFilter<"SkillProgress"> | number
+    totalWordsStudied?: IntWithAggregatesFilter<"SkillProgress"> | number
+    wordsLearned?: IntWithAggregatesFilter<"SkillProgress"> | number
+    wordsReviewing?: IntWithAggregatesFilter<"SkillProgress"> | number
+    lastPracticed?: DateTimeNullableWithAggregatesFilter<"SkillProgress"> | Date | string | null
+    updatedAt?: DateTimeWithAggregatesFilter<"SkillProgress"> | Date | string
+  }
+
+  export type SkillLevelRequirementsWhereInput = {
+    AND?: SkillLevelRequirementsWhereInput | SkillLevelRequirementsWhereInput[]
+    OR?: SkillLevelRequirementsWhereInput[]
+    NOT?: SkillLevelRequirementsWhereInput | SkillLevelRequirementsWhereInput[]
+    id?: IntFilter<"SkillLevelRequirements"> | number
+    skillType?: EnumCoreSkillTypeFilter<"SkillLevelRequirements"> | $Enums.CoreSkillType
+    cefrLevel?: EnumCEFRLevelFilter<"SkillLevelRequirements"> | $Enums.CEFRLevel
+    minXP?: IntFilter<"SkillLevelRequirements"> | number
+    minAccuracy?: FloatFilter<"SkillLevelRequirements"> | number
+    minPracticed?: IntFilter<"SkillLevelRequirements"> | number
+    minTimeSpent?: IntFilter<"SkillLevelRequirements"> | number
+    minWordsLearned?: IntNullableFilter<"SkillLevelRequirements"> | number | null
+    weightInOverall?: FloatFilter<"SkillLevelRequirements"> | number
+    displayName?: StringFilter<"SkillLevelRequirements"> | string
+    description?: StringFilter<"SkillLevelRequirements"> | string
+    color?: StringFilter<"SkillLevelRequirements"> | string
+  }
+
+  export type SkillLevelRequirementsOrderByWithRelationInput = {
+    id?: SortOrder
+    skillType?: SortOrder
+    cefrLevel?: SortOrder
+    minXP?: SortOrder
+    minAccuracy?: SortOrder
+    minPracticed?: SortOrder
+    minTimeSpent?: SortOrder
+    minWordsLearned?: SortOrderInput | SortOrder
+    weightInOverall?: SortOrder
+    displayName?: SortOrder
+    description?: SortOrder
+    color?: SortOrder
+  }
+
+  export type SkillLevelRequirementsWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    skillType_cefrLevel?: SkillLevelRequirementsSkillTypeCefrLevelCompoundUniqueInput
+    AND?: SkillLevelRequirementsWhereInput | SkillLevelRequirementsWhereInput[]
+    OR?: SkillLevelRequirementsWhereInput[]
+    NOT?: SkillLevelRequirementsWhereInput | SkillLevelRequirementsWhereInput[]
+    skillType?: EnumCoreSkillTypeFilter<"SkillLevelRequirements"> | $Enums.CoreSkillType
+    cefrLevel?: EnumCEFRLevelFilter<"SkillLevelRequirements"> | $Enums.CEFRLevel
+    minXP?: IntFilter<"SkillLevelRequirements"> | number
+    minAccuracy?: FloatFilter<"SkillLevelRequirements"> | number
+    minPracticed?: IntFilter<"SkillLevelRequirements"> | number
+    minTimeSpent?: IntFilter<"SkillLevelRequirements"> | number
+    minWordsLearned?: IntNullableFilter<"SkillLevelRequirements"> | number | null
+    weightInOverall?: FloatFilter<"SkillLevelRequirements"> | number
+    displayName?: StringFilter<"SkillLevelRequirements"> | string
+    description?: StringFilter<"SkillLevelRequirements"> | string
+    color?: StringFilter<"SkillLevelRequirements"> | string
+  }, "id" | "skillType_cefrLevel">
+
+  export type SkillLevelRequirementsOrderByWithAggregationInput = {
+    id?: SortOrder
+    skillType?: SortOrder
+    cefrLevel?: SortOrder
+    minXP?: SortOrder
+    minAccuracy?: SortOrder
+    minPracticed?: SortOrder
+    minTimeSpent?: SortOrder
+    minWordsLearned?: SortOrderInput | SortOrder
+    weightInOverall?: SortOrder
+    displayName?: SortOrder
+    description?: SortOrder
+    color?: SortOrder
+    _count?: SkillLevelRequirementsCountOrderByAggregateInput
+    _avg?: SkillLevelRequirementsAvgOrderByAggregateInput
+    _max?: SkillLevelRequirementsMaxOrderByAggregateInput
+    _min?: SkillLevelRequirementsMinOrderByAggregateInput
+    _sum?: SkillLevelRequirementsSumOrderByAggregateInput
+  }
+
+  export type SkillLevelRequirementsScalarWhereWithAggregatesInput = {
+    AND?: SkillLevelRequirementsScalarWhereWithAggregatesInput | SkillLevelRequirementsScalarWhereWithAggregatesInput[]
+    OR?: SkillLevelRequirementsScalarWhereWithAggregatesInput[]
+    NOT?: SkillLevelRequirementsScalarWhereWithAggregatesInput | SkillLevelRequirementsScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"SkillLevelRequirements"> | number
+    skillType?: EnumCoreSkillTypeWithAggregatesFilter<"SkillLevelRequirements"> | $Enums.CoreSkillType
+    cefrLevel?: EnumCEFRLevelWithAggregatesFilter<"SkillLevelRequirements"> | $Enums.CEFRLevel
+    minXP?: IntWithAggregatesFilter<"SkillLevelRequirements"> | number
+    minAccuracy?: FloatWithAggregatesFilter<"SkillLevelRequirements"> | number
+    minPracticed?: IntWithAggregatesFilter<"SkillLevelRequirements"> | number
+    minTimeSpent?: IntWithAggregatesFilter<"SkillLevelRequirements"> | number
+    minWordsLearned?: IntNullableWithAggregatesFilter<"SkillLevelRequirements"> | number | null
+    weightInOverall?: FloatWithAggregatesFilter<"SkillLevelRequirements"> | number
+    displayName?: StringWithAggregatesFilter<"SkillLevelRequirements"> | string
+    description?: StringWithAggregatesFilter<"SkillLevelRequirements"> | string
+    color?: StringWithAggregatesFilter<"SkillLevelRequirements"> | string
   }
 
   export type WordTaskProgressWhereInput = {
@@ -12454,52 +21357,84 @@ export namespace Prisma {
     OR?: WordTaskProgressWhereInput[]
     NOT?: WordTaskProgressWhereInput | WordTaskProgressWhereInput[]
     id?: IntFilter<"WordTaskProgress"> | number
-    userId?: IntFilter<"WordTaskProgress"> | number
     wordId?: IntFilter<"WordTaskProgress"> | number
-    taskType?: EnumWordTaskTypeFilter<"WordTaskProgress"> | $Enums.WordTaskType
+    userId?: IntFilter<"WordTaskProgress"> | number
+    skillType?: EnumCoreSkillTypeFilter<"WordTaskProgress"> | $Enums.CoreSkillType
     isPassed?: BoolFilter<"WordTaskProgress"> | boolean
     score?: IntFilter<"WordTaskProgress"> | number
     attempts?: IntFilter<"WordTaskProgress"> | number
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    correctCount?: IntFilter<"WordTaskProgress"> | number
+    nextReviewAt?: DateTimeNullableFilter<"WordTaskProgress"> | Date | string | null
+    reviewInterval?: IntFilter<"WordTaskProgress"> | number
+    easeFactor?: FloatFilter<"WordTaskProgress"> | number
+    lastAttempt?: DateTimeNullableFilter<"WordTaskProgress"> | Date | string | null
+    timeSpent?: IntFilter<"WordTaskProgress"> | number
+    createdAt?: DateTimeFilter<"WordTaskProgress"> | Date | string
+    updatedAt?: DateTimeFilter<"WordTaskProgress"> | Date | string
     word?: XOR<WordScalarRelationFilter, WordWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
 
   export type WordTaskProgressOrderByWithRelationInput = {
     id?: SortOrder
-    userId?: SortOrder
     wordId?: SortOrder
-    taskType?: SortOrder
+    userId?: SortOrder
+    skillType?: SortOrder
     isPassed?: SortOrder
     score?: SortOrder
     attempts?: SortOrder
-    user?: UserOrderByWithRelationInput
+    correctCount?: SortOrder
+    nextReviewAt?: SortOrderInput | SortOrder
+    reviewInterval?: SortOrder
+    easeFactor?: SortOrder
+    lastAttempt?: SortOrderInput | SortOrder
+    timeSpent?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
     word?: WordOrderByWithRelationInput
+    user?: UserOrderByWithRelationInput
   }
 
   export type WordTaskProgressWhereUniqueInput = Prisma.AtLeast<{
     id?: number
-    userId_wordId_taskType?: WordTaskProgressUserIdWordIdTaskTypeCompoundUniqueInput
+    wordId_userId_skillType?: WordTaskProgressWordIdUserIdSkillTypeCompoundUniqueInput
     AND?: WordTaskProgressWhereInput | WordTaskProgressWhereInput[]
     OR?: WordTaskProgressWhereInput[]
     NOT?: WordTaskProgressWhereInput | WordTaskProgressWhereInput[]
-    userId?: IntFilter<"WordTaskProgress"> | number
     wordId?: IntFilter<"WordTaskProgress"> | number
-    taskType?: EnumWordTaskTypeFilter<"WordTaskProgress"> | $Enums.WordTaskType
+    userId?: IntFilter<"WordTaskProgress"> | number
+    skillType?: EnumCoreSkillTypeFilter<"WordTaskProgress"> | $Enums.CoreSkillType
     isPassed?: BoolFilter<"WordTaskProgress"> | boolean
     score?: IntFilter<"WordTaskProgress"> | number
     attempts?: IntFilter<"WordTaskProgress"> | number
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    correctCount?: IntFilter<"WordTaskProgress"> | number
+    nextReviewAt?: DateTimeNullableFilter<"WordTaskProgress"> | Date | string | null
+    reviewInterval?: IntFilter<"WordTaskProgress"> | number
+    easeFactor?: FloatFilter<"WordTaskProgress"> | number
+    lastAttempt?: DateTimeNullableFilter<"WordTaskProgress"> | Date | string | null
+    timeSpent?: IntFilter<"WordTaskProgress"> | number
+    createdAt?: DateTimeFilter<"WordTaskProgress"> | Date | string
+    updatedAt?: DateTimeFilter<"WordTaskProgress"> | Date | string
     word?: XOR<WordScalarRelationFilter, WordWhereInput>
-  }, "id" | "userId_wordId_taskType">
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id" | "wordId_userId_skillType">
 
   export type WordTaskProgressOrderByWithAggregationInput = {
     id?: SortOrder
-    userId?: SortOrder
     wordId?: SortOrder
-    taskType?: SortOrder
+    userId?: SortOrder
+    skillType?: SortOrder
     isPassed?: SortOrder
     score?: SortOrder
     attempts?: SortOrder
+    correctCount?: SortOrder
+    nextReviewAt?: SortOrderInput | SortOrder
+    reviewInterval?: SortOrder
+    easeFactor?: SortOrder
+    lastAttempt?: SortOrderInput | SortOrder
+    timeSpent?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
     _count?: WordTaskProgressCountOrderByAggregateInput
     _avg?: WordTaskProgressAvgOrderByAggregateInput
     _max?: WordTaskProgressMaxOrderByAggregateInput
@@ -12512,12 +21447,266 @@ export namespace Prisma {
     OR?: WordTaskProgressScalarWhereWithAggregatesInput[]
     NOT?: WordTaskProgressScalarWhereWithAggregatesInput | WordTaskProgressScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"WordTaskProgress"> | number
-    userId?: IntWithAggregatesFilter<"WordTaskProgress"> | number
     wordId?: IntWithAggregatesFilter<"WordTaskProgress"> | number
-    taskType?: EnumWordTaskTypeWithAggregatesFilter<"WordTaskProgress"> | $Enums.WordTaskType
+    userId?: IntWithAggregatesFilter<"WordTaskProgress"> | number
+    skillType?: EnumCoreSkillTypeWithAggregatesFilter<"WordTaskProgress"> | $Enums.CoreSkillType
     isPassed?: BoolWithAggregatesFilter<"WordTaskProgress"> | boolean
     score?: IntWithAggregatesFilter<"WordTaskProgress"> | number
     attempts?: IntWithAggregatesFilter<"WordTaskProgress"> | number
+    correctCount?: IntWithAggregatesFilter<"WordTaskProgress"> | number
+    nextReviewAt?: DateTimeNullableWithAggregatesFilter<"WordTaskProgress"> | Date | string | null
+    reviewInterval?: IntWithAggregatesFilter<"WordTaskProgress"> | number
+    easeFactor?: FloatWithAggregatesFilter<"WordTaskProgress"> | number
+    lastAttempt?: DateTimeNullableWithAggregatesFilter<"WordTaskProgress"> | Date | string | null
+    timeSpent?: IntWithAggregatesFilter<"WordTaskProgress"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"WordTaskProgress"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"WordTaskProgress"> | Date | string
+  }
+
+  export type DailyStatsWhereInput = {
+    AND?: DailyStatsWhereInput | DailyStatsWhereInput[]
+    OR?: DailyStatsWhereInput[]
+    NOT?: DailyStatsWhereInput | DailyStatsWhereInput[]
+    id?: IntFilter<"DailyStats"> | number
+    userId?: IntFilter<"DailyStats"> | number
+    language?: EnumLanguageFilter<"DailyStats"> | $Enums.Language
+    date?: DateTimeFilter<"DailyStats"> | Date | string
+    totalXP?: IntFilter<"DailyStats"> | number
+    totalTime?: IntFilter<"DailyStats"> | number
+    tasksCompleted?: IntFilter<"DailyStats"> | number
+    averageAccuracy?: FloatFilter<"DailyStats"> | number
+    skillsStats?: JsonFilter<"DailyStats">
+    newWordsLearned?: IntFilter<"DailyStats"> | number
+    wordsReviewed?: IntFilter<"DailyStats"> | number
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type DailyStatsOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    language?: SortOrder
+    date?: SortOrder
+    totalXP?: SortOrder
+    totalTime?: SortOrder
+    tasksCompleted?: SortOrder
+    averageAccuracy?: SortOrder
+    skillsStats?: SortOrder
+    newWordsLearned?: SortOrder
+    wordsReviewed?: SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type DailyStatsWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    userId_language_date?: DailyStatsUserIdLanguageDateCompoundUniqueInput
+    AND?: DailyStatsWhereInput | DailyStatsWhereInput[]
+    OR?: DailyStatsWhereInput[]
+    NOT?: DailyStatsWhereInput | DailyStatsWhereInput[]
+    userId?: IntFilter<"DailyStats"> | number
+    language?: EnumLanguageFilter<"DailyStats"> | $Enums.Language
+    date?: DateTimeFilter<"DailyStats"> | Date | string
+    totalXP?: IntFilter<"DailyStats"> | number
+    totalTime?: IntFilter<"DailyStats"> | number
+    tasksCompleted?: IntFilter<"DailyStats"> | number
+    averageAccuracy?: FloatFilter<"DailyStats"> | number
+    skillsStats?: JsonFilter<"DailyStats">
+    newWordsLearned?: IntFilter<"DailyStats"> | number
+    wordsReviewed?: IntFilter<"DailyStats"> | number
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id" | "userId_language_date">
+
+  export type DailyStatsOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    language?: SortOrder
+    date?: SortOrder
+    totalXP?: SortOrder
+    totalTime?: SortOrder
+    tasksCompleted?: SortOrder
+    averageAccuracy?: SortOrder
+    skillsStats?: SortOrder
+    newWordsLearned?: SortOrder
+    wordsReviewed?: SortOrder
+    _count?: DailyStatsCountOrderByAggregateInput
+    _avg?: DailyStatsAvgOrderByAggregateInput
+    _max?: DailyStatsMaxOrderByAggregateInput
+    _min?: DailyStatsMinOrderByAggregateInput
+    _sum?: DailyStatsSumOrderByAggregateInput
+  }
+
+  export type DailyStatsScalarWhereWithAggregatesInput = {
+    AND?: DailyStatsScalarWhereWithAggregatesInput | DailyStatsScalarWhereWithAggregatesInput[]
+    OR?: DailyStatsScalarWhereWithAggregatesInput[]
+    NOT?: DailyStatsScalarWhereWithAggregatesInput | DailyStatsScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"DailyStats"> | number
+    userId?: IntWithAggregatesFilter<"DailyStats"> | number
+    language?: EnumLanguageWithAggregatesFilter<"DailyStats"> | $Enums.Language
+    date?: DateTimeWithAggregatesFilter<"DailyStats"> | Date | string
+    totalXP?: IntWithAggregatesFilter<"DailyStats"> | number
+    totalTime?: IntWithAggregatesFilter<"DailyStats"> | number
+    tasksCompleted?: IntWithAggregatesFilter<"DailyStats"> | number
+    averageAccuracy?: FloatWithAggregatesFilter<"DailyStats"> | number
+    skillsStats?: JsonWithAggregatesFilter<"DailyStats">
+    newWordsLearned?: IntWithAggregatesFilter<"DailyStats"> | number
+    wordsReviewed?: IntWithAggregatesFilter<"DailyStats"> | number
+  }
+
+  export type AchievementWhereInput = {
+    AND?: AchievementWhereInput | AchievementWhereInput[]
+    OR?: AchievementWhereInput[]
+    NOT?: AchievementWhereInput | AchievementWhereInput[]
+    id?: IntFilter<"Achievement"> | number
+    name?: StringFilter<"Achievement"> | string
+    description?: StringFilter<"Achievement"> | string
+    type?: EnumAchievementTypeFilter<"Achievement"> | $Enums.AchievementType
+    requiredSkill?: EnumCoreSkillTypeNullableFilter<"Achievement"> | $Enums.CoreSkillType | null
+    requiredLevel?: EnumCEFRLevelNullableFilter<"Achievement"> | $Enums.CEFRLevel | null
+    requiredOverall?: EnumCEFRLevelNullableFilter<"Achievement"> | $Enums.CEFRLevel | null
+    requiredXP?: IntNullableFilter<"Achievement"> | number | null
+    requiredStreak?: IntNullableFilter<"Achievement"> | number | null
+    requiredAccuracy?: FloatNullableFilter<"Achievement"> | number | null
+    xpReward?: IntFilter<"Achievement"> | number
+    badge?: StringNullableFilter<"Achievement"> | string | null
+    isActive?: BoolFilter<"Achievement"> | boolean
+    users?: UserAchievementListRelationFilter
+  }
+
+  export type AchievementOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    type?: SortOrder
+    requiredSkill?: SortOrderInput | SortOrder
+    requiredLevel?: SortOrderInput | SortOrder
+    requiredOverall?: SortOrderInput | SortOrder
+    requiredXP?: SortOrderInput | SortOrder
+    requiredStreak?: SortOrderInput | SortOrder
+    requiredAccuracy?: SortOrderInput | SortOrder
+    xpReward?: SortOrder
+    badge?: SortOrderInput | SortOrder
+    isActive?: SortOrder
+    users?: UserAchievementOrderByRelationAggregateInput
+  }
+
+  export type AchievementWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: AchievementWhereInput | AchievementWhereInput[]
+    OR?: AchievementWhereInput[]
+    NOT?: AchievementWhereInput | AchievementWhereInput[]
+    name?: StringFilter<"Achievement"> | string
+    description?: StringFilter<"Achievement"> | string
+    type?: EnumAchievementTypeFilter<"Achievement"> | $Enums.AchievementType
+    requiredSkill?: EnumCoreSkillTypeNullableFilter<"Achievement"> | $Enums.CoreSkillType | null
+    requiredLevel?: EnumCEFRLevelNullableFilter<"Achievement"> | $Enums.CEFRLevel | null
+    requiredOverall?: EnumCEFRLevelNullableFilter<"Achievement"> | $Enums.CEFRLevel | null
+    requiredXP?: IntNullableFilter<"Achievement"> | number | null
+    requiredStreak?: IntNullableFilter<"Achievement"> | number | null
+    requiredAccuracy?: FloatNullableFilter<"Achievement"> | number | null
+    xpReward?: IntFilter<"Achievement"> | number
+    badge?: StringNullableFilter<"Achievement"> | string | null
+    isActive?: BoolFilter<"Achievement"> | boolean
+    users?: UserAchievementListRelationFilter
+  }, "id">
+
+  export type AchievementOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    type?: SortOrder
+    requiredSkill?: SortOrderInput | SortOrder
+    requiredLevel?: SortOrderInput | SortOrder
+    requiredOverall?: SortOrderInput | SortOrder
+    requiredXP?: SortOrderInput | SortOrder
+    requiredStreak?: SortOrderInput | SortOrder
+    requiredAccuracy?: SortOrderInput | SortOrder
+    xpReward?: SortOrder
+    badge?: SortOrderInput | SortOrder
+    isActive?: SortOrder
+    _count?: AchievementCountOrderByAggregateInput
+    _avg?: AchievementAvgOrderByAggregateInput
+    _max?: AchievementMaxOrderByAggregateInput
+    _min?: AchievementMinOrderByAggregateInput
+    _sum?: AchievementSumOrderByAggregateInput
+  }
+
+  export type AchievementScalarWhereWithAggregatesInput = {
+    AND?: AchievementScalarWhereWithAggregatesInput | AchievementScalarWhereWithAggregatesInput[]
+    OR?: AchievementScalarWhereWithAggregatesInput[]
+    NOT?: AchievementScalarWhereWithAggregatesInput | AchievementScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Achievement"> | number
+    name?: StringWithAggregatesFilter<"Achievement"> | string
+    description?: StringWithAggregatesFilter<"Achievement"> | string
+    type?: EnumAchievementTypeWithAggregatesFilter<"Achievement"> | $Enums.AchievementType
+    requiredSkill?: EnumCoreSkillTypeNullableWithAggregatesFilter<"Achievement"> | $Enums.CoreSkillType | null
+    requiredLevel?: EnumCEFRLevelNullableWithAggregatesFilter<"Achievement"> | $Enums.CEFRLevel | null
+    requiredOverall?: EnumCEFRLevelNullableWithAggregatesFilter<"Achievement"> | $Enums.CEFRLevel | null
+    requiredXP?: IntNullableWithAggregatesFilter<"Achievement"> | number | null
+    requiredStreak?: IntNullableWithAggregatesFilter<"Achievement"> | number | null
+    requiredAccuracy?: FloatNullableWithAggregatesFilter<"Achievement"> | number | null
+    xpReward?: IntWithAggregatesFilter<"Achievement"> | number
+    badge?: StringNullableWithAggregatesFilter<"Achievement"> | string | null
+    isActive?: BoolWithAggregatesFilter<"Achievement"> | boolean
+  }
+
+  export type UserAchievementWhereInput = {
+    AND?: UserAchievementWhereInput | UserAchievementWhereInput[]
+    OR?: UserAchievementWhereInput[]
+    NOT?: UserAchievementWhereInput | UserAchievementWhereInput[]
+    id?: IntFilter<"UserAchievement"> | number
+    userId?: IntFilter<"UserAchievement"> | number
+    achievementId?: IntFilter<"UserAchievement"> | number
+    unlockedAt?: DateTimeFilter<"UserAchievement"> | Date | string
+    language?: EnumLanguageNullableFilter<"UserAchievement"> | $Enums.Language | null
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    achievement?: XOR<AchievementScalarRelationFilter, AchievementWhereInput>
+  }
+
+  export type UserAchievementOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    achievementId?: SortOrder
+    unlockedAt?: SortOrder
+    language?: SortOrderInput | SortOrder
+    user?: UserOrderByWithRelationInput
+    achievement?: AchievementOrderByWithRelationInput
+  }
+
+  export type UserAchievementWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    userId_achievementId?: UserAchievementUserIdAchievementIdCompoundUniqueInput
+    AND?: UserAchievementWhereInput | UserAchievementWhereInput[]
+    OR?: UserAchievementWhereInput[]
+    NOT?: UserAchievementWhereInput | UserAchievementWhereInput[]
+    userId?: IntFilter<"UserAchievement"> | number
+    achievementId?: IntFilter<"UserAchievement"> | number
+    unlockedAt?: DateTimeFilter<"UserAchievement"> | Date | string
+    language?: EnumLanguageNullableFilter<"UserAchievement"> | $Enums.Language | null
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    achievement?: XOR<AchievementScalarRelationFilter, AchievementWhereInput>
+  }, "id" | "userId_achievementId">
+
+  export type UserAchievementOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    achievementId?: SortOrder
+    unlockedAt?: SortOrder
+    language?: SortOrderInput | SortOrder
+    _count?: UserAchievementCountOrderByAggregateInput
+    _avg?: UserAchievementAvgOrderByAggregateInput
+    _max?: UserAchievementMaxOrderByAggregateInput
+    _min?: UserAchievementMinOrderByAggregateInput
+    _sum?: UserAchievementSumOrderByAggregateInput
+  }
+
+  export type UserAchievementScalarWhereWithAggregatesInput = {
+    AND?: UserAchievementScalarWhereWithAggregatesInput | UserAchievementScalarWhereWithAggregatesInput[]
+    OR?: UserAchievementScalarWhereWithAggregatesInput[]
+    NOT?: UserAchievementScalarWhereWithAggregatesInput | UserAchievementScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"UserAchievement"> | number
+    userId?: IntWithAggregatesFilter<"UserAchievement"> | number
+    achievementId?: IntWithAggregatesFilter<"UserAchievement"> | number
+    unlockedAt?: DateTimeWithAggregatesFilter<"UserAchievement"> | Date | string
+    language?: EnumLanguageNullableWithAggregatesFilter<"UserAchievement"> | $Enums.Language | null
   }
 
   export type UserCreateInput = {
@@ -12533,12 +21722,21 @@ export namespace Prisma {
     lastLoginAt?: Date | string | null
     provider?: string | null
     refreshToken?: string | null
-    enrollments?: EnrollmentCreateNestedManyWithoutUserInput
-    wordProgresses?: WordTaskProgressCreateNestedManyWithoutUserInput
-    courses?: CourseCreateNestedManyWithoutAuthorInput
-    tasks?: TaskCreateNestedManyWithoutAuthorInput
+    totalXP?: number
+    currentStreak?: number
+    longestStreak?: number
+    totalLearningTime?: number
+    lastActiveAt?: Date | string | null
     setting?: SettingCreateNestedOneWithoutUserInput
     words?: WordCreateNestedManyWithoutUserInput
+    languageProgresses?: LanguageProgressCreateNestedManyWithoutUserInput
+    skillProgresses?: SkillProgressCreateNestedManyWithoutUserInput
+    achievements?: UserAchievementCreateNestedManyWithoutUserInput
+    dailyStats?: DailyStatsCreateNestedManyWithoutUserInput
+    enrollments?: EnrollmentCreateNestedManyWithoutUserInput
+    courses?: CourseCreateNestedManyWithoutAuthorInput
+    tasks?: TaskCreateNestedManyWithoutAuthorInput
+    wordProgresses?: WordTaskProgressCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -12555,12 +21753,21 @@ export namespace Prisma {
     lastLoginAt?: Date | string | null
     provider?: string | null
     refreshToken?: string | null
-    enrollments?: EnrollmentUncheckedCreateNestedManyWithoutUserInput
-    wordProgresses?: WordTaskProgressUncheckedCreateNestedManyWithoutUserInput
-    courses?: CourseUncheckedCreateNestedManyWithoutAuthorInput
-    tasks?: TaskUncheckedCreateNestedManyWithoutAuthorInput
+    totalXP?: number
+    currentStreak?: number
+    longestStreak?: number
+    totalLearningTime?: number
+    lastActiveAt?: Date | string | null
     setting?: SettingUncheckedCreateNestedOneWithoutUserInput
     words?: WordUncheckedCreateNestedManyWithoutUserInput
+    languageProgresses?: LanguageProgressUncheckedCreateNestedManyWithoutUserInput
+    skillProgresses?: SkillProgressUncheckedCreateNestedManyWithoutUserInput
+    achievements?: UserAchievementUncheckedCreateNestedManyWithoutUserInput
+    dailyStats?: DailyStatsUncheckedCreateNestedManyWithoutUserInput
+    enrollments?: EnrollmentUncheckedCreateNestedManyWithoutUserInput
+    courses?: CourseUncheckedCreateNestedManyWithoutAuthorInput
+    tasks?: TaskUncheckedCreateNestedManyWithoutAuthorInput
+    wordProgresses?: WordTaskProgressUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -12576,12 +21783,21 @@ export namespace Prisma {
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     provider?: NullableStringFieldUpdateOperationsInput | string | null
     refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
-    enrollments?: EnrollmentUpdateManyWithoutUserNestedInput
-    wordProgresses?: WordTaskProgressUpdateManyWithoutUserNestedInput
-    courses?: CourseUpdateManyWithoutAuthorNestedInput
-    tasks?: TaskUpdateManyWithoutAuthorNestedInput
+    totalXP?: IntFieldUpdateOperationsInput | number
+    currentStreak?: IntFieldUpdateOperationsInput | number
+    longestStreak?: IntFieldUpdateOperationsInput | number
+    totalLearningTime?: IntFieldUpdateOperationsInput | number
+    lastActiveAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     setting?: SettingUpdateOneWithoutUserNestedInput
     words?: WordUpdateManyWithoutUserNestedInput
+    languageProgresses?: LanguageProgressUpdateManyWithoutUserNestedInput
+    skillProgresses?: SkillProgressUpdateManyWithoutUserNestedInput
+    achievements?: UserAchievementUpdateManyWithoutUserNestedInput
+    dailyStats?: DailyStatsUpdateManyWithoutUserNestedInput
+    enrollments?: EnrollmentUpdateManyWithoutUserNestedInput
+    courses?: CourseUpdateManyWithoutAuthorNestedInput
+    tasks?: TaskUpdateManyWithoutAuthorNestedInput
+    wordProgresses?: WordTaskProgressUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -12598,12 +21814,21 @@ export namespace Prisma {
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     provider?: NullableStringFieldUpdateOperationsInput | string | null
     refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
-    enrollments?: EnrollmentUncheckedUpdateManyWithoutUserNestedInput
-    wordProgresses?: WordTaskProgressUncheckedUpdateManyWithoutUserNestedInput
-    courses?: CourseUncheckedUpdateManyWithoutAuthorNestedInput
-    tasks?: TaskUncheckedUpdateManyWithoutAuthorNestedInput
+    totalXP?: IntFieldUpdateOperationsInput | number
+    currentStreak?: IntFieldUpdateOperationsInput | number
+    longestStreak?: IntFieldUpdateOperationsInput | number
+    totalLearningTime?: IntFieldUpdateOperationsInput | number
+    lastActiveAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     setting?: SettingUncheckedUpdateOneWithoutUserNestedInput
     words?: WordUncheckedUpdateManyWithoutUserNestedInput
+    languageProgresses?: LanguageProgressUncheckedUpdateManyWithoutUserNestedInput
+    skillProgresses?: SkillProgressUncheckedUpdateManyWithoutUserNestedInput
+    achievements?: UserAchievementUncheckedUpdateManyWithoutUserNestedInput
+    dailyStats?: DailyStatsUncheckedUpdateManyWithoutUserNestedInput
+    enrollments?: EnrollmentUncheckedUpdateManyWithoutUserNestedInput
+    courses?: CourseUncheckedUpdateManyWithoutAuthorNestedInput
+    tasks?: TaskUncheckedUpdateManyWithoutAuthorNestedInput
+    wordProgresses?: WordTaskProgressUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -12620,6 +21845,11 @@ export namespace Prisma {
     lastLoginAt?: Date | string | null
     provider?: string | null
     refreshToken?: string | null
+    totalXP?: number
+    currentStreak?: number
+    longestStreak?: number
+    totalLearningTime?: number
+    lastActiveAt?: Date | string | null
   }
 
   export type UserUpdateManyMutationInput = {
@@ -12635,6 +21865,11 @@ export namespace Prisma {
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     provider?: NullableStringFieldUpdateOperationsInput | string | null
     refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    totalXP?: IntFieldUpdateOperationsInput | number
+    currentStreak?: IntFieldUpdateOperationsInput | number
+    longestStreak?: IntFieldUpdateOperationsInput | number
+    totalLearningTime?: IntFieldUpdateOperationsInput | number
+    lastActiveAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type UserUncheckedUpdateManyInput = {
@@ -12651,11 +21886,16 @@ export namespace Prisma {
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     provider?: NullableStringFieldUpdateOperationsInput | string | null
     refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    totalXP?: IntFieldUpdateOperationsInput | number
+    currentStreak?: IntFieldUpdateOperationsInput | number
+    longestStreak?: IntFieldUpdateOperationsInput | number
+    totalLearningTime?: IntFieldUpdateOperationsInput | number
+    lastActiveAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type WordCreateInput = {
     text: string
-    language: $Enums.Language
+    language?: $Enums.Language
     translate?: WordCreatetranslateInput | string[]
     definitions?: WordCreatedefinitionsInput | string[]
     synonyms?: WordCreatesynonymsInput | string[]
@@ -12669,14 +21909,14 @@ export namespace Prisma {
     audio?: string
     phoneticUS?: string | null
     audioUS?: string | null
-    progresses?: WordTaskProgressCreateNestedManyWithoutWordInput
     user: UserCreateNestedOneWithoutWordsInput
+    progresses?: WordTaskProgressCreateNestedManyWithoutWordInput
   }
 
   export type WordUncheckedCreateInput = {
     id?: number
     text: string
-    language: $Enums.Language
+    language?: $Enums.Language
     translate?: WordCreatetranslateInput | string[]
     definitions?: WordCreatedefinitionsInput | string[]
     synonyms?: WordCreatesynonymsInput | string[]
@@ -12710,8 +21950,8 @@ export namespace Prisma {
     audio?: StringFieldUpdateOperationsInput | string
     phoneticUS?: NullableStringFieldUpdateOperationsInput | string | null
     audioUS?: NullableStringFieldUpdateOperationsInput | string | null
-    progresses?: WordTaskProgressUpdateManyWithoutWordNestedInput
     user?: UserUpdateOneRequiredWithoutWordsNestedInput
+    progresses?: WordTaskProgressUpdateManyWithoutWordNestedInput
   }
 
   export type WordUncheckedUpdateInput = {
@@ -12738,7 +21978,7 @@ export namespace Prisma {
   export type WordCreateManyInput = {
     id?: number
     text: string
-    language: $Enums.Language
+    language?: $Enums.Language
     translate?: WordCreatetranslateInput | string[]
     definitions?: WordCreatedefinitionsInput | string[]
     synonyms?: WordCreatesynonymsInput | string[]
@@ -12797,9 +22037,11 @@ export namespace Prisma {
     title: string
     description?: string | null
     url: string
-    level?: $Enums.Level | null
+    language?: $Enums.Language
+    level?: $Enums.CEFRLevel
+    duration?: number | null
+    skillTypes?: VideoCreateskillTypesInput | $Enums.CoreSkillType[]
     createdAt?: Date | string
-    tags?: VideoCreatetagsInput | string[]
     tasks?: TaskCreateNestedManyWithoutVideoInput
     course?: CourseCreateNestedOneWithoutVideosInput
   }
@@ -12809,10 +22051,12 @@ export namespace Prisma {
     title: string
     description?: string | null
     url: string
-    level?: $Enums.Level | null
-    createdAt?: Date | string
-    tags?: VideoCreatetagsInput | string[]
+    language?: $Enums.Language
+    level?: $Enums.CEFRLevel
+    duration?: number | null
+    skillTypes?: VideoCreateskillTypesInput | $Enums.CoreSkillType[]
     courseId?: number | null
+    createdAt?: Date | string
     tasks?: TaskUncheckedCreateNestedManyWithoutVideoInput
   }
 
@@ -12820,9 +22064,11 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     url?: StringFieldUpdateOperationsInput | string
-    level?: NullableEnumLevelFieldUpdateOperationsInput | $Enums.Level | null
+    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    level?: EnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
+    skillTypes?: VideoUpdateskillTypesInput | $Enums.CoreSkillType[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    tags?: VideoUpdatetagsInput | string[]
     tasks?: TaskUpdateManyWithoutVideoNestedInput
     course?: CourseUpdateOneWithoutVideosNestedInput
   }
@@ -12832,10 +22078,12 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     url?: StringFieldUpdateOperationsInput | string
-    level?: NullableEnumLevelFieldUpdateOperationsInput | $Enums.Level | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    tags?: VideoUpdatetagsInput | string[]
+    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    level?: EnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
+    skillTypes?: VideoUpdateskillTypesInput | $Enums.CoreSkillType[]
     courseId?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tasks?: TaskUncheckedUpdateManyWithoutVideoNestedInput
   }
 
@@ -12844,19 +22092,23 @@ export namespace Prisma {
     title: string
     description?: string | null
     url: string
-    level?: $Enums.Level | null
-    createdAt?: Date | string
-    tags?: VideoCreatetagsInput | string[]
+    language?: $Enums.Language
+    level?: $Enums.CEFRLevel
+    duration?: number | null
+    skillTypes?: VideoCreateskillTypesInput | $Enums.CoreSkillType[]
     courseId?: number | null
+    createdAt?: Date | string
   }
 
   export type VideoUpdateManyMutationInput = {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     url?: StringFieldUpdateOperationsInput | string
-    level?: NullableEnumLevelFieldUpdateOperationsInput | $Enums.Level | null
+    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    level?: EnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
+    skillTypes?: VideoUpdateskillTypesInput | $Enums.CoreSkillType[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    tags?: VideoUpdatetagsInput | string[]
   }
 
   export type VideoUncheckedUpdateManyInput = {
@@ -12864,10 +22116,12 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     url?: StringFieldUpdateOperationsInput | string
-    level?: NullableEnumLevelFieldUpdateOperationsInput | $Enums.Level | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    tags?: VideoUpdatetagsInput | string[]
+    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    level?: EnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
+    skillTypes?: VideoUpdateskillTypesInput | $Enums.CoreSkillType[]
     courseId?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type TaskCreateInput = {
@@ -12877,9 +22131,13 @@ export namespace Prisma {
     type?: $Enums.TaskType
     score?: number | null
     createdAt?: Date | string
-    language?: $Enums.Language
     order?: number | null
     explanation?: string | null
+    skillType: $Enums.CoreSkillType
+    language?: $Enums.Language
+    cefrLevel?: $Enums.CEFRLevel
+    xpReward?: number
+    timeLimit?: number | null
     author?: UserCreateNestedOneWithoutTasksInput
     video?: VideoCreateNestedOneWithoutTasksInput
     course?: CourseCreateNestedOneWithoutTasksInput
@@ -12893,9 +22151,13 @@ export namespace Prisma {
     type?: $Enums.TaskType
     score?: number | null
     createdAt?: Date | string
-    language?: $Enums.Language
     order?: number | null
     explanation?: string | null
+    skillType: $Enums.CoreSkillType
+    language?: $Enums.Language
+    cefrLevel?: $Enums.CEFRLevel
+    xpReward?: number
+    timeLimit?: number | null
     authorId?: number | null
     videoId?: number | null
     courseId?: number | null
@@ -12908,9 +22170,13 @@ export namespace Prisma {
     type?: EnumTaskTypeFieldUpdateOperationsInput | $Enums.TaskType
     score?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
     order?: NullableIntFieldUpdateOperationsInput | number | null
     explanation?: NullableStringFieldUpdateOperationsInput | string | null
+    skillType?: EnumCoreSkillTypeFieldUpdateOperationsInput | $Enums.CoreSkillType
+    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    cefrLevel?: EnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel
+    xpReward?: IntFieldUpdateOperationsInput | number
+    timeLimit?: NullableIntFieldUpdateOperationsInput | number | null
     author?: UserUpdateOneWithoutTasksNestedInput
     video?: VideoUpdateOneWithoutTasksNestedInput
     course?: CourseUpdateOneWithoutTasksNestedInput
@@ -12924,9 +22190,13 @@ export namespace Prisma {
     type?: EnumTaskTypeFieldUpdateOperationsInput | $Enums.TaskType
     score?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
     order?: NullableIntFieldUpdateOperationsInput | number | null
     explanation?: NullableStringFieldUpdateOperationsInput | string | null
+    skillType?: EnumCoreSkillTypeFieldUpdateOperationsInput | $Enums.CoreSkillType
+    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    cefrLevel?: EnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel
+    xpReward?: IntFieldUpdateOperationsInput | number
+    timeLimit?: NullableIntFieldUpdateOperationsInput | number | null
     authorId?: NullableIntFieldUpdateOperationsInput | number | null
     videoId?: NullableIntFieldUpdateOperationsInput | number | null
     courseId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -12940,9 +22210,13 @@ export namespace Prisma {
     type?: $Enums.TaskType
     score?: number | null
     createdAt?: Date | string
-    language?: $Enums.Language
     order?: number | null
     explanation?: string | null
+    skillType: $Enums.CoreSkillType
+    language?: $Enums.Language
+    cefrLevel?: $Enums.CEFRLevel
+    xpReward?: number
+    timeLimit?: number | null
     authorId?: number | null
     videoId?: number | null
     courseId?: number | null
@@ -12955,9 +22229,13 @@ export namespace Prisma {
     type?: EnumTaskTypeFieldUpdateOperationsInput | $Enums.TaskType
     score?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
     order?: NullableIntFieldUpdateOperationsInput | number | null
     explanation?: NullableStringFieldUpdateOperationsInput | string | null
+    skillType?: EnumCoreSkillTypeFieldUpdateOperationsInput | $Enums.CoreSkillType
+    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    cefrLevel?: EnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel
+    xpReward?: IntFieldUpdateOperationsInput | number
+    timeLimit?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type TaskUncheckedUpdateManyInput = {
@@ -12968,9 +22246,13 @@ export namespace Prisma {
     type?: EnumTaskTypeFieldUpdateOperationsInput | $Enums.TaskType
     score?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
     order?: NullableIntFieldUpdateOperationsInput | number | null
     explanation?: NullableStringFieldUpdateOperationsInput | string | null
+    skillType?: EnumCoreSkillTypeFieldUpdateOperationsInput | $Enums.CoreSkillType
+    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    cefrLevel?: EnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel
+    xpReward?: IntFieldUpdateOperationsInput | number
+    timeLimit?: NullableIntFieldUpdateOperationsInput | number | null
     authorId?: NullableIntFieldUpdateOperationsInput | number | null
     videoId?: NullableIntFieldUpdateOperationsInput | number | null
     courseId?: NullableIntFieldUpdateOperationsInput | number | null
@@ -12980,13 +22262,16 @@ export namespace Prisma {
     title: string
     description?: string | null
     imageUrl?: string | null
-    level?: $Enums.Level
+    level?: $Enums.CEFRLevel
+    targetSkills?: CourseCreatetargetSkillsInput | $Enums.CoreSkillType[]
     isPublished?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     tags?: CourseCreatetagsInput | string[]
-    tasks?: TaskCreateNestedManyWithoutCourseInput
+    estimatedHours?: number | null
+    totalXP?: number
     enrollments?: EnrollmentCreateNestedManyWithoutCourseInput
+    tasks?: TaskCreateNestedManyWithoutCourseInput
     videos?: VideoCreateNestedManyWithoutCourseInput
     author?: UserCreateNestedOneWithoutCoursesInput
   }
@@ -12996,14 +22281,17 @@ export namespace Prisma {
     title: string
     description?: string | null
     imageUrl?: string | null
-    level?: $Enums.Level
+    level?: $Enums.CEFRLevel
+    targetSkills?: CourseCreatetargetSkillsInput | $Enums.CoreSkillType[]
     isPublished?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     tags?: CourseCreatetagsInput | string[]
+    estimatedHours?: number | null
+    totalXP?: number
     authorId?: number | null
-    tasks?: TaskUncheckedCreateNestedManyWithoutCourseInput
     enrollments?: EnrollmentUncheckedCreateNestedManyWithoutCourseInput
+    tasks?: TaskUncheckedCreateNestedManyWithoutCourseInput
     videos?: VideoUncheckedCreateNestedManyWithoutCourseInput
   }
 
@@ -13011,13 +22299,16 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
+    level?: EnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel
+    targetSkills?: CourseUpdatetargetSkillsInput | $Enums.CoreSkillType[]
     isPublished?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tags?: CourseUpdatetagsInput | string[]
-    tasks?: TaskUpdateManyWithoutCourseNestedInput
+    estimatedHours?: NullableIntFieldUpdateOperationsInput | number | null
+    totalXP?: IntFieldUpdateOperationsInput | number
     enrollments?: EnrollmentUpdateManyWithoutCourseNestedInput
+    tasks?: TaskUpdateManyWithoutCourseNestedInput
     videos?: VideoUpdateManyWithoutCourseNestedInput
     author?: UserUpdateOneWithoutCoursesNestedInput
   }
@@ -13027,14 +22318,17 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
+    level?: EnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel
+    targetSkills?: CourseUpdatetargetSkillsInput | $Enums.CoreSkillType[]
     isPublished?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tags?: CourseUpdatetagsInput | string[]
+    estimatedHours?: NullableIntFieldUpdateOperationsInput | number | null
+    totalXP?: IntFieldUpdateOperationsInput | number
     authorId?: NullableIntFieldUpdateOperationsInput | number | null
-    tasks?: TaskUncheckedUpdateManyWithoutCourseNestedInput
     enrollments?: EnrollmentUncheckedUpdateManyWithoutCourseNestedInput
+    tasks?: TaskUncheckedUpdateManyWithoutCourseNestedInput
     videos?: VideoUncheckedUpdateManyWithoutCourseNestedInput
   }
 
@@ -13043,11 +22337,14 @@ export namespace Prisma {
     title: string
     description?: string | null
     imageUrl?: string | null
-    level?: $Enums.Level
+    level?: $Enums.CEFRLevel
+    targetSkills?: CourseCreatetargetSkillsInput | $Enums.CoreSkillType[]
     isPublished?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     tags?: CourseCreatetagsInput | string[]
+    estimatedHours?: number | null
+    totalXP?: number
     authorId?: number | null
   }
 
@@ -13055,11 +22352,14 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
+    level?: EnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel
+    targetSkills?: CourseUpdatetargetSkillsInput | $Enums.CoreSkillType[]
     isPublished?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tags?: CourseUpdatetagsInput | string[]
+    estimatedHours?: NullableIntFieldUpdateOperationsInput | number | null
+    totalXP?: IntFieldUpdateOperationsInput | number
   }
 
   export type CourseUncheckedUpdateManyInput = {
@@ -13067,11 +22367,14 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
+    level?: EnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel
+    targetSkills?: CourseUpdatetargetSkillsInput | $Enums.CoreSkillType[]
     isPublished?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tags?: CourseUpdatetagsInput | string[]
+    estimatedHours?: NullableIntFieldUpdateOperationsInput | number | null
+    totalXP?: IntFieldUpdateOperationsInput | number
     authorId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
@@ -13130,7 +22433,10 @@ export namespace Prisma {
     global_language?: $Enums.Language
     current_language?: $Enums.Language
     purposes?: SettingCreatepurposesInput | $Enums.Purpose[]
-    current_level?: $Enums.Level
+    current_level?: $Enums.CEFRLevel
+    dailyXPGoal?: number
+    dailyTimeGoal?: number
+    weeklyGoal?: number
     user: UserCreateNestedOneWithoutSettingInput
   }
 
@@ -13140,14 +22446,20 @@ export namespace Prisma {
     global_language?: $Enums.Language
     current_language?: $Enums.Language
     purposes?: SettingCreatepurposesInput | $Enums.Purpose[]
-    current_level?: $Enums.Level
+    current_level?: $Enums.CEFRLevel
+    dailyXPGoal?: number
+    dailyTimeGoal?: number
+    weeklyGoal?: number
   }
 
   export type SettingUpdateInput = {
     global_language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
     current_language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
     purposes?: SettingUpdatepurposesInput | $Enums.Purpose[]
-    current_level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
+    current_level?: EnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel
+    dailyXPGoal?: IntFieldUpdateOperationsInput | number
+    dailyTimeGoal?: IntFieldUpdateOperationsInput | number
+    weeklyGoal?: IntFieldUpdateOperationsInput | number
     user?: UserUpdateOneRequiredWithoutSettingNestedInput
   }
 
@@ -13157,7 +22469,10 @@ export namespace Prisma {
     global_language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
     current_language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
     purposes?: SettingUpdatepurposesInput | $Enums.Purpose[]
-    current_level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
+    current_level?: EnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel
+    dailyXPGoal?: IntFieldUpdateOperationsInput | number
+    dailyTimeGoal?: IntFieldUpdateOperationsInput | number
+    weeklyGoal?: IntFieldUpdateOperationsInput | number
   }
 
   export type SettingCreateManyInput = {
@@ -13166,14 +22481,20 @@ export namespace Prisma {
     global_language?: $Enums.Language
     current_language?: $Enums.Language
     purposes?: SettingCreatepurposesInput | $Enums.Purpose[]
-    current_level?: $Enums.Level
+    current_level?: $Enums.CEFRLevel
+    dailyXPGoal?: number
+    dailyTimeGoal?: number
+    weeklyGoal?: number
   }
 
   export type SettingUpdateManyMutationInput = {
     global_language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
     current_language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
     purposes?: SettingUpdatepurposesInput | $Enums.Purpose[]
-    current_level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
+    current_level?: EnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel
+    dailyXPGoal?: IntFieldUpdateOperationsInput | number
+    dailyTimeGoal?: IntFieldUpdateOperationsInput | number
+    weeklyGoal?: IntFieldUpdateOperationsInput | number
   }
 
   export type SettingUncheckedUpdateManyInput = {
@@ -13182,72 +22503,717 @@ export namespace Prisma {
     global_language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
     current_language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
     purposes?: SettingUpdatepurposesInput | $Enums.Purpose[]
-    current_level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
+    current_level?: EnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel
+    dailyXPGoal?: IntFieldUpdateOperationsInput | number
+    dailyTimeGoal?: IntFieldUpdateOperationsInput | number
+    weeklyGoal?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type LanguageProgressCreateInput = {
+    language: $Enums.Language
+    overallCEFR?: $Enums.CEFRLevel
+    overallProgress?: number
+    totalXP?: number
+    totalTime?: number
+    lastActiveAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutLanguageProgressesInput
+    skillProgresses?: SkillProgressCreateNestedManyWithoutLanguageProgressInput
+  }
+
+  export type LanguageProgressUncheckedCreateInput = {
+    id?: number
+    userId: number
+    language: $Enums.Language
+    overallCEFR?: $Enums.CEFRLevel
+    overallProgress?: number
+    totalXP?: number
+    totalTime?: number
+    lastActiveAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    skillProgresses?: SkillProgressUncheckedCreateNestedManyWithoutLanguageProgressInput
+  }
+
+  export type LanguageProgressUpdateInput = {
+    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    overallCEFR?: EnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel
+    overallProgress?: FloatFieldUpdateOperationsInput | number
+    totalXP?: IntFieldUpdateOperationsInput | number
+    totalTime?: IntFieldUpdateOperationsInput | number
+    lastActiveAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutLanguageProgressesNestedInput
+    skillProgresses?: SkillProgressUpdateManyWithoutLanguageProgressNestedInput
+  }
+
+  export type LanguageProgressUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    overallCEFR?: EnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel
+    overallProgress?: FloatFieldUpdateOperationsInput | number
+    totalXP?: IntFieldUpdateOperationsInput | number
+    totalTime?: IntFieldUpdateOperationsInput | number
+    lastActiveAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    skillProgresses?: SkillProgressUncheckedUpdateManyWithoutLanguageProgressNestedInput
+  }
+
+  export type LanguageProgressCreateManyInput = {
+    id?: number
+    userId: number
+    language: $Enums.Language
+    overallCEFR?: $Enums.CEFRLevel
+    overallProgress?: number
+    totalXP?: number
+    totalTime?: number
+    lastActiveAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LanguageProgressUpdateManyMutationInput = {
+    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    overallCEFR?: EnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel
+    overallProgress?: FloatFieldUpdateOperationsInput | number
+    totalXP?: IntFieldUpdateOperationsInput | number
+    totalTime?: IntFieldUpdateOperationsInput | number
+    lastActiveAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LanguageProgressUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    overallCEFR?: EnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel
+    overallProgress?: FloatFieldUpdateOperationsInput | number
+    totalXP?: IntFieldUpdateOperationsInput | number
+    totalTime?: IntFieldUpdateOperationsInput | number
+    lastActiveAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SkillProgressCreateInput = {
+    skillType: $Enums.CoreSkillType
+    cefrLevel?: $Enums.CEFRLevel
+    levelProgress?: number
+    xpEarned?: number
+    totalPracticed?: number
+    correctAnswers?: number
+    totalAnswers?: number
+    currentAccuracy?: number
+    timeSpent?: number
+    totalWordsStudied?: number
+    wordsLearned?: number
+    wordsReviewing?: number
+    lastPracticed?: Date | string | null
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutSkillProgressesInput
+    languageProgress: LanguageProgressCreateNestedOneWithoutSkillProgressesInput
+  }
+
+  export type SkillProgressUncheckedCreateInput = {
+    id?: number
+    userId: number
+    languageProgressId: number
+    skillType: $Enums.CoreSkillType
+    cefrLevel?: $Enums.CEFRLevel
+    levelProgress?: number
+    xpEarned?: number
+    totalPracticed?: number
+    correctAnswers?: number
+    totalAnswers?: number
+    currentAccuracy?: number
+    timeSpent?: number
+    totalWordsStudied?: number
+    wordsLearned?: number
+    wordsReviewing?: number
+    lastPracticed?: Date | string | null
+    updatedAt?: Date | string
+  }
+
+  export type SkillProgressUpdateInput = {
+    skillType?: EnumCoreSkillTypeFieldUpdateOperationsInput | $Enums.CoreSkillType
+    cefrLevel?: EnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel
+    levelProgress?: FloatFieldUpdateOperationsInput | number
+    xpEarned?: IntFieldUpdateOperationsInput | number
+    totalPracticed?: IntFieldUpdateOperationsInput | number
+    correctAnswers?: IntFieldUpdateOperationsInput | number
+    totalAnswers?: IntFieldUpdateOperationsInput | number
+    currentAccuracy?: FloatFieldUpdateOperationsInput | number
+    timeSpent?: IntFieldUpdateOperationsInput | number
+    totalWordsStudied?: IntFieldUpdateOperationsInput | number
+    wordsLearned?: IntFieldUpdateOperationsInput | number
+    wordsReviewing?: IntFieldUpdateOperationsInput | number
+    lastPracticed?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutSkillProgressesNestedInput
+    languageProgress?: LanguageProgressUpdateOneRequiredWithoutSkillProgressesNestedInput
+  }
+
+  export type SkillProgressUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    languageProgressId?: IntFieldUpdateOperationsInput | number
+    skillType?: EnumCoreSkillTypeFieldUpdateOperationsInput | $Enums.CoreSkillType
+    cefrLevel?: EnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel
+    levelProgress?: FloatFieldUpdateOperationsInput | number
+    xpEarned?: IntFieldUpdateOperationsInput | number
+    totalPracticed?: IntFieldUpdateOperationsInput | number
+    correctAnswers?: IntFieldUpdateOperationsInput | number
+    totalAnswers?: IntFieldUpdateOperationsInput | number
+    currentAccuracy?: FloatFieldUpdateOperationsInput | number
+    timeSpent?: IntFieldUpdateOperationsInput | number
+    totalWordsStudied?: IntFieldUpdateOperationsInput | number
+    wordsLearned?: IntFieldUpdateOperationsInput | number
+    wordsReviewing?: IntFieldUpdateOperationsInput | number
+    lastPracticed?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SkillProgressCreateManyInput = {
+    id?: number
+    userId: number
+    languageProgressId: number
+    skillType: $Enums.CoreSkillType
+    cefrLevel?: $Enums.CEFRLevel
+    levelProgress?: number
+    xpEarned?: number
+    totalPracticed?: number
+    correctAnswers?: number
+    totalAnswers?: number
+    currentAccuracy?: number
+    timeSpent?: number
+    totalWordsStudied?: number
+    wordsLearned?: number
+    wordsReviewing?: number
+    lastPracticed?: Date | string | null
+    updatedAt?: Date | string
+  }
+
+  export type SkillProgressUpdateManyMutationInput = {
+    skillType?: EnumCoreSkillTypeFieldUpdateOperationsInput | $Enums.CoreSkillType
+    cefrLevel?: EnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel
+    levelProgress?: FloatFieldUpdateOperationsInput | number
+    xpEarned?: IntFieldUpdateOperationsInput | number
+    totalPracticed?: IntFieldUpdateOperationsInput | number
+    correctAnswers?: IntFieldUpdateOperationsInput | number
+    totalAnswers?: IntFieldUpdateOperationsInput | number
+    currentAccuracy?: FloatFieldUpdateOperationsInput | number
+    timeSpent?: IntFieldUpdateOperationsInput | number
+    totalWordsStudied?: IntFieldUpdateOperationsInput | number
+    wordsLearned?: IntFieldUpdateOperationsInput | number
+    wordsReviewing?: IntFieldUpdateOperationsInput | number
+    lastPracticed?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SkillProgressUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    languageProgressId?: IntFieldUpdateOperationsInput | number
+    skillType?: EnumCoreSkillTypeFieldUpdateOperationsInput | $Enums.CoreSkillType
+    cefrLevel?: EnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel
+    levelProgress?: FloatFieldUpdateOperationsInput | number
+    xpEarned?: IntFieldUpdateOperationsInput | number
+    totalPracticed?: IntFieldUpdateOperationsInput | number
+    correctAnswers?: IntFieldUpdateOperationsInput | number
+    totalAnswers?: IntFieldUpdateOperationsInput | number
+    currentAccuracy?: FloatFieldUpdateOperationsInput | number
+    timeSpent?: IntFieldUpdateOperationsInput | number
+    totalWordsStudied?: IntFieldUpdateOperationsInput | number
+    wordsLearned?: IntFieldUpdateOperationsInput | number
+    wordsReviewing?: IntFieldUpdateOperationsInput | number
+    lastPracticed?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SkillLevelRequirementsCreateInput = {
+    skillType: $Enums.CoreSkillType
+    cefrLevel: $Enums.CEFRLevel
+    minXP: number
+    minAccuracy: number
+    minPracticed: number
+    minTimeSpent: number
+    minWordsLearned?: number | null
+    weightInOverall?: number
+    displayName: string
+    description: string
+    color: string
+  }
+
+  export type SkillLevelRequirementsUncheckedCreateInput = {
+    id?: number
+    skillType: $Enums.CoreSkillType
+    cefrLevel: $Enums.CEFRLevel
+    minXP: number
+    minAccuracy: number
+    minPracticed: number
+    minTimeSpent: number
+    minWordsLearned?: number | null
+    weightInOverall?: number
+    displayName: string
+    description: string
+    color: string
+  }
+
+  export type SkillLevelRequirementsUpdateInput = {
+    skillType?: EnumCoreSkillTypeFieldUpdateOperationsInput | $Enums.CoreSkillType
+    cefrLevel?: EnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel
+    minXP?: IntFieldUpdateOperationsInput | number
+    minAccuracy?: FloatFieldUpdateOperationsInput | number
+    minPracticed?: IntFieldUpdateOperationsInput | number
+    minTimeSpent?: IntFieldUpdateOperationsInput | number
+    minWordsLearned?: NullableIntFieldUpdateOperationsInput | number | null
+    weightInOverall?: FloatFieldUpdateOperationsInput | number
+    displayName?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    color?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SkillLevelRequirementsUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    skillType?: EnumCoreSkillTypeFieldUpdateOperationsInput | $Enums.CoreSkillType
+    cefrLevel?: EnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel
+    minXP?: IntFieldUpdateOperationsInput | number
+    minAccuracy?: FloatFieldUpdateOperationsInput | number
+    minPracticed?: IntFieldUpdateOperationsInput | number
+    minTimeSpent?: IntFieldUpdateOperationsInput | number
+    minWordsLearned?: NullableIntFieldUpdateOperationsInput | number | null
+    weightInOverall?: FloatFieldUpdateOperationsInput | number
+    displayName?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    color?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SkillLevelRequirementsCreateManyInput = {
+    id?: number
+    skillType: $Enums.CoreSkillType
+    cefrLevel: $Enums.CEFRLevel
+    minXP: number
+    minAccuracy: number
+    minPracticed: number
+    minTimeSpent: number
+    minWordsLearned?: number | null
+    weightInOverall?: number
+    displayName: string
+    description: string
+    color: string
+  }
+
+  export type SkillLevelRequirementsUpdateManyMutationInput = {
+    skillType?: EnumCoreSkillTypeFieldUpdateOperationsInput | $Enums.CoreSkillType
+    cefrLevel?: EnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel
+    minXP?: IntFieldUpdateOperationsInput | number
+    minAccuracy?: FloatFieldUpdateOperationsInput | number
+    minPracticed?: IntFieldUpdateOperationsInput | number
+    minTimeSpent?: IntFieldUpdateOperationsInput | number
+    minWordsLearned?: NullableIntFieldUpdateOperationsInput | number | null
+    weightInOverall?: FloatFieldUpdateOperationsInput | number
+    displayName?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    color?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type SkillLevelRequirementsUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    skillType?: EnumCoreSkillTypeFieldUpdateOperationsInput | $Enums.CoreSkillType
+    cefrLevel?: EnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel
+    minXP?: IntFieldUpdateOperationsInput | number
+    minAccuracy?: FloatFieldUpdateOperationsInput | number
+    minPracticed?: IntFieldUpdateOperationsInput | number
+    minTimeSpent?: IntFieldUpdateOperationsInput | number
+    minWordsLearned?: NullableIntFieldUpdateOperationsInput | number | null
+    weightInOverall?: FloatFieldUpdateOperationsInput | number
+    displayName?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    color?: StringFieldUpdateOperationsInput | string
   }
 
   export type WordTaskProgressCreateInput = {
-    taskType: $Enums.WordTaskType
+    skillType?: $Enums.CoreSkillType
     isPassed?: boolean
     score?: number
     attempts?: number
-    user: UserCreateNestedOneWithoutWordProgressesInput
+    correctCount?: number
+    nextReviewAt?: Date | string | null
+    reviewInterval?: number
+    easeFactor?: number
+    lastAttempt?: Date | string | null
+    timeSpent?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
     word: WordCreateNestedOneWithoutProgressesInput
+    user: UserCreateNestedOneWithoutWordProgressesInput
   }
 
   export type WordTaskProgressUncheckedCreateInput = {
     id?: number
-    userId: number
     wordId: number
-    taskType: $Enums.WordTaskType
+    userId: number
+    skillType?: $Enums.CoreSkillType
     isPassed?: boolean
     score?: number
     attempts?: number
+    correctCount?: number
+    nextReviewAt?: Date | string | null
+    reviewInterval?: number
+    easeFactor?: number
+    lastAttempt?: Date | string | null
+    timeSpent?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type WordTaskProgressUpdateInput = {
-    taskType?: EnumWordTaskTypeFieldUpdateOperationsInput | $Enums.WordTaskType
+    skillType?: EnumCoreSkillTypeFieldUpdateOperationsInput | $Enums.CoreSkillType
     isPassed?: BoolFieldUpdateOperationsInput | boolean
     score?: IntFieldUpdateOperationsInput | number
     attempts?: IntFieldUpdateOperationsInput | number
-    user?: UserUpdateOneRequiredWithoutWordProgressesNestedInput
+    correctCount?: IntFieldUpdateOperationsInput | number
+    nextReviewAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    reviewInterval?: IntFieldUpdateOperationsInput | number
+    easeFactor?: FloatFieldUpdateOperationsInput | number
+    lastAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    timeSpent?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     word?: WordUpdateOneRequiredWithoutProgressesNestedInput
+    user?: UserUpdateOneRequiredWithoutWordProgressesNestedInput
   }
 
   export type WordTaskProgressUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
-    userId?: IntFieldUpdateOperationsInput | number
     wordId?: IntFieldUpdateOperationsInput | number
-    taskType?: EnumWordTaskTypeFieldUpdateOperationsInput | $Enums.WordTaskType
+    userId?: IntFieldUpdateOperationsInput | number
+    skillType?: EnumCoreSkillTypeFieldUpdateOperationsInput | $Enums.CoreSkillType
     isPassed?: BoolFieldUpdateOperationsInput | boolean
     score?: IntFieldUpdateOperationsInput | number
     attempts?: IntFieldUpdateOperationsInput | number
+    correctCount?: IntFieldUpdateOperationsInput | number
+    nextReviewAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    reviewInterval?: IntFieldUpdateOperationsInput | number
+    easeFactor?: FloatFieldUpdateOperationsInput | number
+    lastAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    timeSpent?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type WordTaskProgressCreateManyInput = {
     id?: number
-    userId: number
     wordId: number
-    taskType: $Enums.WordTaskType
+    userId: number
+    skillType?: $Enums.CoreSkillType
     isPassed?: boolean
     score?: number
     attempts?: number
+    correctCount?: number
+    nextReviewAt?: Date | string | null
+    reviewInterval?: number
+    easeFactor?: number
+    lastAttempt?: Date | string | null
+    timeSpent?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type WordTaskProgressUpdateManyMutationInput = {
-    taskType?: EnumWordTaskTypeFieldUpdateOperationsInput | $Enums.WordTaskType
+    skillType?: EnumCoreSkillTypeFieldUpdateOperationsInput | $Enums.CoreSkillType
     isPassed?: BoolFieldUpdateOperationsInput | boolean
     score?: IntFieldUpdateOperationsInput | number
     attempts?: IntFieldUpdateOperationsInput | number
+    correctCount?: IntFieldUpdateOperationsInput | number
+    nextReviewAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    reviewInterval?: IntFieldUpdateOperationsInput | number
+    easeFactor?: FloatFieldUpdateOperationsInput | number
+    lastAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    timeSpent?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type WordTaskProgressUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
-    userId?: IntFieldUpdateOperationsInput | number
     wordId?: IntFieldUpdateOperationsInput | number
-    taskType?: EnumWordTaskTypeFieldUpdateOperationsInput | $Enums.WordTaskType
+    userId?: IntFieldUpdateOperationsInput | number
+    skillType?: EnumCoreSkillTypeFieldUpdateOperationsInput | $Enums.CoreSkillType
     isPassed?: BoolFieldUpdateOperationsInput | boolean
     score?: IntFieldUpdateOperationsInput | number
     attempts?: IntFieldUpdateOperationsInput | number
+    correctCount?: IntFieldUpdateOperationsInput | number
+    nextReviewAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    reviewInterval?: IntFieldUpdateOperationsInput | number
+    easeFactor?: FloatFieldUpdateOperationsInput | number
+    lastAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    timeSpent?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DailyStatsCreateInput = {
+    language: $Enums.Language
+    date: Date | string
+    totalXP?: number
+    totalTime?: number
+    tasksCompleted?: number
+    averageAccuracy?: number
+    skillsStats?: JsonNullValueInput | InputJsonValue
+    newWordsLearned?: number
+    wordsReviewed?: number
+    user: UserCreateNestedOneWithoutDailyStatsInput
+  }
+
+  export type DailyStatsUncheckedCreateInput = {
+    id?: number
+    userId: number
+    language: $Enums.Language
+    date: Date | string
+    totalXP?: number
+    totalTime?: number
+    tasksCompleted?: number
+    averageAccuracy?: number
+    skillsStats?: JsonNullValueInput | InputJsonValue
+    newWordsLearned?: number
+    wordsReviewed?: number
+  }
+
+  export type DailyStatsUpdateInput = {
+    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    totalXP?: IntFieldUpdateOperationsInput | number
+    totalTime?: IntFieldUpdateOperationsInput | number
+    tasksCompleted?: IntFieldUpdateOperationsInput | number
+    averageAccuracy?: FloatFieldUpdateOperationsInput | number
+    skillsStats?: JsonNullValueInput | InputJsonValue
+    newWordsLearned?: IntFieldUpdateOperationsInput | number
+    wordsReviewed?: IntFieldUpdateOperationsInput | number
+    user?: UserUpdateOneRequiredWithoutDailyStatsNestedInput
+  }
+
+  export type DailyStatsUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    totalXP?: IntFieldUpdateOperationsInput | number
+    totalTime?: IntFieldUpdateOperationsInput | number
+    tasksCompleted?: IntFieldUpdateOperationsInput | number
+    averageAccuracy?: FloatFieldUpdateOperationsInput | number
+    skillsStats?: JsonNullValueInput | InputJsonValue
+    newWordsLearned?: IntFieldUpdateOperationsInput | number
+    wordsReviewed?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type DailyStatsCreateManyInput = {
+    id?: number
+    userId: number
+    language: $Enums.Language
+    date: Date | string
+    totalXP?: number
+    totalTime?: number
+    tasksCompleted?: number
+    averageAccuracy?: number
+    skillsStats?: JsonNullValueInput | InputJsonValue
+    newWordsLearned?: number
+    wordsReviewed?: number
+  }
+
+  export type DailyStatsUpdateManyMutationInput = {
+    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    totalXP?: IntFieldUpdateOperationsInput | number
+    totalTime?: IntFieldUpdateOperationsInput | number
+    tasksCompleted?: IntFieldUpdateOperationsInput | number
+    averageAccuracy?: FloatFieldUpdateOperationsInput | number
+    skillsStats?: JsonNullValueInput | InputJsonValue
+    newWordsLearned?: IntFieldUpdateOperationsInput | number
+    wordsReviewed?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type DailyStatsUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    totalXP?: IntFieldUpdateOperationsInput | number
+    totalTime?: IntFieldUpdateOperationsInput | number
+    tasksCompleted?: IntFieldUpdateOperationsInput | number
+    averageAccuracy?: FloatFieldUpdateOperationsInput | number
+    skillsStats?: JsonNullValueInput | InputJsonValue
+    newWordsLearned?: IntFieldUpdateOperationsInput | number
+    wordsReviewed?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type AchievementCreateInput = {
+    name: string
+    description: string
+    type: $Enums.AchievementType
+    requiredSkill?: $Enums.CoreSkillType | null
+    requiredLevel?: $Enums.CEFRLevel | null
+    requiredOverall?: $Enums.CEFRLevel | null
+    requiredXP?: number | null
+    requiredStreak?: number | null
+    requiredAccuracy?: number | null
+    xpReward?: number
+    badge?: string | null
+    isActive?: boolean
+    users?: UserAchievementCreateNestedManyWithoutAchievementInput
+  }
+
+  export type AchievementUncheckedCreateInput = {
+    id?: number
+    name: string
+    description: string
+    type: $Enums.AchievementType
+    requiredSkill?: $Enums.CoreSkillType | null
+    requiredLevel?: $Enums.CEFRLevel | null
+    requiredOverall?: $Enums.CEFRLevel | null
+    requiredXP?: number | null
+    requiredStreak?: number | null
+    requiredAccuracy?: number | null
+    xpReward?: number
+    badge?: string | null
+    isActive?: boolean
+    users?: UserAchievementUncheckedCreateNestedManyWithoutAchievementInput
+  }
+
+  export type AchievementUpdateInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    type?: EnumAchievementTypeFieldUpdateOperationsInput | $Enums.AchievementType
+    requiredSkill?: NullableEnumCoreSkillTypeFieldUpdateOperationsInput | $Enums.CoreSkillType | null
+    requiredLevel?: NullableEnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel | null
+    requiredOverall?: NullableEnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel | null
+    requiredXP?: NullableIntFieldUpdateOperationsInput | number | null
+    requiredStreak?: NullableIntFieldUpdateOperationsInput | number | null
+    requiredAccuracy?: NullableFloatFieldUpdateOperationsInput | number | null
+    xpReward?: IntFieldUpdateOperationsInput | number
+    badge?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    users?: UserAchievementUpdateManyWithoutAchievementNestedInput
+  }
+
+  export type AchievementUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    type?: EnumAchievementTypeFieldUpdateOperationsInput | $Enums.AchievementType
+    requiredSkill?: NullableEnumCoreSkillTypeFieldUpdateOperationsInput | $Enums.CoreSkillType | null
+    requiredLevel?: NullableEnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel | null
+    requiredOverall?: NullableEnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel | null
+    requiredXP?: NullableIntFieldUpdateOperationsInput | number | null
+    requiredStreak?: NullableIntFieldUpdateOperationsInput | number | null
+    requiredAccuracy?: NullableFloatFieldUpdateOperationsInput | number | null
+    xpReward?: IntFieldUpdateOperationsInput | number
+    badge?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    users?: UserAchievementUncheckedUpdateManyWithoutAchievementNestedInput
+  }
+
+  export type AchievementCreateManyInput = {
+    id?: number
+    name: string
+    description: string
+    type: $Enums.AchievementType
+    requiredSkill?: $Enums.CoreSkillType | null
+    requiredLevel?: $Enums.CEFRLevel | null
+    requiredOverall?: $Enums.CEFRLevel | null
+    requiredXP?: number | null
+    requiredStreak?: number | null
+    requiredAccuracy?: number | null
+    xpReward?: number
+    badge?: string | null
+    isActive?: boolean
+  }
+
+  export type AchievementUpdateManyMutationInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    type?: EnumAchievementTypeFieldUpdateOperationsInput | $Enums.AchievementType
+    requiredSkill?: NullableEnumCoreSkillTypeFieldUpdateOperationsInput | $Enums.CoreSkillType | null
+    requiredLevel?: NullableEnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel | null
+    requiredOverall?: NullableEnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel | null
+    requiredXP?: NullableIntFieldUpdateOperationsInput | number | null
+    requiredStreak?: NullableIntFieldUpdateOperationsInput | number | null
+    requiredAccuracy?: NullableFloatFieldUpdateOperationsInput | number | null
+    xpReward?: IntFieldUpdateOperationsInput | number
+    badge?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type AchievementUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    type?: EnumAchievementTypeFieldUpdateOperationsInput | $Enums.AchievementType
+    requiredSkill?: NullableEnumCoreSkillTypeFieldUpdateOperationsInput | $Enums.CoreSkillType | null
+    requiredLevel?: NullableEnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel | null
+    requiredOverall?: NullableEnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel | null
+    requiredXP?: NullableIntFieldUpdateOperationsInput | number | null
+    requiredStreak?: NullableIntFieldUpdateOperationsInput | number | null
+    requiredAccuracy?: NullableFloatFieldUpdateOperationsInput | number | null
+    xpReward?: IntFieldUpdateOperationsInput | number
+    badge?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type UserAchievementCreateInput = {
+    unlockedAt?: Date | string
+    language?: $Enums.Language | null
+    user: UserCreateNestedOneWithoutAchievementsInput
+    achievement: AchievementCreateNestedOneWithoutUsersInput
+  }
+
+  export type UserAchievementUncheckedCreateInput = {
+    id?: number
+    userId: number
+    achievementId: number
+    unlockedAt?: Date | string
+    language?: $Enums.Language | null
+  }
+
+  export type UserAchievementUpdateInput = {
+    unlockedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    language?: NullableEnumLanguageFieldUpdateOperationsInput | $Enums.Language | null
+    user?: UserUpdateOneRequiredWithoutAchievementsNestedInput
+    achievement?: AchievementUpdateOneRequiredWithoutUsersNestedInput
+  }
+
+  export type UserAchievementUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    achievementId?: IntFieldUpdateOperationsInput | number
+    unlockedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    language?: NullableEnumLanguageFieldUpdateOperationsInput | $Enums.Language | null
+  }
+
+  export type UserAchievementCreateManyInput = {
+    id?: number
+    userId: number
+    achievementId: number
+    unlockedAt?: Date | string
+    language?: $Enums.Language | null
+  }
+
+  export type UserAchievementUpdateManyMutationInput = {
+    unlockedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    language?: NullableEnumLanguageFieldUpdateOperationsInput | $Enums.Language | null
+  }
+
+  export type UserAchievementUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    achievementId?: IntFieldUpdateOperationsInput | number
+    unlockedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    language?: NullableEnumLanguageFieldUpdateOperationsInput | $Enums.Language | null
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -13325,16 +23291,45 @@ export namespace Prisma {
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
+  export type SettingNullableScalarRelationFilter = {
+    is?: SettingWhereInput | null
+    isNot?: SettingWhereInput | null
+  }
+
+  export type WordListRelationFilter = {
+    every?: WordWhereInput
+    some?: WordWhereInput
+    none?: WordWhereInput
+  }
+
+  export type LanguageProgressListRelationFilter = {
+    every?: LanguageProgressWhereInput
+    some?: LanguageProgressWhereInput
+    none?: LanguageProgressWhereInput
+  }
+
+  export type SkillProgressListRelationFilter = {
+    every?: SkillProgressWhereInput
+    some?: SkillProgressWhereInput
+    none?: SkillProgressWhereInput
+  }
+
+  export type UserAchievementListRelationFilter = {
+    every?: UserAchievementWhereInput
+    some?: UserAchievementWhereInput
+    none?: UserAchievementWhereInput
+  }
+
+  export type DailyStatsListRelationFilter = {
+    every?: DailyStatsWhereInput
+    some?: DailyStatsWhereInput
+    none?: DailyStatsWhereInput
+  }
+
   export type EnrollmentListRelationFilter = {
     every?: EnrollmentWhereInput
     some?: EnrollmentWhereInput
     none?: EnrollmentWhereInput
-  }
-
-  export type WordTaskProgressListRelationFilter = {
-    every?: WordTaskProgressWhereInput
-    some?: WordTaskProgressWhereInput
-    none?: WordTaskProgressWhereInput
   }
 
   export type CourseListRelationFilter = {
@@ -13349,15 +23344,10 @@ export namespace Prisma {
     none?: TaskWhereInput
   }
 
-  export type SettingNullableScalarRelationFilter = {
-    is?: SettingWhereInput | null
-    isNot?: SettingWhereInput | null
-  }
-
-  export type WordListRelationFilter = {
-    every?: WordWhereInput
-    some?: WordWhereInput
-    none?: WordWhereInput
+  export type WordTaskProgressListRelationFilter = {
+    every?: WordTaskProgressWhereInput
+    some?: WordTaskProgressWhereInput
+    none?: WordTaskProgressWhereInput
   }
 
   export type SortOrderInput = {
@@ -13365,11 +23355,27 @@ export namespace Prisma {
     nulls?: NullsOrder
   }
 
-  export type EnrollmentOrderByRelationAggregateInput = {
+  export type WordOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
-  export type WordTaskProgressOrderByRelationAggregateInput = {
+  export type LanguageProgressOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type SkillProgressOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type UserAchievementOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type DailyStatsOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type EnrollmentOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -13381,7 +23387,7 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
-  export type WordOrderByRelationAggregateInput = {
+  export type WordTaskProgressOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -13399,10 +23405,19 @@ export namespace Prisma {
     lastLoginAt?: SortOrder
     provider?: SortOrder
     refreshToken?: SortOrder
+    totalXP?: SortOrder
+    currentStreak?: SortOrder
+    longestStreak?: SortOrder
+    totalLearningTime?: SortOrder
+    lastActiveAt?: SortOrder
   }
 
   export type UserAvgOrderByAggregateInput = {
     id?: SortOrder
+    totalXP?: SortOrder
+    currentStreak?: SortOrder
+    longestStreak?: SortOrder
+    totalLearningTime?: SortOrder
   }
 
   export type UserMaxOrderByAggregateInput = {
@@ -13419,6 +23434,11 @@ export namespace Prisma {
     lastLoginAt?: SortOrder
     provider?: SortOrder
     refreshToken?: SortOrder
+    totalXP?: SortOrder
+    currentStreak?: SortOrder
+    longestStreak?: SortOrder
+    totalLearningTime?: SortOrder
+    lastActiveAt?: SortOrder
   }
 
   export type UserMinOrderByAggregateInput = {
@@ -13435,10 +23455,19 @@ export namespace Prisma {
     lastLoginAt?: SortOrder
     provider?: SortOrder
     refreshToken?: SortOrder
+    totalXP?: SortOrder
+    currentStreak?: SortOrder
+    longestStreak?: SortOrder
+    totalLearningTime?: SortOrder
+    lastActiveAt?: SortOrder
   }
 
   export type UserSumOrderByAggregateInput = {
     id?: SortOrder
+    totalXP?: SortOrder
+    currentStreak?: SortOrder
+    longestStreak?: SortOrder
+    totalLearningTime?: SortOrder
   }
 
   export type IntWithAggregatesFilter<$PrismaModel = never> = {
@@ -13637,11 +23666,11 @@ export namespace Prisma {
     _max?: NestedEnumLanguageFilter<$PrismaModel>
   }
 
-  export type EnumLevelNullableFilter<$PrismaModel = never> = {
-    equals?: $Enums.Level | EnumLevelFieldRefInput<$PrismaModel> | null
-    in?: $Enums.Level[] | ListEnumLevelFieldRefInput<$PrismaModel> | null
-    notIn?: $Enums.Level[] | ListEnumLevelFieldRefInput<$PrismaModel> | null
-    not?: NestedEnumLevelNullableFilter<$PrismaModel> | $Enums.Level | null
+  export type EnumCEFRLevelFilter<$PrismaModel = never> = {
+    equals?: $Enums.CEFRLevel | EnumCEFRLevelFieldRefInput<$PrismaModel>
+    in?: $Enums.CEFRLevel[] | ListEnumCEFRLevelFieldRefInput<$PrismaModel>
+    notIn?: $Enums.CEFRLevel[] | ListEnumCEFRLevelFieldRefInput<$PrismaModel>
+    not?: NestedEnumCEFRLevelFilter<$PrismaModel> | $Enums.CEFRLevel
   }
 
   export type IntNullableFilter<$PrismaModel = never> = {
@@ -13655,6 +23684,14 @@ export namespace Prisma {
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
+  export type EnumCoreSkillTypeNullableListFilter<$PrismaModel = never> = {
+    equals?: $Enums.CoreSkillType[] | ListEnumCoreSkillTypeFieldRefInput<$PrismaModel> | null
+    has?: $Enums.CoreSkillType | EnumCoreSkillTypeFieldRefInput<$PrismaModel> | null
+    hasEvery?: $Enums.CoreSkillType[] | ListEnumCoreSkillTypeFieldRefInput<$PrismaModel>
+    hasSome?: $Enums.CoreSkillType[] | ListEnumCoreSkillTypeFieldRefInput<$PrismaModel>
+    isEmpty?: boolean
+  }
+
   export type CourseNullableScalarRelationFilter = {
     is?: CourseWhereInput | null
     isNot?: CourseWhereInput | null
@@ -13665,14 +23702,17 @@ export namespace Prisma {
     title?: SortOrder
     description?: SortOrder
     url?: SortOrder
+    language?: SortOrder
     level?: SortOrder
-    createdAt?: SortOrder
-    tags?: SortOrder
+    duration?: SortOrder
+    skillTypes?: SortOrder
     courseId?: SortOrder
+    createdAt?: SortOrder
   }
 
   export type VideoAvgOrderByAggregateInput = {
     id?: SortOrder
+    duration?: SortOrder
     courseId?: SortOrder
   }
 
@@ -13681,9 +23721,11 @@ export namespace Prisma {
     title?: SortOrder
     description?: SortOrder
     url?: SortOrder
+    language?: SortOrder
     level?: SortOrder
-    createdAt?: SortOrder
+    duration?: SortOrder
     courseId?: SortOrder
+    createdAt?: SortOrder
   }
 
   export type VideoMinOrderByAggregateInput = {
@@ -13691,24 +23733,27 @@ export namespace Prisma {
     title?: SortOrder
     description?: SortOrder
     url?: SortOrder
+    language?: SortOrder
     level?: SortOrder
-    createdAt?: SortOrder
+    duration?: SortOrder
     courseId?: SortOrder
+    createdAt?: SortOrder
   }
 
   export type VideoSumOrderByAggregateInput = {
     id?: SortOrder
+    duration?: SortOrder
     courseId?: SortOrder
   }
 
-  export type EnumLevelNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.Level | EnumLevelFieldRefInput<$PrismaModel> | null
-    in?: $Enums.Level[] | ListEnumLevelFieldRefInput<$PrismaModel> | null
-    notIn?: $Enums.Level[] | ListEnumLevelFieldRefInput<$PrismaModel> | null
-    not?: NestedEnumLevelNullableWithAggregatesFilter<$PrismaModel> | $Enums.Level | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedEnumLevelNullableFilter<$PrismaModel>
-    _max?: NestedEnumLevelNullableFilter<$PrismaModel>
+  export type EnumCEFRLevelWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.CEFRLevel | EnumCEFRLevelFieldRefInput<$PrismaModel>
+    in?: $Enums.CEFRLevel[] | ListEnumCEFRLevelFieldRefInput<$PrismaModel>
+    notIn?: $Enums.CEFRLevel[] | ListEnumCEFRLevelFieldRefInput<$PrismaModel>
+    not?: NestedEnumCEFRLevelWithAggregatesFilter<$PrismaModel> | $Enums.CEFRLevel
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumCEFRLevelFilter<$PrismaModel>
+    _max?: NestedEnumCEFRLevelFilter<$PrismaModel>
   }
 
   export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -13734,6 +23779,13 @@ export namespace Prisma {
     not?: NestedEnumTaskTypeFilter<$PrismaModel> | $Enums.TaskType
   }
 
+  export type EnumCoreSkillTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.CoreSkillType | EnumCoreSkillTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.CoreSkillType[] | ListEnumCoreSkillTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.CoreSkillType[] | ListEnumCoreSkillTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumCoreSkillTypeFilter<$PrismaModel> | $Enums.CoreSkillType
+  }
+
   export type UserNullableScalarRelationFilter = {
     is?: UserWhereInput | null
     isNot?: UserWhereInput | null
@@ -13752,9 +23804,13 @@ export namespace Prisma {
     type?: SortOrder
     score?: SortOrder
     createdAt?: SortOrder
-    language?: SortOrder
     order?: SortOrder
     explanation?: SortOrder
+    skillType?: SortOrder
+    language?: SortOrder
+    cefrLevel?: SortOrder
+    xpReward?: SortOrder
+    timeLimit?: SortOrder
     authorId?: SortOrder
     videoId?: SortOrder
     courseId?: SortOrder
@@ -13764,6 +23820,8 @@ export namespace Prisma {
     id?: SortOrder
     score?: SortOrder
     order?: SortOrder
+    xpReward?: SortOrder
+    timeLimit?: SortOrder
     authorId?: SortOrder
     videoId?: SortOrder
     courseId?: SortOrder
@@ -13776,9 +23834,13 @@ export namespace Prisma {
     type?: SortOrder
     score?: SortOrder
     createdAt?: SortOrder
-    language?: SortOrder
     order?: SortOrder
     explanation?: SortOrder
+    skillType?: SortOrder
+    language?: SortOrder
+    cefrLevel?: SortOrder
+    xpReward?: SortOrder
+    timeLimit?: SortOrder
     authorId?: SortOrder
     videoId?: SortOrder
     courseId?: SortOrder
@@ -13791,9 +23853,13 @@ export namespace Prisma {
     type?: SortOrder
     score?: SortOrder
     createdAt?: SortOrder
-    language?: SortOrder
     order?: SortOrder
     explanation?: SortOrder
+    skillType?: SortOrder
+    language?: SortOrder
+    cefrLevel?: SortOrder
+    xpReward?: SortOrder
+    timeLimit?: SortOrder
     authorId?: SortOrder
     videoId?: SortOrder
     courseId?: SortOrder
@@ -13803,6 +23869,8 @@ export namespace Prisma {
     id?: SortOrder
     score?: SortOrder
     order?: SortOrder
+    xpReward?: SortOrder
+    timeLimit?: SortOrder
     authorId?: SortOrder
     videoId?: SortOrder
     courseId?: SortOrder
@@ -13818,11 +23886,14 @@ export namespace Prisma {
     _max?: NestedEnumTaskTypeFilter<$PrismaModel>
   }
 
-  export type EnumLevelFilter<$PrismaModel = never> = {
-    equals?: $Enums.Level | EnumLevelFieldRefInput<$PrismaModel>
-    in?: $Enums.Level[] | ListEnumLevelFieldRefInput<$PrismaModel>
-    notIn?: $Enums.Level[] | ListEnumLevelFieldRefInput<$PrismaModel>
-    not?: NestedEnumLevelFilter<$PrismaModel> | $Enums.Level
+  export type EnumCoreSkillTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.CoreSkillType | EnumCoreSkillTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.CoreSkillType[] | ListEnumCoreSkillTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.CoreSkillType[] | ListEnumCoreSkillTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumCoreSkillTypeWithAggregatesFilter<$PrismaModel> | $Enums.CoreSkillType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumCoreSkillTypeFilter<$PrismaModel>
+    _max?: NestedEnumCoreSkillTypeFilter<$PrismaModel>
   }
 
   export type VideoListRelationFilter = {
@@ -13841,15 +23912,20 @@ export namespace Prisma {
     description?: SortOrder
     imageUrl?: SortOrder
     level?: SortOrder
+    targetSkills?: SortOrder
     isPublished?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     tags?: SortOrder
+    estimatedHours?: SortOrder
+    totalXP?: SortOrder
     authorId?: SortOrder
   }
 
   export type CourseAvgOrderByAggregateInput = {
     id?: SortOrder
+    estimatedHours?: SortOrder
+    totalXP?: SortOrder
     authorId?: SortOrder
   }
 
@@ -13862,6 +23938,8 @@ export namespace Prisma {
     isPublished?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    estimatedHours?: SortOrder
+    totalXP?: SortOrder
     authorId?: SortOrder
   }
 
@@ -13874,22 +23952,16 @@ export namespace Prisma {
     isPublished?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    estimatedHours?: SortOrder
+    totalXP?: SortOrder
     authorId?: SortOrder
   }
 
   export type CourseSumOrderByAggregateInput = {
     id?: SortOrder
+    estimatedHours?: SortOrder
+    totalXP?: SortOrder
     authorId?: SortOrder
-  }
-
-  export type EnumLevelWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.Level | EnumLevelFieldRefInput<$PrismaModel>
-    in?: $Enums.Level[] | ListEnumLevelFieldRefInput<$PrismaModel>
-    notIn?: $Enums.Level[] | ListEnumLevelFieldRefInput<$PrismaModel>
-    not?: NestedEnumLevelWithAggregatesFilter<$PrismaModel> | $Enums.Level
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumLevelFilter<$PrismaModel>
-    _max?: NestedEnumLevelFilter<$PrismaModel>
   }
 
   export type FloatFilter<$PrismaModel = never> = {
@@ -13982,11 +24054,17 @@ export namespace Prisma {
     current_language?: SortOrder
     purposes?: SortOrder
     current_level?: SortOrder
+    dailyXPGoal?: SortOrder
+    dailyTimeGoal?: SortOrder
+    weeklyGoal?: SortOrder
   }
 
   export type SettingAvgOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
+    dailyXPGoal?: SortOrder
+    dailyTimeGoal?: SortOrder
+    weeklyGoal?: SortOrder
   }
 
   export type SettingMaxOrderByAggregateInput = {
@@ -13995,6 +24073,9 @@ export namespace Prisma {
     global_language?: SortOrder
     current_language?: SortOrder
     current_level?: SortOrder
+    dailyXPGoal?: SortOrder
+    dailyTimeGoal?: SortOrder
+    weeklyGoal?: SortOrder
   }
 
   export type SettingMinOrderByAggregateInput = {
@@ -14003,18 +24084,250 @@ export namespace Prisma {
     global_language?: SortOrder
     current_language?: SortOrder
     current_level?: SortOrder
+    dailyXPGoal?: SortOrder
+    dailyTimeGoal?: SortOrder
+    weeklyGoal?: SortOrder
   }
 
   export type SettingSumOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
+    dailyXPGoal?: SortOrder
+    dailyTimeGoal?: SortOrder
+    weeklyGoal?: SortOrder
   }
 
-  export type EnumWordTaskTypeFilter<$PrismaModel = never> = {
-    equals?: $Enums.WordTaskType | EnumWordTaskTypeFieldRefInput<$PrismaModel>
-    in?: $Enums.WordTaskType[] | ListEnumWordTaskTypeFieldRefInput<$PrismaModel>
-    notIn?: $Enums.WordTaskType[] | ListEnumWordTaskTypeFieldRefInput<$PrismaModel>
-    not?: NestedEnumWordTaskTypeFilter<$PrismaModel> | $Enums.WordTaskType
+  export type LanguageProgressUserIdLanguageCompoundUniqueInput = {
+    userId: number
+    language: $Enums.Language
+  }
+
+  export type LanguageProgressCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    language?: SortOrder
+    overallCEFR?: SortOrder
+    overallProgress?: SortOrder
+    totalXP?: SortOrder
+    totalTime?: SortOrder
+    lastActiveAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type LanguageProgressAvgOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    overallProgress?: SortOrder
+    totalXP?: SortOrder
+    totalTime?: SortOrder
+  }
+
+  export type LanguageProgressMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    language?: SortOrder
+    overallCEFR?: SortOrder
+    overallProgress?: SortOrder
+    totalXP?: SortOrder
+    totalTime?: SortOrder
+    lastActiveAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type LanguageProgressMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    language?: SortOrder
+    overallCEFR?: SortOrder
+    overallProgress?: SortOrder
+    totalXP?: SortOrder
+    totalTime?: SortOrder
+    lastActiveAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type LanguageProgressSumOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    overallProgress?: SortOrder
+    totalXP?: SortOrder
+    totalTime?: SortOrder
+  }
+
+  export type LanguageProgressScalarRelationFilter = {
+    is?: LanguageProgressWhereInput
+    isNot?: LanguageProgressWhereInput
+  }
+
+  export type SkillProgressUserIdLanguageProgressIdSkillTypeCompoundUniqueInput = {
+    userId: number
+    languageProgressId: number
+    skillType: $Enums.CoreSkillType
+  }
+
+  export type SkillProgressCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    languageProgressId?: SortOrder
+    skillType?: SortOrder
+    cefrLevel?: SortOrder
+    levelProgress?: SortOrder
+    xpEarned?: SortOrder
+    totalPracticed?: SortOrder
+    correctAnswers?: SortOrder
+    totalAnswers?: SortOrder
+    currentAccuracy?: SortOrder
+    timeSpent?: SortOrder
+    totalWordsStudied?: SortOrder
+    wordsLearned?: SortOrder
+    wordsReviewing?: SortOrder
+    lastPracticed?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SkillProgressAvgOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    languageProgressId?: SortOrder
+    levelProgress?: SortOrder
+    xpEarned?: SortOrder
+    totalPracticed?: SortOrder
+    correctAnswers?: SortOrder
+    totalAnswers?: SortOrder
+    currentAccuracy?: SortOrder
+    timeSpent?: SortOrder
+    totalWordsStudied?: SortOrder
+    wordsLearned?: SortOrder
+    wordsReviewing?: SortOrder
+  }
+
+  export type SkillProgressMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    languageProgressId?: SortOrder
+    skillType?: SortOrder
+    cefrLevel?: SortOrder
+    levelProgress?: SortOrder
+    xpEarned?: SortOrder
+    totalPracticed?: SortOrder
+    correctAnswers?: SortOrder
+    totalAnswers?: SortOrder
+    currentAccuracy?: SortOrder
+    timeSpent?: SortOrder
+    totalWordsStudied?: SortOrder
+    wordsLearned?: SortOrder
+    wordsReviewing?: SortOrder
+    lastPracticed?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SkillProgressMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    languageProgressId?: SortOrder
+    skillType?: SortOrder
+    cefrLevel?: SortOrder
+    levelProgress?: SortOrder
+    xpEarned?: SortOrder
+    totalPracticed?: SortOrder
+    correctAnswers?: SortOrder
+    totalAnswers?: SortOrder
+    currentAccuracy?: SortOrder
+    timeSpent?: SortOrder
+    totalWordsStudied?: SortOrder
+    wordsLearned?: SortOrder
+    wordsReviewing?: SortOrder
+    lastPracticed?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SkillProgressSumOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    languageProgressId?: SortOrder
+    levelProgress?: SortOrder
+    xpEarned?: SortOrder
+    totalPracticed?: SortOrder
+    correctAnswers?: SortOrder
+    totalAnswers?: SortOrder
+    currentAccuracy?: SortOrder
+    timeSpent?: SortOrder
+    totalWordsStudied?: SortOrder
+    wordsLearned?: SortOrder
+    wordsReviewing?: SortOrder
+  }
+
+  export type SkillLevelRequirementsSkillTypeCefrLevelCompoundUniqueInput = {
+    skillType: $Enums.CoreSkillType
+    cefrLevel: $Enums.CEFRLevel
+  }
+
+  export type SkillLevelRequirementsCountOrderByAggregateInput = {
+    id?: SortOrder
+    skillType?: SortOrder
+    cefrLevel?: SortOrder
+    minXP?: SortOrder
+    minAccuracy?: SortOrder
+    minPracticed?: SortOrder
+    minTimeSpent?: SortOrder
+    minWordsLearned?: SortOrder
+    weightInOverall?: SortOrder
+    displayName?: SortOrder
+    description?: SortOrder
+    color?: SortOrder
+  }
+
+  export type SkillLevelRequirementsAvgOrderByAggregateInput = {
+    id?: SortOrder
+    minXP?: SortOrder
+    minAccuracy?: SortOrder
+    minPracticed?: SortOrder
+    minTimeSpent?: SortOrder
+    minWordsLearned?: SortOrder
+    weightInOverall?: SortOrder
+  }
+
+  export type SkillLevelRequirementsMaxOrderByAggregateInput = {
+    id?: SortOrder
+    skillType?: SortOrder
+    cefrLevel?: SortOrder
+    minXP?: SortOrder
+    minAccuracy?: SortOrder
+    minPracticed?: SortOrder
+    minTimeSpent?: SortOrder
+    minWordsLearned?: SortOrder
+    weightInOverall?: SortOrder
+    displayName?: SortOrder
+    description?: SortOrder
+    color?: SortOrder
+  }
+
+  export type SkillLevelRequirementsMinOrderByAggregateInput = {
+    id?: SortOrder
+    skillType?: SortOrder
+    cefrLevel?: SortOrder
+    minXP?: SortOrder
+    minAccuracy?: SortOrder
+    minPracticed?: SortOrder
+    minTimeSpent?: SortOrder
+    minWordsLearned?: SortOrder
+    weightInOverall?: SortOrder
+    displayName?: SortOrder
+    description?: SortOrder
+    color?: SortOrder
+  }
+
+  export type SkillLevelRequirementsSumOrderByAggregateInput = {
+    id?: SortOrder
+    minXP?: SortOrder
+    minAccuracy?: SortOrder
+    minPracticed?: SortOrder
+    minTimeSpent?: SortOrder
+    minWordsLearned?: SortOrder
+    weightInOverall?: SortOrder
   }
 
   export type WordScalarRelationFilter = {
@@ -14022,66 +24335,451 @@ export namespace Prisma {
     isNot?: WordWhereInput
   }
 
-  export type WordTaskProgressUserIdWordIdTaskTypeCompoundUniqueInput = {
-    userId: number
+  export type WordTaskProgressWordIdUserIdSkillTypeCompoundUniqueInput = {
     wordId: number
-    taskType: $Enums.WordTaskType
+    userId: number
+    skillType: $Enums.CoreSkillType
   }
 
   export type WordTaskProgressCountOrderByAggregateInput = {
     id?: SortOrder
-    userId?: SortOrder
     wordId?: SortOrder
-    taskType?: SortOrder
+    userId?: SortOrder
+    skillType?: SortOrder
     isPassed?: SortOrder
     score?: SortOrder
     attempts?: SortOrder
+    correctCount?: SortOrder
+    nextReviewAt?: SortOrder
+    reviewInterval?: SortOrder
+    easeFactor?: SortOrder
+    lastAttempt?: SortOrder
+    timeSpent?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type WordTaskProgressAvgOrderByAggregateInput = {
     id?: SortOrder
-    userId?: SortOrder
     wordId?: SortOrder
+    userId?: SortOrder
     score?: SortOrder
     attempts?: SortOrder
+    correctCount?: SortOrder
+    reviewInterval?: SortOrder
+    easeFactor?: SortOrder
+    timeSpent?: SortOrder
   }
 
   export type WordTaskProgressMaxOrderByAggregateInput = {
     id?: SortOrder
-    userId?: SortOrder
     wordId?: SortOrder
-    taskType?: SortOrder
+    userId?: SortOrder
+    skillType?: SortOrder
     isPassed?: SortOrder
     score?: SortOrder
     attempts?: SortOrder
+    correctCount?: SortOrder
+    nextReviewAt?: SortOrder
+    reviewInterval?: SortOrder
+    easeFactor?: SortOrder
+    lastAttempt?: SortOrder
+    timeSpent?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type WordTaskProgressMinOrderByAggregateInput = {
     id?: SortOrder
-    userId?: SortOrder
     wordId?: SortOrder
-    taskType?: SortOrder
+    userId?: SortOrder
+    skillType?: SortOrder
     isPassed?: SortOrder
     score?: SortOrder
     attempts?: SortOrder
+    correctCount?: SortOrder
+    nextReviewAt?: SortOrder
+    reviewInterval?: SortOrder
+    easeFactor?: SortOrder
+    lastAttempt?: SortOrder
+    timeSpent?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type WordTaskProgressSumOrderByAggregateInput = {
     id?: SortOrder
-    userId?: SortOrder
     wordId?: SortOrder
+    userId?: SortOrder
     score?: SortOrder
     attempts?: SortOrder
+    correctCount?: SortOrder
+    reviewInterval?: SortOrder
+    easeFactor?: SortOrder
+    timeSpent?: SortOrder
+  }
+  export type JsonFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
-  export type EnumWordTaskTypeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.WordTaskType | EnumWordTaskTypeFieldRefInput<$PrismaModel>
-    in?: $Enums.WordTaskType[] | ListEnumWordTaskTypeFieldRefInput<$PrismaModel>
-    notIn?: $Enums.WordTaskType[] | ListEnumWordTaskTypeFieldRefInput<$PrismaModel>
-    not?: NestedEnumWordTaskTypeWithAggregatesFilter<$PrismaModel> | $Enums.WordTaskType
+  export type DailyStatsUserIdLanguageDateCompoundUniqueInput = {
+    userId: number
+    language: $Enums.Language
+    date: Date | string
+  }
+
+  export type DailyStatsCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    language?: SortOrder
+    date?: SortOrder
+    totalXP?: SortOrder
+    totalTime?: SortOrder
+    tasksCompleted?: SortOrder
+    averageAccuracy?: SortOrder
+    skillsStats?: SortOrder
+    newWordsLearned?: SortOrder
+    wordsReviewed?: SortOrder
+  }
+
+  export type DailyStatsAvgOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    totalXP?: SortOrder
+    totalTime?: SortOrder
+    tasksCompleted?: SortOrder
+    averageAccuracy?: SortOrder
+    newWordsLearned?: SortOrder
+    wordsReviewed?: SortOrder
+  }
+
+  export type DailyStatsMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    language?: SortOrder
+    date?: SortOrder
+    totalXP?: SortOrder
+    totalTime?: SortOrder
+    tasksCompleted?: SortOrder
+    averageAccuracy?: SortOrder
+    newWordsLearned?: SortOrder
+    wordsReviewed?: SortOrder
+  }
+
+  export type DailyStatsMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    language?: SortOrder
+    date?: SortOrder
+    totalXP?: SortOrder
+    totalTime?: SortOrder
+    tasksCompleted?: SortOrder
+    averageAccuracy?: SortOrder
+    newWordsLearned?: SortOrder
+    wordsReviewed?: SortOrder
+  }
+
+  export type DailyStatsSumOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    totalXP?: SortOrder
+    totalTime?: SortOrder
+    tasksCompleted?: SortOrder
+    averageAccuracy?: SortOrder
+    newWordsLearned?: SortOrder
+    wordsReviewed?: SortOrder
+  }
+  export type JsonWithAggregatesFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonWithAggregatesFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonWithAggregatesFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonWithAggregatesFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
     _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumWordTaskTypeFilter<$PrismaModel>
-    _max?: NestedEnumWordTaskTypeFilter<$PrismaModel>
+    _min?: NestedJsonFilter<$PrismaModel>
+    _max?: NestedJsonFilter<$PrismaModel>
+  }
+
+  export type EnumAchievementTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.AchievementType | EnumAchievementTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.AchievementType[] | ListEnumAchievementTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.AchievementType[] | ListEnumAchievementTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumAchievementTypeFilter<$PrismaModel> | $Enums.AchievementType
+  }
+
+  export type EnumCoreSkillTypeNullableFilter<$PrismaModel = never> = {
+    equals?: $Enums.CoreSkillType | EnumCoreSkillTypeFieldRefInput<$PrismaModel> | null
+    in?: $Enums.CoreSkillType[] | ListEnumCoreSkillTypeFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.CoreSkillType[] | ListEnumCoreSkillTypeFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumCoreSkillTypeNullableFilter<$PrismaModel> | $Enums.CoreSkillType | null
+  }
+
+  export type EnumCEFRLevelNullableFilter<$PrismaModel = never> = {
+    equals?: $Enums.CEFRLevel | EnumCEFRLevelFieldRefInput<$PrismaModel> | null
+    in?: $Enums.CEFRLevel[] | ListEnumCEFRLevelFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.CEFRLevel[] | ListEnumCEFRLevelFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumCEFRLevelNullableFilter<$PrismaModel> | $Enums.CEFRLevel | null
+  }
+
+  export type FloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type AchievementCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    type?: SortOrder
+    requiredSkill?: SortOrder
+    requiredLevel?: SortOrder
+    requiredOverall?: SortOrder
+    requiredXP?: SortOrder
+    requiredStreak?: SortOrder
+    requiredAccuracy?: SortOrder
+    xpReward?: SortOrder
+    badge?: SortOrder
+    isActive?: SortOrder
+  }
+
+  export type AchievementAvgOrderByAggregateInput = {
+    id?: SortOrder
+    requiredXP?: SortOrder
+    requiredStreak?: SortOrder
+    requiredAccuracy?: SortOrder
+    xpReward?: SortOrder
+  }
+
+  export type AchievementMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    type?: SortOrder
+    requiredSkill?: SortOrder
+    requiredLevel?: SortOrder
+    requiredOverall?: SortOrder
+    requiredXP?: SortOrder
+    requiredStreak?: SortOrder
+    requiredAccuracy?: SortOrder
+    xpReward?: SortOrder
+    badge?: SortOrder
+    isActive?: SortOrder
+  }
+
+  export type AchievementMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    type?: SortOrder
+    requiredSkill?: SortOrder
+    requiredLevel?: SortOrder
+    requiredOverall?: SortOrder
+    requiredXP?: SortOrder
+    requiredStreak?: SortOrder
+    requiredAccuracy?: SortOrder
+    xpReward?: SortOrder
+    badge?: SortOrder
+    isActive?: SortOrder
+  }
+
+  export type AchievementSumOrderByAggregateInput = {
+    id?: SortOrder
+    requiredXP?: SortOrder
+    requiredStreak?: SortOrder
+    requiredAccuracy?: SortOrder
+    xpReward?: SortOrder
+  }
+
+  export type EnumAchievementTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.AchievementType | EnumAchievementTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.AchievementType[] | ListEnumAchievementTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.AchievementType[] | ListEnumAchievementTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumAchievementTypeWithAggregatesFilter<$PrismaModel> | $Enums.AchievementType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumAchievementTypeFilter<$PrismaModel>
+    _max?: NestedEnumAchievementTypeFilter<$PrismaModel>
+  }
+
+  export type EnumCoreSkillTypeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.CoreSkillType | EnumCoreSkillTypeFieldRefInput<$PrismaModel> | null
+    in?: $Enums.CoreSkillType[] | ListEnumCoreSkillTypeFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.CoreSkillType[] | ListEnumCoreSkillTypeFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumCoreSkillTypeNullableWithAggregatesFilter<$PrismaModel> | $Enums.CoreSkillType | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedEnumCoreSkillTypeNullableFilter<$PrismaModel>
+    _max?: NestedEnumCoreSkillTypeNullableFilter<$PrismaModel>
+  }
+
+  export type EnumCEFRLevelNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.CEFRLevel | EnumCEFRLevelFieldRefInput<$PrismaModel> | null
+    in?: $Enums.CEFRLevel[] | ListEnumCEFRLevelFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.CEFRLevel[] | ListEnumCEFRLevelFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumCEFRLevelNullableWithAggregatesFilter<$PrismaModel> | $Enums.CEFRLevel | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedEnumCEFRLevelNullableFilter<$PrismaModel>
+    _max?: NestedEnumCEFRLevelNullableFilter<$PrismaModel>
+  }
+
+  export type FloatNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedFloatNullableFilter<$PrismaModel>
+    _min?: NestedFloatNullableFilter<$PrismaModel>
+    _max?: NestedFloatNullableFilter<$PrismaModel>
+  }
+
+  export type EnumLanguageNullableFilter<$PrismaModel = never> = {
+    equals?: $Enums.Language | EnumLanguageFieldRefInput<$PrismaModel> | null
+    in?: $Enums.Language[] | ListEnumLanguageFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.Language[] | ListEnumLanguageFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumLanguageNullableFilter<$PrismaModel> | $Enums.Language | null
+  }
+
+  export type AchievementScalarRelationFilter = {
+    is?: AchievementWhereInput
+    isNot?: AchievementWhereInput
+  }
+
+  export type UserAchievementUserIdAchievementIdCompoundUniqueInput = {
+    userId: number
+    achievementId: number
+  }
+
+  export type UserAchievementCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    achievementId?: SortOrder
+    unlockedAt?: SortOrder
+    language?: SortOrder
+  }
+
+  export type UserAchievementAvgOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    achievementId?: SortOrder
+  }
+
+  export type UserAchievementMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    achievementId?: SortOrder
+    unlockedAt?: SortOrder
+    language?: SortOrder
+  }
+
+  export type UserAchievementMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    achievementId?: SortOrder
+    unlockedAt?: SortOrder
+    language?: SortOrder
+  }
+
+  export type UserAchievementSumOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    achievementId?: SortOrder
+  }
+
+  export type EnumLanguageNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Language | EnumLanguageFieldRefInput<$PrismaModel> | null
+    in?: $Enums.Language[] | ListEnumLanguageFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.Language[] | ListEnumLanguageFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumLanguageNullableWithAggregatesFilter<$PrismaModel> | $Enums.Language | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedEnumLanguageNullableFilter<$PrismaModel>
+    _max?: NestedEnumLanguageNullableFilter<$PrismaModel>
+  }
+
+  export type SettingCreateNestedOneWithoutUserInput = {
+    create?: XOR<SettingCreateWithoutUserInput, SettingUncheckedCreateWithoutUserInput>
+    connectOrCreate?: SettingCreateOrConnectWithoutUserInput
+    connect?: SettingWhereUniqueInput
+  }
+
+  export type WordCreateNestedManyWithoutUserInput = {
+    create?: XOR<WordCreateWithoutUserInput, WordUncheckedCreateWithoutUserInput> | WordCreateWithoutUserInput[] | WordUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: WordCreateOrConnectWithoutUserInput | WordCreateOrConnectWithoutUserInput[]
+    createMany?: WordCreateManyUserInputEnvelope
+    connect?: WordWhereUniqueInput | WordWhereUniqueInput[]
+  }
+
+  export type LanguageProgressCreateNestedManyWithoutUserInput = {
+    create?: XOR<LanguageProgressCreateWithoutUserInput, LanguageProgressUncheckedCreateWithoutUserInput> | LanguageProgressCreateWithoutUserInput[] | LanguageProgressUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: LanguageProgressCreateOrConnectWithoutUserInput | LanguageProgressCreateOrConnectWithoutUserInput[]
+    createMany?: LanguageProgressCreateManyUserInputEnvelope
+    connect?: LanguageProgressWhereUniqueInput | LanguageProgressWhereUniqueInput[]
+  }
+
+  export type SkillProgressCreateNestedManyWithoutUserInput = {
+    create?: XOR<SkillProgressCreateWithoutUserInput, SkillProgressUncheckedCreateWithoutUserInput> | SkillProgressCreateWithoutUserInput[] | SkillProgressUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: SkillProgressCreateOrConnectWithoutUserInput | SkillProgressCreateOrConnectWithoutUserInput[]
+    createMany?: SkillProgressCreateManyUserInputEnvelope
+    connect?: SkillProgressWhereUniqueInput | SkillProgressWhereUniqueInput[]
+  }
+
+  export type UserAchievementCreateNestedManyWithoutUserInput = {
+    create?: XOR<UserAchievementCreateWithoutUserInput, UserAchievementUncheckedCreateWithoutUserInput> | UserAchievementCreateWithoutUserInput[] | UserAchievementUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserAchievementCreateOrConnectWithoutUserInput | UserAchievementCreateOrConnectWithoutUserInput[]
+    createMany?: UserAchievementCreateManyUserInputEnvelope
+    connect?: UserAchievementWhereUniqueInput | UserAchievementWhereUniqueInput[]
+  }
+
+  export type DailyStatsCreateNestedManyWithoutUserInput = {
+    create?: XOR<DailyStatsCreateWithoutUserInput, DailyStatsUncheckedCreateWithoutUserInput> | DailyStatsCreateWithoutUserInput[] | DailyStatsUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: DailyStatsCreateOrConnectWithoutUserInput | DailyStatsCreateOrConnectWithoutUserInput[]
+    createMany?: DailyStatsCreateManyUserInputEnvelope
+    connect?: DailyStatsWhereUniqueInput | DailyStatsWhereUniqueInput[]
   }
 
   export type EnrollmentCreateNestedManyWithoutUserInput = {
@@ -14089,13 +24787,6 @@ export namespace Prisma {
     connectOrCreate?: EnrollmentCreateOrConnectWithoutUserInput | EnrollmentCreateOrConnectWithoutUserInput[]
     createMany?: EnrollmentCreateManyUserInputEnvelope
     connect?: EnrollmentWhereUniqueInput | EnrollmentWhereUniqueInput[]
-  }
-
-  export type WordTaskProgressCreateNestedManyWithoutUserInput = {
-    create?: XOR<WordTaskProgressCreateWithoutUserInput, WordTaskProgressUncheckedCreateWithoutUserInput> | WordTaskProgressCreateWithoutUserInput[] | WordTaskProgressUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: WordTaskProgressCreateOrConnectWithoutUserInput | WordTaskProgressCreateOrConnectWithoutUserInput[]
-    createMany?: WordTaskProgressCreateManyUserInputEnvelope
-    connect?: WordTaskProgressWhereUniqueInput | WordTaskProgressWhereUniqueInput[]
   }
 
   export type CourseCreateNestedManyWithoutAuthorInput = {
@@ -14112,17 +24803,52 @@ export namespace Prisma {
     connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
   }
 
-  export type SettingCreateNestedOneWithoutUserInput = {
+  export type WordTaskProgressCreateNestedManyWithoutUserInput = {
+    create?: XOR<WordTaskProgressCreateWithoutUserInput, WordTaskProgressUncheckedCreateWithoutUserInput> | WordTaskProgressCreateWithoutUserInput[] | WordTaskProgressUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: WordTaskProgressCreateOrConnectWithoutUserInput | WordTaskProgressCreateOrConnectWithoutUserInput[]
+    createMany?: WordTaskProgressCreateManyUserInputEnvelope
+    connect?: WordTaskProgressWhereUniqueInput | WordTaskProgressWhereUniqueInput[]
+  }
+
+  export type SettingUncheckedCreateNestedOneWithoutUserInput = {
     create?: XOR<SettingCreateWithoutUserInput, SettingUncheckedCreateWithoutUserInput>
     connectOrCreate?: SettingCreateOrConnectWithoutUserInput
     connect?: SettingWhereUniqueInput
   }
 
-  export type WordCreateNestedManyWithoutUserInput = {
+  export type WordUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<WordCreateWithoutUserInput, WordUncheckedCreateWithoutUserInput> | WordCreateWithoutUserInput[] | WordUncheckedCreateWithoutUserInput[]
     connectOrCreate?: WordCreateOrConnectWithoutUserInput | WordCreateOrConnectWithoutUserInput[]
     createMany?: WordCreateManyUserInputEnvelope
     connect?: WordWhereUniqueInput | WordWhereUniqueInput[]
+  }
+
+  export type LanguageProgressUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<LanguageProgressCreateWithoutUserInput, LanguageProgressUncheckedCreateWithoutUserInput> | LanguageProgressCreateWithoutUserInput[] | LanguageProgressUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: LanguageProgressCreateOrConnectWithoutUserInput | LanguageProgressCreateOrConnectWithoutUserInput[]
+    createMany?: LanguageProgressCreateManyUserInputEnvelope
+    connect?: LanguageProgressWhereUniqueInput | LanguageProgressWhereUniqueInput[]
+  }
+
+  export type SkillProgressUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<SkillProgressCreateWithoutUserInput, SkillProgressUncheckedCreateWithoutUserInput> | SkillProgressCreateWithoutUserInput[] | SkillProgressUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: SkillProgressCreateOrConnectWithoutUserInput | SkillProgressCreateOrConnectWithoutUserInput[]
+    createMany?: SkillProgressCreateManyUserInputEnvelope
+    connect?: SkillProgressWhereUniqueInput | SkillProgressWhereUniqueInput[]
+  }
+
+  export type UserAchievementUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<UserAchievementCreateWithoutUserInput, UserAchievementUncheckedCreateWithoutUserInput> | UserAchievementCreateWithoutUserInput[] | UserAchievementUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserAchievementCreateOrConnectWithoutUserInput | UserAchievementCreateOrConnectWithoutUserInput[]
+    createMany?: UserAchievementCreateManyUserInputEnvelope
+    connect?: UserAchievementWhereUniqueInput | UserAchievementWhereUniqueInput[]
+  }
+
+  export type DailyStatsUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<DailyStatsCreateWithoutUserInput, DailyStatsUncheckedCreateWithoutUserInput> | DailyStatsCreateWithoutUserInput[] | DailyStatsUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: DailyStatsCreateOrConnectWithoutUserInput | DailyStatsCreateOrConnectWithoutUserInput[]
+    createMany?: DailyStatsCreateManyUserInputEnvelope
+    connect?: DailyStatsWhereUniqueInput | DailyStatsWhereUniqueInput[]
   }
 
   export type EnrollmentUncheckedCreateNestedManyWithoutUserInput = {
@@ -14130,13 +24856,6 @@ export namespace Prisma {
     connectOrCreate?: EnrollmentCreateOrConnectWithoutUserInput | EnrollmentCreateOrConnectWithoutUserInput[]
     createMany?: EnrollmentCreateManyUserInputEnvelope
     connect?: EnrollmentWhereUniqueInput | EnrollmentWhereUniqueInput[]
-  }
-
-  export type WordTaskProgressUncheckedCreateNestedManyWithoutUserInput = {
-    create?: XOR<WordTaskProgressCreateWithoutUserInput, WordTaskProgressUncheckedCreateWithoutUserInput> | WordTaskProgressCreateWithoutUserInput[] | WordTaskProgressUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: WordTaskProgressCreateOrConnectWithoutUserInput | WordTaskProgressCreateOrConnectWithoutUserInput[]
-    createMany?: WordTaskProgressCreateManyUserInputEnvelope
-    connect?: WordTaskProgressWhereUniqueInput | WordTaskProgressWhereUniqueInput[]
   }
 
   export type CourseUncheckedCreateNestedManyWithoutAuthorInput = {
@@ -14153,17 +24872,11 @@ export namespace Prisma {
     connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
   }
 
-  export type SettingUncheckedCreateNestedOneWithoutUserInput = {
-    create?: XOR<SettingCreateWithoutUserInput, SettingUncheckedCreateWithoutUserInput>
-    connectOrCreate?: SettingCreateOrConnectWithoutUserInput
-    connect?: SettingWhereUniqueInput
-  }
-
-  export type WordUncheckedCreateNestedManyWithoutUserInput = {
-    create?: XOR<WordCreateWithoutUserInput, WordUncheckedCreateWithoutUserInput> | WordCreateWithoutUserInput[] | WordUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: WordCreateOrConnectWithoutUserInput | WordCreateOrConnectWithoutUserInput[]
-    createMany?: WordCreateManyUserInputEnvelope
-    connect?: WordWhereUniqueInput | WordWhereUniqueInput[]
+  export type WordTaskProgressUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<WordTaskProgressCreateWithoutUserInput, WordTaskProgressUncheckedCreateWithoutUserInput> | WordTaskProgressCreateWithoutUserInput[] | WordTaskProgressUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: WordTaskProgressCreateOrConnectWithoutUserInput | WordTaskProgressCreateOrConnectWithoutUserInput[]
+    createMany?: WordTaskProgressCreateManyUserInputEnvelope
+    connect?: WordTaskProgressWhereUniqueInput | WordTaskProgressWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -14190,6 +24903,94 @@ export namespace Prisma {
     set?: Date | string | null
   }
 
+  export type IntFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type SettingUpdateOneWithoutUserNestedInput = {
+    create?: XOR<SettingCreateWithoutUserInput, SettingUncheckedCreateWithoutUserInput>
+    connectOrCreate?: SettingCreateOrConnectWithoutUserInput
+    upsert?: SettingUpsertWithoutUserInput
+    disconnect?: SettingWhereInput | boolean
+    delete?: SettingWhereInput | boolean
+    connect?: SettingWhereUniqueInput
+    update?: XOR<XOR<SettingUpdateToOneWithWhereWithoutUserInput, SettingUpdateWithoutUserInput>, SettingUncheckedUpdateWithoutUserInput>
+  }
+
+  export type WordUpdateManyWithoutUserNestedInput = {
+    create?: XOR<WordCreateWithoutUserInput, WordUncheckedCreateWithoutUserInput> | WordCreateWithoutUserInput[] | WordUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: WordCreateOrConnectWithoutUserInput | WordCreateOrConnectWithoutUserInput[]
+    upsert?: WordUpsertWithWhereUniqueWithoutUserInput | WordUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: WordCreateManyUserInputEnvelope
+    set?: WordWhereUniqueInput | WordWhereUniqueInput[]
+    disconnect?: WordWhereUniqueInput | WordWhereUniqueInput[]
+    delete?: WordWhereUniqueInput | WordWhereUniqueInput[]
+    connect?: WordWhereUniqueInput | WordWhereUniqueInput[]
+    update?: WordUpdateWithWhereUniqueWithoutUserInput | WordUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: WordUpdateManyWithWhereWithoutUserInput | WordUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: WordScalarWhereInput | WordScalarWhereInput[]
+  }
+
+  export type LanguageProgressUpdateManyWithoutUserNestedInput = {
+    create?: XOR<LanguageProgressCreateWithoutUserInput, LanguageProgressUncheckedCreateWithoutUserInput> | LanguageProgressCreateWithoutUserInput[] | LanguageProgressUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: LanguageProgressCreateOrConnectWithoutUserInput | LanguageProgressCreateOrConnectWithoutUserInput[]
+    upsert?: LanguageProgressUpsertWithWhereUniqueWithoutUserInput | LanguageProgressUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: LanguageProgressCreateManyUserInputEnvelope
+    set?: LanguageProgressWhereUniqueInput | LanguageProgressWhereUniqueInput[]
+    disconnect?: LanguageProgressWhereUniqueInput | LanguageProgressWhereUniqueInput[]
+    delete?: LanguageProgressWhereUniqueInput | LanguageProgressWhereUniqueInput[]
+    connect?: LanguageProgressWhereUniqueInput | LanguageProgressWhereUniqueInput[]
+    update?: LanguageProgressUpdateWithWhereUniqueWithoutUserInput | LanguageProgressUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: LanguageProgressUpdateManyWithWhereWithoutUserInput | LanguageProgressUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: LanguageProgressScalarWhereInput | LanguageProgressScalarWhereInput[]
+  }
+
+  export type SkillProgressUpdateManyWithoutUserNestedInput = {
+    create?: XOR<SkillProgressCreateWithoutUserInput, SkillProgressUncheckedCreateWithoutUserInput> | SkillProgressCreateWithoutUserInput[] | SkillProgressUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: SkillProgressCreateOrConnectWithoutUserInput | SkillProgressCreateOrConnectWithoutUserInput[]
+    upsert?: SkillProgressUpsertWithWhereUniqueWithoutUserInput | SkillProgressUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: SkillProgressCreateManyUserInputEnvelope
+    set?: SkillProgressWhereUniqueInput | SkillProgressWhereUniqueInput[]
+    disconnect?: SkillProgressWhereUniqueInput | SkillProgressWhereUniqueInput[]
+    delete?: SkillProgressWhereUniqueInput | SkillProgressWhereUniqueInput[]
+    connect?: SkillProgressWhereUniqueInput | SkillProgressWhereUniqueInput[]
+    update?: SkillProgressUpdateWithWhereUniqueWithoutUserInput | SkillProgressUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: SkillProgressUpdateManyWithWhereWithoutUserInput | SkillProgressUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: SkillProgressScalarWhereInput | SkillProgressScalarWhereInput[]
+  }
+
+  export type UserAchievementUpdateManyWithoutUserNestedInput = {
+    create?: XOR<UserAchievementCreateWithoutUserInput, UserAchievementUncheckedCreateWithoutUserInput> | UserAchievementCreateWithoutUserInput[] | UserAchievementUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserAchievementCreateOrConnectWithoutUserInput | UserAchievementCreateOrConnectWithoutUserInput[]
+    upsert?: UserAchievementUpsertWithWhereUniqueWithoutUserInput | UserAchievementUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: UserAchievementCreateManyUserInputEnvelope
+    set?: UserAchievementWhereUniqueInput | UserAchievementWhereUniqueInput[]
+    disconnect?: UserAchievementWhereUniqueInput | UserAchievementWhereUniqueInput[]
+    delete?: UserAchievementWhereUniqueInput | UserAchievementWhereUniqueInput[]
+    connect?: UserAchievementWhereUniqueInput | UserAchievementWhereUniqueInput[]
+    update?: UserAchievementUpdateWithWhereUniqueWithoutUserInput | UserAchievementUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: UserAchievementUpdateManyWithWhereWithoutUserInput | UserAchievementUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: UserAchievementScalarWhereInput | UserAchievementScalarWhereInput[]
+  }
+
+  export type DailyStatsUpdateManyWithoutUserNestedInput = {
+    create?: XOR<DailyStatsCreateWithoutUserInput, DailyStatsUncheckedCreateWithoutUserInput> | DailyStatsCreateWithoutUserInput[] | DailyStatsUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: DailyStatsCreateOrConnectWithoutUserInput | DailyStatsCreateOrConnectWithoutUserInput[]
+    upsert?: DailyStatsUpsertWithWhereUniqueWithoutUserInput | DailyStatsUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: DailyStatsCreateManyUserInputEnvelope
+    set?: DailyStatsWhereUniqueInput | DailyStatsWhereUniqueInput[]
+    disconnect?: DailyStatsWhereUniqueInput | DailyStatsWhereUniqueInput[]
+    delete?: DailyStatsWhereUniqueInput | DailyStatsWhereUniqueInput[]
+    connect?: DailyStatsWhereUniqueInput | DailyStatsWhereUniqueInput[]
+    update?: DailyStatsUpdateWithWhereUniqueWithoutUserInput | DailyStatsUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: DailyStatsUpdateManyWithWhereWithoutUserInput | DailyStatsUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: DailyStatsScalarWhereInput | DailyStatsScalarWhereInput[]
+  }
+
   export type EnrollmentUpdateManyWithoutUserNestedInput = {
     create?: XOR<EnrollmentCreateWithoutUserInput, EnrollmentUncheckedCreateWithoutUserInput> | EnrollmentCreateWithoutUserInput[] | EnrollmentUncheckedCreateWithoutUserInput[]
     connectOrCreate?: EnrollmentCreateOrConnectWithoutUserInput | EnrollmentCreateOrConnectWithoutUserInput[]
@@ -14202,20 +25003,6 @@ export namespace Prisma {
     update?: EnrollmentUpdateWithWhereUniqueWithoutUserInput | EnrollmentUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: EnrollmentUpdateManyWithWhereWithoutUserInput | EnrollmentUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: EnrollmentScalarWhereInput | EnrollmentScalarWhereInput[]
-  }
-
-  export type WordTaskProgressUpdateManyWithoutUserNestedInput = {
-    create?: XOR<WordTaskProgressCreateWithoutUserInput, WordTaskProgressUncheckedCreateWithoutUserInput> | WordTaskProgressCreateWithoutUserInput[] | WordTaskProgressUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: WordTaskProgressCreateOrConnectWithoutUserInput | WordTaskProgressCreateOrConnectWithoutUserInput[]
-    upsert?: WordTaskProgressUpsertWithWhereUniqueWithoutUserInput | WordTaskProgressUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: WordTaskProgressCreateManyUserInputEnvelope
-    set?: WordTaskProgressWhereUniqueInput | WordTaskProgressWhereUniqueInput[]
-    disconnect?: WordTaskProgressWhereUniqueInput | WordTaskProgressWhereUniqueInput[]
-    delete?: WordTaskProgressWhereUniqueInput | WordTaskProgressWhereUniqueInput[]
-    connect?: WordTaskProgressWhereUniqueInput | WordTaskProgressWhereUniqueInput[]
-    update?: WordTaskProgressUpdateWithWhereUniqueWithoutUserInput | WordTaskProgressUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: WordTaskProgressUpdateManyWithWhereWithoutUserInput | WordTaskProgressUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: WordTaskProgressScalarWhereInput | WordTaskProgressScalarWhereInput[]
   }
 
   export type CourseUpdateManyWithoutAuthorNestedInput = {
@@ -14246,7 +25033,21 @@ export namespace Prisma {
     deleteMany?: TaskScalarWhereInput | TaskScalarWhereInput[]
   }
 
-  export type SettingUpdateOneWithoutUserNestedInput = {
+  export type WordTaskProgressUpdateManyWithoutUserNestedInput = {
+    create?: XOR<WordTaskProgressCreateWithoutUserInput, WordTaskProgressUncheckedCreateWithoutUserInput> | WordTaskProgressCreateWithoutUserInput[] | WordTaskProgressUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: WordTaskProgressCreateOrConnectWithoutUserInput | WordTaskProgressCreateOrConnectWithoutUserInput[]
+    upsert?: WordTaskProgressUpsertWithWhereUniqueWithoutUserInput | WordTaskProgressUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: WordTaskProgressCreateManyUserInputEnvelope
+    set?: WordTaskProgressWhereUniqueInput | WordTaskProgressWhereUniqueInput[]
+    disconnect?: WordTaskProgressWhereUniqueInput | WordTaskProgressWhereUniqueInput[]
+    delete?: WordTaskProgressWhereUniqueInput | WordTaskProgressWhereUniqueInput[]
+    connect?: WordTaskProgressWhereUniqueInput | WordTaskProgressWhereUniqueInput[]
+    update?: WordTaskProgressUpdateWithWhereUniqueWithoutUserInput | WordTaskProgressUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: WordTaskProgressUpdateManyWithWhereWithoutUserInput | WordTaskProgressUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: WordTaskProgressScalarWhereInput | WordTaskProgressScalarWhereInput[]
+  }
+
+  export type SettingUncheckedUpdateOneWithoutUserNestedInput = {
     create?: XOR<SettingCreateWithoutUserInput, SettingUncheckedCreateWithoutUserInput>
     connectOrCreate?: SettingCreateOrConnectWithoutUserInput
     upsert?: SettingUpsertWithoutUserInput
@@ -14256,7 +25057,7 @@ export namespace Prisma {
     update?: XOR<XOR<SettingUpdateToOneWithWhereWithoutUserInput, SettingUpdateWithoutUserInput>, SettingUncheckedUpdateWithoutUserInput>
   }
 
-  export type WordUpdateManyWithoutUserNestedInput = {
+  export type WordUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<WordCreateWithoutUserInput, WordUncheckedCreateWithoutUserInput> | WordCreateWithoutUserInput[] | WordUncheckedCreateWithoutUserInput[]
     connectOrCreate?: WordCreateOrConnectWithoutUserInput | WordCreateOrConnectWithoutUserInput[]
     upsert?: WordUpsertWithWhereUniqueWithoutUserInput | WordUpsertWithWhereUniqueWithoutUserInput[]
@@ -14270,12 +25071,60 @@ export namespace Prisma {
     deleteMany?: WordScalarWhereInput | WordScalarWhereInput[]
   }
 
-  export type IntFieldUpdateOperationsInput = {
-    set?: number
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
+  export type LanguageProgressUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<LanguageProgressCreateWithoutUserInput, LanguageProgressUncheckedCreateWithoutUserInput> | LanguageProgressCreateWithoutUserInput[] | LanguageProgressUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: LanguageProgressCreateOrConnectWithoutUserInput | LanguageProgressCreateOrConnectWithoutUserInput[]
+    upsert?: LanguageProgressUpsertWithWhereUniqueWithoutUserInput | LanguageProgressUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: LanguageProgressCreateManyUserInputEnvelope
+    set?: LanguageProgressWhereUniqueInput | LanguageProgressWhereUniqueInput[]
+    disconnect?: LanguageProgressWhereUniqueInput | LanguageProgressWhereUniqueInput[]
+    delete?: LanguageProgressWhereUniqueInput | LanguageProgressWhereUniqueInput[]
+    connect?: LanguageProgressWhereUniqueInput | LanguageProgressWhereUniqueInput[]
+    update?: LanguageProgressUpdateWithWhereUniqueWithoutUserInput | LanguageProgressUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: LanguageProgressUpdateManyWithWhereWithoutUserInput | LanguageProgressUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: LanguageProgressScalarWhereInput | LanguageProgressScalarWhereInput[]
+  }
+
+  export type SkillProgressUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<SkillProgressCreateWithoutUserInput, SkillProgressUncheckedCreateWithoutUserInput> | SkillProgressCreateWithoutUserInput[] | SkillProgressUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: SkillProgressCreateOrConnectWithoutUserInput | SkillProgressCreateOrConnectWithoutUserInput[]
+    upsert?: SkillProgressUpsertWithWhereUniqueWithoutUserInput | SkillProgressUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: SkillProgressCreateManyUserInputEnvelope
+    set?: SkillProgressWhereUniqueInput | SkillProgressWhereUniqueInput[]
+    disconnect?: SkillProgressWhereUniqueInput | SkillProgressWhereUniqueInput[]
+    delete?: SkillProgressWhereUniqueInput | SkillProgressWhereUniqueInput[]
+    connect?: SkillProgressWhereUniqueInput | SkillProgressWhereUniqueInput[]
+    update?: SkillProgressUpdateWithWhereUniqueWithoutUserInput | SkillProgressUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: SkillProgressUpdateManyWithWhereWithoutUserInput | SkillProgressUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: SkillProgressScalarWhereInput | SkillProgressScalarWhereInput[]
+  }
+
+  export type UserAchievementUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<UserAchievementCreateWithoutUserInput, UserAchievementUncheckedCreateWithoutUserInput> | UserAchievementCreateWithoutUserInput[] | UserAchievementUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserAchievementCreateOrConnectWithoutUserInput | UserAchievementCreateOrConnectWithoutUserInput[]
+    upsert?: UserAchievementUpsertWithWhereUniqueWithoutUserInput | UserAchievementUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: UserAchievementCreateManyUserInputEnvelope
+    set?: UserAchievementWhereUniqueInput | UserAchievementWhereUniqueInput[]
+    disconnect?: UserAchievementWhereUniqueInput | UserAchievementWhereUniqueInput[]
+    delete?: UserAchievementWhereUniqueInput | UserAchievementWhereUniqueInput[]
+    connect?: UserAchievementWhereUniqueInput | UserAchievementWhereUniqueInput[]
+    update?: UserAchievementUpdateWithWhereUniqueWithoutUserInput | UserAchievementUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: UserAchievementUpdateManyWithWhereWithoutUserInput | UserAchievementUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: UserAchievementScalarWhereInput | UserAchievementScalarWhereInput[]
+  }
+
+  export type DailyStatsUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<DailyStatsCreateWithoutUserInput, DailyStatsUncheckedCreateWithoutUserInput> | DailyStatsCreateWithoutUserInput[] | DailyStatsUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: DailyStatsCreateOrConnectWithoutUserInput | DailyStatsCreateOrConnectWithoutUserInput[]
+    upsert?: DailyStatsUpsertWithWhereUniqueWithoutUserInput | DailyStatsUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: DailyStatsCreateManyUserInputEnvelope
+    set?: DailyStatsWhereUniqueInput | DailyStatsWhereUniqueInput[]
+    disconnect?: DailyStatsWhereUniqueInput | DailyStatsWhereUniqueInput[]
+    delete?: DailyStatsWhereUniqueInput | DailyStatsWhereUniqueInput[]
+    connect?: DailyStatsWhereUniqueInput | DailyStatsWhereUniqueInput[]
+    update?: DailyStatsUpdateWithWhereUniqueWithoutUserInput | DailyStatsUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: DailyStatsUpdateManyWithWhereWithoutUserInput | DailyStatsUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: DailyStatsScalarWhereInput | DailyStatsScalarWhereInput[]
   }
 
   export type EnrollmentUncheckedUpdateManyWithoutUserNestedInput = {
@@ -14290,20 +25139,6 @@ export namespace Prisma {
     update?: EnrollmentUpdateWithWhereUniqueWithoutUserInput | EnrollmentUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: EnrollmentUpdateManyWithWhereWithoutUserInput | EnrollmentUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: EnrollmentScalarWhereInput | EnrollmentScalarWhereInput[]
-  }
-
-  export type WordTaskProgressUncheckedUpdateManyWithoutUserNestedInput = {
-    create?: XOR<WordTaskProgressCreateWithoutUserInput, WordTaskProgressUncheckedCreateWithoutUserInput> | WordTaskProgressCreateWithoutUserInput[] | WordTaskProgressUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: WordTaskProgressCreateOrConnectWithoutUserInput | WordTaskProgressCreateOrConnectWithoutUserInput[]
-    upsert?: WordTaskProgressUpsertWithWhereUniqueWithoutUserInput | WordTaskProgressUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: WordTaskProgressCreateManyUserInputEnvelope
-    set?: WordTaskProgressWhereUniqueInput | WordTaskProgressWhereUniqueInput[]
-    disconnect?: WordTaskProgressWhereUniqueInput | WordTaskProgressWhereUniqueInput[]
-    delete?: WordTaskProgressWhereUniqueInput | WordTaskProgressWhereUniqueInput[]
-    connect?: WordTaskProgressWhereUniqueInput | WordTaskProgressWhereUniqueInput[]
-    update?: WordTaskProgressUpdateWithWhereUniqueWithoutUserInput | WordTaskProgressUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: WordTaskProgressUpdateManyWithWhereWithoutUserInput | WordTaskProgressUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: WordTaskProgressScalarWhereInput | WordTaskProgressScalarWhereInput[]
   }
 
   export type CourseUncheckedUpdateManyWithoutAuthorNestedInput = {
@@ -14334,28 +25169,18 @@ export namespace Prisma {
     deleteMany?: TaskScalarWhereInput | TaskScalarWhereInput[]
   }
 
-  export type SettingUncheckedUpdateOneWithoutUserNestedInput = {
-    create?: XOR<SettingCreateWithoutUserInput, SettingUncheckedCreateWithoutUserInput>
-    connectOrCreate?: SettingCreateOrConnectWithoutUserInput
-    upsert?: SettingUpsertWithoutUserInput
-    disconnect?: SettingWhereInput | boolean
-    delete?: SettingWhereInput | boolean
-    connect?: SettingWhereUniqueInput
-    update?: XOR<XOR<SettingUpdateToOneWithWhereWithoutUserInput, SettingUpdateWithoutUserInput>, SettingUncheckedUpdateWithoutUserInput>
-  }
-
-  export type WordUncheckedUpdateManyWithoutUserNestedInput = {
-    create?: XOR<WordCreateWithoutUserInput, WordUncheckedCreateWithoutUserInput> | WordCreateWithoutUserInput[] | WordUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: WordCreateOrConnectWithoutUserInput | WordCreateOrConnectWithoutUserInput[]
-    upsert?: WordUpsertWithWhereUniqueWithoutUserInput | WordUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: WordCreateManyUserInputEnvelope
-    set?: WordWhereUniqueInput | WordWhereUniqueInput[]
-    disconnect?: WordWhereUniqueInput | WordWhereUniqueInput[]
-    delete?: WordWhereUniqueInput | WordWhereUniqueInput[]
-    connect?: WordWhereUniqueInput | WordWhereUniqueInput[]
-    update?: WordUpdateWithWhereUniqueWithoutUserInput | WordUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: WordUpdateManyWithWhereWithoutUserInput | WordUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: WordScalarWhereInput | WordScalarWhereInput[]
+  export type WordTaskProgressUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<WordTaskProgressCreateWithoutUserInput, WordTaskProgressUncheckedCreateWithoutUserInput> | WordTaskProgressCreateWithoutUserInput[] | WordTaskProgressUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: WordTaskProgressCreateOrConnectWithoutUserInput | WordTaskProgressCreateOrConnectWithoutUserInput[]
+    upsert?: WordTaskProgressUpsertWithWhereUniqueWithoutUserInput | WordTaskProgressUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: WordTaskProgressCreateManyUserInputEnvelope
+    set?: WordTaskProgressWhereUniqueInput | WordTaskProgressWhereUniqueInput[]
+    disconnect?: WordTaskProgressWhereUniqueInput | WordTaskProgressWhereUniqueInput[]
+    delete?: WordTaskProgressWhereUniqueInput | WordTaskProgressWhereUniqueInput[]
+    connect?: WordTaskProgressWhereUniqueInput | WordTaskProgressWhereUniqueInput[]
+    update?: WordTaskProgressUpdateWithWhereUniqueWithoutUserInput | WordTaskProgressUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: WordTaskProgressUpdateManyWithWhereWithoutUserInput | WordTaskProgressUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: WordTaskProgressScalarWhereInput | WordTaskProgressScalarWhereInput[]
   }
 
   export type WordCreatetranslateInput = {
@@ -14378,17 +25203,17 @@ export namespace Prisma {
     set: string[]
   }
 
+  export type UserCreateNestedOneWithoutWordsInput = {
+    create?: XOR<UserCreateWithoutWordsInput, UserUncheckedCreateWithoutWordsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutWordsInput
+    connect?: UserWhereUniqueInput
+  }
+
   export type WordTaskProgressCreateNestedManyWithoutWordInput = {
     create?: XOR<WordTaskProgressCreateWithoutWordInput, WordTaskProgressUncheckedCreateWithoutWordInput> | WordTaskProgressCreateWithoutWordInput[] | WordTaskProgressUncheckedCreateWithoutWordInput[]
     connectOrCreate?: WordTaskProgressCreateOrConnectWithoutWordInput | WordTaskProgressCreateOrConnectWithoutWordInput[]
     createMany?: WordTaskProgressCreateManyWordInputEnvelope
     connect?: WordTaskProgressWhereUniqueInput | WordTaskProgressWhereUniqueInput[]
-  }
-
-  export type UserCreateNestedOneWithoutWordsInput = {
-    create?: XOR<UserCreateWithoutWordsInput, UserUncheckedCreateWithoutWordsInput>
-    connectOrCreate?: UserCreateOrConnectWithoutWordsInput
-    connect?: UserWhereUniqueInput
   }
 
   export type WordTaskProgressUncheckedCreateNestedManyWithoutWordInput = {
@@ -14427,6 +25252,14 @@ export namespace Prisma {
     push?: string | string[]
   }
 
+  export type UserUpdateOneRequiredWithoutWordsNestedInput = {
+    create?: XOR<UserCreateWithoutWordsInput, UserUncheckedCreateWithoutWordsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutWordsInput
+    upsert?: UserUpsertWithoutWordsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutWordsInput, UserUpdateWithoutWordsInput>, UserUncheckedUpdateWithoutWordsInput>
+  }
+
   export type WordTaskProgressUpdateManyWithoutWordNestedInput = {
     create?: XOR<WordTaskProgressCreateWithoutWordInput, WordTaskProgressUncheckedCreateWithoutWordInput> | WordTaskProgressCreateWithoutWordInput[] | WordTaskProgressUncheckedCreateWithoutWordInput[]
     connectOrCreate?: WordTaskProgressCreateOrConnectWithoutWordInput | WordTaskProgressCreateOrConnectWithoutWordInput[]
@@ -14439,14 +25272,6 @@ export namespace Prisma {
     update?: WordTaskProgressUpdateWithWhereUniqueWithoutWordInput | WordTaskProgressUpdateWithWhereUniqueWithoutWordInput[]
     updateMany?: WordTaskProgressUpdateManyWithWhereWithoutWordInput | WordTaskProgressUpdateManyWithWhereWithoutWordInput[]
     deleteMany?: WordTaskProgressScalarWhereInput | WordTaskProgressScalarWhereInput[]
-  }
-
-  export type UserUpdateOneRequiredWithoutWordsNestedInput = {
-    create?: XOR<UserCreateWithoutWordsInput, UserUncheckedCreateWithoutWordsInput>
-    connectOrCreate?: UserCreateOrConnectWithoutWordsInput
-    upsert?: UserUpsertWithoutWordsInput
-    connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutWordsInput, UserUpdateWithoutWordsInput>, UserUncheckedUpdateWithoutWordsInput>
   }
 
   export type WordTaskProgressUncheckedUpdateManyWithoutWordNestedInput = {
@@ -14463,8 +25288,8 @@ export namespace Prisma {
     deleteMany?: WordTaskProgressScalarWhereInput | WordTaskProgressScalarWhereInput[]
   }
 
-  export type VideoCreatetagsInput = {
-    set: string[]
+  export type VideoCreateskillTypesInput = {
+    set: $Enums.CoreSkillType[]
   }
 
   export type TaskCreateNestedManyWithoutVideoInput = {
@@ -14487,13 +25312,21 @@ export namespace Prisma {
     connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
   }
 
-  export type NullableEnumLevelFieldUpdateOperationsInput = {
-    set?: $Enums.Level | null
+  export type EnumCEFRLevelFieldUpdateOperationsInput = {
+    set?: $Enums.CEFRLevel
   }
 
-  export type VideoUpdatetagsInput = {
-    set?: string[]
-    push?: string | string[]
+  export type NullableIntFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type VideoUpdateskillTypesInput = {
+    set?: $Enums.CoreSkillType[]
+    push?: $Enums.CoreSkillType | $Enums.CoreSkillType[]
   }
 
   export type TaskUpdateManyWithoutVideoNestedInput = {
@@ -14518,14 +25351,6 @@ export namespace Prisma {
     delete?: CourseWhereInput | boolean
     connect?: CourseWhereUniqueInput
     update?: XOR<XOR<CourseUpdateToOneWithWhereWithoutVideosInput, CourseUpdateWithoutVideosInput>, CourseUncheckedUpdateWithoutVideosInput>
-  }
-
-  export type NullableIntFieldUpdateOperationsInput = {
-    set?: number | null
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
   }
 
   export type TaskUncheckedUpdateManyWithoutVideoNestedInput = {
@@ -14573,6 +25398,10 @@ export namespace Prisma {
     set?: $Enums.TaskType
   }
 
+  export type EnumCoreSkillTypeFieldUpdateOperationsInput = {
+    set?: $Enums.CoreSkillType
+  }
+
   export type UserUpdateOneWithoutTasksNestedInput = {
     create?: XOR<UserCreateWithoutTasksInput, UserUncheckedCreateWithoutTasksInput>
     connectOrCreate?: UserCreateOrConnectWithoutTasksInput
@@ -14603,15 +25432,12 @@ export namespace Prisma {
     update?: XOR<XOR<CourseUpdateToOneWithWhereWithoutTasksInput, CourseUpdateWithoutTasksInput>, CourseUncheckedUpdateWithoutTasksInput>
   }
 
-  export type CourseCreatetagsInput = {
-    set: string[]
+  export type CourseCreatetargetSkillsInput = {
+    set: $Enums.CoreSkillType[]
   }
 
-  export type TaskCreateNestedManyWithoutCourseInput = {
-    create?: XOR<TaskCreateWithoutCourseInput, TaskUncheckedCreateWithoutCourseInput> | TaskCreateWithoutCourseInput[] | TaskUncheckedCreateWithoutCourseInput[]
-    connectOrCreate?: TaskCreateOrConnectWithoutCourseInput | TaskCreateOrConnectWithoutCourseInput[]
-    createMany?: TaskCreateManyCourseInputEnvelope
-    connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+  export type CourseCreatetagsInput = {
+    set: string[]
   }
 
   export type EnrollmentCreateNestedManyWithoutCourseInput = {
@@ -14619,6 +25445,13 @@ export namespace Prisma {
     connectOrCreate?: EnrollmentCreateOrConnectWithoutCourseInput | EnrollmentCreateOrConnectWithoutCourseInput[]
     createMany?: EnrollmentCreateManyCourseInputEnvelope
     connect?: EnrollmentWhereUniqueInput | EnrollmentWhereUniqueInput[]
+  }
+
+  export type TaskCreateNestedManyWithoutCourseInput = {
+    create?: XOR<TaskCreateWithoutCourseInput, TaskUncheckedCreateWithoutCourseInput> | TaskCreateWithoutCourseInput[] | TaskUncheckedCreateWithoutCourseInput[]
+    connectOrCreate?: TaskCreateOrConnectWithoutCourseInput | TaskCreateOrConnectWithoutCourseInput[]
+    createMany?: TaskCreateManyCourseInputEnvelope
+    connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
   }
 
   export type VideoCreateNestedManyWithoutCourseInput = {
@@ -14634,18 +25467,18 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
-  export type TaskUncheckedCreateNestedManyWithoutCourseInput = {
-    create?: XOR<TaskCreateWithoutCourseInput, TaskUncheckedCreateWithoutCourseInput> | TaskCreateWithoutCourseInput[] | TaskUncheckedCreateWithoutCourseInput[]
-    connectOrCreate?: TaskCreateOrConnectWithoutCourseInput | TaskCreateOrConnectWithoutCourseInput[]
-    createMany?: TaskCreateManyCourseInputEnvelope
-    connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
-  }
-
   export type EnrollmentUncheckedCreateNestedManyWithoutCourseInput = {
     create?: XOR<EnrollmentCreateWithoutCourseInput, EnrollmentUncheckedCreateWithoutCourseInput> | EnrollmentCreateWithoutCourseInput[] | EnrollmentUncheckedCreateWithoutCourseInput[]
     connectOrCreate?: EnrollmentCreateOrConnectWithoutCourseInput | EnrollmentCreateOrConnectWithoutCourseInput[]
     createMany?: EnrollmentCreateManyCourseInputEnvelope
     connect?: EnrollmentWhereUniqueInput | EnrollmentWhereUniqueInput[]
+  }
+
+  export type TaskUncheckedCreateNestedManyWithoutCourseInput = {
+    create?: XOR<TaskCreateWithoutCourseInput, TaskUncheckedCreateWithoutCourseInput> | TaskCreateWithoutCourseInput[] | TaskUncheckedCreateWithoutCourseInput[]
+    connectOrCreate?: TaskCreateOrConnectWithoutCourseInput | TaskCreateOrConnectWithoutCourseInput[]
+    createMany?: TaskCreateManyCourseInputEnvelope
+    connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
   }
 
   export type VideoUncheckedCreateNestedManyWithoutCourseInput = {
@@ -14655,27 +25488,14 @@ export namespace Prisma {
     connect?: VideoWhereUniqueInput | VideoWhereUniqueInput[]
   }
 
-  export type EnumLevelFieldUpdateOperationsInput = {
-    set?: $Enums.Level
+  export type CourseUpdatetargetSkillsInput = {
+    set?: $Enums.CoreSkillType[]
+    push?: $Enums.CoreSkillType | $Enums.CoreSkillType[]
   }
 
   export type CourseUpdatetagsInput = {
     set?: string[]
     push?: string | string[]
-  }
-
-  export type TaskUpdateManyWithoutCourseNestedInput = {
-    create?: XOR<TaskCreateWithoutCourseInput, TaskUncheckedCreateWithoutCourseInput> | TaskCreateWithoutCourseInput[] | TaskUncheckedCreateWithoutCourseInput[]
-    connectOrCreate?: TaskCreateOrConnectWithoutCourseInput | TaskCreateOrConnectWithoutCourseInput[]
-    upsert?: TaskUpsertWithWhereUniqueWithoutCourseInput | TaskUpsertWithWhereUniqueWithoutCourseInput[]
-    createMany?: TaskCreateManyCourseInputEnvelope
-    set?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
-    disconnect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
-    delete?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
-    connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
-    update?: TaskUpdateWithWhereUniqueWithoutCourseInput | TaskUpdateWithWhereUniqueWithoutCourseInput[]
-    updateMany?: TaskUpdateManyWithWhereWithoutCourseInput | TaskUpdateManyWithWhereWithoutCourseInput[]
-    deleteMany?: TaskScalarWhereInput | TaskScalarWhereInput[]
   }
 
   export type EnrollmentUpdateManyWithoutCourseNestedInput = {
@@ -14690,6 +25510,20 @@ export namespace Prisma {
     update?: EnrollmentUpdateWithWhereUniqueWithoutCourseInput | EnrollmentUpdateWithWhereUniqueWithoutCourseInput[]
     updateMany?: EnrollmentUpdateManyWithWhereWithoutCourseInput | EnrollmentUpdateManyWithWhereWithoutCourseInput[]
     deleteMany?: EnrollmentScalarWhereInput | EnrollmentScalarWhereInput[]
+  }
+
+  export type TaskUpdateManyWithoutCourseNestedInput = {
+    create?: XOR<TaskCreateWithoutCourseInput, TaskUncheckedCreateWithoutCourseInput> | TaskCreateWithoutCourseInput[] | TaskUncheckedCreateWithoutCourseInput[]
+    connectOrCreate?: TaskCreateOrConnectWithoutCourseInput | TaskCreateOrConnectWithoutCourseInput[]
+    upsert?: TaskUpsertWithWhereUniqueWithoutCourseInput | TaskUpsertWithWhereUniqueWithoutCourseInput[]
+    createMany?: TaskCreateManyCourseInputEnvelope
+    set?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+    disconnect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+    delete?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+    connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+    update?: TaskUpdateWithWhereUniqueWithoutCourseInput | TaskUpdateWithWhereUniqueWithoutCourseInput[]
+    updateMany?: TaskUpdateManyWithWhereWithoutCourseInput | TaskUpdateManyWithWhereWithoutCourseInput[]
+    deleteMany?: TaskScalarWhereInput | TaskScalarWhereInput[]
   }
 
   export type VideoUpdateManyWithoutCourseNestedInput = {
@@ -14716,20 +25550,6 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutCoursesInput, UserUpdateWithoutCoursesInput>, UserUncheckedUpdateWithoutCoursesInput>
   }
 
-  export type TaskUncheckedUpdateManyWithoutCourseNestedInput = {
-    create?: XOR<TaskCreateWithoutCourseInput, TaskUncheckedCreateWithoutCourseInput> | TaskCreateWithoutCourseInput[] | TaskUncheckedCreateWithoutCourseInput[]
-    connectOrCreate?: TaskCreateOrConnectWithoutCourseInput | TaskCreateOrConnectWithoutCourseInput[]
-    upsert?: TaskUpsertWithWhereUniqueWithoutCourseInput | TaskUpsertWithWhereUniqueWithoutCourseInput[]
-    createMany?: TaskCreateManyCourseInputEnvelope
-    set?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
-    disconnect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
-    delete?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
-    connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
-    update?: TaskUpdateWithWhereUniqueWithoutCourseInput | TaskUpdateWithWhereUniqueWithoutCourseInput[]
-    updateMany?: TaskUpdateManyWithWhereWithoutCourseInput | TaskUpdateManyWithWhereWithoutCourseInput[]
-    deleteMany?: TaskScalarWhereInput | TaskScalarWhereInput[]
-  }
-
   export type EnrollmentUncheckedUpdateManyWithoutCourseNestedInput = {
     create?: XOR<EnrollmentCreateWithoutCourseInput, EnrollmentUncheckedCreateWithoutCourseInput> | EnrollmentCreateWithoutCourseInput[] | EnrollmentUncheckedCreateWithoutCourseInput[]
     connectOrCreate?: EnrollmentCreateOrConnectWithoutCourseInput | EnrollmentCreateOrConnectWithoutCourseInput[]
@@ -14742,6 +25562,20 @@ export namespace Prisma {
     update?: EnrollmentUpdateWithWhereUniqueWithoutCourseInput | EnrollmentUpdateWithWhereUniqueWithoutCourseInput[]
     updateMany?: EnrollmentUpdateManyWithWhereWithoutCourseInput | EnrollmentUpdateManyWithWhereWithoutCourseInput[]
     deleteMany?: EnrollmentScalarWhereInput | EnrollmentScalarWhereInput[]
+  }
+
+  export type TaskUncheckedUpdateManyWithoutCourseNestedInput = {
+    create?: XOR<TaskCreateWithoutCourseInput, TaskUncheckedCreateWithoutCourseInput> | TaskCreateWithoutCourseInput[] | TaskUncheckedCreateWithoutCourseInput[]
+    connectOrCreate?: TaskCreateOrConnectWithoutCourseInput | TaskCreateOrConnectWithoutCourseInput[]
+    upsert?: TaskUpsertWithWhereUniqueWithoutCourseInput | TaskUpsertWithWhereUniqueWithoutCourseInput[]
+    createMany?: TaskCreateManyCourseInputEnvelope
+    set?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+    disconnect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+    delete?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+    connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+    update?: TaskUpdateWithWhereUniqueWithoutCourseInput | TaskUpdateWithWhereUniqueWithoutCourseInput[]
+    updateMany?: TaskUpdateManyWithWhereWithoutCourseInput | TaskUpdateManyWithWhereWithoutCourseInput[]
+    deleteMany?: TaskScalarWhereInput | TaskScalarWhereInput[]
   }
 
   export type VideoUncheckedUpdateManyWithoutCourseNestedInput = {
@@ -14817,10 +25651,88 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutSettingInput, UserUpdateWithoutSettingInput>, UserUncheckedUpdateWithoutSettingInput>
   }
 
-  export type UserCreateNestedOneWithoutWordProgressesInput = {
-    create?: XOR<UserCreateWithoutWordProgressesInput, UserUncheckedCreateWithoutWordProgressesInput>
-    connectOrCreate?: UserCreateOrConnectWithoutWordProgressesInput
+  export type UserCreateNestedOneWithoutLanguageProgressesInput = {
+    create?: XOR<UserCreateWithoutLanguageProgressesInput, UserUncheckedCreateWithoutLanguageProgressesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutLanguageProgressesInput
     connect?: UserWhereUniqueInput
+  }
+
+  export type SkillProgressCreateNestedManyWithoutLanguageProgressInput = {
+    create?: XOR<SkillProgressCreateWithoutLanguageProgressInput, SkillProgressUncheckedCreateWithoutLanguageProgressInput> | SkillProgressCreateWithoutLanguageProgressInput[] | SkillProgressUncheckedCreateWithoutLanguageProgressInput[]
+    connectOrCreate?: SkillProgressCreateOrConnectWithoutLanguageProgressInput | SkillProgressCreateOrConnectWithoutLanguageProgressInput[]
+    createMany?: SkillProgressCreateManyLanguageProgressInputEnvelope
+    connect?: SkillProgressWhereUniqueInput | SkillProgressWhereUniqueInput[]
+  }
+
+  export type SkillProgressUncheckedCreateNestedManyWithoutLanguageProgressInput = {
+    create?: XOR<SkillProgressCreateWithoutLanguageProgressInput, SkillProgressUncheckedCreateWithoutLanguageProgressInput> | SkillProgressCreateWithoutLanguageProgressInput[] | SkillProgressUncheckedCreateWithoutLanguageProgressInput[]
+    connectOrCreate?: SkillProgressCreateOrConnectWithoutLanguageProgressInput | SkillProgressCreateOrConnectWithoutLanguageProgressInput[]
+    createMany?: SkillProgressCreateManyLanguageProgressInputEnvelope
+    connect?: SkillProgressWhereUniqueInput | SkillProgressWhereUniqueInput[]
+  }
+
+  export type UserUpdateOneRequiredWithoutLanguageProgressesNestedInput = {
+    create?: XOR<UserCreateWithoutLanguageProgressesInput, UserUncheckedCreateWithoutLanguageProgressesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutLanguageProgressesInput
+    upsert?: UserUpsertWithoutLanguageProgressesInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutLanguageProgressesInput, UserUpdateWithoutLanguageProgressesInput>, UserUncheckedUpdateWithoutLanguageProgressesInput>
+  }
+
+  export type SkillProgressUpdateManyWithoutLanguageProgressNestedInput = {
+    create?: XOR<SkillProgressCreateWithoutLanguageProgressInput, SkillProgressUncheckedCreateWithoutLanguageProgressInput> | SkillProgressCreateWithoutLanguageProgressInput[] | SkillProgressUncheckedCreateWithoutLanguageProgressInput[]
+    connectOrCreate?: SkillProgressCreateOrConnectWithoutLanguageProgressInput | SkillProgressCreateOrConnectWithoutLanguageProgressInput[]
+    upsert?: SkillProgressUpsertWithWhereUniqueWithoutLanguageProgressInput | SkillProgressUpsertWithWhereUniqueWithoutLanguageProgressInput[]
+    createMany?: SkillProgressCreateManyLanguageProgressInputEnvelope
+    set?: SkillProgressWhereUniqueInput | SkillProgressWhereUniqueInput[]
+    disconnect?: SkillProgressWhereUniqueInput | SkillProgressWhereUniqueInput[]
+    delete?: SkillProgressWhereUniqueInput | SkillProgressWhereUniqueInput[]
+    connect?: SkillProgressWhereUniqueInput | SkillProgressWhereUniqueInput[]
+    update?: SkillProgressUpdateWithWhereUniqueWithoutLanguageProgressInput | SkillProgressUpdateWithWhereUniqueWithoutLanguageProgressInput[]
+    updateMany?: SkillProgressUpdateManyWithWhereWithoutLanguageProgressInput | SkillProgressUpdateManyWithWhereWithoutLanguageProgressInput[]
+    deleteMany?: SkillProgressScalarWhereInput | SkillProgressScalarWhereInput[]
+  }
+
+  export type SkillProgressUncheckedUpdateManyWithoutLanguageProgressNestedInput = {
+    create?: XOR<SkillProgressCreateWithoutLanguageProgressInput, SkillProgressUncheckedCreateWithoutLanguageProgressInput> | SkillProgressCreateWithoutLanguageProgressInput[] | SkillProgressUncheckedCreateWithoutLanguageProgressInput[]
+    connectOrCreate?: SkillProgressCreateOrConnectWithoutLanguageProgressInput | SkillProgressCreateOrConnectWithoutLanguageProgressInput[]
+    upsert?: SkillProgressUpsertWithWhereUniqueWithoutLanguageProgressInput | SkillProgressUpsertWithWhereUniqueWithoutLanguageProgressInput[]
+    createMany?: SkillProgressCreateManyLanguageProgressInputEnvelope
+    set?: SkillProgressWhereUniqueInput | SkillProgressWhereUniqueInput[]
+    disconnect?: SkillProgressWhereUniqueInput | SkillProgressWhereUniqueInput[]
+    delete?: SkillProgressWhereUniqueInput | SkillProgressWhereUniqueInput[]
+    connect?: SkillProgressWhereUniqueInput | SkillProgressWhereUniqueInput[]
+    update?: SkillProgressUpdateWithWhereUniqueWithoutLanguageProgressInput | SkillProgressUpdateWithWhereUniqueWithoutLanguageProgressInput[]
+    updateMany?: SkillProgressUpdateManyWithWhereWithoutLanguageProgressInput | SkillProgressUpdateManyWithWhereWithoutLanguageProgressInput[]
+    deleteMany?: SkillProgressScalarWhereInput | SkillProgressScalarWhereInput[]
+  }
+
+  export type UserCreateNestedOneWithoutSkillProgressesInput = {
+    create?: XOR<UserCreateWithoutSkillProgressesInput, UserUncheckedCreateWithoutSkillProgressesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutSkillProgressesInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type LanguageProgressCreateNestedOneWithoutSkillProgressesInput = {
+    create?: XOR<LanguageProgressCreateWithoutSkillProgressesInput, LanguageProgressUncheckedCreateWithoutSkillProgressesInput>
+    connectOrCreate?: LanguageProgressCreateOrConnectWithoutSkillProgressesInput
+    connect?: LanguageProgressWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutSkillProgressesNestedInput = {
+    create?: XOR<UserCreateWithoutSkillProgressesInput, UserUncheckedCreateWithoutSkillProgressesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutSkillProgressesInput
+    upsert?: UserUpsertWithoutSkillProgressesInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutSkillProgressesInput, UserUpdateWithoutSkillProgressesInput>, UserUncheckedUpdateWithoutSkillProgressesInput>
+  }
+
+  export type LanguageProgressUpdateOneRequiredWithoutSkillProgressesNestedInput = {
+    create?: XOR<LanguageProgressCreateWithoutSkillProgressesInput, LanguageProgressUncheckedCreateWithoutSkillProgressesInput>
+    connectOrCreate?: LanguageProgressCreateOrConnectWithoutSkillProgressesInput
+    upsert?: LanguageProgressUpsertWithoutSkillProgressesInput
+    connect?: LanguageProgressWhereUniqueInput
+    update?: XOR<XOR<LanguageProgressUpdateToOneWithWhereWithoutSkillProgressesInput, LanguageProgressUpdateWithoutSkillProgressesInput>, LanguageProgressUncheckedUpdateWithoutSkillProgressesInput>
   }
 
   export type WordCreateNestedOneWithoutProgressesInput = {
@@ -14829,8 +25741,18 @@ export namespace Prisma {
     connect?: WordWhereUniqueInput
   }
 
-  export type EnumWordTaskTypeFieldUpdateOperationsInput = {
-    set?: $Enums.WordTaskType
+  export type UserCreateNestedOneWithoutWordProgressesInput = {
+    create?: XOR<UserCreateWithoutWordProgressesInput, UserUncheckedCreateWithoutWordProgressesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutWordProgressesInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type WordUpdateOneRequiredWithoutProgressesNestedInput = {
+    create?: XOR<WordCreateWithoutProgressesInput, WordUncheckedCreateWithoutProgressesInput>
+    connectOrCreate?: WordCreateOrConnectWithoutProgressesInput
+    upsert?: WordUpsertWithoutProgressesInput
+    connect?: WordWhereUniqueInput
+    update?: XOR<XOR<WordUpdateToOneWithWhereWithoutProgressesInput, WordUpdateWithoutProgressesInput>, WordUncheckedUpdateWithoutProgressesInput>
   }
 
   export type UserUpdateOneRequiredWithoutWordProgressesNestedInput = {
@@ -14841,12 +25763,112 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutWordProgressesInput, UserUpdateWithoutWordProgressesInput>, UserUncheckedUpdateWithoutWordProgressesInput>
   }
 
-  export type WordUpdateOneRequiredWithoutProgressesNestedInput = {
-    create?: XOR<WordCreateWithoutProgressesInput, WordUncheckedCreateWithoutProgressesInput>
-    connectOrCreate?: WordCreateOrConnectWithoutProgressesInput
-    upsert?: WordUpsertWithoutProgressesInput
-    connect?: WordWhereUniqueInput
-    update?: XOR<XOR<WordUpdateToOneWithWhereWithoutProgressesInput, WordUpdateWithoutProgressesInput>, WordUncheckedUpdateWithoutProgressesInput>
+  export type UserCreateNestedOneWithoutDailyStatsInput = {
+    create?: XOR<UserCreateWithoutDailyStatsInput, UserUncheckedCreateWithoutDailyStatsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutDailyStatsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutDailyStatsNestedInput = {
+    create?: XOR<UserCreateWithoutDailyStatsInput, UserUncheckedCreateWithoutDailyStatsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutDailyStatsInput
+    upsert?: UserUpsertWithoutDailyStatsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutDailyStatsInput, UserUpdateWithoutDailyStatsInput>, UserUncheckedUpdateWithoutDailyStatsInput>
+  }
+
+  export type UserAchievementCreateNestedManyWithoutAchievementInput = {
+    create?: XOR<UserAchievementCreateWithoutAchievementInput, UserAchievementUncheckedCreateWithoutAchievementInput> | UserAchievementCreateWithoutAchievementInput[] | UserAchievementUncheckedCreateWithoutAchievementInput[]
+    connectOrCreate?: UserAchievementCreateOrConnectWithoutAchievementInput | UserAchievementCreateOrConnectWithoutAchievementInput[]
+    createMany?: UserAchievementCreateManyAchievementInputEnvelope
+    connect?: UserAchievementWhereUniqueInput | UserAchievementWhereUniqueInput[]
+  }
+
+  export type UserAchievementUncheckedCreateNestedManyWithoutAchievementInput = {
+    create?: XOR<UserAchievementCreateWithoutAchievementInput, UserAchievementUncheckedCreateWithoutAchievementInput> | UserAchievementCreateWithoutAchievementInput[] | UserAchievementUncheckedCreateWithoutAchievementInput[]
+    connectOrCreate?: UserAchievementCreateOrConnectWithoutAchievementInput | UserAchievementCreateOrConnectWithoutAchievementInput[]
+    createMany?: UserAchievementCreateManyAchievementInputEnvelope
+    connect?: UserAchievementWhereUniqueInput | UserAchievementWhereUniqueInput[]
+  }
+
+  export type EnumAchievementTypeFieldUpdateOperationsInput = {
+    set?: $Enums.AchievementType
+  }
+
+  export type NullableEnumCoreSkillTypeFieldUpdateOperationsInput = {
+    set?: $Enums.CoreSkillType | null
+  }
+
+  export type NullableEnumCEFRLevelFieldUpdateOperationsInput = {
+    set?: $Enums.CEFRLevel | null
+  }
+
+  export type NullableFloatFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type UserAchievementUpdateManyWithoutAchievementNestedInput = {
+    create?: XOR<UserAchievementCreateWithoutAchievementInput, UserAchievementUncheckedCreateWithoutAchievementInput> | UserAchievementCreateWithoutAchievementInput[] | UserAchievementUncheckedCreateWithoutAchievementInput[]
+    connectOrCreate?: UserAchievementCreateOrConnectWithoutAchievementInput | UserAchievementCreateOrConnectWithoutAchievementInput[]
+    upsert?: UserAchievementUpsertWithWhereUniqueWithoutAchievementInput | UserAchievementUpsertWithWhereUniqueWithoutAchievementInput[]
+    createMany?: UserAchievementCreateManyAchievementInputEnvelope
+    set?: UserAchievementWhereUniqueInput | UserAchievementWhereUniqueInput[]
+    disconnect?: UserAchievementWhereUniqueInput | UserAchievementWhereUniqueInput[]
+    delete?: UserAchievementWhereUniqueInput | UserAchievementWhereUniqueInput[]
+    connect?: UserAchievementWhereUniqueInput | UserAchievementWhereUniqueInput[]
+    update?: UserAchievementUpdateWithWhereUniqueWithoutAchievementInput | UserAchievementUpdateWithWhereUniqueWithoutAchievementInput[]
+    updateMany?: UserAchievementUpdateManyWithWhereWithoutAchievementInput | UserAchievementUpdateManyWithWhereWithoutAchievementInput[]
+    deleteMany?: UserAchievementScalarWhereInput | UserAchievementScalarWhereInput[]
+  }
+
+  export type UserAchievementUncheckedUpdateManyWithoutAchievementNestedInput = {
+    create?: XOR<UserAchievementCreateWithoutAchievementInput, UserAchievementUncheckedCreateWithoutAchievementInput> | UserAchievementCreateWithoutAchievementInput[] | UserAchievementUncheckedCreateWithoutAchievementInput[]
+    connectOrCreate?: UserAchievementCreateOrConnectWithoutAchievementInput | UserAchievementCreateOrConnectWithoutAchievementInput[]
+    upsert?: UserAchievementUpsertWithWhereUniqueWithoutAchievementInput | UserAchievementUpsertWithWhereUniqueWithoutAchievementInput[]
+    createMany?: UserAchievementCreateManyAchievementInputEnvelope
+    set?: UserAchievementWhereUniqueInput | UserAchievementWhereUniqueInput[]
+    disconnect?: UserAchievementWhereUniqueInput | UserAchievementWhereUniqueInput[]
+    delete?: UserAchievementWhereUniqueInput | UserAchievementWhereUniqueInput[]
+    connect?: UserAchievementWhereUniqueInput | UserAchievementWhereUniqueInput[]
+    update?: UserAchievementUpdateWithWhereUniqueWithoutAchievementInput | UserAchievementUpdateWithWhereUniqueWithoutAchievementInput[]
+    updateMany?: UserAchievementUpdateManyWithWhereWithoutAchievementInput | UserAchievementUpdateManyWithWhereWithoutAchievementInput[]
+    deleteMany?: UserAchievementScalarWhereInput | UserAchievementScalarWhereInput[]
+  }
+
+  export type UserCreateNestedOneWithoutAchievementsInput = {
+    create?: XOR<UserCreateWithoutAchievementsInput, UserUncheckedCreateWithoutAchievementsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutAchievementsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type AchievementCreateNestedOneWithoutUsersInput = {
+    create?: XOR<AchievementCreateWithoutUsersInput, AchievementUncheckedCreateWithoutUsersInput>
+    connectOrCreate?: AchievementCreateOrConnectWithoutUsersInput
+    connect?: AchievementWhereUniqueInput
+  }
+
+  export type NullableEnumLanguageFieldUpdateOperationsInput = {
+    set?: $Enums.Language | null
+  }
+
+  export type UserUpdateOneRequiredWithoutAchievementsNestedInput = {
+    create?: XOR<UserCreateWithoutAchievementsInput, UserUncheckedCreateWithoutAchievementsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutAchievementsInput
+    upsert?: UserUpsertWithoutAchievementsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutAchievementsInput, UserUpdateWithoutAchievementsInput>, UserUncheckedUpdateWithoutAchievementsInput>
+  }
+
+  export type AchievementUpdateOneRequiredWithoutUsersNestedInput = {
+    create?: XOR<AchievementCreateWithoutUsersInput, AchievementUncheckedCreateWithoutUsersInput>
+    connectOrCreate?: AchievementCreateOrConnectWithoutUsersInput
+    upsert?: AchievementUpsertWithoutUsersInput
+    connect?: AchievementWhereUniqueInput
+    update?: XOR<XOR<AchievementUpdateToOneWithWhereWithoutUsersInput, AchievementUpdateWithoutUsersInput>, AchievementUncheckedUpdateWithoutUsersInput>
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -15057,21 +26079,21 @@ export namespace Prisma {
     _max?: NestedEnumLanguageFilter<$PrismaModel>
   }
 
-  export type NestedEnumLevelNullableFilter<$PrismaModel = never> = {
-    equals?: $Enums.Level | EnumLevelFieldRefInput<$PrismaModel> | null
-    in?: $Enums.Level[] | ListEnumLevelFieldRefInput<$PrismaModel> | null
-    notIn?: $Enums.Level[] | ListEnumLevelFieldRefInput<$PrismaModel> | null
-    not?: NestedEnumLevelNullableFilter<$PrismaModel> | $Enums.Level | null
+  export type NestedEnumCEFRLevelFilter<$PrismaModel = never> = {
+    equals?: $Enums.CEFRLevel | EnumCEFRLevelFieldRefInput<$PrismaModel>
+    in?: $Enums.CEFRLevel[] | ListEnumCEFRLevelFieldRefInput<$PrismaModel>
+    notIn?: $Enums.CEFRLevel[] | ListEnumCEFRLevelFieldRefInput<$PrismaModel>
+    not?: NestedEnumCEFRLevelFilter<$PrismaModel> | $Enums.CEFRLevel
   }
 
-  export type NestedEnumLevelNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.Level | EnumLevelFieldRefInput<$PrismaModel> | null
-    in?: $Enums.Level[] | ListEnumLevelFieldRefInput<$PrismaModel> | null
-    notIn?: $Enums.Level[] | ListEnumLevelFieldRefInput<$PrismaModel> | null
-    not?: NestedEnumLevelNullableWithAggregatesFilter<$PrismaModel> | $Enums.Level | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedEnumLevelNullableFilter<$PrismaModel>
-    _max?: NestedEnumLevelNullableFilter<$PrismaModel>
+  export type NestedEnumCEFRLevelWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.CEFRLevel | EnumCEFRLevelFieldRefInput<$PrismaModel>
+    in?: $Enums.CEFRLevel[] | ListEnumCEFRLevelFieldRefInput<$PrismaModel>
+    notIn?: $Enums.CEFRLevel[] | ListEnumCEFRLevelFieldRefInput<$PrismaModel>
+    not?: NestedEnumCEFRLevelWithAggregatesFilter<$PrismaModel> | $Enums.CEFRLevel
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumCEFRLevelFilter<$PrismaModel>
+    _max?: NestedEnumCEFRLevelFilter<$PrismaModel>
   }
 
   export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -15108,6 +26130,13 @@ export namespace Prisma {
     not?: NestedEnumTaskTypeFilter<$PrismaModel> | $Enums.TaskType
   }
 
+  export type NestedEnumCoreSkillTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.CoreSkillType | EnumCoreSkillTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.CoreSkillType[] | ListEnumCoreSkillTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.CoreSkillType[] | ListEnumCoreSkillTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumCoreSkillTypeFilter<$PrismaModel> | $Enums.CoreSkillType
+  }
+
   export type NestedEnumTaskTypeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: $Enums.TaskType | EnumTaskTypeFieldRefInput<$PrismaModel>
     in?: $Enums.TaskType[] | ListEnumTaskTypeFieldRefInput<$PrismaModel>
@@ -15118,21 +26147,14 @@ export namespace Prisma {
     _max?: NestedEnumTaskTypeFilter<$PrismaModel>
   }
 
-  export type NestedEnumLevelFilter<$PrismaModel = never> = {
-    equals?: $Enums.Level | EnumLevelFieldRefInput<$PrismaModel>
-    in?: $Enums.Level[] | ListEnumLevelFieldRefInput<$PrismaModel>
-    notIn?: $Enums.Level[] | ListEnumLevelFieldRefInput<$PrismaModel>
-    not?: NestedEnumLevelFilter<$PrismaModel> | $Enums.Level
-  }
-
-  export type NestedEnumLevelWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.Level | EnumLevelFieldRefInput<$PrismaModel>
-    in?: $Enums.Level[] | ListEnumLevelFieldRefInput<$PrismaModel>
-    notIn?: $Enums.Level[] | ListEnumLevelFieldRefInput<$PrismaModel>
-    not?: NestedEnumLevelWithAggregatesFilter<$PrismaModel> | $Enums.Level
+  export type NestedEnumCoreSkillTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.CoreSkillType | EnumCoreSkillTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.CoreSkillType[] | ListEnumCoreSkillTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.CoreSkillType[] | ListEnumCoreSkillTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumCoreSkillTypeWithAggregatesFilter<$PrismaModel> | $Enums.CoreSkillType
     _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumLevelFilter<$PrismaModel>
-    _max?: NestedEnumLevelFilter<$PrismaModel>
+    _min?: NestedEnumCoreSkillTypeFilter<$PrismaModel>
+    _max?: NestedEnumCoreSkillTypeFilter<$PrismaModel>
   }
 
   export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
@@ -15150,157 +26172,122 @@ export namespace Prisma {
     _min?: NestedFloatFilter<$PrismaModel>
     _max?: NestedFloatFilter<$PrismaModel>
   }
+  export type NestedJsonFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<NestedJsonFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>,
+        Required<NestedJsonFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>
 
-  export type NestedEnumWordTaskTypeFilter<$PrismaModel = never> = {
-    equals?: $Enums.WordTaskType | EnumWordTaskTypeFieldRefInput<$PrismaModel>
-    in?: $Enums.WordTaskType[] | ListEnumWordTaskTypeFieldRefInput<$PrismaModel>
-    notIn?: $Enums.WordTaskType[] | ListEnumWordTaskTypeFieldRefInput<$PrismaModel>
-    not?: NestedEnumWordTaskTypeFilter<$PrismaModel> | $Enums.WordTaskType
+  export type NestedJsonFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
-  export type NestedEnumWordTaskTypeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.WordTaskType | EnumWordTaskTypeFieldRefInput<$PrismaModel>
-    in?: $Enums.WordTaskType[] | ListEnumWordTaskTypeFieldRefInput<$PrismaModel>
-    notIn?: $Enums.WordTaskType[] | ListEnumWordTaskTypeFieldRefInput<$PrismaModel>
-    not?: NestedEnumWordTaskTypeWithAggregatesFilter<$PrismaModel> | $Enums.WordTaskType
+  export type NestedEnumAchievementTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.AchievementType | EnumAchievementTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.AchievementType[] | ListEnumAchievementTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.AchievementType[] | ListEnumAchievementTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumAchievementTypeFilter<$PrismaModel> | $Enums.AchievementType
+  }
+
+  export type NestedEnumCoreSkillTypeNullableFilter<$PrismaModel = never> = {
+    equals?: $Enums.CoreSkillType | EnumCoreSkillTypeFieldRefInput<$PrismaModel> | null
+    in?: $Enums.CoreSkillType[] | ListEnumCoreSkillTypeFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.CoreSkillType[] | ListEnumCoreSkillTypeFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumCoreSkillTypeNullableFilter<$PrismaModel> | $Enums.CoreSkillType | null
+  }
+
+  export type NestedEnumCEFRLevelNullableFilter<$PrismaModel = never> = {
+    equals?: $Enums.CEFRLevel | EnumCEFRLevelFieldRefInput<$PrismaModel> | null
+    in?: $Enums.CEFRLevel[] | ListEnumCEFRLevelFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.CEFRLevel[] | ListEnumCEFRLevelFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumCEFRLevelNullableFilter<$PrismaModel> | $Enums.CEFRLevel | null
+  }
+
+  export type NestedEnumAchievementTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.AchievementType | EnumAchievementTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.AchievementType[] | ListEnumAchievementTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.AchievementType[] | ListEnumAchievementTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumAchievementTypeWithAggregatesFilter<$PrismaModel> | $Enums.AchievementType
     _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumWordTaskTypeFilter<$PrismaModel>
-    _max?: NestedEnumWordTaskTypeFilter<$PrismaModel>
+    _min?: NestedEnumAchievementTypeFilter<$PrismaModel>
+    _max?: NestedEnumAchievementTypeFilter<$PrismaModel>
   }
 
-  export type EnrollmentCreateWithoutUserInput = {
-    progress?: number
-    enrolledAt?: Date | string
-    course: CourseCreateNestedOneWithoutEnrollmentsInput
+  export type NestedEnumCoreSkillTypeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.CoreSkillType | EnumCoreSkillTypeFieldRefInput<$PrismaModel> | null
+    in?: $Enums.CoreSkillType[] | ListEnumCoreSkillTypeFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.CoreSkillType[] | ListEnumCoreSkillTypeFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumCoreSkillTypeNullableWithAggregatesFilter<$PrismaModel> | $Enums.CoreSkillType | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedEnumCoreSkillTypeNullableFilter<$PrismaModel>
+    _max?: NestedEnumCoreSkillTypeNullableFilter<$PrismaModel>
   }
 
-  export type EnrollmentUncheckedCreateWithoutUserInput = {
-    id?: number
-    courseId: number
-    progress?: number
-    enrolledAt?: Date | string
+  export type NestedEnumCEFRLevelNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.CEFRLevel | EnumCEFRLevelFieldRefInput<$PrismaModel> | null
+    in?: $Enums.CEFRLevel[] | ListEnumCEFRLevelFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.CEFRLevel[] | ListEnumCEFRLevelFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumCEFRLevelNullableWithAggregatesFilter<$PrismaModel> | $Enums.CEFRLevel | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedEnumCEFRLevelNullableFilter<$PrismaModel>
+    _max?: NestedEnumCEFRLevelNullableFilter<$PrismaModel>
   }
 
-  export type EnrollmentCreateOrConnectWithoutUserInput = {
-    where: EnrollmentWhereUniqueInput
-    create: XOR<EnrollmentCreateWithoutUserInput, EnrollmentUncheckedCreateWithoutUserInput>
+  export type NestedFloatNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedFloatNullableFilter<$PrismaModel>
+    _min?: NestedFloatNullableFilter<$PrismaModel>
+    _max?: NestedFloatNullableFilter<$PrismaModel>
   }
 
-  export type EnrollmentCreateManyUserInputEnvelope = {
-    data: EnrollmentCreateManyUserInput | EnrollmentCreateManyUserInput[]
-    skipDuplicates?: boolean
+  export type NestedEnumLanguageNullableFilter<$PrismaModel = never> = {
+    equals?: $Enums.Language | EnumLanguageFieldRefInput<$PrismaModel> | null
+    in?: $Enums.Language[] | ListEnumLanguageFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.Language[] | ListEnumLanguageFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumLanguageNullableFilter<$PrismaModel> | $Enums.Language | null
   }
 
-  export type WordTaskProgressCreateWithoutUserInput = {
-    taskType: $Enums.WordTaskType
-    isPassed?: boolean
-    score?: number
-    attempts?: number
-    word: WordCreateNestedOneWithoutProgressesInput
-  }
-
-  export type WordTaskProgressUncheckedCreateWithoutUserInput = {
-    id?: number
-    wordId: number
-    taskType: $Enums.WordTaskType
-    isPassed?: boolean
-    score?: number
-    attempts?: number
-  }
-
-  export type WordTaskProgressCreateOrConnectWithoutUserInput = {
-    where: WordTaskProgressWhereUniqueInput
-    create: XOR<WordTaskProgressCreateWithoutUserInput, WordTaskProgressUncheckedCreateWithoutUserInput>
-  }
-
-  export type WordTaskProgressCreateManyUserInputEnvelope = {
-    data: WordTaskProgressCreateManyUserInput | WordTaskProgressCreateManyUserInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type CourseCreateWithoutAuthorInput = {
-    title: string
-    description?: string | null
-    imageUrl?: string | null
-    level?: $Enums.Level
-    isPublished?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    tags?: CourseCreatetagsInput | string[]
-    tasks?: TaskCreateNestedManyWithoutCourseInput
-    enrollments?: EnrollmentCreateNestedManyWithoutCourseInput
-    videos?: VideoCreateNestedManyWithoutCourseInput
-  }
-
-  export type CourseUncheckedCreateWithoutAuthorInput = {
-    id?: number
-    title: string
-    description?: string | null
-    imageUrl?: string | null
-    level?: $Enums.Level
-    isPublished?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    tags?: CourseCreatetagsInput | string[]
-    tasks?: TaskUncheckedCreateNestedManyWithoutCourseInput
-    enrollments?: EnrollmentUncheckedCreateNestedManyWithoutCourseInput
-    videos?: VideoUncheckedCreateNestedManyWithoutCourseInput
-  }
-
-  export type CourseCreateOrConnectWithoutAuthorInput = {
-    where: CourseWhereUniqueInput
-    create: XOR<CourseCreateWithoutAuthorInput, CourseUncheckedCreateWithoutAuthorInput>
-  }
-
-  export type CourseCreateManyAuthorInputEnvelope = {
-    data: CourseCreateManyAuthorInput | CourseCreateManyAuthorInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type TaskCreateWithoutAuthorInput = {
-    question: string
-    answer: string
-    options?: TaskCreateoptionsInput | string[]
-    type?: $Enums.TaskType
-    score?: number | null
-    createdAt?: Date | string
-    language?: $Enums.Language
-    order?: number | null
-    explanation?: string | null
-    video?: VideoCreateNestedOneWithoutTasksInput
-    course?: CourseCreateNestedOneWithoutTasksInput
-  }
-
-  export type TaskUncheckedCreateWithoutAuthorInput = {
-    id?: number
-    question: string
-    answer: string
-    options?: TaskCreateoptionsInput | string[]
-    type?: $Enums.TaskType
-    score?: number | null
-    createdAt?: Date | string
-    language?: $Enums.Language
-    order?: number | null
-    explanation?: string | null
-    videoId?: number | null
-    courseId?: number | null
-  }
-
-  export type TaskCreateOrConnectWithoutAuthorInput = {
-    where: TaskWhereUniqueInput
-    create: XOR<TaskCreateWithoutAuthorInput, TaskUncheckedCreateWithoutAuthorInput>
-  }
-
-  export type TaskCreateManyAuthorInputEnvelope = {
-    data: TaskCreateManyAuthorInput | TaskCreateManyAuthorInput[]
-    skipDuplicates?: boolean
+  export type NestedEnumLanguageNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Language | EnumLanguageFieldRefInput<$PrismaModel> | null
+    in?: $Enums.Language[] | ListEnumLanguageFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.Language[] | ListEnumLanguageFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumLanguageNullableWithAggregatesFilter<$PrismaModel> | $Enums.Language | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedEnumLanguageNullableFilter<$PrismaModel>
+    _max?: NestedEnumLanguageNullableFilter<$PrismaModel>
   }
 
   export type SettingCreateWithoutUserInput = {
     global_language?: $Enums.Language
     current_language?: $Enums.Language
     purposes?: SettingCreatepurposesInput | $Enums.Purpose[]
-    current_level?: $Enums.Level
+    current_level?: $Enums.CEFRLevel
+    dailyXPGoal?: number
+    dailyTimeGoal?: number
+    weeklyGoal?: number
   }
 
   export type SettingUncheckedCreateWithoutUserInput = {
@@ -15308,7 +26295,10 @@ export namespace Prisma {
     global_language?: $Enums.Language
     current_language?: $Enums.Language
     purposes?: SettingCreatepurposesInput | $Enums.Purpose[]
-    current_level?: $Enums.Level
+    current_level?: $Enums.CEFRLevel
+    dailyXPGoal?: number
+    dailyTimeGoal?: number
+    weeklyGoal?: number
   }
 
   export type SettingCreateOrConnectWithoutUserInput = {
@@ -15318,7 +26308,7 @@ export namespace Prisma {
 
   export type WordCreateWithoutUserInput = {
     text: string
-    language: $Enums.Language
+    language?: $Enums.Language
     translate?: WordCreatetranslateInput | string[]
     definitions?: WordCreatedefinitionsInput | string[]
     synonyms?: WordCreatesynonymsInput | string[]
@@ -15338,7 +26328,7 @@ export namespace Prisma {
   export type WordUncheckedCreateWithoutUserInput = {
     id?: number
     text: string
-    language: $Enums.Language
+    language?: $Enums.Language
     translate?: WordCreatetranslateInput | string[]
     definitions?: WordCreatedefinitionsInput | string[]
     synonyms?: WordCreatesynonymsInput | string[]
@@ -15365,127 +26355,302 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type EnrollmentUpsertWithWhereUniqueWithoutUserInput = {
+  export type LanguageProgressCreateWithoutUserInput = {
+    language: $Enums.Language
+    overallCEFR?: $Enums.CEFRLevel
+    overallProgress?: number
+    totalXP?: number
+    totalTime?: number
+    lastActiveAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    skillProgresses?: SkillProgressCreateNestedManyWithoutLanguageProgressInput
+  }
+
+  export type LanguageProgressUncheckedCreateWithoutUserInput = {
+    id?: number
+    language: $Enums.Language
+    overallCEFR?: $Enums.CEFRLevel
+    overallProgress?: number
+    totalXP?: number
+    totalTime?: number
+    lastActiveAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    skillProgresses?: SkillProgressUncheckedCreateNestedManyWithoutLanguageProgressInput
+  }
+
+  export type LanguageProgressCreateOrConnectWithoutUserInput = {
+    where: LanguageProgressWhereUniqueInput
+    create: XOR<LanguageProgressCreateWithoutUserInput, LanguageProgressUncheckedCreateWithoutUserInput>
+  }
+
+  export type LanguageProgressCreateManyUserInputEnvelope = {
+    data: LanguageProgressCreateManyUserInput | LanguageProgressCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type SkillProgressCreateWithoutUserInput = {
+    skillType: $Enums.CoreSkillType
+    cefrLevel?: $Enums.CEFRLevel
+    levelProgress?: number
+    xpEarned?: number
+    totalPracticed?: number
+    correctAnswers?: number
+    totalAnswers?: number
+    currentAccuracy?: number
+    timeSpent?: number
+    totalWordsStudied?: number
+    wordsLearned?: number
+    wordsReviewing?: number
+    lastPracticed?: Date | string | null
+    updatedAt?: Date | string
+    languageProgress: LanguageProgressCreateNestedOneWithoutSkillProgressesInput
+  }
+
+  export type SkillProgressUncheckedCreateWithoutUserInput = {
+    id?: number
+    languageProgressId: number
+    skillType: $Enums.CoreSkillType
+    cefrLevel?: $Enums.CEFRLevel
+    levelProgress?: number
+    xpEarned?: number
+    totalPracticed?: number
+    correctAnswers?: number
+    totalAnswers?: number
+    currentAccuracy?: number
+    timeSpent?: number
+    totalWordsStudied?: number
+    wordsLearned?: number
+    wordsReviewing?: number
+    lastPracticed?: Date | string | null
+    updatedAt?: Date | string
+  }
+
+  export type SkillProgressCreateOrConnectWithoutUserInput = {
+    where: SkillProgressWhereUniqueInput
+    create: XOR<SkillProgressCreateWithoutUserInput, SkillProgressUncheckedCreateWithoutUserInput>
+  }
+
+  export type SkillProgressCreateManyUserInputEnvelope = {
+    data: SkillProgressCreateManyUserInput | SkillProgressCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UserAchievementCreateWithoutUserInput = {
+    unlockedAt?: Date | string
+    language?: $Enums.Language | null
+    achievement: AchievementCreateNestedOneWithoutUsersInput
+  }
+
+  export type UserAchievementUncheckedCreateWithoutUserInput = {
+    id?: number
+    achievementId: number
+    unlockedAt?: Date | string
+    language?: $Enums.Language | null
+  }
+
+  export type UserAchievementCreateOrConnectWithoutUserInput = {
+    where: UserAchievementWhereUniqueInput
+    create: XOR<UserAchievementCreateWithoutUserInput, UserAchievementUncheckedCreateWithoutUserInput>
+  }
+
+  export type UserAchievementCreateManyUserInputEnvelope = {
+    data: UserAchievementCreateManyUserInput | UserAchievementCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type DailyStatsCreateWithoutUserInput = {
+    language: $Enums.Language
+    date: Date | string
+    totalXP?: number
+    totalTime?: number
+    tasksCompleted?: number
+    averageAccuracy?: number
+    skillsStats?: JsonNullValueInput | InputJsonValue
+    newWordsLearned?: number
+    wordsReviewed?: number
+  }
+
+  export type DailyStatsUncheckedCreateWithoutUserInput = {
+    id?: number
+    language: $Enums.Language
+    date: Date | string
+    totalXP?: number
+    totalTime?: number
+    tasksCompleted?: number
+    averageAccuracy?: number
+    skillsStats?: JsonNullValueInput | InputJsonValue
+    newWordsLearned?: number
+    wordsReviewed?: number
+  }
+
+  export type DailyStatsCreateOrConnectWithoutUserInput = {
+    where: DailyStatsWhereUniqueInput
+    create: XOR<DailyStatsCreateWithoutUserInput, DailyStatsUncheckedCreateWithoutUserInput>
+  }
+
+  export type DailyStatsCreateManyUserInputEnvelope = {
+    data: DailyStatsCreateManyUserInput | DailyStatsCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type EnrollmentCreateWithoutUserInput = {
+    progress?: number
+    enrolledAt?: Date | string
+    course: CourseCreateNestedOneWithoutEnrollmentsInput
+  }
+
+  export type EnrollmentUncheckedCreateWithoutUserInput = {
+    id?: number
+    courseId: number
+    progress?: number
+    enrolledAt?: Date | string
+  }
+
+  export type EnrollmentCreateOrConnectWithoutUserInput = {
     where: EnrollmentWhereUniqueInput
-    update: XOR<EnrollmentUpdateWithoutUserInput, EnrollmentUncheckedUpdateWithoutUserInput>
     create: XOR<EnrollmentCreateWithoutUserInput, EnrollmentUncheckedCreateWithoutUserInput>
   }
 
-  export type EnrollmentUpdateWithWhereUniqueWithoutUserInput = {
-    where: EnrollmentWhereUniqueInput
-    data: XOR<EnrollmentUpdateWithoutUserInput, EnrollmentUncheckedUpdateWithoutUserInput>
+  export type EnrollmentCreateManyUserInputEnvelope = {
+    data: EnrollmentCreateManyUserInput | EnrollmentCreateManyUserInput[]
+    skipDuplicates?: boolean
   }
 
-  export type EnrollmentUpdateManyWithWhereWithoutUserInput = {
-    where: EnrollmentScalarWhereInput
-    data: XOR<EnrollmentUpdateManyMutationInput, EnrollmentUncheckedUpdateManyWithoutUserInput>
+  export type CourseCreateWithoutAuthorInput = {
+    title: string
+    description?: string | null
+    imageUrl?: string | null
+    level?: $Enums.CEFRLevel
+    targetSkills?: CourseCreatetargetSkillsInput | $Enums.CoreSkillType[]
+    isPublished?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    tags?: CourseCreatetagsInput | string[]
+    estimatedHours?: number | null
+    totalXP?: number
+    enrollments?: EnrollmentCreateNestedManyWithoutCourseInput
+    tasks?: TaskCreateNestedManyWithoutCourseInput
+    videos?: VideoCreateNestedManyWithoutCourseInput
   }
 
-  export type EnrollmentScalarWhereInput = {
-    AND?: EnrollmentScalarWhereInput | EnrollmentScalarWhereInput[]
-    OR?: EnrollmentScalarWhereInput[]
-    NOT?: EnrollmentScalarWhereInput | EnrollmentScalarWhereInput[]
-    id?: IntFilter<"Enrollment"> | number
-    userId?: IntFilter<"Enrollment"> | number
-    courseId?: IntFilter<"Enrollment"> | number
-    progress?: FloatFilter<"Enrollment"> | number
-    enrolledAt?: DateTimeFilter<"Enrollment"> | Date | string
+  export type CourseUncheckedCreateWithoutAuthorInput = {
+    id?: number
+    title: string
+    description?: string | null
+    imageUrl?: string | null
+    level?: $Enums.CEFRLevel
+    targetSkills?: CourseCreatetargetSkillsInput | $Enums.CoreSkillType[]
+    isPublished?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    tags?: CourseCreatetagsInput | string[]
+    estimatedHours?: number | null
+    totalXP?: number
+    enrollments?: EnrollmentUncheckedCreateNestedManyWithoutCourseInput
+    tasks?: TaskUncheckedCreateNestedManyWithoutCourseInput
+    videos?: VideoUncheckedCreateNestedManyWithoutCourseInput
   }
 
-  export type WordTaskProgressUpsertWithWhereUniqueWithoutUserInput = {
-    where: WordTaskProgressWhereUniqueInput
-    update: XOR<WordTaskProgressUpdateWithoutUserInput, WordTaskProgressUncheckedUpdateWithoutUserInput>
-    create: XOR<WordTaskProgressCreateWithoutUserInput, WordTaskProgressUncheckedCreateWithoutUserInput>
-  }
-
-  export type WordTaskProgressUpdateWithWhereUniqueWithoutUserInput = {
-    where: WordTaskProgressWhereUniqueInput
-    data: XOR<WordTaskProgressUpdateWithoutUserInput, WordTaskProgressUncheckedUpdateWithoutUserInput>
-  }
-
-  export type WordTaskProgressUpdateManyWithWhereWithoutUserInput = {
-    where: WordTaskProgressScalarWhereInput
-    data: XOR<WordTaskProgressUpdateManyMutationInput, WordTaskProgressUncheckedUpdateManyWithoutUserInput>
-  }
-
-  export type WordTaskProgressScalarWhereInput = {
-    AND?: WordTaskProgressScalarWhereInput | WordTaskProgressScalarWhereInput[]
-    OR?: WordTaskProgressScalarWhereInput[]
-    NOT?: WordTaskProgressScalarWhereInput | WordTaskProgressScalarWhereInput[]
-    id?: IntFilter<"WordTaskProgress"> | number
-    userId?: IntFilter<"WordTaskProgress"> | number
-    wordId?: IntFilter<"WordTaskProgress"> | number
-    taskType?: EnumWordTaskTypeFilter<"WordTaskProgress"> | $Enums.WordTaskType
-    isPassed?: BoolFilter<"WordTaskProgress"> | boolean
-    score?: IntFilter<"WordTaskProgress"> | number
-    attempts?: IntFilter<"WordTaskProgress"> | number
-  }
-
-  export type CourseUpsertWithWhereUniqueWithoutAuthorInput = {
+  export type CourseCreateOrConnectWithoutAuthorInput = {
     where: CourseWhereUniqueInput
-    update: XOR<CourseUpdateWithoutAuthorInput, CourseUncheckedUpdateWithoutAuthorInput>
     create: XOR<CourseCreateWithoutAuthorInput, CourseUncheckedCreateWithoutAuthorInput>
   }
 
-  export type CourseUpdateWithWhereUniqueWithoutAuthorInput = {
-    where: CourseWhereUniqueInput
-    data: XOR<CourseUpdateWithoutAuthorInput, CourseUncheckedUpdateWithoutAuthorInput>
+  export type CourseCreateManyAuthorInputEnvelope = {
+    data: CourseCreateManyAuthorInput | CourseCreateManyAuthorInput[]
+    skipDuplicates?: boolean
   }
 
-  export type CourseUpdateManyWithWhereWithoutAuthorInput = {
-    where: CourseScalarWhereInput
-    data: XOR<CourseUpdateManyMutationInput, CourseUncheckedUpdateManyWithoutAuthorInput>
+  export type TaskCreateWithoutAuthorInput = {
+    question: string
+    answer: string
+    options?: TaskCreateoptionsInput | string[]
+    type?: $Enums.TaskType
+    score?: number | null
+    createdAt?: Date | string
+    order?: number | null
+    explanation?: string | null
+    skillType: $Enums.CoreSkillType
+    language?: $Enums.Language
+    cefrLevel?: $Enums.CEFRLevel
+    xpReward?: number
+    timeLimit?: number | null
+    video?: VideoCreateNestedOneWithoutTasksInput
+    course?: CourseCreateNestedOneWithoutTasksInput
   }
 
-  export type CourseScalarWhereInput = {
-    AND?: CourseScalarWhereInput | CourseScalarWhereInput[]
-    OR?: CourseScalarWhereInput[]
-    NOT?: CourseScalarWhereInput | CourseScalarWhereInput[]
-    id?: IntFilter<"Course"> | number
-    title?: StringFilter<"Course"> | string
-    description?: StringNullableFilter<"Course"> | string | null
-    imageUrl?: StringNullableFilter<"Course"> | string | null
-    level?: EnumLevelFilter<"Course"> | $Enums.Level
-    isPublished?: BoolFilter<"Course"> | boolean
-    createdAt?: DateTimeFilter<"Course"> | Date | string
-    updatedAt?: DateTimeFilter<"Course"> | Date | string
-    tags?: StringNullableListFilter<"Course">
-    authorId?: IntNullableFilter<"Course"> | number | null
+  export type TaskUncheckedCreateWithoutAuthorInput = {
+    id?: number
+    question: string
+    answer: string
+    options?: TaskCreateoptionsInput | string[]
+    type?: $Enums.TaskType
+    score?: number | null
+    createdAt?: Date | string
+    order?: number | null
+    explanation?: string | null
+    skillType: $Enums.CoreSkillType
+    language?: $Enums.Language
+    cefrLevel?: $Enums.CEFRLevel
+    xpReward?: number
+    timeLimit?: number | null
+    videoId?: number | null
+    courseId?: number | null
   }
 
-  export type TaskUpsertWithWhereUniqueWithoutAuthorInput = {
+  export type TaskCreateOrConnectWithoutAuthorInput = {
     where: TaskWhereUniqueInput
-    update: XOR<TaskUpdateWithoutAuthorInput, TaskUncheckedUpdateWithoutAuthorInput>
     create: XOR<TaskCreateWithoutAuthorInput, TaskUncheckedCreateWithoutAuthorInput>
   }
 
-  export type TaskUpdateWithWhereUniqueWithoutAuthorInput = {
-    where: TaskWhereUniqueInput
-    data: XOR<TaskUpdateWithoutAuthorInput, TaskUncheckedUpdateWithoutAuthorInput>
+  export type TaskCreateManyAuthorInputEnvelope = {
+    data: TaskCreateManyAuthorInput | TaskCreateManyAuthorInput[]
+    skipDuplicates?: boolean
   }
 
-  export type TaskUpdateManyWithWhereWithoutAuthorInput = {
-    where: TaskScalarWhereInput
-    data: XOR<TaskUpdateManyMutationInput, TaskUncheckedUpdateManyWithoutAuthorInput>
+  export type WordTaskProgressCreateWithoutUserInput = {
+    skillType?: $Enums.CoreSkillType
+    isPassed?: boolean
+    score?: number
+    attempts?: number
+    correctCount?: number
+    nextReviewAt?: Date | string | null
+    reviewInterval?: number
+    easeFactor?: number
+    lastAttempt?: Date | string | null
+    timeSpent?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    word: WordCreateNestedOneWithoutProgressesInput
   }
 
-  export type TaskScalarWhereInput = {
-    AND?: TaskScalarWhereInput | TaskScalarWhereInput[]
-    OR?: TaskScalarWhereInput[]
-    NOT?: TaskScalarWhereInput | TaskScalarWhereInput[]
-    id?: IntFilter<"Task"> | number
-    question?: StringFilter<"Task"> | string
-    answer?: StringFilter<"Task"> | string
-    options?: StringNullableListFilter<"Task">
-    type?: EnumTaskTypeFilter<"Task"> | $Enums.TaskType
-    score?: IntNullableFilter<"Task"> | number | null
-    createdAt?: DateTimeFilter<"Task"> | Date | string
-    language?: EnumLanguageFilter<"Task"> | $Enums.Language
-    order?: IntNullableFilter<"Task"> | number | null
-    explanation?: StringNullableFilter<"Task"> | string | null
-    authorId?: IntNullableFilter<"Task"> | number | null
-    videoId?: IntNullableFilter<"Task"> | number | null
-    courseId?: IntNullableFilter<"Task"> | number | null
+  export type WordTaskProgressUncheckedCreateWithoutUserInput = {
+    id?: number
+    wordId: number
+    skillType?: $Enums.CoreSkillType
+    isPassed?: boolean
+    score?: number
+    attempts?: number
+    correctCount?: number
+    nextReviewAt?: Date | string | null
+    reviewInterval?: number
+    easeFactor?: number
+    lastAttempt?: Date | string | null
+    timeSpent?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WordTaskProgressCreateOrConnectWithoutUserInput = {
+    where: WordTaskProgressWhereUniqueInput
+    create: XOR<WordTaskProgressCreateWithoutUserInput, WordTaskProgressUncheckedCreateWithoutUserInput>
+  }
+
+  export type WordTaskProgressCreateManyUserInputEnvelope = {
+    data: WordTaskProgressCreateManyUserInput | WordTaskProgressCreateManyUserInput[]
+    skipDuplicates?: boolean
   }
 
   export type SettingUpsertWithoutUserInput = {
@@ -15503,7 +26668,10 @@ export namespace Prisma {
     global_language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
     current_language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
     purposes?: SettingUpdatepurposesInput | $Enums.Purpose[]
-    current_level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
+    current_level?: EnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel
+    dailyXPGoal?: IntFieldUpdateOperationsInput | number
+    dailyTimeGoal?: IntFieldUpdateOperationsInput | number
+    weeklyGoal?: IntFieldUpdateOperationsInput | number
   }
 
   export type SettingUncheckedUpdateWithoutUserInput = {
@@ -15511,7 +26679,10 @@ export namespace Prisma {
     global_language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
     current_language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
     purposes?: SettingUpdatepurposesInput | $Enums.Purpose[]
-    current_level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
+    current_level?: EnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel
+    dailyXPGoal?: IntFieldUpdateOperationsInput | number
+    dailyTimeGoal?: IntFieldUpdateOperationsInput | number
+    weeklyGoal?: IntFieldUpdateOperationsInput | number
   }
 
   export type WordUpsertWithWhereUniqueWithoutUserInput = {
@@ -15553,31 +26724,273 @@ export namespace Prisma {
     userId?: IntFilter<"Word"> | number
   }
 
-  export type WordTaskProgressCreateWithoutWordInput = {
-    taskType: $Enums.WordTaskType
-    isPassed?: boolean
-    score?: number
-    attempts?: number
-    user: UserCreateNestedOneWithoutWordProgressesInput
+  export type LanguageProgressUpsertWithWhereUniqueWithoutUserInput = {
+    where: LanguageProgressWhereUniqueInput
+    update: XOR<LanguageProgressUpdateWithoutUserInput, LanguageProgressUncheckedUpdateWithoutUserInput>
+    create: XOR<LanguageProgressCreateWithoutUserInput, LanguageProgressUncheckedCreateWithoutUserInput>
   }
 
-  export type WordTaskProgressUncheckedCreateWithoutWordInput = {
-    id?: number
-    userId: number
-    taskType: $Enums.WordTaskType
-    isPassed?: boolean
-    score?: number
-    attempts?: number
+  export type LanguageProgressUpdateWithWhereUniqueWithoutUserInput = {
+    where: LanguageProgressWhereUniqueInput
+    data: XOR<LanguageProgressUpdateWithoutUserInput, LanguageProgressUncheckedUpdateWithoutUserInput>
   }
 
-  export type WordTaskProgressCreateOrConnectWithoutWordInput = {
+  export type LanguageProgressUpdateManyWithWhereWithoutUserInput = {
+    where: LanguageProgressScalarWhereInput
+    data: XOR<LanguageProgressUpdateManyMutationInput, LanguageProgressUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type LanguageProgressScalarWhereInput = {
+    AND?: LanguageProgressScalarWhereInput | LanguageProgressScalarWhereInput[]
+    OR?: LanguageProgressScalarWhereInput[]
+    NOT?: LanguageProgressScalarWhereInput | LanguageProgressScalarWhereInput[]
+    id?: IntFilter<"LanguageProgress"> | number
+    userId?: IntFilter<"LanguageProgress"> | number
+    language?: EnumLanguageFilter<"LanguageProgress"> | $Enums.Language
+    overallCEFR?: EnumCEFRLevelFilter<"LanguageProgress"> | $Enums.CEFRLevel
+    overallProgress?: FloatFilter<"LanguageProgress"> | number
+    totalXP?: IntFilter<"LanguageProgress"> | number
+    totalTime?: IntFilter<"LanguageProgress"> | number
+    lastActiveAt?: DateTimeNullableFilter<"LanguageProgress"> | Date | string | null
+    createdAt?: DateTimeFilter<"LanguageProgress"> | Date | string
+    updatedAt?: DateTimeFilter<"LanguageProgress"> | Date | string
+  }
+
+  export type SkillProgressUpsertWithWhereUniqueWithoutUserInput = {
+    where: SkillProgressWhereUniqueInput
+    update: XOR<SkillProgressUpdateWithoutUserInput, SkillProgressUncheckedUpdateWithoutUserInput>
+    create: XOR<SkillProgressCreateWithoutUserInput, SkillProgressUncheckedCreateWithoutUserInput>
+  }
+
+  export type SkillProgressUpdateWithWhereUniqueWithoutUserInput = {
+    where: SkillProgressWhereUniqueInput
+    data: XOR<SkillProgressUpdateWithoutUserInput, SkillProgressUncheckedUpdateWithoutUserInput>
+  }
+
+  export type SkillProgressUpdateManyWithWhereWithoutUserInput = {
+    where: SkillProgressScalarWhereInput
+    data: XOR<SkillProgressUpdateManyMutationInput, SkillProgressUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type SkillProgressScalarWhereInput = {
+    AND?: SkillProgressScalarWhereInput | SkillProgressScalarWhereInput[]
+    OR?: SkillProgressScalarWhereInput[]
+    NOT?: SkillProgressScalarWhereInput | SkillProgressScalarWhereInput[]
+    id?: IntFilter<"SkillProgress"> | number
+    userId?: IntFilter<"SkillProgress"> | number
+    languageProgressId?: IntFilter<"SkillProgress"> | number
+    skillType?: EnumCoreSkillTypeFilter<"SkillProgress"> | $Enums.CoreSkillType
+    cefrLevel?: EnumCEFRLevelFilter<"SkillProgress"> | $Enums.CEFRLevel
+    levelProgress?: FloatFilter<"SkillProgress"> | number
+    xpEarned?: IntFilter<"SkillProgress"> | number
+    totalPracticed?: IntFilter<"SkillProgress"> | number
+    correctAnswers?: IntFilter<"SkillProgress"> | number
+    totalAnswers?: IntFilter<"SkillProgress"> | number
+    currentAccuracy?: FloatFilter<"SkillProgress"> | number
+    timeSpent?: IntFilter<"SkillProgress"> | number
+    totalWordsStudied?: IntFilter<"SkillProgress"> | number
+    wordsLearned?: IntFilter<"SkillProgress"> | number
+    wordsReviewing?: IntFilter<"SkillProgress"> | number
+    lastPracticed?: DateTimeNullableFilter<"SkillProgress"> | Date | string | null
+    updatedAt?: DateTimeFilter<"SkillProgress"> | Date | string
+  }
+
+  export type UserAchievementUpsertWithWhereUniqueWithoutUserInput = {
+    where: UserAchievementWhereUniqueInput
+    update: XOR<UserAchievementUpdateWithoutUserInput, UserAchievementUncheckedUpdateWithoutUserInput>
+    create: XOR<UserAchievementCreateWithoutUserInput, UserAchievementUncheckedCreateWithoutUserInput>
+  }
+
+  export type UserAchievementUpdateWithWhereUniqueWithoutUserInput = {
+    where: UserAchievementWhereUniqueInput
+    data: XOR<UserAchievementUpdateWithoutUserInput, UserAchievementUncheckedUpdateWithoutUserInput>
+  }
+
+  export type UserAchievementUpdateManyWithWhereWithoutUserInput = {
+    where: UserAchievementScalarWhereInput
+    data: XOR<UserAchievementUpdateManyMutationInput, UserAchievementUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type UserAchievementScalarWhereInput = {
+    AND?: UserAchievementScalarWhereInput | UserAchievementScalarWhereInput[]
+    OR?: UserAchievementScalarWhereInput[]
+    NOT?: UserAchievementScalarWhereInput | UserAchievementScalarWhereInput[]
+    id?: IntFilter<"UserAchievement"> | number
+    userId?: IntFilter<"UserAchievement"> | number
+    achievementId?: IntFilter<"UserAchievement"> | number
+    unlockedAt?: DateTimeFilter<"UserAchievement"> | Date | string
+    language?: EnumLanguageNullableFilter<"UserAchievement"> | $Enums.Language | null
+  }
+
+  export type DailyStatsUpsertWithWhereUniqueWithoutUserInput = {
+    where: DailyStatsWhereUniqueInput
+    update: XOR<DailyStatsUpdateWithoutUserInput, DailyStatsUncheckedUpdateWithoutUserInput>
+    create: XOR<DailyStatsCreateWithoutUserInput, DailyStatsUncheckedCreateWithoutUserInput>
+  }
+
+  export type DailyStatsUpdateWithWhereUniqueWithoutUserInput = {
+    where: DailyStatsWhereUniqueInput
+    data: XOR<DailyStatsUpdateWithoutUserInput, DailyStatsUncheckedUpdateWithoutUserInput>
+  }
+
+  export type DailyStatsUpdateManyWithWhereWithoutUserInput = {
+    where: DailyStatsScalarWhereInput
+    data: XOR<DailyStatsUpdateManyMutationInput, DailyStatsUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type DailyStatsScalarWhereInput = {
+    AND?: DailyStatsScalarWhereInput | DailyStatsScalarWhereInput[]
+    OR?: DailyStatsScalarWhereInput[]
+    NOT?: DailyStatsScalarWhereInput | DailyStatsScalarWhereInput[]
+    id?: IntFilter<"DailyStats"> | number
+    userId?: IntFilter<"DailyStats"> | number
+    language?: EnumLanguageFilter<"DailyStats"> | $Enums.Language
+    date?: DateTimeFilter<"DailyStats"> | Date | string
+    totalXP?: IntFilter<"DailyStats"> | number
+    totalTime?: IntFilter<"DailyStats"> | number
+    tasksCompleted?: IntFilter<"DailyStats"> | number
+    averageAccuracy?: FloatFilter<"DailyStats"> | number
+    skillsStats?: JsonFilter<"DailyStats">
+    newWordsLearned?: IntFilter<"DailyStats"> | number
+    wordsReviewed?: IntFilter<"DailyStats"> | number
+  }
+
+  export type EnrollmentUpsertWithWhereUniqueWithoutUserInput = {
+    where: EnrollmentWhereUniqueInput
+    update: XOR<EnrollmentUpdateWithoutUserInput, EnrollmentUncheckedUpdateWithoutUserInput>
+    create: XOR<EnrollmentCreateWithoutUserInput, EnrollmentUncheckedCreateWithoutUserInput>
+  }
+
+  export type EnrollmentUpdateWithWhereUniqueWithoutUserInput = {
+    where: EnrollmentWhereUniqueInput
+    data: XOR<EnrollmentUpdateWithoutUserInput, EnrollmentUncheckedUpdateWithoutUserInput>
+  }
+
+  export type EnrollmentUpdateManyWithWhereWithoutUserInput = {
+    where: EnrollmentScalarWhereInput
+    data: XOR<EnrollmentUpdateManyMutationInput, EnrollmentUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type EnrollmentScalarWhereInput = {
+    AND?: EnrollmentScalarWhereInput | EnrollmentScalarWhereInput[]
+    OR?: EnrollmentScalarWhereInput[]
+    NOT?: EnrollmentScalarWhereInput | EnrollmentScalarWhereInput[]
+    id?: IntFilter<"Enrollment"> | number
+    userId?: IntFilter<"Enrollment"> | number
+    courseId?: IntFilter<"Enrollment"> | number
+    progress?: FloatFilter<"Enrollment"> | number
+    enrolledAt?: DateTimeFilter<"Enrollment"> | Date | string
+  }
+
+  export type CourseUpsertWithWhereUniqueWithoutAuthorInput = {
+    where: CourseWhereUniqueInput
+    update: XOR<CourseUpdateWithoutAuthorInput, CourseUncheckedUpdateWithoutAuthorInput>
+    create: XOR<CourseCreateWithoutAuthorInput, CourseUncheckedCreateWithoutAuthorInput>
+  }
+
+  export type CourseUpdateWithWhereUniqueWithoutAuthorInput = {
+    where: CourseWhereUniqueInput
+    data: XOR<CourseUpdateWithoutAuthorInput, CourseUncheckedUpdateWithoutAuthorInput>
+  }
+
+  export type CourseUpdateManyWithWhereWithoutAuthorInput = {
+    where: CourseScalarWhereInput
+    data: XOR<CourseUpdateManyMutationInput, CourseUncheckedUpdateManyWithoutAuthorInput>
+  }
+
+  export type CourseScalarWhereInput = {
+    AND?: CourseScalarWhereInput | CourseScalarWhereInput[]
+    OR?: CourseScalarWhereInput[]
+    NOT?: CourseScalarWhereInput | CourseScalarWhereInput[]
+    id?: IntFilter<"Course"> | number
+    title?: StringFilter<"Course"> | string
+    description?: StringNullableFilter<"Course"> | string | null
+    imageUrl?: StringNullableFilter<"Course"> | string | null
+    level?: EnumCEFRLevelFilter<"Course"> | $Enums.CEFRLevel
+    targetSkills?: EnumCoreSkillTypeNullableListFilter<"Course">
+    isPublished?: BoolFilter<"Course"> | boolean
+    createdAt?: DateTimeFilter<"Course"> | Date | string
+    updatedAt?: DateTimeFilter<"Course"> | Date | string
+    tags?: StringNullableListFilter<"Course">
+    estimatedHours?: IntNullableFilter<"Course"> | number | null
+    totalXP?: IntFilter<"Course"> | number
+    authorId?: IntNullableFilter<"Course"> | number | null
+  }
+
+  export type TaskUpsertWithWhereUniqueWithoutAuthorInput = {
+    where: TaskWhereUniqueInput
+    update: XOR<TaskUpdateWithoutAuthorInput, TaskUncheckedUpdateWithoutAuthorInput>
+    create: XOR<TaskCreateWithoutAuthorInput, TaskUncheckedCreateWithoutAuthorInput>
+  }
+
+  export type TaskUpdateWithWhereUniqueWithoutAuthorInput = {
+    where: TaskWhereUniqueInput
+    data: XOR<TaskUpdateWithoutAuthorInput, TaskUncheckedUpdateWithoutAuthorInput>
+  }
+
+  export type TaskUpdateManyWithWhereWithoutAuthorInput = {
+    where: TaskScalarWhereInput
+    data: XOR<TaskUpdateManyMutationInput, TaskUncheckedUpdateManyWithoutAuthorInput>
+  }
+
+  export type TaskScalarWhereInput = {
+    AND?: TaskScalarWhereInput | TaskScalarWhereInput[]
+    OR?: TaskScalarWhereInput[]
+    NOT?: TaskScalarWhereInput | TaskScalarWhereInput[]
+    id?: IntFilter<"Task"> | number
+    question?: StringFilter<"Task"> | string
+    answer?: StringFilter<"Task"> | string
+    options?: StringNullableListFilter<"Task">
+    type?: EnumTaskTypeFilter<"Task"> | $Enums.TaskType
+    score?: IntNullableFilter<"Task"> | number | null
+    createdAt?: DateTimeFilter<"Task"> | Date | string
+    order?: IntNullableFilter<"Task"> | number | null
+    explanation?: StringNullableFilter<"Task"> | string | null
+    skillType?: EnumCoreSkillTypeFilter<"Task"> | $Enums.CoreSkillType
+    language?: EnumLanguageFilter<"Task"> | $Enums.Language
+    cefrLevel?: EnumCEFRLevelFilter<"Task"> | $Enums.CEFRLevel
+    xpReward?: IntFilter<"Task"> | number
+    timeLimit?: IntNullableFilter<"Task"> | number | null
+    authorId?: IntNullableFilter<"Task"> | number | null
+    videoId?: IntNullableFilter<"Task"> | number | null
+    courseId?: IntNullableFilter<"Task"> | number | null
+  }
+
+  export type WordTaskProgressUpsertWithWhereUniqueWithoutUserInput = {
     where: WordTaskProgressWhereUniqueInput
-    create: XOR<WordTaskProgressCreateWithoutWordInput, WordTaskProgressUncheckedCreateWithoutWordInput>
+    update: XOR<WordTaskProgressUpdateWithoutUserInput, WordTaskProgressUncheckedUpdateWithoutUserInput>
+    create: XOR<WordTaskProgressCreateWithoutUserInput, WordTaskProgressUncheckedCreateWithoutUserInput>
   }
 
-  export type WordTaskProgressCreateManyWordInputEnvelope = {
-    data: WordTaskProgressCreateManyWordInput | WordTaskProgressCreateManyWordInput[]
-    skipDuplicates?: boolean
+  export type WordTaskProgressUpdateWithWhereUniqueWithoutUserInput = {
+    where: WordTaskProgressWhereUniqueInput
+    data: XOR<WordTaskProgressUpdateWithoutUserInput, WordTaskProgressUncheckedUpdateWithoutUserInput>
+  }
+
+  export type WordTaskProgressUpdateManyWithWhereWithoutUserInput = {
+    where: WordTaskProgressScalarWhereInput
+    data: XOR<WordTaskProgressUpdateManyMutationInput, WordTaskProgressUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type WordTaskProgressScalarWhereInput = {
+    AND?: WordTaskProgressScalarWhereInput | WordTaskProgressScalarWhereInput[]
+    OR?: WordTaskProgressScalarWhereInput[]
+    NOT?: WordTaskProgressScalarWhereInput | WordTaskProgressScalarWhereInput[]
+    id?: IntFilter<"WordTaskProgress"> | number
+    wordId?: IntFilter<"WordTaskProgress"> | number
+    userId?: IntFilter<"WordTaskProgress"> | number
+    skillType?: EnumCoreSkillTypeFilter<"WordTaskProgress"> | $Enums.CoreSkillType
+    isPassed?: BoolFilter<"WordTaskProgress"> | boolean
+    score?: IntFilter<"WordTaskProgress"> | number
+    attempts?: IntFilter<"WordTaskProgress"> | number
+    correctCount?: IntFilter<"WordTaskProgress"> | number
+    nextReviewAt?: DateTimeNullableFilter<"WordTaskProgress"> | Date | string | null
+    reviewInterval?: IntFilter<"WordTaskProgress"> | number
+    easeFactor?: FloatFilter<"WordTaskProgress"> | number
+    lastAttempt?: DateTimeNullableFilter<"WordTaskProgress"> | Date | string | null
+    timeSpent?: IntFilter<"WordTaskProgress"> | number
+    createdAt?: DateTimeFilter<"WordTaskProgress"> | Date | string
+    updatedAt?: DateTimeFilter<"WordTaskProgress"> | Date | string
   }
 
   export type UserCreateWithoutWordsInput = {
@@ -15593,11 +27006,20 @@ export namespace Prisma {
     lastLoginAt?: Date | string | null
     provider?: string | null
     refreshToken?: string | null
+    totalXP?: number
+    currentStreak?: number
+    longestStreak?: number
+    totalLearningTime?: number
+    lastActiveAt?: Date | string | null
+    setting?: SettingCreateNestedOneWithoutUserInput
+    languageProgresses?: LanguageProgressCreateNestedManyWithoutUserInput
+    skillProgresses?: SkillProgressCreateNestedManyWithoutUserInput
+    achievements?: UserAchievementCreateNestedManyWithoutUserInput
+    dailyStats?: DailyStatsCreateNestedManyWithoutUserInput
     enrollments?: EnrollmentCreateNestedManyWithoutUserInput
-    wordProgresses?: WordTaskProgressCreateNestedManyWithoutUserInput
     courses?: CourseCreateNestedManyWithoutAuthorInput
     tasks?: TaskCreateNestedManyWithoutAuthorInput
-    setting?: SettingCreateNestedOneWithoutUserInput
+    wordProgresses?: WordTaskProgressCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutWordsInput = {
@@ -15614,11 +27036,20 @@ export namespace Prisma {
     lastLoginAt?: Date | string | null
     provider?: string | null
     refreshToken?: string | null
+    totalXP?: number
+    currentStreak?: number
+    longestStreak?: number
+    totalLearningTime?: number
+    lastActiveAt?: Date | string | null
+    setting?: SettingUncheckedCreateNestedOneWithoutUserInput
+    languageProgresses?: LanguageProgressUncheckedCreateNestedManyWithoutUserInput
+    skillProgresses?: SkillProgressUncheckedCreateNestedManyWithoutUserInput
+    achievements?: UserAchievementUncheckedCreateNestedManyWithoutUserInput
+    dailyStats?: DailyStatsUncheckedCreateNestedManyWithoutUserInput
     enrollments?: EnrollmentUncheckedCreateNestedManyWithoutUserInput
-    wordProgresses?: WordTaskProgressUncheckedCreateNestedManyWithoutUserInput
     courses?: CourseUncheckedCreateNestedManyWithoutAuthorInput
     tasks?: TaskUncheckedCreateNestedManyWithoutAuthorInput
-    setting?: SettingUncheckedCreateNestedOneWithoutUserInput
+    wordProgresses?: WordTaskProgressUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutWordsInput = {
@@ -15626,20 +27057,47 @@ export namespace Prisma {
     create: XOR<UserCreateWithoutWordsInput, UserUncheckedCreateWithoutWordsInput>
   }
 
-  export type WordTaskProgressUpsertWithWhereUniqueWithoutWordInput = {
+  export type WordTaskProgressCreateWithoutWordInput = {
+    skillType?: $Enums.CoreSkillType
+    isPassed?: boolean
+    score?: number
+    attempts?: number
+    correctCount?: number
+    nextReviewAt?: Date | string | null
+    reviewInterval?: number
+    easeFactor?: number
+    lastAttempt?: Date | string | null
+    timeSpent?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutWordProgressesInput
+  }
+
+  export type WordTaskProgressUncheckedCreateWithoutWordInput = {
+    id?: number
+    userId: number
+    skillType?: $Enums.CoreSkillType
+    isPassed?: boolean
+    score?: number
+    attempts?: number
+    correctCount?: number
+    nextReviewAt?: Date | string | null
+    reviewInterval?: number
+    easeFactor?: number
+    lastAttempt?: Date | string | null
+    timeSpent?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WordTaskProgressCreateOrConnectWithoutWordInput = {
     where: WordTaskProgressWhereUniqueInput
-    update: XOR<WordTaskProgressUpdateWithoutWordInput, WordTaskProgressUncheckedUpdateWithoutWordInput>
     create: XOR<WordTaskProgressCreateWithoutWordInput, WordTaskProgressUncheckedCreateWithoutWordInput>
   }
 
-  export type WordTaskProgressUpdateWithWhereUniqueWithoutWordInput = {
-    where: WordTaskProgressWhereUniqueInput
-    data: XOR<WordTaskProgressUpdateWithoutWordInput, WordTaskProgressUncheckedUpdateWithoutWordInput>
-  }
-
-  export type WordTaskProgressUpdateManyWithWhereWithoutWordInput = {
-    where: WordTaskProgressScalarWhereInput
-    data: XOR<WordTaskProgressUpdateManyMutationInput, WordTaskProgressUncheckedUpdateManyWithoutWordInput>
+  export type WordTaskProgressCreateManyWordInputEnvelope = {
+    data: WordTaskProgressCreateManyWordInput | WordTaskProgressCreateManyWordInput[]
+    skipDuplicates?: boolean
   }
 
   export type UserUpsertWithoutWordsInput = {
@@ -15666,11 +27124,20 @@ export namespace Prisma {
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     provider?: NullableStringFieldUpdateOperationsInput | string | null
     refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    totalXP?: IntFieldUpdateOperationsInput | number
+    currentStreak?: IntFieldUpdateOperationsInput | number
+    longestStreak?: IntFieldUpdateOperationsInput | number
+    totalLearningTime?: IntFieldUpdateOperationsInput | number
+    lastActiveAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    setting?: SettingUpdateOneWithoutUserNestedInput
+    languageProgresses?: LanguageProgressUpdateManyWithoutUserNestedInput
+    skillProgresses?: SkillProgressUpdateManyWithoutUserNestedInput
+    achievements?: UserAchievementUpdateManyWithoutUserNestedInput
+    dailyStats?: DailyStatsUpdateManyWithoutUserNestedInput
     enrollments?: EnrollmentUpdateManyWithoutUserNestedInput
-    wordProgresses?: WordTaskProgressUpdateManyWithoutUserNestedInput
     courses?: CourseUpdateManyWithoutAuthorNestedInput
     tasks?: TaskUpdateManyWithoutAuthorNestedInput
-    setting?: SettingUpdateOneWithoutUserNestedInput
+    wordProgresses?: WordTaskProgressUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutWordsInput = {
@@ -15687,11 +27154,36 @@ export namespace Prisma {
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     provider?: NullableStringFieldUpdateOperationsInput | string | null
     refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    totalXP?: IntFieldUpdateOperationsInput | number
+    currentStreak?: IntFieldUpdateOperationsInput | number
+    longestStreak?: IntFieldUpdateOperationsInput | number
+    totalLearningTime?: IntFieldUpdateOperationsInput | number
+    lastActiveAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    setting?: SettingUncheckedUpdateOneWithoutUserNestedInput
+    languageProgresses?: LanguageProgressUncheckedUpdateManyWithoutUserNestedInput
+    skillProgresses?: SkillProgressUncheckedUpdateManyWithoutUserNestedInput
+    achievements?: UserAchievementUncheckedUpdateManyWithoutUserNestedInput
+    dailyStats?: DailyStatsUncheckedUpdateManyWithoutUserNestedInput
     enrollments?: EnrollmentUncheckedUpdateManyWithoutUserNestedInput
-    wordProgresses?: WordTaskProgressUncheckedUpdateManyWithoutUserNestedInput
     courses?: CourseUncheckedUpdateManyWithoutAuthorNestedInput
     tasks?: TaskUncheckedUpdateManyWithoutAuthorNestedInput
-    setting?: SettingUncheckedUpdateOneWithoutUserNestedInput
+    wordProgresses?: WordTaskProgressUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type WordTaskProgressUpsertWithWhereUniqueWithoutWordInput = {
+    where: WordTaskProgressWhereUniqueInput
+    update: XOR<WordTaskProgressUpdateWithoutWordInput, WordTaskProgressUncheckedUpdateWithoutWordInput>
+    create: XOR<WordTaskProgressCreateWithoutWordInput, WordTaskProgressUncheckedCreateWithoutWordInput>
+  }
+
+  export type WordTaskProgressUpdateWithWhereUniqueWithoutWordInput = {
+    where: WordTaskProgressWhereUniqueInput
+    data: XOR<WordTaskProgressUpdateWithoutWordInput, WordTaskProgressUncheckedUpdateWithoutWordInput>
+  }
+
+  export type WordTaskProgressUpdateManyWithWhereWithoutWordInput = {
+    where: WordTaskProgressScalarWhereInput
+    data: XOR<WordTaskProgressUpdateManyMutationInput, WordTaskProgressUncheckedUpdateManyWithoutWordInput>
   }
 
   export type TaskCreateWithoutVideoInput = {
@@ -15701,9 +27193,13 @@ export namespace Prisma {
     type?: $Enums.TaskType
     score?: number | null
     createdAt?: Date | string
-    language?: $Enums.Language
     order?: number | null
     explanation?: string | null
+    skillType: $Enums.CoreSkillType
+    language?: $Enums.Language
+    cefrLevel?: $Enums.CEFRLevel
+    xpReward?: number
+    timeLimit?: number | null
     author?: UserCreateNestedOneWithoutTasksInput
     course?: CourseCreateNestedOneWithoutTasksInput
   }
@@ -15716,9 +27212,13 @@ export namespace Prisma {
     type?: $Enums.TaskType
     score?: number | null
     createdAt?: Date | string
-    language?: $Enums.Language
     order?: number | null
     explanation?: string | null
+    skillType: $Enums.CoreSkillType
+    language?: $Enums.Language
+    cefrLevel?: $Enums.CEFRLevel
+    xpReward?: number
+    timeLimit?: number | null
     authorId?: number | null
     courseId?: number | null
   }
@@ -15737,13 +27237,16 @@ export namespace Prisma {
     title: string
     description?: string | null
     imageUrl?: string | null
-    level?: $Enums.Level
+    level?: $Enums.CEFRLevel
+    targetSkills?: CourseCreatetargetSkillsInput | $Enums.CoreSkillType[]
     isPublished?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     tags?: CourseCreatetagsInput | string[]
-    tasks?: TaskCreateNestedManyWithoutCourseInput
+    estimatedHours?: number | null
+    totalXP?: number
     enrollments?: EnrollmentCreateNestedManyWithoutCourseInput
+    tasks?: TaskCreateNestedManyWithoutCourseInput
     author?: UserCreateNestedOneWithoutCoursesInput
   }
 
@@ -15752,14 +27255,17 @@ export namespace Prisma {
     title: string
     description?: string | null
     imageUrl?: string | null
-    level?: $Enums.Level
+    level?: $Enums.CEFRLevel
+    targetSkills?: CourseCreatetargetSkillsInput | $Enums.CoreSkillType[]
     isPublished?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     tags?: CourseCreatetagsInput | string[]
+    estimatedHours?: number | null
+    totalXP?: number
     authorId?: number | null
-    tasks?: TaskUncheckedCreateNestedManyWithoutCourseInput
     enrollments?: EnrollmentUncheckedCreateNestedManyWithoutCourseInput
+    tasks?: TaskUncheckedCreateNestedManyWithoutCourseInput
   }
 
   export type CourseCreateOrConnectWithoutVideosInput = {
@@ -15798,13 +27304,16 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
+    level?: EnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel
+    targetSkills?: CourseUpdatetargetSkillsInput | $Enums.CoreSkillType[]
     isPublished?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tags?: CourseUpdatetagsInput | string[]
-    tasks?: TaskUpdateManyWithoutCourseNestedInput
+    estimatedHours?: NullableIntFieldUpdateOperationsInput | number | null
+    totalXP?: IntFieldUpdateOperationsInput | number
     enrollments?: EnrollmentUpdateManyWithoutCourseNestedInput
+    tasks?: TaskUpdateManyWithoutCourseNestedInput
     author?: UserUpdateOneWithoutCoursesNestedInput
   }
 
@@ -15813,14 +27322,17 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
+    level?: EnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel
+    targetSkills?: CourseUpdatetargetSkillsInput | $Enums.CoreSkillType[]
     isPublished?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tags?: CourseUpdatetagsInput | string[]
+    estimatedHours?: NullableIntFieldUpdateOperationsInput | number | null
+    totalXP?: IntFieldUpdateOperationsInput | number
     authorId?: NullableIntFieldUpdateOperationsInput | number | null
-    tasks?: TaskUncheckedUpdateManyWithoutCourseNestedInput
     enrollments?: EnrollmentUncheckedUpdateManyWithoutCourseNestedInput
+    tasks?: TaskUncheckedUpdateManyWithoutCourseNestedInput
   }
 
   export type UserCreateWithoutTasksInput = {
@@ -15836,11 +27348,20 @@ export namespace Prisma {
     lastLoginAt?: Date | string | null
     provider?: string | null
     refreshToken?: string | null
-    enrollments?: EnrollmentCreateNestedManyWithoutUserInput
-    wordProgresses?: WordTaskProgressCreateNestedManyWithoutUserInput
-    courses?: CourseCreateNestedManyWithoutAuthorInput
+    totalXP?: number
+    currentStreak?: number
+    longestStreak?: number
+    totalLearningTime?: number
+    lastActiveAt?: Date | string | null
     setting?: SettingCreateNestedOneWithoutUserInput
     words?: WordCreateNestedManyWithoutUserInput
+    languageProgresses?: LanguageProgressCreateNestedManyWithoutUserInput
+    skillProgresses?: SkillProgressCreateNestedManyWithoutUserInput
+    achievements?: UserAchievementCreateNestedManyWithoutUserInput
+    dailyStats?: DailyStatsCreateNestedManyWithoutUserInput
+    enrollments?: EnrollmentCreateNestedManyWithoutUserInput
+    courses?: CourseCreateNestedManyWithoutAuthorInput
+    wordProgresses?: WordTaskProgressCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutTasksInput = {
@@ -15857,11 +27378,20 @@ export namespace Prisma {
     lastLoginAt?: Date | string | null
     provider?: string | null
     refreshToken?: string | null
-    enrollments?: EnrollmentUncheckedCreateNestedManyWithoutUserInput
-    wordProgresses?: WordTaskProgressUncheckedCreateNestedManyWithoutUserInput
-    courses?: CourseUncheckedCreateNestedManyWithoutAuthorInput
+    totalXP?: number
+    currentStreak?: number
+    longestStreak?: number
+    totalLearningTime?: number
+    lastActiveAt?: Date | string | null
     setting?: SettingUncheckedCreateNestedOneWithoutUserInput
     words?: WordUncheckedCreateNestedManyWithoutUserInput
+    languageProgresses?: LanguageProgressUncheckedCreateNestedManyWithoutUserInput
+    skillProgresses?: SkillProgressUncheckedCreateNestedManyWithoutUserInput
+    achievements?: UserAchievementUncheckedCreateNestedManyWithoutUserInput
+    dailyStats?: DailyStatsUncheckedCreateNestedManyWithoutUserInput
+    enrollments?: EnrollmentUncheckedCreateNestedManyWithoutUserInput
+    courses?: CourseUncheckedCreateNestedManyWithoutAuthorInput
+    wordProgresses?: WordTaskProgressUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutTasksInput = {
@@ -15873,9 +27403,11 @@ export namespace Prisma {
     title: string
     description?: string | null
     url: string
-    level?: $Enums.Level | null
+    language?: $Enums.Language
+    level?: $Enums.CEFRLevel
+    duration?: number | null
+    skillTypes?: VideoCreateskillTypesInput | $Enums.CoreSkillType[]
     createdAt?: Date | string
-    tags?: VideoCreatetagsInput | string[]
     course?: CourseCreateNestedOneWithoutVideosInput
   }
 
@@ -15884,10 +27416,12 @@ export namespace Prisma {
     title: string
     description?: string | null
     url: string
-    level?: $Enums.Level | null
-    createdAt?: Date | string
-    tags?: VideoCreatetagsInput | string[]
+    language?: $Enums.Language
+    level?: $Enums.CEFRLevel
+    duration?: number | null
+    skillTypes?: VideoCreateskillTypesInput | $Enums.CoreSkillType[]
     courseId?: number | null
+    createdAt?: Date | string
   }
 
   export type VideoCreateOrConnectWithoutTasksInput = {
@@ -15899,11 +27433,14 @@ export namespace Prisma {
     title: string
     description?: string | null
     imageUrl?: string | null
-    level?: $Enums.Level
+    level?: $Enums.CEFRLevel
+    targetSkills?: CourseCreatetargetSkillsInput | $Enums.CoreSkillType[]
     isPublished?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     tags?: CourseCreatetagsInput | string[]
+    estimatedHours?: number | null
+    totalXP?: number
     enrollments?: EnrollmentCreateNestedManyWithoutCourseInput
     videos?: VideoCreateNestedManyWithoutCourseInput
     author?: UserCreateNestedOneWithoutCoursesInput
@@ -15914,11 +27451,14 @@ export namespace Prisma {
     title: string
     description?: string | null
     imageUrl?: string | null
-    level?: $Enums.Level
+    level?: $Enums.CEFRLevel
+    targetSkills?: CourseCreatetargetSkillsInput | $Enums.CoreSkillType[]
     isPublished?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     tags?: CourseCreatetagsInput | string[]
+    estimatedHours?: number | null
+    totalXP?: number
     authorId?: number | null
     enrollments?: EnrollmentUncheckedCreateNestedManyWithoutCourseInput
     videos?: VideoUncheckedCreateNestedManyWithoutCourseInput
@@ -15953,11 +27493,20 @@ export namespace Prisma {
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     provider?: NullableStringFieldUpdateOperationsInput | string | null
     refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
-    enrollments?: EnrollmentUpdateManyWithoutUserNestedInput
-    wordProgresses?: WordTaskProgressUpdateManyWithoutUserNestedInput
-    courses?: CourseUpdateManyWithoutAuthorNestedInput
+    totalXP?: IntFieldUpdateOperationsInput | number
+    currentStreak?: IntFieldUpdateOperationsInput | number
+    longestStreak?: IntFieldUpdateOperationsInput | number
+    totalLearningTime?: IntFieldUpdateOperationsInput | number
+    lastActiveAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     setting?: SettingUpdateOneWithoutUserNestedInput
     words?: WordUpdateManyWithoutUserNestedInput
+    languageProgresses?: LanguageProgressUpdateManyWithoutUserNestedInput
+    skillProgresses?: SkillProgressUpdateManyWithoutUserNestedInput
+    achievements?: UserAchievementUpdateManyWithoutUserNestedInput
+    dailyStats?: DailyStatsUpdateManyWithoutUserNestedInput
+    enrollments?: EnrollmentUpdateManyWithoutUserNestedInput
+    courses?: CourseUpdateManyWithoutAuthorNestedInput
+    wordProgresses?: WordTaskProgressUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutTasksInput = {
@@ -15974,11 +27523,20 @@ export namespace Prisma {
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     provider?: NullableStringFieldUpdateOperationsInput | string | null
     refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
-    enrollments?: EnrollmentUncheckedUpdateManyWithoutUserNestedInput
-    wordProgresses?: WordTaskProgressUncheckedUpdateManyWithoutUserNestedInput
-    courses?: CourseUncheckedUpdateManyWithoutAuthorNestedInput
+    totalXP?: IntFieldUpdateOperationsInput | number
+    currentStreak?: IntFieldUpdateOperationsInput | number
+    longestStreak?: IntFieldUpdateOperationsInput | number
+    totalLearningTime?: IntFieldUpdateOperationsInput | number
+    lastActiveAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     setting?: SettingUncheckedUpdateOneWithoutUserNestedInput
     words?: WordUncheckedUpdateManyWithoutUserNestedInput
+    languageProgresses?: LanguageProgressUncheckedUpdateManyWithoutUserNestedInput
+    skillProgresses?: SkillProgressUncheckedUpdateManyWithoutUserNestedInput
+    achievements?: UserAchievementUncheckedUpdateManyWithoutUserNestedInput
+    dailyStats?: DailyStatsUncheckedUpdateManyWithoutUserNestedInput
+    enrollments?: EnrollmentUncheckedUpdateManyWithoutUserNestedInput
+    courses?: CourseUncheckedUpdateManyWithoutAuthorNestedInput
+    wordProgresses?: WordTaskProgressUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type VideoUpsertWithoutTasksInput = {
@@ -15996,9 +27554,11 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     url?: StringFieldUpdateOperationsInput | string
-    level?: NullableEnumLevelFieldUpdateOperationsInput | $Enums.Level | null
+    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    level?: EnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
+    skillTypes?: VideoUpdateskillTypesInput | $Enums.CoreSkillType[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    tags?: VideoUpdatetagsInput | string[]
     course?: CourseUpdateOneWithoutVideosNestedInput
   }
 
@@ -16007,10 +27567,12 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     url?: StringFieldUpdateOperationsInput | string
-    level?: NullableEnumLevelFieldUpdateOperationsInput | $Enums.Level | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    tags?: VideoUpdatetagsInput | string[]
+    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    level?: EnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
+    skillTypes?: VideoUpdateskillTypesInput | $Enums.CoreSkillType[]
     courseId?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type CourseUpsertWithoutTasksInput = {
@@ -16028,11 +27590,14 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
+    level?: EnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel
+    targetSkills?: CourseUpdatetargetSkillsInput | $Enums.CoreSkillType[]
     isPublished?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tags?: CourseUpdatetagsInput | string[]
+    estimatedHours?: NullableIntFieldUpdateOperationsInput | number | null
+    totalXP?: IntFieldUpdateOperationsInput | number
     enrollments?: EnrollmentUpdateManyWithoutCourseNestedInput
     videos?: VideoUpdateManyWithoutCourseNestedInput
     author?: UserUpdateOneWithoutCoursesNestedInput
@@ -16043,53 +27608,17 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
+    level?: EnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel
+    targetSkills?: CourseUpdatetargetSkillsInput | $Enums.CoreSkillType[]
     isPublished?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tags?: CourseUpdatetagsInput | string[]
+    estimatedHours?: NullableIntFieldUpdateOperationsInput | number | null
+    totalXP?: IntFieldUpdateOperationsInput | number
     authorId?: NullableIntFieldUpdateOperationsInput | number | null
     enrollments?: EnrollmentUncheckedUpdateManyWithoutCourseNestedInput
     videos?: VideoUncheckedUpdateManyWithoutCourseNestedInput
-  }
-
-  export type TaskCreateWithoutCourseInput = {
-    question: string
-    answer: string
-    options?: TaskCreateoptionsInput | string[]
-    type?: $Enums.TaskType
-    score?: number | null
-    createdAt?: Date | string
-    language?: $Enums.Language
-    order?: number | null
-    explanation?: string | null
-    author?: UserCreateNestedOneWithoutTasksInput
-    video?: VideoCreateNestedOneWithoutTasksInput
-  }
-
-  export type TaskUncheckedCreateWithoutCourseInput = {
-    id?: number
-    question: string
-    answer: string
-    options?: TaskCreateoptionsInput | string[]
-    type?: $Enums.TaskType
-    score?: number | null
-    createdAt?: Date | string
-    language?: $Enums.Language
-    order?: number | null
-    explanation?: string | null
-    authorId?: number | null
-    videoId?: number | null
-  }
-
-  export type TaskCreateOrConnectWithoutCourseInput = {
-    where: TaskWhereUniqueInput
-    create: XOR<TaskCreateWithoutCourseInput, TaskUncheckedCreateWithoutCourseInput>
-  }
-
-  export type TaskCreateManyCourseInputEnvelope = {
-    data: TaskCreateManyCourseInput | TaskCreateManyCourseInput[]
-    skipDuplicates?: boolean
   }
 
   export type EnrollmentCreateWithoutCourseInput = {
@@ -16115,13 +27644,62 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type TaskCreateWithoutCourseInput = {
+    question: string
+    answer: string
+    options?: TaskCreateoptionsInput | string[]
+    type?: $Enums.TaskType
+    score?: number | null
+    createdAt?: Date | string
+    order?: number | null
+    explanation?: string | null
+    skillType: $Enums.CoreSkillType
+    language?: $Enums.Language
+    cefrLevel?: $Enums.CEFRLevel
+    xpReward?: number
+    timeLimit?: number | null
+    author?: UserCreateNestedOneWithoutTasksInput
+    video?: VideoCreateNestedOneWithoutTasksInput
+  }
+
+  export type TaskUncheckedCreateWithoutCourseInput = {
+    id?: number
+    question: string
+    answer: string
+    options?: TaskCreateoptionsInput | string[]
+    type?: $Enums.TaskType
+    score?: number | null
+    createdAt?: Date | string
+    order?: number | null
+    explanation?: string | null
+    skillType: $Enums.CoreSkillType
+    language?: $Enums.Language
+    cefrLevel?: $Enums.CEFRLevel
+    xpReward?: number
+    timeLimit?: number | null
+    authorId?: number | null
+    videoId?: number | null
+  }
+
+  export type TaskCreateOrConnectWithoutCourseInput = {
+    where: TaskWhereUniqueInput
+    create: XOR<TaskCreateWithoutCourseInput, TaskUncheckedCreateWithoutCourseInput>
+  }
+
+  export type TaskCreateManyCourseInputEnvelope = {
+    data: TaskCreateManyCourseInput | TaskCreateManyCourseInput[]
+    skipDuplicates?: boolean
+  }
+
   export type VideoCreateWithoutCourseInput = {
     title: string
     description?: string | null
     url: string
-    level?: $Enums.Level | null
+    language?: $Enums.Language
+    level?: $Enums.CEFRLevel
+    duration?: number | null
+    skillTypes?: VideoCreateskillTypesInput | $Enums.CoreSkillType[]
     createdAt?: Date | string
-    tags?: VideoCreatetagsInput | string[]
     tasks?: TaskCreateNestedManyWithoutVideoInput
   }
 
@@ -16130,9 +27708,11 @@ export namespace Prisma {
     title: string
     description?: string | null
     url: string
-    level?: $Enums.Level | null
+    language?: $Enums.Language
+    level?: $Enums.CEFRLevel
+    duration?: number | null
+    skillTypes?: VideoCreateskillTypesInput | $Enums.CoreSkillType[]
     createdAt?: Date | string
-    tags?: VideoCreatetagsInput | string[]
     tasks?: TaskUncheckedCreateNestedManyWithoutVideoInput
   }
 
@@ -16159,11 +27739,20 @@ export namespace Prisma {
     lastLoginAt?: Date | string | null
     provider?: string | null
     refreshToken?: string | null
-    enrollments?: EnrollmentCreateNestedManyWithoutUserInput
-    wordProgresses?: WordTaskProgressCreateNestedManyWithoutUserInput
-    tasks?: TaskCreateNestedManyWithoutAuthorInput
+    totalXP?: number
+    currentStreak?: number
+    longestStreak?: number
+    totalLearningTime?: number
+    lastActiveAt?: Date | string | null
     setting?: SettingCreateNestedOneWithoutUserInput
     words?: WordCreateNestedManyWithoutUserInput
+    languageProgresses?: LanguageProgressCreateNestedManyWithoutUserInput
+    skillProgresses?: SkillProgressCreateNestedManyWithoutUserInput
+    achievements?: UserAchievementCreateNestedManyWithoutUserInput
+    dailyStats?: DailyStatsCreateNestedManyWithoutUserInput
+    enrollments?: EnrollmentCreateNestedManyWithoutUserInput
+    tasks?: TaskCreateNestedManyWithoutAuthorInput
+    wordProgresses?: WordTaskProgressCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutCoursesInput = {
@@ -16180,32 +27769,25 @@ export namespace Prisma {
     lastLoginAt?: Date | string | null
     provider?: string | null
     refreshToken?: string | null
-    enrollments?: EnrollmentUncheckedCreateNestedManyWithoutUserInput
-    wordProgresses?: WordTaskProgressUncheckedCreateNestedManyWithoutUserInput
-    tasks?: TaskUncheckedCreateNestedManyWithoutAuthorInput
+    totalXP?: number
+    currentStreak?: number
+    longestStreak?: number
+    totalLearningTime?: number
+    lastActiveAt?: Date | string | null
     setting?: SettingUncheckedCreateNestedOneWithoutUserInput
     words?: WordUncheckedCreateNestedManyWithoutUserInput
+    languageProgresses?: LanguageProgressUncheckedCreateNestedManyWithoutUserInput
+    skillProgresses?: SkillProgressUncheckedCreateNestedManyWithoutUserInput
+    achievements?: UserAchievementUncheckedCreateNestedManyWithoutUserInput
+    dailyStats?: DailyStatsUncheckedCreateNestedManyWithoutUserInput
+    enrollments?: EnrollmentUncheckedCreateNestedManyWithoutUserInput
+    tasks?: TaskUncheckedCreateNestedManyWithoutAuthorInput
+    wordProgresses?: WordTaskProgressUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutCoursesInput = {
     where: UserWhereUniqueInput
     create: XOR<UserCreateWithoutCoursesInput, UserUncheckedCreateWithoutCoursesInput>
-  }
-
-  export type TaskUpsertWithWhereUniqueWithoutCourseInput = {
-    where: TaskWhereUniqueInput
-    update: XOR<TaskUpdateWithoutCourseInput, TaskUncheckedUpdateWithoutCourseInput>
-    create: XOR<TaskCreateWithoutCourseInput, TaskUncheckedCreateWithoutCourseInput>
-  }
-
-  export type TaskUpdateWithWhereUniqueWithoutCourseInput = {
-    where: TaskWhereUniqueInput
-    data: XOR<TaskUpdateWithoutCourseInput, TaskUncheckedUpdateWithoutCourseInput>
-  }
-
-  export type TaskUpdateManyWithWhereWithoutCourseInput = {
-    where: TaskScalarWhereInput
-    data: XOR<TaskUpdateManyMutationInput, TaskUncheckedUpdateManyWithoutCourseInput>
   }
 
   export type EnrollmentUpsertWithWhereUniqueWithoutCourseInput = {
@@ -16222,6 +27804,22 @@ export namespace Prisma {
   export type EnrollmentUpdateManyWithWhereWithoutCourseInput = {
     where: EnrollmentScalarWhereInput
     data: XOR<EnrollmentUpdateManyMutationInput, EnrollmentUncheckedUpdateManyWithoutCourseInput>
+  }
+
+  export type TaskUpsertWithWhereUniqueWithoutCourseInput = {
+    where: TaskWhereUniqueInput
+    update: XOR<TaskUpdateWithoutCourseInput, TaskUncheckedUpdateWithoutCourseInput>
+    create: XOR<TaskCreateWithoutCourseInput, TaskUncheckedCreateWithoutCourseInput>
+  }
+
+  export type TaskUpdateWithWhereUniqueWithoutCourseInput = {
+    where: TaskWhereUniqueInput
+    data: XOR<TaskUpdateWithoutCourseInput, TaskUncheckedUpdateWithoutCourseInput>
+  }
+
+  export type TaskUpdateManyWithWhereWithoutCourseInput = {
+    where: TaskScalarWhereInput
+    data: XOR<TaskUpdateManyMutationInput, TaskUncheckedUpdateManyWithoutCourseInput>
   }
 
   export type VideoUpsertWithWhereUniqueWithoutCourseInput = {
@@ -16248,10 +27846,12 @@ export namespace Prisma {
     title?: StringFilter<"Video"> | string
     description?: StringNullableFilter<"Video"> | string | null
     url?: StringFilter<"Video"> | string
-    level?: EnumLevelNullableFilter<"Video"> | $Enums.Level | null
-    createdAt?: DateTimeFilter<"Video"> | Date | string
-    tags?: StringNullableListFilter<"Video">
+    language?: EnumLanguageFilter<"Video"> | $Enums.Language
+    level?: EnumCEFRLevelFilter<"Video"> | $Enums.CEFRLevel
+    duration?: IntNullableFilter<"Video"> | number | null
+    skillTypes?: EnumCoreSkillTypeNullableListFilter<"Video">
     courseId?: IntNullableFilter<"Video"> | number | null
+    createdAt?: DateTimeFilter<"Video"> | Date | string
   }
 
   export type UserUpsertWithoutCoursesInput = {
@@ -16278,11 +27878,20 @@ export namespace Prisma {
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     provider?: NullableStringFieldUpdateOperationsInput | string | null
     refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
-    enrollments?: EnrollmentUpdateManyWithoutUserNestedInput
-    wordProgresses?: WordTaskProgressUpdateManyWithoutUserNestedInput
-    tasks?: TaskUpdateManyWithoutAuthorNestedInput
+    totalXP?: IntFieldUpdateOperationsInput | number
+    currentStreak?: IntFieldUpdateOperationsInput | number
+    longestStreak?: IntFieldUpdateOperationsInput | number
+    totalLearningTime?: IntFieldUpdateOperationsInput | number
+    lastActiveAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     setting?: SettingUpdateOneWithoutUserNestedInput
     words?: WordUpdateManyWithoutUserNestedInput
+    languageProgresses?: LanguageProgressUpdateManyWithoutUserNestedInput
+    skillProgresses?: SkillProgressUpdateManyWithoutUserNestedInput
+    achievements?: UserAchievementUpdateManyWithoutUserNestedInput
+    dailyStats?: DailyStatsUpdateManyWithoutUserNestedInput
+    enrollments?: EnrollmentUpdateManyWithoutUserNestedInput
+    tasks?: TaskUpdateManyWithoutAuthorNestedInput
+    wordProgresses?: WordTaskProgressUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCoursesInput = {
@@ -16299,11 +27908,20 @@ export namespace Prisma {
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     provider?: NullableStringFieldUpdateOperationsInput | string | null
     refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
-    enrollments?: EnrollmentUncheckedUpdateManyWithoutUserNestedInput
-    wordProgresses?: WordTaskProgressUncheckedUpdateManyWithoutUserNestedInput
-    tasks?: TaskUncheckedUpdateManyWithoutAuthorNestedInput
+    totalXP?: IntFieldUpdateOperationsInput | number
+    currentStreak?: IntFieldUpdateOperationsInput | number
+    longestStreak?: IntFieldUpdateOperationsInput | number
+    totalLearningTime?: IntFieldUpdateOperationsInput | number
+    lastActiveAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     setting?: SettingUncheckedUpdateOneWithoutUserNestedInput
     words?: WordUncheckedUpdateManyWithoutUserNestedInput
+    languageProgresses?: LanguageProgressUncheckedUpdateManyWithoutUserNestedInput
+    skillProgresses?: SkillProgressUncheckedUpdateManyWithoutUserNestedInput
+    achievements?: UserAchievementUncheckedUpdateManyWithoutUserNestedInput
+    dailyStats?: DailyStatsUncheckedUpdateManyWithoutUserNestedInput
+    enrollments?: EnrollmentUncheckedUpdateManyWithoutUserNestedInput
+    tasks?: TaskUncheckedUpdateManyWithoutAuthorNestedInput
+    wordProgresses?: WordTaskProgressUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutEnrollmentsInput = {
@@ -16319,11 +27937,20 @@ export namespace Prisma {
     lastLoginAt?: Date | string | null
     provider?: string | null
     refreshToken?: string | null
-    wordProgresses?: WordTaskProgressCreateNestedManyWithoutUserInput
-    courses?: CourseCreateNestedManyWithoutAuthorInput
-    tasks?: TaskCreateNestedManyWithoutAuthorInput
+    totalXP?: number
+    currentStreak?: number
+    longestStreak?: number
+    totalLearningTime?: number
+    lastActiveAt?: Date | string | null
     setting?: SettingCreateNestedOneWithoutUserInput
     words?: WordCreateNestedManyWithoutUserInput
+    languageProgresses?: LanguageProgressCreateNestedManyWithoutUserInput
+    skillProgresses?: SkillProgressCreateNestedManyWithoutUserInput
+    achievements?: UserAchievementCreateNestedManyWithoutUserInput
+    dailyStats?: DailyStatsCreateNestedManyWithoutUserInput
+    courses?: CourseCreateNestedManyWithoutAuthorInput
+    tasks?: TaskCreateNestedManyWithoutAuthorInput
+    wordProgresses?: WordTaskProgressCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutEnrollmentsInput = {
@@ -16340,11 +27967,20 @@ export namespace Prisma {
     lastLoginAt?: Date | string | null
     provider?: string | null
     refreshToken?: string | null
-    wordProgresses?: WordTaskProgressUncheckedCreateNestedManyWithoutUserInput
-    courses?: CourseUncheckedCreateNestedManyWithoutAuthorInput
-    tasks?: TaskUncheckedCreateNestedManyWithoutAuthorInput
+    totalXP?: number
+    currentStreak?: number
+    longestStreak?: number
+    totalLearningTime?: number
+    lastActiveAt?: Date | string | null
     setting?: SettingUncheckedCreateNestedOneWithoutUserInput
     words?: WordUncheckedCreateNestedManyWithoutUserInput
+    languageProgresses?: LanguageProgressUncheckedCreateNestedManyWithoutUserInput
+    skillProgresses?: SkillProgressUncheckedCreateNestedManyWithoutUserInput
+    achievements?: UserAchievementUncheckedCreateNestedManyWithoutUserInput
+    dailyStats?: DailyStatsUncheckedCreateNestedManyWithoutUserInput
+    courses?: CourseUncheckedCreateNestedManyWithoutAuthorInput
+    tasks?: TaskUncheckedCreateNestedManyWithoutAuthorInput
+    wordProgresses?: WordTaskProgressUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutEnrollmentsInput = {
@@ -16356,11 +27992,14 @@ export namespace Prisma {
     title: string
     description?: string | null
     imageUrl?: string | null
-    level?: $Enums.Level
+    level?: $Enums.CEFRLevel
+    targetSkills?: CourseCreatetargetSkillsInput | $Enums.CoreSkillType[]
     isPublished?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     tags?: CourseCreatetagsInput | string[]
+    estimatedHours?: number | null
+    totalXP?: number
     tasks?: TaskCreateNestedManyWithoutCourseInput
     videos?: VideoCreateNestedManyWithoutCourseInput
     author?: UserCreateNestedOneWithoutCoursesInput
@@ -16371,11 +28010,14 @@ export namespace Prisma {
     title: string
     description?: string | null
     imageUrl?: string | null
-    level?: $Enums.Level
+    level?: $Enums.CEFRLevel
+    targetSkills?: CourseCreatetargetSkillsInput | $Enums.CoreSkillType[]
     isPublished?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     tags?: CourseCreatetagsInput | string[]
+    estimatedHours?: number | null
+    totalXP?: number
     authorId?: number | null
     tasks?: TaskUncheckedCreateNestedManyWithoutCourseInput
     videos?: VideoUncheckedCreateNestedManyWithoutCourseInput
@@ -16410,11 +28052,20 @@ export namespace Prisma {
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     provider?: NullableStringFieldUpdateOperationsInput | string | null
     refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
-    wordProgresses?: WordTaskProgressUpdateManyWithoutUserNestedInput
-    courses?: CourseUpdateManyWithoutAuthorNestedInput
-    tasks?: TaskUpdateManyWithoutAuthorNestedInput
+    totalXP?: IntFieldUpdateOperationsInput | number
+    currentStreak?: IntFieldUpdateOperationsInput | number
+    longestStreak?: IntFieldUpdateOperationsInput | number
+    totalLearningTime?: IntFieldUpdateOperationsInput | number
+    lastActiveAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     setting?: SettingUpdateOneWithoutUserNestedInput
     words?: WordUpdateManyWithoutUserNestedInput
+    languageProgresses?: LanguageProgressUpdateManyWithoutUserNestedInput
+    skillProgresses?: SkillProgressUpdateManyWithoutUserNestedInput
+    achievements?: UserAchievementUpdateManyWithoutUserNestedInput
+    dailyStats?: DailyStatsUpdateManyWithoutUserNestedInput
+    courses?: CourseUpdateManyWithoutAuthorNestedInput
+    tasks?: TaskUpdateManyWithoutAuthorNestedInput
+    wordProgresses?: WordTaskProgressUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutEnrollmentsInput = {
@@ -16431,11 +28082,20 @@ export namespace Prisma {
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     provider?: NullableStringFieldUpdateOperationsInput | string | null
     refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
-    wordProgresses?: WordTaskProgressUncheckedUpdateManyWithoutUserNestedInput
-    courses?: CourseUncheckedUpdateManyWithoutAuthorNestedInput
-    tasks?: TaskUncheckedUpdateManyWithoutAuthorNestedInput
+    totalXP?: IntFieldUpdateOperationsInput | number
+    currentStreak?: IntFieldUpdateOperationsInput | number
+    longestStreak?: IntFieldUpdateOperationsInput | number
+    totalLearningTime?: IntFieldUpdateOperationsInput | number
+    lastActiveAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     setting?: SettingUncheckedUpdateOneWithoutUserNestedInput
     words?: WordUncheckedUpdateManyWithoutUserNestedInput
+    languageProgresses?: LanguageProgressUncheckedUpdateManyWithoutUserNestedInput
+    skillProgresses?: SkillProgressUncheckedUpdateManyWithoutUserNestedInput
+    achievements?: UserAchievementUncheckedUpdateManyWithoutUserNestedInput
+    dailyStats?: DailyStatsUncheckedUpdateManyWithoutUserNestedInput
+    courses?: CourseUncheckedUpdateManyWithoutAuthorNestedInput
+    tasks?: TaskUncheckedUpdateManyWithoutAuthorNestedInput
+    wordProgresses?: WordTaskProgressUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type CourseUpsertWithoutEnrollmentsInput = {
@@ -16453,11 +28113,14 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
+    level?: EnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel
+    targetSkills?: CourseUpdatetargetSkillsInput | $Enums.CoreSkillType[]
     isPublished?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tags?: CourseUpdatetagsInput | string[]
+    estimatedHours?: NullableIntFieldUpdateOperationsInput | number | null
+    totalXP?: IntFieldUpdateOperationsInput | number
     tasks?: TaskUpdateManyWithoutCourseNestedInput
     videos?: VideoUpdateManyWithoutCourseNestedInput
     author?: UserUpdateOneWithoutCoursesNestedInput
@@ -16468,11 +28131,14 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
+    level?: EnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel
+    targetSkills?: CourseUpdatetargetSkillsInput | $Enums.CoreSkillType[]
     isPublished?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tags?: CourseUpdatetagsInput | string[]
+    estimatedHours?: NullableIntFieldUpdateOperationsInput | number | null
+    totalXP?: IntFieldUpdateOperationsInput | number
     authorId?: NullableIntFieldUpdateOperationsInput | number | null
     tasks?: TaskUncheckedUpdateManyWithoutCourseNestedInput
     videos?: VideoUncheckedUpdateManyWithoutCourseNestedInput
@@ -16491,11 +28157,20 @@ export namespace Prisma {
     lastLoginAt?: Date | string | null
     provider?: string | null
     refreshToken?: string | null
+    totalXP?: number
+    currentStreak?: number
+    longestStreak?: number
+    totalLearningTime?: number
+    lastActiveAt?: Date | string | null
+    words?: WordCreateNestedManyWithoutUserInput
+    languageProgresses?: LanguageProgressCreateNestedManyWithoutUserInput
+    skillProgresses?: SkillProgressCreateNestedManyWithoutUserInput
+    achievements?: UserAchievementCreateNestedManyWithoutUserInput
+    dailyStats?: DailyStatsCreateNestedManyWithoutUserInput
     enrollments?: EnrollmentCreateNestedManyWithoutUserInput
-    wordProgresses?: WordTaskProgressCreateNestedManyWithoutUserInput
     courses?: CourseCreateNestedManyWithoutAuthorInput
     tasks?: TaskCreateNestedManyWithoutAuthorInput
-    words?: WordCreateNestedManyWithoutUserInput
+    wordProgresses?: WordTaskProgressCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSettingInput = {
@@ -16512,11 +28187,20 @@ export namespace Prisma {
     lastLoginAt?: Date | string | null
     provider?: string | null
     refreshToken?: string | null
+    totalXP?: number
+    currentStreak?: number
+    longestStreak?: number
+    totalLearningTime?: number
+    lastActiveAt?: Date | string | null
+    words?: WordUncheckedCreateNestedManyWithoutUserInput
+    languageProgresses?: LanguageProgressUncheckedCreateNestedManyWithoutUserInput
+    skillProgresses?: SkillProgressUncheckedCreateNestedManyWithoutUserInput
+    achievements?: UserAchievementUncheckedCreateNestedManyWithoutUserInput
+    dailyStats?: DailyStatsUncheckedCreateNestedManyWithoutUserInput
     enrollments?: EnrollmentUncheckedCreateNestedManyWithoutUserInput
-    wordProgresses?: WordTaskProgressUncheckedCreateNestedManyWithoutUserInput
     courses?: CourseUncheckedCreateNestedManyWithoutAuthorInput
     tasks?: TaskUncheckedCreateNestedManyWithoutAuthorInput
-    words?: WordUncheckedCreateNestedManyWithoutUserInput
+    wordProgresses?: WordTaskProgressUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSettingInput = {
@@ -16548,11 +28232,20 @@ export namespace Prisma {
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     provider?: NullableStringFieldUpdateOperationsInput | string | null
     refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    totalXP?: IntFieldUpdateOperationsInput | number
+    currentStreak?: IntFieldUpdateOperationsInput | number
+    longestStreak?: IntFieldUpdateOperationsInput | number
+    totalLearningTime?: IntFieldUpdateOperationsInput | number
+    lastActiveAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    words?: WordUpdateManyWithoutUserNestedInput
+    languageProgresses?: LanguageProgressUpdateManyWithoutUserNestedInput
+    skillProgresses?: SkillProgressUpdateManyWithoutUserNestedInput
+    achievements?: UserAchievementUpdateManyWithoutUserNestedInput
+    dailyStats?: DailyStatsUpdateManyWithoutUserNestedInput
     enrollments?: EnrollmentUpdateManyWithoutUserNestedInput
-    wordProgresses?: WordTaskProgressUpdateManyWithoutUserNestedInput
     courses?: CourseUpdateManyWithoutAuthorNestedInput
     tasks?: TaskUpdateManyWithoutAuthorNestedInput
-    words?: WordUpdateManyWithoutUserNestedInput
+    wordProgresses?: WordTaskProgressUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSettingInput = {
@@ -16569,14 +28262,23 @@ export namespace Prisma {
     lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     provider?: NullableStringFieldUpdateOperationsInput | string | null
     refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    totalXP?: IntFieldUpdateOperationsInput | number
+    currentStreak?: IntFieldUpdateOperationsInput | number
+    longestStreak?: IntFieldUpdateOperationsInput | number
+    totalLearningTime?: IntFieldUpdateOperationsInput | number
+    lastActiveAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    words?: WordUncheckedUpdateManyWithoutUserNestedInput
+    languageProgresses?: LanguageProgressUncheckedUpdateManyWithoutUserNestedInput
+    skillProgresses?: SkillProgressUncheckedUpdateManyWithoutUserNestedInput
+    achievements?: UserAchievementUncheckedUpdateManyWithoutUserNestedInput
+    dailyStats?: DailyStatsUncheckedUpdateManyWithoutUserNestedInput
     enrollments?: EnrollmentUncheckedUpdateManyWithoutUserNestedInput
-    wordProgresses?: WordTaskProgressUncheckedUpdateManyWithoutUserNestedInput
     courses?: CourseUncheckedUpdateManyWithoutAuthorNestedInput
     tasks?: TaskUncheckedUpdateManyWithoutAuthorNestedInput
-    words?: WordUncheckedUpdateManyWithoutUserNestedInput
+    wordProgresses?: WordTaskProgressUncheckedUpdateManyWithoutUserNestedInput
   }
 
-  export type UserCreateWithoutWordProgressesInput = {
+  export type UserCreateWithoutLanguageProgressesInput = {
     email: string
     username: string
     password: string
@@ -16589,14 +28291,23 @@ export namespace Prisma {
     lastLoginAt?: Date | string | null
     provider?: string | null
     refreshToken?: string | null
+    totalXP?: number
+    currentStreak?: number
+    longestStreak?: number
+    totalLearningTime?: number
+    lastActiveAt?: Date | string | null
+    setting?: SettingCreateNestedOneWithoutUserInput
+    words?: WordCreateNestedManyWithoutUserInput
+    skillProgresses?: SkillProgressCreateNestedManyWithoutUserInput
+    achievements?: UserAchievementCreateNestedManyWithoutUserInput
+    dailyStats?: DailyStatsCreateNestedManyWithoutUserInput
     enrollments?: EnrollmentCreateNestedManyWithoutUserInput
     courses?: CourseCreateNestedManyWithoutAuthorInput
     tasks?: TaskCreateNestedManyWithoutAuthorInput
-    setting?: SettingCreateNestedOneWithoutUserInput
-    words?: WordCreateNestedManyWithoutUserInput
+    wordProgresses?: WordTaskProgressCreateNestedManyWithoutUserInput
   }
 
-  export type UserUncheckedCreateWithoutWordProgressesInput = {
+  export type UserUncheckedCreateWithoutLanguageProgressesInput = {
     id?: number
     email: string
     username: string
@@ -16610,21 +28321,363 @@ export namespace Prisma {
     lastLoginAt?: Date | string | null
     provider?: string | null
     refreshToken?: string | null
+    totalXP?: number
+    currentStreak?: number
+    longestStreak?: number
+    totalLearningTime?: number
+    lastActiveAt?: Date | string | null
+    setting?: SettingUncheckedCreateNestedOneWithoutUserInput
+    words?: WordUncheckedCreateNestedManyWithoutUserInput
+    skillProgresses?: SkillProgressUncheckedCreateNestedManyWithoutUserInput
+    achievements?: UserAchievementUncheckedCreateNestedManyWithoutUserInput
+    dailyStats?: DailyStatsUncheckedCreateNestedManyWithoutUserInput
     enrollments?: EnrollmentUncheckedCreateNestedManyWithoutUserInput
     courses?: CourseUncheckedCreateNestedManyWithoutAuthorInput
     tasks?: TaskUncheckedCreateNestedManyWithoutAuthorInput
-    setting?: SettingUncheckedCreateNestedOneWithoutUserInput
-    words?: WordUncheckedCreateNestedManyWithoutUserInput
+    wordProgresses?: WordTaskProgressUncheckedCreateNestedManyWithoutUserInput
   }
 
-  export type UserCreateOrConnectWithoutWordProgressesInput = {
+  export type UserCreateOrConnectWithoutLanguageProgressesInput = {
     where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutWordProgressesInput, UserUncheckedCreateWithoutWordProgressesInput>
+    create: XOR<UserCreateWithoutLanguageProgressesInput, UserUncheckedCreateWithoutLanguageProgressesInput>
+  }
+
+  export type SkillProgressCreateWithoutLanguageProgressInput = {
+    skillType: $Enums.CoreSkillType
+    cefrLevel?: $Enums.CEFRLevel
+    levelProgress?: number
+    xpEarned?: number
+    totalPracticed?: number
+    correctAnswers?: number
+    totalAnswers?: number
+    currentAccuracy?: number
+    timeSpent?: number
+    totalWordsStudied?: number
+    wordsLearned?: number
+    wordsReviewing?: number
+    lastPracticed?: Date | string | null
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutSkillProgressesInput
+  }
+
+  export type SkillProgressUncheckedCreateWithoutLanguageProgressInput = {
+    id?: number
+    userId: number
+    skillType: $Enums.CoreSkillType
+    cefrLevel?: $Enums.CEFRLevel
+    levelProgress?: number
+    xpEarned?: number
+    totalPracticed?: number
+    correctAnswers?: number
+    totalAnswers?: number
+    currentAccuracy?: number
+    timeSpent?: number
+    totalWordsStudied?: number
+    wordsLearned?: number
+    wordsReviewing?: number
+    lastPracticed?: Date | string | null
+    updatedAt?: Date | string
+  }
+
+  export type SkillProgressCreateOrConnectWithoutLanguageProgressInput = {
+    where: SkillProgressWhereUniqueInput
+    create: XOR<SkillProgressCreateWithoutLanguageProgressInput, SkillProgressUncheckedCreateWithoutLanguageProgressInput>
+  }
+
+  export type SkillProgressCreateManyLanguageProgressInputEnvelope = {
+    data: SkillProgressCreateManyLanguageProgressInput | SkillProgressCreateManyLanguageProgressInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UserUpsertWithoutLanguageProgressesInput = {
+    update: XOR<UserUpdateWithoutLanguageProgressesInput, UserUncheckedUpdateWithoutLanguageProgressesInput>
+    create: XOR<UserCreateWithoutLanguageProgressesInput, UserUncheckedCreateWithoutLanguageProgressesInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutLanguageProgressesInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutLanguageProgressesInput, UserUncheckedUpdateWithoutLanguageProgressesInput>
+  }
+
+  export type UserUpdateWithoutLanguageProgressesInput = {
+    email?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    provider?: NullableStringFieldUpdateOperationsInput | string | null
+    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    totalXP?: IntFieldUpdateOperationsInput | number
+    currentStreak?: IntFieldUpdateOperationsInput | number
+    longestStreak?: IntFieldUpdateOperationsInput | number
+    totalLearningTime?: IntFieldUpdateOperationsInput | number
+    lastActiveAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    setting?: SettingUpdateOneWithoutUserNestedInput
+    words?: WordUpdateManyWithoutUserNestedInput
+    skillProgresses?: SkillProgressUpdateManyWithoutUserNestedInput
+    achievements?: UserAchievementUpdateManyWithoutUserNestedInput
+    dailyStats?: DailyStatsUpdateManyWithoutUserNestedInput
+    enrollments?: EnrollmentUpdateManyWithoutUserNestedInput
+    courses?: CourseUpdateManyWithoutAuthorNestedInput
+    tasks?: TaskUpdateManyWithoutAuthorNestedInput
+    wordProgresses?: WordTaskProgressUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutLanguageProgressesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    email?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    provider?: NullableStringFieldUpdateOperationsInput | string | null
+    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    totalXP?: IntFieldUpdateOperationsInput | number
+    currentStreak?: IntFieldUpdateOperationsInput | number
+    longestStreak?: IntFieldUpdateOperationsInput | number
+    totalLearningTime?: IntFieldUpdateOperationsInput | number
+    lastActiveAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    setting?: SettingUncheckedUpdateOneWithoutUserNestedInput
+    words?: WordUncheckedUpdateManyWithoutUserNestedInput
+    skillProgresses?: SkillProgressUncheckedUpdateManyWithoutUserNestedInput
+    achievements?: UserAchievementUncheckedUpdateManyWithoutUserNestedInput
+    dailyStats?: DailyStatsUncheckedUpdateManyWithoutUserNestedInput
+    enrollments?: EnrollmentUncheckedUpdateManyWithoutUserNestedInput
+    courses?: CourseUncheckedUpdateManyWithoutAuthorNestedInput
+    tasks?: TaskUncheckedUpdateManyWithoutAuthorNestedInput
+    wordProgresses?: WordTaskProgressUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type SkillProgressUpsertWithWhereUniqueWithoutLanguageProgressInput = {
+    where: SkillProgressWhereUniqueInput
+    update: XOR<SkillProgressUpdateWithoutLanguageProgressInput, SkillProgressUncheckedUpdateWithoutLanguageProgressInput>
+    create: XOR<SkillProgressCreateWithoutLanguageProgressInput, SkillProgressUncheckedCreateWithoutLanguageProgressInput>
+  }
+
+  export type SkillProgressUpdateWithWhereUniqueWithoutLanguageProgressInput = {
+    where: SkillProgressWhereUniqueInput
+    data: XOR<SkillProgressUpdateWithoutLanguageProgressInput, SkillProgressUncheckedUpdateWithoutLanguageProgressInput>
+  }
+
+  export type SkillProgressUpdateManyWithWhereWithoutLanguageProgressInput = {
+    where: SkillProgressScalarWhereInput
+    data: XOR<SkillProgressUpdateManyMutationInput, SkillProgressUncheckedUpdateManyWithoutLanguageProgressInput>
+  }
+
+  export type UserCreateWithoutSkillProgressesInput = {
+    email: string
+    username: string
+    password: string
+    role?: $Enums.Role
+    avatar?: string | null
+    isEmailVerified?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    deleteAt?: Date | string | null
+    lastLoginAt?: Date | string | null
+    provider?: string | null
+    refreshToken?: string | null
+    totalXP?: number
+    currentStreak?: number
+    longestStreak?: number
+    totalLearningTime?: number
+    lastActiveAt?: Date | string | null
+    setting?: SettingCreateNestedOneWithoutUserInput
+    words?: WordCreateNestedManyWithoutUserInput
+    languageProgresses?: LanguageProgressCreateNestedManyWithoutUserInput
+    achievements?: UserAchievementCreateNestedManyWithoutUserInput
+    dailyStats?: DailyStatsCreateNestedManyWithoutUserInput
+    enrollments?: EnrollmentCreateNestedManyWithoutUserInput
+    courses?: CourseCreateNestedManyWithoutAuthorInput
+    tasks?: TaskCreateNestedManyWithoutAuthorInput
+    wordProgresses?: WordTaskProgressCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutSkillProgressesInput = {
+    id?: number
+    email: string
+    username: string
+    password: string
+    role?: $Enums.Role
+    avatar?: string | null
+    isEmailVerified?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    deleteAt?: Date | string | null
+    lastLoginAt?: Date | string | null
+    provider?: string | null
+    refreshToken?: string | null
+    totalXP?: number
+    currentStreak?: number
+    longestStreak?: number
+    totalLearningTime?: number
+    lastActiveAt?: Date | string | null
+    setting?: SettingUncheckedCreateNestedOneWithoutUserInput
+    words?: WordUncheckedCreateNestedManyWithoutUserInput
+    languageProgresses?: LanguageProgressUncheckedCreateNestedManyWithoutUserInput
+    achievements?: UserAchievementUncheckedCreateNestedManyWithoutUserInput
+    dailyStats?: DailyStatsUncheckedCreateNestedManyWithoutUserInput
+    enrollments?: EnrollmentUncheckedCreateNestedManyWithoutUserInput
+    courses?: CourseUncheckedCreateNestedManyWithoutAuthorInput
+    tasks?: TaskUncheckedCreateNestedManyWithoutAuthorInput
+    wordProgresses?: WordTaskProgressUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutSkillProgressesInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutSkillProgressesInput, UserUncheckedCreateWithoutSkillProgressesInput>
+  }
+
+  export type LanguageProgressCreateWithoutSkillProgressesInput = {
+    language: $Enums.Language
+    overallCEFR?: $Enums.CEFRLevel
+    overallProgress?: number
+    totalXP?: number
+    totalTime?: number
+    lastActiveAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutLanguageProgressesInput
+  }
+
+  export type LanguageProgressUncheckedCreateWithoutSkillProgressesInput = {
+    id?: number
+    userId: number
+    language: $Enums.Language
+    overallCEFR?: $Enums.CEFRLevel
+    overallProgress?: number
+    totalXP?: number
+    totalTime?: number
+    lastActiveAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type LanguageProgressCreateOrConnectWithoutSkillProgressesInput = {
+    where: LanguageProgressWhereUniqueInput
+    create: XOR<LanguageProgressCreateWithoutSkillProgressesInput, LanguageProgressUncheckedCreateWithoutSkillProgressesInput>
+  }
+
+  export type UserUpsertWithoutSkillProgressesInput = {
+    update: XOR<UserUpdateWithoutSkillProgressesInput, UserUncheckedUpdateWithoutSkillProgressesInput>
+    create: XOR<UserCreateWithoutSkillProgressesInput, UserUncheckedCreateWithoutSkillProgressesInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutSkillProgressesInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutSkillProgressesInput, UserUncheckedUpdateWithoutSkillProgressesInput>
+  }
+
+  export type UserUpdateWithoutSkillProgressesInput = {
+    email?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    provider?: NullableStringFieldUpdateOperationsInput | string | null
+    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    totalXP?: IntFieldUpdateOperationsInput | number
+    currentStreak?: IntFieldUpdateOperationsInput | number
+    longestStreak?: IntFieldUpdateOperationsInput | number
+    totalLearningTime?: IntFieldUpdateOperationsInput | number
+    lastActiveAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    setting?: SettingUpdateOneWithoutUserNestedInput
+    words?: WordUpdateManyWithoutUserNestedInput
+    languageProgresses?: LanguageProgressUpdateManyWithoutUserNestedInput
+    achievements?: UserAchievementUpdateManyWithoutUserNestedInput
+    dailyStats?: DailyStatsUpdateManyWithoutUserNestedInput
+    enrollments?: EnrollmentUpdateManyWithoutUserNestedInput
+    courses?: CourseUpdateManyWithoutAuthorNestedInput
+    tasks?: TaskUpdateManyWithoutAuthorNestedInput
+    wordProgresses?: WordTaskProgressUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutSkillProgressesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    email?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    provider?: NullableStringFieldUpdateOperationsInput | string | null
+    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    totalXP?: IntFieldUpdateOperationsInput | number
+    currentStreak?: IntFieldUpdateOperationsInput | number
+    longestStreak?: IntFieldUpdateOperationsInput | number
+    totalLearningTime?: IntFieldUpdateOperationsInput | number
+    lastActiveAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    setting?: SettingUncheckedUpdateOneWithoutUserNestedInput
+    words?: WordUncheckedUpdateManyWithoutUserNestedInput
+    languageProgresses?: LanguageProgressUncheckedUpdateManyWithoutUserNestedInput
+    achievements?: UserAchievementUncheckedUpdateManyWithoutUserNestedInput
+    dailyStats?: DailyStatsUncheckedUpdateManyWithoutUserNestedInput
+    enrollments?: EnrollmentUncheckedUpdateManyWithoutUserNestedInput
+    courses?: CourseUncheckedUpdateManyWithoutAuthorNestedInput
+    tasks?: TaskUncheckedUpdateManyWithoutAuthorNestedInput
+    wordProgresses?: WordTaskProgressUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type LanguageProgressUpsertWithoutSkillProgressesInput = {
+    update: XOR<LanguageProgressUpdateWithoutSkillProgressesInput, LanguageProgressUncheckedUpdateWithoutSkillProgressesInput>
+    create: XOR<LanguageProgressCreateWithoutSkillProgressesInput, LanguageProgressUncheckedCreateWithoutSkillProgressesInput>
+    where?: LanguageProgressWhereInput
+  }
+
+  export type LanguageProgressUpdateToOneWithWhereWithoutSkillProgressesInput = {
+    where?: LanguageProgressWhereInput
+    data: XOR<LanguageProgressUpdateWithoutSkillProgressesInput, LanguageProgressUncheckedUpdateWithoutSkillProgressesInput>
+  }
+
+  export type LanguageProgressUpdateWithoutSkillProgressesInput = {
+    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    overallCEFR?: EnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel
+    overallProgress?: FloatFieldUpdateOperationsInput | number
+    totalXP?: IntFieldUpdateOperationsInput | number
+    totalTime?: IntFieldUpdateOperationsInput | number
+    lastActiveAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutLanguageProgressesNestedInput
+  }
+
+  export type LanguageProgressUncheckedUpdateWithoutSkillProgressesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    overallCEFR?: EnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel
+    overallProgress?: FloatFieldUpdateOperationsInput | number
+    totalXP?: IntFieldUpdateOperationsInput | number
+    totalTime?: IntFieldUpdateOperationsInput | number
+    lastActiveAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type WordCreateWithoutProgressesInput = {
     text: string
-    language: $Enums.Language
+    language?: $Enums.Language
     translate?: WordCreatetranslateInput | string[]
     definitions?: WordCreatedefinitionsInput | string[]
     synonyms?: WordCreatesynonymsInput | string[]
@@ -16644,7 +28697,7 @@ export namespace Prisma {
   export type WordUncheckedCreateWithoutProgressesInput = {
     id?: number
     text: string
-    language: $Enums.Language
+    language?: $Enums.Language
     translate?: WordCreatetranslateInput | string[]
     definitions?: WordCreatedefinitionsInput | string[]
     synonyms?: WordCreatesynonymsInput | string[]
@@ -16666,56 +28719,68 @@ export namespace Prisma {
     create: XOR<WordCreateWithoutProgressesInput, WordUncheckedCreateWithoutProgressesInput>
   }
 
-  export type UserUpsertWithoutWordProgressesInput = {
-    update: XOR<UserUpdateWithoutWordProgressesInput, UserUncheckedUpdateWithoutWordProgressesInput>
+  export type UserCreateWithoutWordProgressesInput = {
+    email: string
+    username: string
+    password: string
+    role?: $Enums.Role
+    avatar?: string | null
+    isEmailVerified?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    deleteAt?: Date | string | null
+    lastLoginAt?: Date | string | null
+    provider?: string | null
+    refreshToken?: string | null
+    totalXP?: number
+    currentStreak?: number
+    longestStreak?: number
+    totalLearningTime?: number
+    lastActiveAt?: Date | string | null
+    setting?: SettingCreateNestedOneWithoutUserInput
+    words?: WordCreateNestedManyWithoutUserInput
+    languageProgresses?: LanguageProgressCreateNestedManyWithoutUserInput
+    skillProgresses?: SkillProgressCreateNestedManyWithoutUserInput
+    achievements?: UserAchievementCreateNestedManyWithoutUserInput
+    dailyStats?: DailyStatsCreateNestedManyWithoutUserInput
+    enrollments?: EnrollmentCreateNestedManyWithoutUserInput
+    courses?: CourseCreateNestedManyWithoutAuthorInput
+    tasks?: TaskCreateNestedManyWithoutAuthorInput
+  }
+
+  export type UserUncheckedCreateWithoutWordProgressesInput = {
+    id?: number
+    email: string
+    username: string
+    password: string
+    role?: $Enums.Role
+    avatar?: string | null
+    isEmailVerified?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    deleteAt?: Date | string | null
+    lastLoginAt?: Date | string | null
+    provider?: string | null
+    refreshToken?: string | null
+    totalXP?: number
+    currentStreak?: number
+    longestStreak?: number
+    totalLearningTime?: number
+    lastActiveAt?: Date | string | null
+    setting?: SettingUncheckedCreateNestedOneWithoutUserInput
+    words?: WordUncheckedCreateNestedManyWithoutUserInput
+    languageProgresses?: LanguageProgressUncheckedCreateNestedManyWithoutUserInput
+    skillProgresses?: SkillProgressUncheckedCreateNestedManyWithoutUserInput
+    achievements?: UserAchievementUncheckedCreateNestedManyWithoutUserInput
+    dailyStats?: DailyStatsUncheckedCreateNestedManyWithoutUserInput
+    enrollments?: EnrollmentUncheckedCreateNestedManyWithoutUserInput
+    courses?: CourseUncheckedCreateNestedManyWithoutAuthorInput
+    tasks?: TaskUncheckedCreateNestedManyWithoutAuthorInput
+  }
+
+  export type UserCreateOrConnectWithoutWordProgressesInput = {
+    where: UserWhereUniqueInput
     create: XOR<UserCreateWithoutWordProgressesInput, UserUncheckedCreateWithoutWordProgressesInput>
-    where?: UserWhereInput
-  }
-
-  export type UserUpdateToOneWithWhereWithoutWordProgressesInput = {
-    where?: UserWhereInput
-    data: XOR<UserUpdateWithoutWordProgressesInput, UserUncheckedUpdateWithoutWordProgressesInput>
-  }
-
-  export type UserUpdateWithoutWordProgressesInput = {
-    email?: StringFieldUpdateOperationsInput | string
-    username?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    avatar?: NullableStringFieldUpdateOperationsInput | string | null
-    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    provider?: NullableStringFieldUpdateOperationsInput | string | null
-    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
-    enrollments?: EnrollmentUpdateManyWithoutUserNestedInput
-    courses?: CourseUpdateManyWithoutAuthorNestedInput
-    tasks?: TaskUpdateManyWithoutAuthorNestedInput
-    setting?: SettingUpdateOneWithoutUserNestedInput
-    words?: WordUpdateManyWithoutUserNestedInput
-  }
-
-  export type UserUncheckedUpdateWithoutWordProgressesInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    email?: StringFieldUpdateOperationsInput | string
-    username?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    avatar?: NullableStringFieldUpdateOperationsInput | string | null
-    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    provider?: NullableStringFieldUpdateOperationsInput | string | null
-    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
-    enrollments?: EnrollmentUncheckedUpdateManyWithoutUserNestedInput
-    courses?: CourseUncheckedUpdateManyWithoutAuthorNestedInput
-    tasks?: TaskUncheckedUpdateManyWithoutAuthorNestedInput
-    setting?: SettingUncheckedUpdateOneWithoutUserNestedInput
-    words?: WordUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type WordUpsertWithoutProgressesInput = {
@@ -16768,53 +28833,465 @@ export namespace Prisma {
     userId?: IntFieldUpdateOperationsInput | number
   }
 
-  export type EnrollmentCreateManyUserInput = {
-    id?: number
-    courseId: number
-    progress?: number
-    enrolledAt?: Date | string
+  export type UserUpsertWithoutWordProgressesInput = {
+    update: XOR<UserUpdateWithoutWordProgressesInput, UserUncheckedUpdateWithoutWordProgressesInput>
+    create: XOR<UserCreateWithoutWordProgressesInput, UserUncheckedCreateWithoutWordProgressesInput>
+    where?: UserWhereInput
   }
 
-  export type WordTaskProgressCreateManyUserInput = {
-    id?: number
-    wordId: number
-    taskType: $Enums.WordTaskType
-    isPassed?: boolean
-    score?: number
-    attempts?: number
+  export type UserUpdateToOneWithWhereWithoutWordProgressesInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutWordProgressesInput, UserUncheckedUpdateWithoutWordProgressesInput>
   }
 
-  export type CourseCreateManyAuthorInput = {
-    id?: number
-    title: string
-    description?: string | null
-    imageUrl?: string | null
-    level?: $Enums.Level
-    isPublished?: boolean
+  export type UserUpdateWithoutWordProgressesInput = {
+    email?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    provider?: NullableStringFieldUpdateOperationsInput | string | null
+    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    totalXP?: IntFieldUpdateOperationsInput | number
+    currentStreak?: IntFieldUpdateOperationsInput | number
+    longestStreak?: IntFieldUpdateOperationsInput | number
+    totalLearningTime?: IntFieldUpdateOperationsInput | number
+    lastActiveAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    setting?: SettingUpdateOneWithoutUserNestedInput
+    words?: WordUpdateManyWithoutUserNestedInput
+    languageProgresses?: LanguageProgressUpdateManyWithoutUserNestedInput
+    skillProgresses?: SkillProgressUpdateManyWithoutUserNestedInput
+    achievements?: UserAchievementUpdateManyWithoutUserNestedInput
+    dailyStats?: DailyStatsUpdateManyWithoutUserNestedInput
+    enrollments?: EnrollmentUpdateManyWithoutUserNestedInput
+    courses?: CourseUpdateManyWithoutAuthorNestedInput
+    tasks?: TaskUpdateManyWithoutAuthorNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutWordProgressesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    email?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    provider?: NullableStringFieldUpdateOperationsInput | string | null
+    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    totalXP?: IntFieldUpdateOperationsInput | number
+    currentStreak?: IntFieldUpdateOperationsInput | number
+    longestStreak?: IntFieldUpdateOperationsInput | number
+    totalLearningTime?: IntFieldUpdateOperationsInput | number
+    lastActiveAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    setting?: SettingUncheckedUpdateOneWithoutUserNestedInput
+    words?: WordUncheckedUpdateManyWithoutUserNestedInput
+    languageProgresses?: LanguageProgressUncheckedUpdateManyWithoutUserNestedInput
+    skillProgresses?: SkillProgressUncheckedUpdateManyWithoutUserNestedInput
+    achievements?: UserAchievementUncheckedUpdateManyWithoutUserNestedInput
+    dailyStats?: DailyStatsUncheckedUpdateManyWithoutUserNestedInput
+    enrollments?: EnrollmentUncheckedUpdateManyWithoutUserNestedInput
+    courses?: CourseUncheckedUpdateManyWithoutAuthorNestedInput
+    tasks?: TaskUncheckedUpdateManyWithoutAuthorNestedInput
+  }
+
+  export type UserCreateWithoutDailyStatsInput = {
+    email: string
+    username: string
+    password: string
+    role?: $Enums.Role
+    avatar?: string | null
+    isEmailVerified?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
-    tags?: CourseCreatetagsInput | string[]
+    deleteAt?: Date | string | null
+    lastLoginAt?: Date | string | null
+    provider?: string | null
+    refreshToken?: string | null
+    totalXP?: number
+    currentStreak?: number
+    longestStreak?: number
+    totalLearningTime?: number
+    lastActiveAt?: Date | string | null
+    setting?: SettingCreateNestedOneWithoutUserInput
+    words?: WordCreateNestedManyWithoutUserInput
+    languageProgresses?: LanguageProgressCreateNestedManyWithoutUserInput
+    skillProgresses?: SkillProgressCreateNestedManyWithoutUserInput
+    achievements?: UserAchievementCreateNestedManyWithoutUserInput
+    enrollments?: EnrollmentCreateNestedManyWithoutUserInput
+    courses?: CourseCreateNestedManyWithoutAuthorInput
+    tasks?: TaskCreateNestedManyWithoutAuthorInput
+    wordProgresses?: WordTaskProgressCreateNestedManyWithoutUserInput
   }
 
-  export type TaskCreateManyAuthorInput = {
+  export type UserUncheckedCreateWithoutDailyStatsInput = {
     id?: number
-    question: string
-    answer: string
-    options?: TaskCreateoptionsInput | string[]
-    type?: $Enums.TaskType
-    score?: number | null
+    email: string
+    username: string
+    password: string
+    role?: $Enums.Role
+    avatar?: string | null
+    isEmailVerified?: boolean
     createdAt?: Date | string
-    language?: $Enums.Language
-    order?: number | null
-    explanation?: string | null
-    videoId?: number | null
-    courseId?: number | null
+    updatedAt?: Date | string
+    deleteAt?: Date | string | null
+    lastLoginAt?: Date | string | null
+    provider?: string | null
+    refreshToken?: string | null
+    totalXP?: number
+    currentStreak?: number
+    longestStreak?: number
+    totalLearningTime?: number
+    lastActiveAt?: Date | string | null
+    setting?: SettingUncheckedCreateNestedOneWithoutUserInput
+    words?: WordUncheckedCreateNestedManyWithoutUserInput
+    languageProgresses?: LanguageProgressUncheckedCreateNestedManyWithoutUserInput
+    skillProgresses?: SkillProgressUncheckedCreateNestedManyWithoutUserInput
+    achievements?: UserAchievementUncheckedCreateNestedManyWithoutUserInput
+    enrollments?: EnrollmentUncheckedCreateNestedManyWithoutUserInput
+    courses?: CourseUncheckedCreateNestedManyWithoutAuthorInput
+    tasks?: TaskUncheckedCreateNestedManyWithoutAuthorInput
+    wordProgresses?: WordTaskProgressUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutDailyStatsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutDailyStatsInput, UserUncheckedCreateWithoutDailyStatsInput>
+  }
+
+  export type UserUpsertWithoutDailyStatsInput = {
+    update: XOR<UserUpdateWithoutDailyStatsInput, UserUncheckedUpdateWithoutDailyStatsInput>
+    create: XOR<UserCreateWithoutDailyStatsInput, UserUncheckedCreateWithoutDailyStatsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutDailyStatsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutDailyStatsInput, UserUncheckedUpdateWithoutDailyStatsInput>
+  }
+
+  export type UserUpdateWithoutDailyStatsInput = {
+    email?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    provider?: NullableStringFieldUpdateOperationsInput | string | null
+    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    totalXP?: IntFieldUpdateOperationsInput | number
+    currentStreak?: IntFieldUpdateOperationsInput | number
+    longestStreak?: IntFieldUpdateOperationsInput | number
+    totalLearningTime?: IntFieldUpdateOperationsInput | number
+    lastActiveAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    setting?: SettingUpdateOneWithoutUserNestedInput
+    words?: WordUpdateManyWithoutUserNestedInput
+    languageProgresses?: LanguageProgressUpdateManyWithoutUserNestedInput
+    skillProgresses?: SkillProgressUpdateManyWithoutUserNestedInput
+    achievements?: UserAchievementUpdateManyWithoutUserNestedInput
+    enrollments?: EnrollmentUpdateManyWithoutUserNestedInput
+    courses?: CourseUpdateManyWithoutAuthorNestedInput
+    tasks?: TaskUpdateManyWithoutAuthorNestedInput
+    wordProgresses?: WordTaskProgressUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutDailyStatsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    email?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    provider?: NullableStringFieldUpdateOperationsInput | string | null
+    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    totalXP?: IntFieldUpdateOperationsInput | number
+    currentStreak?: IntFieldUpdateOperationsInput | number
+    longestStreak?: IntFieldUpdateOperationsInput | number
+    totalLearningTime?: IntFieldUpdateOperationsInput | number
+    lastActiveAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    setting?: SettingUncheckedUpdateOneWithoutUserNestedInput
+    words?: WordUncheckedUpdateManyWithoutUserNestedInput
+    languageProgresses?: LanguageProgressUncheckedUpdateManyWithoutUserNestedInput
+    skillProgresses?: SkillProgressUncheckedUpdateManyWithoutUserNestedInput
+    achievements?: UserAchievementUncheckedUpdateManyWithoutUserNestedInput
+    enrollments?: EnrollmentUncheckedUpdateManyWithoutUserNestedInput
+    courses?: CourseUncheckedUpdateManyWithoutAuthorNestedInput
+    tasks?: TaskUncheckedUpdateManyWithoutAuthorNestedInput
+    wordProgresses?: WordTaskProgressUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserAchievementCreateWithoutAchievementInput = {
+    unlockedAt?: Date | string
+    language?: $Enums.Language | null
+    user: UserCreateNestedOneWithoutAchievementsInput
+  }
+
+  export type UserAchievementUncheckedCreateWithoutAchievementInput = {
+    id?: number
+    userId: number
+    unlockedAt?: Date | string
+    language?: $Enums.Language | null
+  }
+
+  export type UserAchievementCreateOrConnectWithoutAchievementInput = {
+    where: UserAchievementWhereUniqueInput
+    create: XOR<UserAchievementCreateWithoutAchievementInput, UserAchievementUncheckedCreateWithoutAchievementInput>
+  }
+
+  export type UserAchievementCreateManyAchievementInputEnvelope = {
+    data: UserAchievementCreateManyAchievementInput | UserAchievementCreateManyAchievementInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UserAchievementUpsertWithWhereUniqueWithoutAchievementInput = {
+    where: UserAchievementWhereUniqueInput
+    update: XOR<UserAchievementUpdateWithoutAchievementInput, UserAchievementUncheckedUpdateWithoutAchievementInput>
+    create: XOR<UserAchievementCreateWithoutAchievementInput, UserAchievementUncheckedCreateWithoutAchievementInput>
+  }
+
+  export type UserAchievementUpdateWithWhereUniqueWithoutAchievementInput = {
+    where: UserAchievementWhereUniqueInput
+    data: XOR<UserAchievementUpdateWithoutAchievementInput, UserAchievementUncheckedUpdateWithoutAchievementInput>
+  }
+
+  export type UserAchievementUpdateManyWithWhereWithoutAchievementInput = {
+    where: UserAchievementScalarWhereInput
+    data: XOR<UserAchievementUpdateManyMutationInput, UserAchievementUncheckedUpdateManyWithoutAchievementInput>
+  }
+
+  export type UserCreateWithoutAchievementsInput = {
+    email: string
+    username: string
+    password: string
+    role?: $Enums.Role
+    avatar?: string | null
+    isEmailVerified?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    deleteAt?: Date | string | null
+    lastLoginAt?: Date | string | null
+    provider?: string | null
+    refreshToken?: string | null
+    totalXP?: number
+    currentStreak?: number
+    longestStreak?: number
+    totalLearningTime?: number
+    lastActiveAt?: Date | string | null
+    setting?: SettingCreateNestedOneWithoutUserInput
+    words?: WordCreateNestedManyWithoutUserInput
+    languageProgresses?: LanguageProgressCreateNestedManyWithoutUserInput
+    skillProgresses?: SkillProgressCreateNestedManyWithoutUserInput
+    dailyStats?: DailyStatsCreateNestedManyWithoutUserInput
+    enrollments?: EnrollmentCreateNestedManyWithoutUserInput
+    courses?: CourseCreateNestedManyWithoutAuthorInput
+    tasks?: TaskCreateNestedManyWithoutAuthorInput
+    wordProgresses?: WordTaskProgressCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutAchievementsInput = {
+    id?: number
+    email: string
+    username: string
+    password: string
+    role?: $Enums.Role
+    avatar?: string | null
+    isEmailVerified?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    deleteAt?: Date | string | null
+    lastLoginAt?: Date | string | null
+    provider?: string | null
+    refreshToken?: string | null
+    totalXP?: number
+    currentStreak?: number
+    longestStreak?: number
+    totalLearningTime?: number
+    lastActiveAt?: Date | string | null
+    setting?: SettingUncheckedCreateNestedOneWithoutUserInput
+    words?: WordUncheckedCreateNestedManyWithoutUserInput
+    languageProgresses?: LanguageProgressUncheckedCreateNestedManyWithoutUserInput
+    skillProgresses?: SkillProgressUncheckedCreateNestedManyWithoutUserInput
+    dailyStats?: DailyStatsUncheckedCreateNestedManyWithoutUserInput
+    enrollments?: EnrollmentUncheckedCreateNestedManyWithoutUserInput
+    courses?: CourseUncheckedCreateNestedManyWithoutAuthorInput
+    tasks?: TaskUncheckedCreateNestedManyWithoutAuthorInput
+    wordProgresses?: WordTaskProgressUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutAchievementsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutAchievementsInput, UserUncheckedCreateWithoutAchievementsInput>
+  }
+
+  export type AchievementCreateWithoutUsersInput = {
+    name: string
+    description: string
+    type: $Enums.AchievementType
+    requiredSkill?: $Enums.CoreSkillType | null
+    requiredLevel?: $Enums.CEFRLevel | null
+    requiredOverall?: $Enums.CEFRLevel | null
+    requiredXP?: number | null
+    requiredStreak?: number | null
+    requiredAccuracy?: number | null
+    xpReward?: number
+    badge?: string | null
+    isActive?: boolean
+  }
+
+  export type AchievementUncheckedCreateWithoutUsersInput = {
+    id?: number
+    name: string
+    description: string
+    type: $Enums.AchievementType
+    requiredSkill?: $Enums.CoreSkillType | null
+    requiredLevel?: $Enums.CEFRLevel | null
+    requiredOverall?: $Enums.CEFRLevel | null
+    requiredXP?: number | null
+    requiredStreak?: number | null
+    requiredAccuracy?: number | null
+    xpReward?: number
+    badge?: string | null
+    isActive?: boolean
+  }
+
+  export type AchievementCreateOrConnectWithoutUsersInput = {
+    where: AchievementWhereUniqueInput
+    create: XOR<AchievementCreateWithoutUsersInput, AchievementUncheckedCreateWithoutUsersInput>
+  }
+
+  export type UserUpsertWithoutAchievementsInput = {
+    update: XOR<UserUpdateWithoutAchievementsInput, UserUncheckedUpdateWithoutAchievementsInput>
+    create: XOR<UserCreateWithoutAchievementsInput, UserUncheckedCreateWithoutAchievementsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutAchievementsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutAchievementsInput, UserUncheckedUpdateWithoutAchievementsInput>
+  }
+
+  export type UserUpdateWithoutAchievementsInput = {
+    email?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    provider?: NullableStringFieldUpdateOperationsInput | string | null
+    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    totalXP?: IntFieldUpdateOperationsInput | number
+    currentStreak?: IntFieldUpdateOperationsInput | number
+    longestStreak?: IntFieldUpdateOperationsInput | number
+    totalLearningTime?: IntFieldUpdateOperationsInput | number
+    lastActiveAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    setting?: SettingUpdateOneWithoutUserNestedInput
+    words?: WordUpdateManyWithoutUserNestedInput
+    languageProgresses?: LanguageProgressUpdateManyWithoutUserNestedInput
+    skillProgresses?: SkillProgressUpdateManyWithoutUserNestedInput
+    dailyStats?: DailyStatsUpdateManyWithoutUserNestedInput
+    enrollments?: EnrollmentUpdateManyWithoutUserNestedInput
+    courses?: CourseUpdateManyWithoutAuthorNestedInput
+    tasks?: TaskUpdateManyWithoutAuthorNestedInput
+    wordProgresses?: WordTaskProgressUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutAchievementsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    email?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    provider?: NullableStringFieldUpdateOperationsInput | string | null
+    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
+    totalXP?: IntFieldUpdateOperationsInput | number
+    currentStreak?: IntFieldUpdateOperationsInput | number
+    longestStreak?: IntFieldUpdateOperationsInput | number
+    totalLearningTime?: IntFieldUpdateOperationsInput | number
+    lastActiveAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    setting?: SettingUncheckedUpdateOneWithoutUserNestedInput
+    words?: WordUncheckedUpdateManyWithoutUserNestedInput
+    languageProgresses?: LanguageProgressUncheckedUpdateManyWithoutUserNestedInput
+    skillProgresses?: SkillProgressUncheckedUpdateManyWithoutUserNestedInput
+    dailyStats?: DailyStatsUncheckedUpdateManyWithoutUserNestedInput
+    enrollments?: EnrollmentUncheckedUpdateManyWithoutUserNestedInput
+    courses?: CourseUncheckedUpdateManyWithoutAuthorNestedInput
+    tasks?: TaskUncheckedUpdateManyWithoutAuthorNestedInput
+    wordProgresses?: WordTaskProgressUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type AchievementUpsertWithoutUsersInput = {
+    update: XOR<AchievementUpdateWithoutUsersInput, AchievementUncheckedUpdateWithoutUsersInput>
+    create: XOR<AchievementCreateWithoutUsersInput, AchievementUncheckedCreateWithoutUsersInput>
+    where?: AchievementWhereInput
+  }
+
+  export type AchievementUpdateToOneWithWhereWithoutUsersInput = {
+    where?: AchievementWhereInput
+    data: XOR<AchievementUpdateWithoutUsersInput, AchievementUncheckedUpdateWithoutUsersInput>
+  }
+
+  export type AchievementUpdateWithoutUsersInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    type?: EnumAchievementTypeFieldUpdateOperationsInput | $Enums.AchievementType
+    requiredSkill?: NullableEnumCoreSkillTypeFieldUpdateOperationsInput | $Enums.CoreSkillType | null
+    requiredLevel?: NullableEnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel | null
+    requiredOverall?: NullableEnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel | null
+    requiredXP?: NullableIntFieldUpdateOperationsInput | number | null
+    requiredStreak?: NullableIntFieldUpdateOperationsInput | number | null
+    requiredAccuracy?: NullableFloatFieldUpdateOperationsInput | number | null
+    xpReward?: IntFieldUpdateOperationsInput | number
+    badge?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type AchievementUncheckedUpdateWithoutUsersInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    type?: EnumAchievementTypeFieldUpdateOperationsInput | $Enums.AchievementType
+    requiredSkill?: NullableEnumCoreSkillTypeFieldUpdateOperationsInput | $Enums.CoreSkillType | null
+    requiredLevel?: NullableEnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel | null
+    requiredOverall?: NullableEnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel | null
+    requiredXP?: NullableIntFieldUpdateOperationsInput | number | null
+    requiredStreak?: NullableIntFieldUpdateOperationsInput | number | null
+    requiredAccuracy?: NullableFloatFieldUpdateOperationsInput | number | null
+    xpReward?: IntFieldUpdateOperationsInput | number
+    badge?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type WordCreateManyUserInput = {
     id?: number
     text: string
-    language: $Enums.Language
+    language?: $Enums.Language
     translate?: WordCreatetranslateInput | string[]
     definitions?: WordCreatedefinitionsInput | string[]
     synonyms?: WordCreatesynonymsInput | string[]
@@ -16830,135 +29307,113 @@ export namespace Prisma {
     audioUS?: string | null
   }
 
-  export type EnrollmentUpdateWithoutUserInput = {
-    progress?: FloatFieldUpdateOperationsInput | number
-    enrolledAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    course?: CourseUpdateOneRequiredWithoutEnrollmentsNestedInput
+  export type LanguageProgressCreateManyUserInput = {
+    id?: number
+    language: $Enums.Language
+    overallCEFR?: $Enums.CEFRLevel
+    overallProgress?: number
+    totalXP?: number
+    totalTime?: number
+    lastActiveAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
-  export type EnrollmentUncheckedUpdateWithoutUserInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    courseId?: IntFieldUpdateOperationsInput | number
-    progress?: FloatFieldUpdateOperationsInput | number
-    enrolledAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  export type SkillProgressCreateManyUserInput = {
+    id?: number
+    languageProgressId: number
+    skillType: $Enums.CoreSkillType
+    cefrLevel?: $Enums.CEFRLevel
+    levelProgress?: number
+    xpEarned?: number
+    totalPracticed?: number
+    correctAnswers?: number
+    totalAnswers?: number
+    currentAccuracy?: number
+    timeSpent?: number
+    totalWordsStudied?: number
+    wordsLearned?: number
+    wordsReviewing?: number
+    lastPracticed?: Date | string | null
+    updatedAt?: Date | string
   }
 
-  export type EnrollmentUncheckedUpdateManyWithoutUserInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    courseId?: IntFieldUpdateOperationsInput | number
-    progress?: FloatFieldUpdateOperationsInput | number
-    enrolledAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  export type UserAchievementCreateManyUserInput = {
+    id?: number
+    achievementId: number
+    unlockedAt?: Date | string
+    language?: $Enums.Language | null
   }
 
-  export type WordTaskProgressUpdateWithoutUserInput = {
-    taskType?: EnumWordTaskTypeFieldUpdateOperationsInput | $Enums.WordTaskType
-    isPassed?: BoolFieldUpdateOperationsInput | boolean
-    score?: IntFieldUpdateOperationsInput | number
-    attempts?: IntFieldUpdateOperationsInput | number
-    word?: WordUpdateOneRequiredWithoutProgressesNestedInput
+  export type DailyStatsCreateManyUserInput = {
+    id?: number
+    language: $Enums.Language
+    date: Date | string
+    totalXP?: number
+    totalTime?: number
+    tasksCompleted?: number
+    averageAccuracy?: number
+    skillsStats?: JsonNullValueInput | InputJsonValue
+    newWordsLearned?: number
+    wordsReviewed?: number
   }
 
-  export type WordTaskProgressUncheckedUpdateWithoutUserInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    wordId?: IntFieldUpdateOperationsInput | number
-    taskType?: EnumWordTaskTypeFieldUpdateOperationsInput | $Enums.WordTaskType
-    isPassed?: BoolFieldUpdateOperationsInput | boolean
-    score?: IntFieldUpdateOperationsInput | number
-    attempts?: IntFieldUpdateOperationsInput | number
+  export type EnrollmentCreateManyUserInput = {
+    id?: number
+    courseId: number
+    progress?: number
+    enrolledAt?: Date | string
   }
 
-  export type WordTaskProgressUncheckedUpdateManyWithoutUserInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    wordId?: IntFieldUpdateOperationsInput | number
-    taskType?: EnumWordTaskTypeFieldUpdateOperationsInput | $Enums.WordTaskType
-    isPassed?: BoolFieldUpdateOperationsInput | boolean
-    score?: IntFieldUpdateOperationsInput | number
-    attempts?: IntFieldUpdateOperationsInput | number
+  export type CourseCreateManyAuthorInput = {
+    id?: number
+    title: string
+    description?: string | null
+    imageUrl?: string | null
+    level?: $Enums.CEFRLevel
+    targetSkills?: CourseCreatetargetSkillsInput | $Enums.CoreSkillType[]
+    isPublished?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    tags?: CourseCreatetagsInput | string[]
+    estimatedHours?: number | null
+    totalXP?: number
   }
 
-  export type CourseUpdateWithoutAuthorInput = {
-    title?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
-    isPublished?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    tags?: CourseUpdatetagsInput | string[]
-    tasks?: TaskUpdateManyWithoutCourseNestedInput
-    enrollments?: EnrollmentUpdateManyWithoutCourseNestedInput
-    videos?: VideoUpdateManyWithoutCourseNestedInput
+  export type TaskCreateManyAuthorInput = {
+    id?: number
+    question: string
+    answer: string
+    options?: TaskCreateoptionsInput | string[]
+    type?: $Enums.TaskType
+    score?: number | null
+    createdAt?: Date | string
+    order?: number | null
+    explanation?: string | null
+    skillType: $Enums.CoreSkillType
+    language?: $Enums.Language
+    cefrLevel?: $Enums.CEFRLevel
+    xpReward?: number
+    timeLimit?: number | null
+    videoId?: number | null
+    courseId?: number | null
   }
 
-  export type CourseUncheckedUpdateWithoutAuthorInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    title?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
-    isPublished?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    tags?: CourseUpdatetagsInput | string[]
-    tasks?: TaskUncheckedUpdateManyWithoutCourseNestedInput
-    enrollments?: EnrollmentUncheckedUpdateManyWithoutCourseNestedInput
-    videos?: VideoUncheckedUpdateManyWithoutCourseNestedInput
-  }
-
-  export type CourseUncheckedUpdateManyWithoutAuthorInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    title?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    level?: EnumLevelFieldUpdateOperationsInput | $Enums.Level
-    isPublished?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    tags?: CourseUpdatetagsInput | string[]
-  }
-
-  export type TaskUpdateWithoutAuthorInput = {
-    question?: StringFieldUpdateOperationsInput | string
-    answer?: StringFieldUpdateOperationsInput | string
-    options?: TaskUpdateoptionsInput | string[]
-    type?: EnumTaskTypeFieldUpdateOperationsInput | $Enums.TaskType
-    score?: NullableIntFieldUpdateOperationsInput | number | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
-    order?: NullableIntFieldUpdateOperationsInput | number | null
-    explanation?: NullableStringFieldUpdateOperationsInput | string | null
-    video?: VideoUpdateOneWithoutTasksNestedInput
-    course?: CourseUpdateOneWithoutTasksNestedInput
-  }
-
-  export type TaskUncheckedUpdateWithoutAuthorInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    question?: StringFieldUpdateOperationsInput | string
-    answer?: StringFieldUpdateOperationsInput | string
-    options?: TaskUpdateoptionsInput | string[]
-    type?: EnumTaskTypeFieldUpdateOperationsInput | $Enums.TaskType
-    score?: NullableIntFieldUpdateOperationsInput | number | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
-    order?: NullableIntFieldUpdateOperationsInput | number | null
-    explanation?: NullableStringFieldUpdateOperationsInput | string | null
-    videoId?: NullableIntFieldUpdateOperationsInput | number | null
-    courseId?: NullableIntFieldUpdateOperationsInput | number | null
-  }
-
-  export type TaskUncheckedUpdateManyWithoutAuthorInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    question?: StringFieldUpdateOperationsInput | string
-    answer?: StringFieldUpdateOperationsInput | string
-    options?: TaskUpdateoptionsInput | string[]
-    type?: EnumTaskTypeFieldUpdateOperationsInput | $Enums.TaskType
-    score?: NullableIntFieldUpdateOperationsInput | number | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
-    order?: NullableIntFieldUpdateOperationsInput | number | null
-    explanation?: NullableStringFieldUpdateOperationsInput | string | null
-    videoId?: NullableIntFieldUpdateOperationsInput | number | null
-    courseId?: NullableIntFieldUpdateOperationsInput | number | null
+  export type WordTaskProgressCreateManyUserInput = {
+    id?: number
+    wordId: number
+    skillType?: $Enums.CoreSkillType
+    isPassed?: boolean
+    score?: number
+    attempts?: number
+    correctCount?: number
+    nextReviewAt?: Date | string | null
+    reviewInterval?: number
+    easeFactor?: number
+    lastAttempt?: Date | string | null
+    timeSpent?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type WordUpdateWithoutUserInput = {
@@ -17019,39 +29474,398 @@ export namespace Prisma {
     audioUS?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
-  export type WordTaskProgressCreateManyWordInput = {
-    id?: number
-    userId: number
-    taskType: $Enums.WordTaskType
-    isPassed?: boolean
-    score?: number
-    attempts?: number
+  export type LanguageProgressUpdateWithoutUserInput = {
+    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    overallCEFR?: EnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel
+    overallProgress?: FloatFieldUpdateOperationsInput | number
+    totalXP?: IntFieldUpdateOperationsInput | number
+    totalTime?: IntFieldUpdateOperationsInput | number
+    lastActiveAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    skillProgresses?: SkillProgressUpdateManyWithoutLanguageProgressNestedInput
   }
 
-  export type WordTaskProgressUpdateWithoutWordInput = {
-    taskType?: EnumWordTaskTypeFieldUpdateOperationsInput | $Enums.WordTaskType
+  export type LanguageProgressUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    overallCEFR?: EnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel
+    overallProgress?: FloatFieldUpdateOperationsInput | number
+    totalXP?: IntFieldUpdateOperationsInput | number
+    totalTime?: IntFieldUpdateOperationsInput | number
+    lastActiveAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    skillProgresses?: SkillProgressUncheckedUpdateManyWithoutLanguageProgressNestedInput
+  }
+
+  export type LanguageProgressUncheckedUpdateManyWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    overallCEFR?: EnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel
+    overallProgress?: FloatFieldUpdateOperationsInput | number
+    totalXP?: IntFieldUpdateOperationsInput | number
+    totalTime?: IntFieldUpdateOperationsInput | number
+    lastActiveAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SkillProgressUpdateWithoutUserInput = {
+    skillType?: EnumCoreSkillTypeFieldUpdateOperationsInput | $Enums.CoreSkillType
+    cefrLevel?: EnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel
+    levelProgress?: FloatFieldUpdateOperationsInput | number
+    xpEarned?: IntFieldUpdateOperationsInput | number
+    totalPracticed?: IntFieldUpdateOperationsInput | number
+    correctAnswers?: IntFieldUpdateOperationsInput | number
+    totalAnswers?: IntFieldUpdateOperationsInput | number
+    currentAccuracy?: FloatFieldUpdateOperationsInput | number
+    timeSpent?: IntFieldUpdateOperationsInput | number
+    totalWordsStudied?: IntFieldUpdateOperationsInput | number
+    wordsLearned?: IntFieldUpdateOperationsInput | number
+    wordsReviewing?: IntFieldUpdateOperationsInput | number
+    lastPracticed?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    languageProgress?: LanguageProgressUpdateOneRequiredWithoutSkillProgressesNestedInput
+  }
+
+  export type SkillProgressUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    languageProgressId?: IntFieldUpdateOperationsInput | number
+    skillType?: EnumCoreSkillTypeFieldUpdateOperationsInput | $Enums.CoreSkillType
+    cefrLevel?: EnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel
+    levelProgress?: FloatFieldUpdateOperationsInput | number
+    xpEarned?: IntFieldUpdateOperationsInput | number
+    totalPracticed?: IntFieldUpdateOperationsInput | number
+    correctAnswers?: IntFieldUpdateOperationsInput | number
+    totalAnswers?: IntFieldUpdateOperationsInput | number
+    currentAccuracy?: FloatFieldUpdateOperationsInput | number
+    timeSpent?: IntFieldUpdateOperationsInput | number
+    totalWordsStudied?: IntFieldUpdateOperationsInput | number
+    wordsLearned?: IntFieldUpdateOperationsInput | number
+    wordsReviewing?: IntFieldUpdateOperationsInput | number
+    lastPracticed?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SkillProgressUncheckedUpdateManyWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    languageProgressId?: IntFieldUpdateOperationsInput | number
+    skillType?: EnumCoreSkillTypeFieldUpdateOperationsInput | $Enums.CoreSkillType
+    cefrLevel?: EnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel
+    levelProgress?: FloatFieldUpdateOperationsInput | number
+    xpEarned?: IntFieldUpdateOperationsInput | number
+    totalPracticed?: IntFieldUpdateOperationsInput | number
+    correctAnswers?: IntFieldUpdateOperationsInput | number
+    totalAnswers?: IntFieldUpdateOperationsInput | number
+    currentAccuracy?: FloatFieldUpdateOperationsInput | number
+    timeSpent?: IntFieldUpdateOperationsInput | number
+    totalWordsStudied?: IntFieldUpdateOperationsInput | number
+    wordsLearned?: IntFieldUpdateOperationsInput | number
+    wordsReviewing?: IntFieldUpdateOperationsInput | number
+    lastPracticed?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserAchievementUpdateWithoutUserInput = {
+    unlockedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    language?: NullableEnumLanguageFieldUpdateOperationsInput | $Enums.Language | null
+    achievement?: AchievementUpdateOneRequiredWithoutUsersNestedInput
+  }
+
+  export type UserAchievementUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    achievementId?: IntFieldUpdateOperationsInput | number
+    unlockedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    language?: NullableEnumLanguageFieldUpdateOperationsInput | $Enums.Language | null
+  }
+
+  export type UserAchievementUncheckedUpdateManyWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    achievementId?: IntFieldUpdateOperationsInput | number
+    unlockedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    language?: NullableEnumLanguageFieldUpdateOperationsInput | $Enums.Language | null
+  }
+
+  export type DailyStatsUpdateWithoutUserInput = {
+    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    totalXP?: IntFieldUpdateOperationsInput | number
+    totalTime?: IntFieldUpdateOperationsInput | number
+    tasksCompleted?: IntFieldUpdateOperationsInput | number
+    averageAccuracy?: FloatFieldUpdateOperationsInput | number
+    skillsStats?: JsonNullValueInput | InputJsonValue
+    newWordsLearned?: IntFieldUpdateOperationsInput | number
+    wordsReviewed?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type DailyStatsUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    totalXP?: IntFieldUpdateOperationsInput | number
+    totalTime?: IntFieldUpdateOperationsInput | number
+    tasksCompleted?: IntFieldUpdateOperationsInput | number
+    averageAccuracy?: FloatFieldUpdateOperationsInput | number
+    skillsStats?: JsonNullValueInput | InputJsonValue
+    newWordsLearned?: IntFieldUpdateOperationsInput | number
+    wordsReviewed?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type DailyStatsUncheckedUpdateManyWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    totalXP?: IntFieldUpdateOperationsInput | number
+    totalTime?: IntFieldUpdateOperationsInput | number
+    tasksCompleted?: IntFieldUpdateOperationsInput | number
+    averageAccuracy?: FloatFieldUpdateOperationsInput | number
+    skillsStats?: JsonNullValueInput | InputJsonValue
+    newWordsLearned?: IntFieldUpdateOperationsInput | number
+    wordsReviewed?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type EnrollmentUpdateWithoutUserInput = {
+    progress?: FloatFieldUpdateOperationsInput | number
+    enrolledAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    course?: CourseUpdateOneRequiredWithoutEnrollmentsNestedInput
+  }
+
+  export type EnrollmentUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    courseId?: IntFieldUpdateOperationsInput | number
+    progress?: FloatFieldUpdateOperationsInput | number
+    enrolledAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type EnrollmentUncheckedUpdateManyWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    courseId?: IntFieldUpdateOperationsInput | number
+    progress?: FloatFieldUpdateOperationsInput | number
+    enrolledAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CourseUpdateWithoutAuthorInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    level?: EnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel
+    targetSkills?: CourseUpdatetargetSkillsInput | $Enums.CoreSkillType[]
+    isPublished?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tags?: CourseUpdatetagsInput | string[]
+    estimatedHours?: NullableIntFieldUpdateOperationsInput | number | null
+    totalXP?: IntFieldUpdateOperationsInput | number
+    enrollments?: EnrollmentUpdateManyWithoutCourseNestedInput
+    tasks?: TaskUpdateManyWithoutCourseNestedInput
+    videos?: VideoUpdateManyWithoutCourseNestedInput
+  }
+
+  export type CourseUncheckedUpdateWithoutAuthorInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    level?: EnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel
+    targetSkills?: CourseUpdatetargetSkillsInput | $Enums.CoreSkillType[]
+    isPublished?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tags?: CourseUpdatetagsInput | string[]
+    estimatedHours?: NullableIntFieldUpdateOperationsInput | number | null
+    totalXP?: IntFieldUpdateOperationsInput | number
+    enrollments?: EnrollmentUncheckedUpdateManyWithoutCourseNestedInput
+    tasks?: TaskUncheckedUpdateManyWithoutCourseNestedInput
+    videos?: VideoUncheckedUpdateManyWithoutCourseNestedInput
+  }
+
+  export type CourseUncheckedUpdateManyWithoutAuthorInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    level?: EnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel
+    targetSkills?: CourseUpdatetargetSkillsInput | $Enums.CoreSkillType[]
+    isPublished?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tags?: CourseUpdatetagsInput | string[]
+    estimatedHours?: NullableIntFieldUpdateOperationsInput | number | null
+    totalXP?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type TaskUpdateWithoutAuthorInput = {
+    question?: StringFieldUpdateOperationsInput | string
+    answer?: StringFieldUpdateOperationsInput | string
+    options?: TaskUpdateoptionsInput | string[]
+    type?: EnumTaskTypeFieldUpdateOperationsInput | $Enums.TaskType
+    score?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    explanation?: NullableStringFieldUpdateOperationsInput | string | null
+    skillType?: EnumCoreSkillTypeFieldUpdateOperationsInput | $Enums.CoreSkillType
+    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    cefrLevel?: EnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel
+    xpReward?: IntFieldUpdateOperationsInput | number
+    timeLimit?: NullableIntFieldUpdateOperationsInput | number | null
+    video?: VideoUpdateOneWithoutTasksNestedInput
+    course?: CourseUpdateOneWithoutTasksNestedInput
+  }
+
+  export type TaskUncheckedUpdateWithoutAuthorInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    question?: StringFieldUpdateOperationsInput | string
+    answer?: StringFieldUpdateOperationsInput | string
+    options?: TaskUpdateoptionsInput | string[]
+    type?: EnumTaskTypeFieldUpdateOperationsInput | $Enums.TaskType
+    score?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    explanation?: NullableStringFieldUpdateOperationsInput | string | null
+    skillType?: EnumCoreSkillTypeFieldUpdateOperationsInput | $Enums.CoreSkillType
+    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    cefrLevel?: EnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel
+    xpReward?: IntFieldUpdateOperationsInput | number
+    timeLimit?: NullableIntFieldUpdateOperationsInput | number | null
+    videoId?: NullableIntFieldUpdateOperationsInput | number | null
+    courseId?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type TaskUncheckedUpdateManyWithoutAuthorInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    question?: StringFieldUpdateOperationsInput | string
+    answer?: StringFieldUpdateOperationsInput | string
+    options?: TaskUpdateoptionsInput | string[]
+    type?: EnumTaskTypeFieldUpdateOperationsInput | $Enums.TaskType
+    score?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    explanation?: NullableStringFieldUpdateOperationsInput | string | null
+    skillType?: EnumCoreSkillTypeFieldUpdateOperationsInput | $Enums.CoreSkillType
+    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    cefrLevel?: EnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel
+    xpReward?: IntFieldUpdateOperationsInput | number
+    timeLimit?: NullableIntFieldUpdateOperationsInput | number | null
+    videoId?: NullableIntFieldUpdateOperationsInput | number | null
+    courseId?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type WordTaskProgressUpdateWithoutUserInput = {
+    skillType?: EnumCoreSkillTypeFieldUpdateOperationsInput | $Enums.CoreSkillType
     isPassed?: BoolFieldUpdateOperationsInput | boolean
     score?: IntFieldUpdateOperationsInput | number
     attempts?: IntFieldUpdateOperationsInput | number
+    correctCount?: IntFieldUpdateOperationsInput | number
+    nextReviewAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    reviewInterval?: IntFieldUpdateOperationsInput | number
+    easeFactor?: FloatFieldUpdateOperationsInput | number
+    lastAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    timeSpent?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    word?: WordUpdateOneRequiredWithoutProgressesNestedInput
+  }
+
+  export type WordTaskProgressUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    wordId?: IntFieldUpdateOperationsInput | number
+    skillType?: EnumCoreSkillTypeFieldUpdateOperationsInput | $Enums.CoreSkillType
+    isPassed?: BoolFieldUpdateOperationsInput | boolean
+    score?: IntFieldUpdateOperationsInput | number
+    attempts?: IntFieldUpdateOperationsInput | number
+    correctCount?: IntFieldUpdateOperationsInput | number
+    nextReviewAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    reviewInterval?: IntFieldUpdateOperationsInput | number
+    easeFactor?: FloatFieldUpdateOperationsInput | number
+    lastAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    timeSpent?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WordTaskProgressUncheckedUpdateManyWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    wordId?: IntFieldUpdateOperationsInput | number
+    skillType?: EnumCoreSkillTypeFieldUpdateOperationsInput | $Enums.CoreSkillType
+    isPassed?: BoolFieldUpdateOperationsInput | boolean
+    score?: IntFieldUpdateOperationsInput | number
+    attempts?: IntFieldUpdateOperationsInput | number
+    correctCount?: IntFieldUpdateOperationsInput | number
+    nextReviewAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    reviewInterval?: IntFieldUpdateOperationsInput | number
+    easeFactor?: FloatFieldUpdateOperationsInput | number
+    lastAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    timeSpent?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WordTaskProgressCreateManyWordInput = {
+    id?: number
+    userId: number
+    skillType?: $Enums.CoreSkillType
+    isPassed?: boolean
+    score?: number
+    attempts?: number
+    correctCount?: number
+    nextReviewAt?: Date | string | null
+    reviewInterval?: number
+    easeFactor?: number
+    lastAttempt?: Date | string | null
+    timeSpent?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WordTaskProgressUpdateWithoutWordInput = {
+    skillType?: EnumCoreSkillTypeFieldUpdateOperationsInput | $Enums.CoreSkillType
+    isPassed?: BoolFieldUpdateOperationsInput | boolean
+    score?: IntFieldUpdateOperationsInput | number
+    attempts?: IntFieldUpdateOperationsInput | number
+    correctCount?: IntFieldUpdateOperationsInput | number
+    nextReviewAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    reviewInterval?: IntFieldUpdateOperationsInput | number
+    easeFactor?: FloatFieldUpdateOperationsInput | number
+    lastAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    timeSpent?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutWordProgressesNestedInput
   }
 
   export type WordTaskProgressUncheckedUpdateWithoutWordInput = {
     id?: IntFieldUpdateOperationsInput | number
     userId?: IntFieldUpdateOperationsInput | number
-    taskType?: EnumWordTaskTypeFieldUpdateOperationsInput | $Enums.WordTaskType
+    skillType?: EnumCoreSkillTypeFieldUpdateOperationsInput | $Enums.CoreSkillType
     isPassed?: BoolFieldUpdateOperationsInput | boolean
     score?: IntFieldUpdateOperationsInput | number
     attempts?: IntFieldUpdateOperationsInput | number
+    correctCount?: IntFieldUpdateOperationsInput | number
+    nextReviewAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    reviewInterval?: IntFieldUpdateOperationsInput | number
+    easeFactor?: FloatFieldUpdateOperationsInput | number
+    lastAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    timeSpent?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type WordTaskProgressUncheckedUpdateManyWithoutWordInput = {
     id?: IntFieldUpdateOperationsInput | number
     userId?: IntFieldUpdateOperationsInput | number
-    taskType?: EnumWordTaskTypeFieldUpdateOperationsInput | $Enums.WordTaskType
+    skillType?: EnumCoreSkillTypeFieldUpdateOperationsInput | $Enums.CoreSkillType
     isPassed?: BoolFieldUpdateOperationsInput | boolean
     score?: IntFieldUpdateOperationsInput | number
     attempts?: IntFieldUpdateOperationsInput | number
+    correctCount?: IntFieldUpdateOperationsInput | number
+    nextReviewAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    reviewInterval?: IntFieldUpdateOperationsInput | number
+    easeFactor?: FloatFieldUpdateOperationsInput | number
+    lastAttempt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    timeSpent?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type TaskCreateManyVideoInput = {
@@ -17062,9 +29876,13 @@ export namespace Prisma {
     type?: $Enums.TaskType
     score?: number | null
     createdAt?: Date | string
-    language?: $Enums.Language
     order?: number | null
     explanation?: string | null
+    skillType: $Enums.CoreSkillType
+    language?: $Enums.Language
+    cefrLevel?: $Enums.CEFRLevel
+    xpReward?: number
+    timeLimit?: number | null
     authorId?: number | null
     courseId?: number | null
   }
@@ -17076,9 +29894,13 @@ export namespace Prisma {
     type?: EnumTaskTypeFieldUpdateOperationsInput | $Enums.TaskType
     score?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
     order?: NullableIntFieldUpdateOperationsInput | number | null
     explanation?: NullableStringFieldUpdateOperationsInput | string | null
+    skillType?: EnumCoreSkillTypeFieldUpdateOperationsInput | $Enums.CoreSkillType
+    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    cefrLevel?: EnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel
+    xpReward?: IntFieldUpdateOperationsInput | number
+    timeLimit?: NullableIntFieldUpdateOperationsInput | number | null
     author?: UserUpdateOneWithoutTasksNestedInput
     course?: CourseUpdateOneWithoutTasksNestedInput
   }
@@ -17091,9 +29913,13 @@ export namespace Prisma {
     type?: EnumTaskTypeFieldUpdateOperationsInput | $Enums.TaskType
     score?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
     order?: NullableIntFieldUpdateOperationsInput | number | null
     explanation?: NullableStringFieldUpdateOperationsInput | string | null
+    skillType?: EnumCoreSkillTypeFieldUpdateOperationsInput | $Enums.CoreSkillType
+    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    cefrLevel?: EnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel
+    xpReward?: IntFieldUpdateOperationsInput | number
+    timeLimit?: NullableIntFieldUpdateOperationsInput | number | null
     authorId?: NullableIntFieldUpdateOperationsInput | number | null
     courseId?: NullableIntFieldUpdateOperationsInput | number | null
   }
@@ -17106,11 +29932,22 @@ export namespace Prisma {
     type?: EnumTaskTypeFieldUpdateOperationsInput | $Enums.TaskType
     score?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
     order?: NullableIntFieldUpdateOperationsInput | number | null
     explanation?: NullableStringFieldUpdateOperationsInput | string | null
+    skillType?: EnumCoreSkillTypeFieldUpdateOperationsInput | $Enums.CoreSkillType
+    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    cefrLevel?: EnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel
+    xpReward?: IntFieldUpdateOperationsInput | number
+    timeLimit?: NullableIntFieldUpdateOperationsInput | number | null
     authorId?: NullableIntFieldUpdateOperationsInput | number | null
     courseId?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type EnrollmentCreateManyCourseInput = {
+    id?: number
+    userId: number
+    progress?: number
+    enrolledAt?: Date | string
   }
 
   export type TaskCreateManyCourseInput = {
@@ -17121,18 +29958,15 @@ export namespace Prisma {
     type?: $Enums.TaskType
     score?: number | null
     createdAt?: Date | string
-    language?: $Enums.Language
     order?: number | null
     explanation?: string | null
+    skillType: $Enums.CoreSkillType
+    language?: $Enums.Language
+    cefrLevel?: $Enums.CEFRLevel
+    xpReward?: number
+    timeLimit?: number | null
     authorId?: number | null
     videoId?: number | null
-  }
-
-  export type EnrollmentCreateManyCourseInput = {
-    id?: number
-    userId: number
-    progress?: number
-    enrolledAt?: Date | string
   }
 
   export type VideoCreateManyCourseInput = {
@@ -17140,53 +29974,11 @@ export namespace Prisma {
     title: string
     description?: string | null
     url: string
-    level?: $Enums.Level | null
+    language?: $Enums.Language
+    level?: $Enums.CEFRLevel
+    duration?: number | null
+    skillTypes?: VideoCreateskillTypesInput | $Enums.CoreSkillType[]
     createdAt?: Date | string
-    tags?: VideoCreatetagsInput | string[]
-  }
-
-  export type TaskUpdateWithoutCourseInput = {
-    question?: StringFieldUpdateOperationsInput | string
-    answer?: StringFieldUpdateOperationsInput | string
-    options?: TaskUpdateoptionsInput | string[]
-    type?: EnumTaskTypeFieldUpdateOperationsInput | $Enums.TaskType
-    score?: NullableIntFieldUpdateOperationsInput | number | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
-    order?: NullableIntFieldUpdateOperationsInput | number | null
-    explanation?: NullableStringFieldUpdateOperationsInput | string | null
-    author?: UserUpdateOneWithoutTasksNestedInput
-    video?: VideoUpdateOneWithoutTasksNestedInput
-  }
-
-  export type TaskUncheckedUpdateWithoutCourseInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    question?: StringFieldUpdateOperationsInput | string
-    answer?: StringFieldUpdateOperationsInput | string
-    options?: TaskUpdateoptionsInput | string[]
-    type?: EnumTaskTypeFieldUpdateOperationsInput | $Enums.TaskType
-    score?: NullableIntFieldUpdateOperationsInput | number | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
-    order?: NullableIntFieldUpdateOperationsInput | number | null
-    explanation?: NullableStringFieldUpdateOperationsInput | string | null
-    authorId?: NullableIntFieldUpdateOperationsInput | number | null
-    videoId?: NullableIntFieldUpdateOperationsInput | number | null
-  }
-
-  export type TaskUncheckedUpdateManyWithoutCourseInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    question?: StringFieldUpdateOperationsInput | string
-    answer?: StringFieldUpdateOperationsInput | string
-    options?: TaskUpdateoptionsInput | string[]
-    type?: EnumTaskTypeFieldUpdateOperationsInput | $Enums.TaskType
-    score?: NullableIntFieldUpdateOperationsInput | number | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
-    order?: NullableIntFieldUpdateOperationsInput | number | null
-    explanation?: NullableStringFieldUpdateOperationsInput | string | null
-    authorId?: NullableIntFieldUpdateOperationsInput | number | null
-    videoId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type EnrollmentUpdateWithoutCourseInput = {
@@ -17209,13 +30001,71 @@ export namespace Prisma {
     enrolledAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type TaskUpdateWithoutCourseInput = {
+    question?: StringFieldUpdateOperationsInput | string
+    answer?: StringFieldUpdateOperationsInput | string
+    options?: TaskUpdateoptionsInput | string[]
+    type?: EnumTaskTypeFieldUpdateOperationsInput | $Enums.TaskType
+    score?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    explanation?: NullableStringFieldUpdateOperationsInput | string | null
+    skillType?: EnumCoreSkillTypeFieldUpdateOperationsInput | $Enums.CoreSkillType
+    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    cefrLevel?: EnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel
+    xpReward?: IntFieldUpdateOperationsInput | number
+    timeLimit?: NullableIntFieldUpdateOperationsInput | number | null
+    author?: UserUpdateOneWithoutTasksNestedInput
+    video?: VideoUpdateOneWithoutTasksNestedInput
+  }
+
+  export type TaskUncheckedUpdateWithoutCourseInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    question?: StringFieldUpdateOperationsInput | string
+    answer?: StringFieldUpdateOperationsInput | string
+    options?: TaskUpdateoptionsInput | string[]
+    type?: EnumTaskTypeFieldUpdateOperationsInput | $Enums.TaskType
+    score?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    explanation?: NullableStringFieldUpdateOperationsInput | string | null
+    skillType?: EnumCoreSkillTypeFieldUpdateOperationsInput | $Enums.CoreSkillType
+    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    cefrLevel?: EnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel
+    xpReward?: IntFieldUpdateOperationsInput | number
+    timeLimit?: NullableIntFieldUpdateOperationsInput | number | null
+    authorId?: NullableIntFieldUpdateOperationsInput | number | null
+    videoId?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type TaskUncheckedUpdateManyWithoutCourseInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    question?: StringFieldUpdateOperationsInput | string
+    answer?: StringFieldUpdateOperationsInput | string
+    options?: TaskUpdateoptionsInput | string[]
+    type?: EnumTaskTypeFieldUpdateOperationsInput | $Enums.TaskType
+    score?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    explanation?: NullableStringFieldUpdateOperationsInput | string | null
+    skillType?: EnumCoreSkillTypeFieldUpdateOperationsInput | $Enums.CoreSkillType
+    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    cefrLevel?: EnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel
+    xpReward?: IntFieldUpdateOperationsInput | number
+    timeLimit?: NullableIntFieldUpdateOperationsInput | number | null
+    authorId?: NullableIntFieldUpdateOperationsInput | number | null
+    videoId?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
   export type VideoUpdateWithoutCourseInput = {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     url?: StringFieldUpdateOperationsInput | string
-    level?: NullableEnumLevelFieldUpdateOperationsInput | $Enums.Level | null
+    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    level?: EnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
+    skillTypes?: VideoUpdateskillTypesInput | $Enums.CoreSkillType[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    tags?: VideoUpdatetagsInput | string[]
     tasks?: TaskUpdateManyWithoutVideoNestedInput
   }
 
@@ -17224,9 +30074,11 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     url?: StringFieldUpdateOperationsInput | string
-    level?: NullableEnumLevelFieldUpdateOperationsInput | $Enums.Level | null
+    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    level?: EnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
+    skillTypes?: VideoUpdateskillTypesInput | $Enums.CoreSkillType[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    tags?: VideoUpdatetagsInput | string[]
     tasks?: TaskUncheckedUpdateManyWithoutVideoNestedInput
   }
 
@@ -17235,9 +30087,113 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     url?: StringFieldUpdateOperationsInput | string
-    level?: NullableEnumLevelFieldUpdateOperationsInput | $Enums.Level | null
+    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    level?: EnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
+    skillTypes?: VideoUpdateskillTypesInput | $Enums.CoreSkillType[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    tags?: VideoUpdatetagsInput | string[]
+  }
+
+  export type SkillProgressCreateManyLanguageProgressInput = {
+    id?: number
+    userId: number
+    skillType: $Enums.CoreSkillType
+    cefrLevel?: $Enums.CEFRLevel
+    levelProgress?: number
+    xpEarned?: number
+    totalPracticed?: number
+    correctAnswers?: number
+    totalAnswers?: number
+    currentAccuracy?: number
+    timeSpent?: number
+    totalWordsStudied?: number
+    wordsLearned?: number
+    wordsReviewing?: number
+    lastPracticed?: Date | string | null
+    updatedAt?: Date | string
+  }
+
+  export type SkillProgressUpdateWithoutLanguageProgressInput = {
+    skillType?: EnumCoreSkillTypeFieldUpdateOperationsInput | $Enums.CoreSkillType
+    cefrLevel?: EnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel
+    levelProgress?: FloatFieldUpdateOperationsInput | number
+    xpEarned?: IntFieldUpdateOperationsInput | number
+    totalPracticed?: IntFieldUpdateOperationsInput | number
+    correctAnswers?: IntFieldUpdateOperationsInput | number
+    totalAnswers?: IntFieldUpdateOperationsInput | number
+    currentAccuracy?: FloatFieldUpdateOperationsInput | number
+    timeSpent?: IntFieldUpdateOperationsInput | number
+    totalWordsStudied?: IntFieldUpdateOperationsInput | number
+    wordsLearned?: IntFieldUpdateOperationsInput | number
+    wordsReviewing?: IntFieldUpdateOperationsInput | number
+    lastPracticed?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutSkillProgressesNestedInput
+  }
+
+  export type SkillProgressUncheckedUpdateWithoutLanguageProgressInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    skillType?: EnumCoreSkillTypeFieldUpdateOperationsInput | $Enums.CoreSkillType
+    cefrLevel?: EnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel
+    levelProgress?: FloatFieldUpdateOperationsInput | number
+    xpEarned?: IntFieldUpdateOperationsInput | number
+    totalPracticed?: IntFieldUpdateOperationsInput | number
+    correctAnswers?: IntFieldUpdateOperationsInput | number
+    totalAnswers?: IntFieldUpdateOperationsInput | number
+    currentAccuracy?: FloatFieldUpdateOperationsInput | number
+    timeSpent?: IntFieldUpdateOperationsInput | number
+    totalWordsStudied?: IntFieldUpdateOperationsInput | number
+    wordsLearned?: IntFieldUpdateOperationsInput | number
+    wordsReviewing?: IntFieldUpdateOperationsInput | number
+    lastPracticed?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SkillProgressUncheckedUpdateManyWithoutLanguageProgressInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    skillType?: EnumCoreSkillTypeFieldUpdateOperationsInput | $Enums.CoreSkillType
+    cefrLevel?: EnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel
+    levelProgress?: FloatFieldUpdateOperationsInput | number
+    xpEarned?: IntFieldUpdateOperationsInput | number
+    totalPracticed?: IntFieldUpdateOperationsInput | number
+    correctAnswers?: IntFieldUpdateOperationsInput | number
+    totalAnswers?: IntFieldUpdateOperationsInput | number
+    currentAccuracy?: FloatFieldUpdateOperationsInput | number
+    timeSpent?: IntFieldUpdateOperationsInput | number
+    totalWordsStudied?: IntFieldUpdateOperationsInput | number
+    wordsLearned?: IntFieldUpdateOperationsInput | number
+    wordsReviewing?: IntFieldUpdateOperationsInput | number
+    lastPracticed?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserAchievementCreateManyAchievementInput = {
+    id?: number
+    userId: number
+    unlockedAt?: Date | string
+    language?: $Enums.Language | null
+  }
+
+  export type UserAchievementUpdateWithoutAchievementInput = {
+    unlockedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    language?: NullableEnumLanguageFieldUpdateOperationsInput | $Enums.Language | null
+    user?: UserUpdateOneRequiredWithoutAchievementsNestedInput
+  }
+
+  export type UserAchievementUncheckedUpdateWithoutAchievementInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    unlockedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    language?: NullableEnumLanguageFieldUpdateOperationsInput | $Enums.Language | null
+  }
+
+  export type UserAchievementUncheckedUpdateManyWithoutAchievementInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    unlockedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    language?: NullableEnumLanguageFieldUpdateOperationsInput | $Enums.Language | null
   }
 
 

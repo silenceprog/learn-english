@@ -16,65 +16,80 @@ datasource db {
 }
 
 model User {
-  id              Int                @id @default(autoincrement())
-  email           String             @unique
-  username        String             @unique
+  id              Int       @id @default(autoincrement())
+  email           String    @unique
+  username        String    @unique
   password        String
-  role            Role               @default(USER)
-  avatar          String?            @default("none")
-  isEmailVerified Boolean            @default(false)
-  createdAt       DateTime           @default(now())
-  updatedAt       DateTime           @updatedAt
-  enrollments     Enrollment[]
-  wordProgresses  WordTaskProgress[]
-  courses         Course[]
-  tasks           Task[]
-  setting         Setting?
+  role            Role      @default(USER)
+  avatar          String?   @default("none")
+  isEmailVerified Boolean   @default(false)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
   deleteAt        DateTime?
   lastLoginAt     DateTime?
   provider        String?
   refreshToken    String?
 
-  words Word[]
+  // Загальна статистика
+  totalXP           Int       @default(0)
+  currentStreak     Int       @default(0)
+  longestStreak     Int       @default(0)
+  totalLearningTime Int       @default(0)
+  lastActiveAt      DateTime?
+
+  // Зв'язки
+  setting            Setting?
+  words              Word[]
+  languageProgresses LanguageProgress[]
+  skillProgresses    SkillProgress[]
+  achievements       UserAchievement[]
+  dailyStats         DailyStats[]
+  enrollments        Enrollment[]
+  courses            Course[]
+  tasks              Task[]
+  wordProgresses     WordTaskProgress[] @relation("UserWordProgresses")
 }
 
 model Word {
-  id            Int                @id @default(autoincrement())
+  id            Int      @id @default(autoincrement())
   text          String
-  language      Language
+  language      Language @default(EN)
   translate     String[]
-  definitions   String[]           @default([])
-  synonyms      String[]           @default([])
-  antonyms      String[]           @default([])
-  examples      String[]           @default([])
+  definitions   String[] @default([])
+  synonyms      String[] @default([])
+  antonyms      String[] @default([])
+  examples      String[] @default([])
   partOfSpeech  String?
-  createdAt     DateTime           @default(now())
-  progresses    WordTaskProgress[]
-  totalProgress Int                @default(0)
-  isLearned     Boolean            @default(false)
-  phonetic      String             @default("none")
-  audio         String             @default("none")
+  createdAt     DateTime @default(now())
+  totalProgress Int      @default(0)
+  isLearned     Boolean  @default(false)
+  phonetic      String   @default("none")
+  audio         String   @default("none")
   phoneticUS    String?
   audioUS       String?
 
-  userId Int
-  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId     Int
+  user       User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  progresses WordTaskProgress[] @relation("WordProgresses")
 
   @@unique([userId, text, language])
 }
 
 model Video {
-  id          Int      @id @default(autoincrement())
+  id          Int             @id @default(autoincrement())
   title       String
   description String?
-  url         String   @unique
-  level       Level?
-  createdAt   DateTime @default(now())
-  tags        String[] @default([])
+  url         String          @unique
+  language    Language        @default(EN)
+  level       CEFRLevel       @default(PRE_A1)
+  duration    Int? // секунди
+  skillTypes  CoreSkillType[] @default([])
 
   tasks    Task[]
-  courseId Int?
   course   Course? @relation(fields: [courseId], references: [id])
+  courseId Int?
+
+  createdAt DateTime @default(now())
 }
 
 model Task {
@@ -85,34 +100,41 @@ model Task {
   type        TaskType @default(MULTIPLE_CHOICE)
   score       Int?
   createdAt   DateTime @default(now())
-  language    Language @default(EN)
   order       Int?
   explanation String?
+
+  skillType CoreSkillType
+  language  Language      @default(EN)
+  cefrLevel CEFRLevel     @default(PRE_A1)
+  xpReward  Int           @default(10)
+  timeLimit Int? // секунди
 
   author   User? @relation(fields: [authorId], references: [id])
   authorId Int?
 
-  video   Video? @relation(fields: [videoId], references: [id])
-  videoId Int?
-
+  video    Video?  @relation(fields: [videoId], references: [id])
+  videoId  Int?
   course   Course? @relation(fields: [courseId], references: [id])
   courseId Int?
 }
 
 model Course {
-  id          Int      @id @default(autoincrement())
-  title       String
-  description String?
-  imageUrl    String?
-  level       Level    @default(NONE)
-  isPublished Boolean  @default(false)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  tags        String[] @default([])
+  id           Int             @id @default(autoincrement())
+  title        String
+  description  String?
+  imageUrl     String?
+  level        CEFRLevel       @default(PRE_A1)
+  targetSkills CoreSkillType[] @default([])
+  isPublished  Boolean         @default(false)
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+  tags         String[]        @default([])
 
-  tasks Task[]
+  estimatedHours Int?
+  totalXP        Int  @default(0)
 
   enrollments Enrollment[]
+  tasks       Task[]
   videos      Video[]
 
   author   User? @relation(fields: [authorId], references: [id])
@@ -138,29 +160,179 @@ model Setting {
   global_language  Language  @default(UA)
   current_language Language  @default(EN)
   purposes         Purpose[] @default([NONE])
-  current_level    Level     @default(NONE)
+  current_level    CEFRLevel @default(PRE_A1)
+
+  dailyXPGoal   Int @default(50)
+  dailyTimeGoal Int @default(15) // хвилини
+  weeklyGoal    Int @default(5)
+}
+
+model LanguageProgress {
+  id       Int      @id @default(autoincrement())
+  userId   Int
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  language Language
+
+  overallCEFR     CEFRLevel @default(PRE_A1)
+  overallProgress Float     @default(0.0)
+
+  totalXP      Int       @default(0)
+  totalTime    Int       @default(0) // в секундах
+  lastActiveAt DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  skillProgresses SkillProgress[]
+
+  @@unique([userId, language])
+}
+
+model SkillProgress {
+  id Int @id @default(autoincrement())
+
+  // Зв'язки
+  userId             Int
+  user               User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  languageProgressId Int
+  languageProgress   LanguageProgress @relation(fields: [languageProgressId], references: [id], onDelete: Cascade)
+
+  skillType CoreSkillType
+
+  cefrLevel     CEFRLevel @default(PRE_A1)
+  levelProgress Float     @default(0.0)
+
+  // XP та статистика
+  xpEarned        Int   @default(0)
+  totalPracticed  Int   @default(0)
+  correctAnswers  Int   @default(0)
+  totalAnswers    Int   @default(0)
+  currentAccuracy Float @default(0.0)
+  timeSpent       Int   @default(0)
+
+  // Для VOCABULARY
+  totalWordsStudied Int @default(0)
+  wordsLearned      Int @default(0)
+  wordsReviewing    Int @default(0)
+
+  // Останні активності
+  lastPracticed DateTime?
+  updatedAt     DateTime  @updatedAt
+
+  @@unique([userId, languageProgressId, skillType])
+}
+
+model SkillLevelRequirements {
+  id        Int           @id @default(autoincrement())
+  skillType CoreSkillType
+  cefrLevel CEFRLevel
+
+  // Вимоги для досягнення рівня
+  minXP        Int // мінімум XP
+  minAccuracy  Float // мінімальна точність (0-100)
+  minPracticed Int // мінімум вправ
+  minTimeSpent Int // мінімум часу (секунди)
+
+  // Для VOCABULARY
+  minWordsLearned Int?
+
+  // Вага навичок для загального рівня
+  weightInOverall Float @default(0.2)
+
+  // Відображення
+  displayName String // "Elementary Reading (A2)"
+  description String // опис здібностей
+  color       String // колір для UI
+
+  @@unique([skillType, cefrLevel])
 }
 
 model WordTaskProgress {
-  id     Int  @id @default(autoincrement())
-  userId Int
-  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id        Int           @id @default(autoincrement())
+  wordId    Int
+  userId    Int
+  skillType CoreSkillType @default(VOCABULARY)
 
-  wordId Int
-  word   Word @relation(fields: [wordId], references: [id], onDelete: Cascade)
+  // Прогрес
+  isPassed     Boolean @default(false)
+  score        Int     @default(0)
+  attempts     Int     @default(0)
+  correctCount Int     @default(0)
 
-  taskType WordTaskType
-  isPassed Boolean      @default(false)
-  score    Int          @default(0)
-  attempts Int          @default(0)
+  // Інтервальне повторення
+  nextReviewAt   DateTime?
+  reviewInterval Int       @default(1) // днів
+  easeFactor     Float     @default(2.5)
 
-  @@unique([userId, wordId, taskType])
+  // Таймінги
+  lastAttempt DateTime?
+  timeSpent   Int       @default(0) // секунди
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  // Зв'язки
+  word Word @relation("WordProgresses", fields: [wordId], references: [id], onDelete: Cascade)
+  user User @relation("UserWordProgresses", fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([wordId, userId, skillType])
+  @@index([userId, nextReviewAt])
 }
 
-enum WordTaskType {
-  TRANSLATION
-  MATCHING
-  LISTENING
+model DailyStats {
+  id       Int      @id @default(autoincrement())
+  userId   Int
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  language Language
+  date     DateTime @db.Date
+
+  // Загальна статистика
+  totalXP         Int   @default(0)
+  totalTime       Int   @default(0)
+  tasksCompleted  Int   @default(0)
+  averageAccuracy Float @default(0.0)
+
+  // По навичках (JSON для гнучкості)
+  skillsStats Json @default("{}") // {"READING": {"xp": 50, "time": 600}, ...}
+
+  // Для словника
+  newWordsLearned Int @default(0)
+  wordsReviewed   Int @default(0)
+
+  @@unique([userId, language, date])
+}
+
+model Achievement {
+  id          Int             @id @default(autoincrement())
+  name        String
+  description String
+  type        AchievementType
+
+  requiredSkill    CoreSkillType?
+  requiredLevel    CEFRLevel?
+  requiredOverall  CEFRLevel?
+  requiredXP       Int?
+  requiredStreak   Int?
+  requiredAccuracy Float?
+
+  // Винагорода
+  xpReward Int     @default(0)
+  badge    String?
+  isActive Boolean @default(true)
+
+  users UserAchievement[]
+}
+
+model UserAchievement {
+  id            Int         @id @default(autoincrement())
+  userId        Int
+  user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  achievementId Int
+  achievement   Achievement @relation(fields: [achievementId], references: [id])
+
+  unlockedAt DateTime  @default(now())
+  language   Language?
+
+  @@unique([userId, achievementId])
 }
 
 enum Role {
@@ -204,15 +376,32 @@ enum Level {
   C2
 }
 
-enum SkillType {
-  VOCABULARY
-  GRAMMAR
+enum CEFRLevel {
+  PRE_A1
+  A1
+  A2
+  B1
+  B2
+  C1
+  C2
+}
+
+enum CoreSkillType {
+  READING
   LISTENING
   SPEAKING
-  READING
   WRITING
-  PRONUNCIATION
-  COMPREHENSION
+  VOCABULARY
+}
+
+enum AchievementType {
+  SKILL_LEVEL
+  OVERALL_LEVEL
+  XP_MILESTONE
+  STREAK_MASTER
+  ACCURACY_EXPERT
+  VOCABULARY_GURU
+  PERFECTIONIST
 }
 
 enum DifficultyPreference {
