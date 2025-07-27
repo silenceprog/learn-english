@@ -18,6 +18,10 @@ export const useChangePassword = create<ChangePassword>((set, get) => ({
     const { oldPassword, newPassword } = get();
     const baseUrl =
       "https://learn-english-6ufl.onrender.com/api/email/change-password";
+    if (oldPassword.length < 8 || newPassword.length < 8) {
+      addAlert("Password must be longer than 8 characters!", "info");
+      return;
+    }
     try {
       const response = await fetch(baseUrl, {
         method: "PATCH",
@@ -25,18 +29,21 @@ export const useChangePassword = create<ChangePassword>((set, get) => ({
           "Content-Type": "application/json",
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
         },
-        body: JSON.stringify({
-          oldPassword: oldPassword,
-          newPassword: newPassword,
-        }),
+        body: JSON.stringify({ oldPassword, newPassword }),
       });
+
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
-        addAlert(`Помилка: ${errorData.message}`, "error");
-        throw new Error(errorData.message || `HTTP Error: ${response.status}`);
+        addAlert(
+          `Помилка: ${errorData.message || "Сталася помилка на сервері"}`,
+          "error",
+        );
+        return;
       }
+
       addAlert("Ви успішно змінили пароль", "success");
     } catch (error) {
+      addAlert("Помилка з'єднання з сервером. Спробуйте пізніше.", "error");
       console.error(error);
     }
   },

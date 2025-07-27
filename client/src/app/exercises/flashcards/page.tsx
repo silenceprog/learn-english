@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/shared/ui/Button";
+import { Progress } from "@/app/exercises/progress";
 
 export default function FlashCard() {
   const [currentCard, setCurrentCard] = useState(0);
@@ -72,6 +73,7 @@ export default function FlashCard() {
   ];
 
   const currentCardData = flashcards[currentCard];
+  const progress = ((currentCard + 1) / flashcards.length) * 100;
 
   const handleFlip = () => {
     setIsFlipped(!isFlipped);
@@ -184,13 +186,13 @@ export default function FlashCard() {
             {currentCard + 1} из {flashcards.length}
           </span>
         </div>
-        {/*<Progress value={progress} className="h-2 mb-6" />*/}
+        <Progress value={progress} className="h-2 mb-6" />
       </div>
 
       <div className="max-w-2xl mx-auto">
-        <div className="perspective-1000 mb-8">
+        <div className="perspective-1000 mb-8 ">
           <div
-            className={`relative h-80 cursor-pointer transition-transform duration-500 transform-style-preserve-3d ${
+            className={`rounded-lg border bg-card text-card-foreground shadow-2xs relative h-80 cursor-pointer transition-transform duration-500 transform-style-preserve-3d ${
               isFlipped ? "rotate-y-180" : ""
             }`}
             onClick={handleFlip}
@@ -206,7 +208,7 @@ export default function FlashCard() {
                     <p className="text-lg text-muted-foreground">
                       {currentCardData.transcription}
                     </p>
-                    <Button className="rounded-full">
+                    <Button className="rounded-full" color="outlineBlue">
                       <Volume2 className="h-5 w-5" />
                     </Button>
                   </div>
@@ -250,14 +252,14 @@ export default function FlashCard() {
             <Button
               onClick={handleUnknown}
               color="outline"
-              className="flex-1 max-w-40 border-red-200 text-red-700 hover:bg-red-50 bg-transparent"
+              className="flex-1 max-w-40 border-red-200 text-red-700 hover:bg-red-50 bg-transparent flex flex-row justify-center items-center"
             >
               <XCircle className="h-4 w-4 mr-2" />
               Не знаю
             </Button>
             <Button
               onClick={handleKnown}
-              className="flex-1 max-w-40 bg-green-600 hover:bg-green-700"
+              className="flex-1 max-w-40 bg-green-600 hover:bg-green-700 flex flex-row justify-center items-center"
             >
               <CheckCircle className="h-4 w-4 mr-2" />
               Знаю
@@ -270,6 +272,7 @@ export default function FlashCard() {
             onClick={prevCard}
             color="outline"
             disabled={currentCard === 0}
+            className="flex flex-row justify-center items-center"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
             Назад
@@ -278,7 +281,7 @@ export default function FlashCard() {
           <Button
             onClick={handleFlip}
             color="outline"
-            className="gap-2 bg-transparent"
+            className="gap-2 bg-transparent flex flex-row justify-center items-center"
           >
             <RotateCcw className="h-4 w-4" />
             Перевернуть
@@ -288,6 +291,7 @@ export default function FlashCard() {
             onClick={nextCard}
             color="outline"
             disabled={currentCard === flashcards.length - 1}
+            className="flex flex-row justify-center items-center"
           >
             Вперед
             <ArrowRight className="h-4 w-4 ml-2" />
@@ -308,7 +312,7 @@ export default function FlashCard() {
         </div>
       </div>
 
-      {/*<style jsx>{`
+      <style jsx>{`
         .perspective-1000 {
           perspective: 1000px;
         }
@@ -321,7 +325,7 @@ export default function FlashCard() {
         .rotate-y-180 {
           transform: rotateY(180deg);
         }
-      `}</style>*/}
+      `}</style>
     </div>
   );
 }
