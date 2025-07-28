@@ -250,58 +250,6 @@ export class TranslateService {
     });
   }
 
-  async findWordsBySynonym(synonym: string, userId: number) {
-    return this.databaseService.word.findMany({
-      where: {
-        synonyms: {
-          has: synonym,
-        },
-        progresses: {
-          some: {
-            userId: userId,
-          },
-        },
-      },
-      include: {
-        progresses: {
-          where: {
-            userId: userId,
-          },
-        },
-      },
-    });
-  }
+  
 
-  async getPartOfSpeechStats(userId: number) {
-    const words = await this.databaseService.word.findMany({
-      where: {
-        progresses: {
-          some: {
-            userId: userId,
-          },
-        },
-        partOfSpeech: {
-          not: null,
-        },
-      },
-      select: {
-        partOfSpeech: true,
-      },
-    });
-
-    const stats = words.reduce(
-      (acc, word) => {
-        if (word.partOfSpeech) {
-          acc[word.partOfSpeech] = (acc[word.partOfSpeech] || 0) + 1;
-        }
-        return acc;
-      },
-      {} as Record<string, number>,
-    );
-
-    return Object.entries(stats).map(([partOfSpeech, count]) => ({
-      partOfSpeech,
-      count,
-    }));
-  }
 }

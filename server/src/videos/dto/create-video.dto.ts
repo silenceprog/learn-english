@@ -1,6 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsArray, IsEnum, IsNotEmpty, IsNumber, IsOptional, IsString, IsUrl } from "class-validator";
-import { CEFRLevel, CoreSkillType, Language, Level } from "generated/prisma";
+import { CEFRLevel, CoreSkillType, Language } from "generated/prisma";
 
 export class CreateVideoDto {
   @IsString()
