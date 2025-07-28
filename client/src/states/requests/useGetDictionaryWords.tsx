@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { secureFetch } from "@/lib/secureFetch";
 
 export interface DictionaryResponse {
   data: Word[];
@@ -45,7 +46,7 @@ interface DictionaryStore {
   wordsLimit: number;
   currentPage: number;
   words: Word[];
-  totalWords: number;
+  learned: number;
   totalPages: number;
   setCurrentTab: (tab: "ALL" | "LEARNING" | "LEARNED") => void;
   setWordsLimit: (limit: number) => void;
@@ -58,7 +59,7 @@ export const useDictionaryStore = create<DictionaryStore>((set, get) => ({
   wordsLimit: 10,
   currentPage: 1,
   words: [],
-  totalWords: 0,
+  learned: 0,
   totalPages: 0,
 
   setCurrentTab: (tab) => {
@@ -86,7 +87,7 @@ export const useDictionaryStore = create<DictionaryStore>((set, get) => ({
     const url = `${baseUrl}?${params.toString()}`;
 
     try {
-      const response = await fetch(url, {
+      const response = await secureFetch(url, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -98,9 +99,10 @@ export const useDictionaryStore = create<DictionaryStore>((set, get) => ({
         throw new Error(errorData.message || `HTTP Error: ${response.status}`);
       }
       const data = await response.json();
+      console.log(data);
       set({
         words: data.data,
-        totalWords: data.total,
+        learned: data.learned,
         totalPages: data.pages,
       });
     } catch (error) {

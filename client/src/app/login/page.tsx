@@ -5,9 +5,11 @@ import { useStates } from "@/states/useStates";
 import { Button } from "@/shared/ui/Button";
 import { Loader2 } from "lucide-react";
 import { useAlertStore } from "@/states/alertStore";
+import { useAuthStore } from "@/states/authStore";
 
 export default function Login() {
   const { addAlert } = useAlertStore();
+  const { setAccessToken } = useAuthStore();
   const router = useRouter();
   const [form, setForm] = useState({
     email: "",
@@ -40,6 +42,8 @@ export default function Login() {
       );
 
       const data = await response.json();
+      setAccessToken(data.accessToken);
+      localStorage.setItem("refreshToken", data.refreshToken);
 
       if (!response.ok) {
         addAlert(data.message || "Login error", "error");
@@ -48,8 +52,6 @@ export default function Login() {
       addAlert("Login success", "success");
 
       setIsLoggedIn(true);
-      // Save token
-      localStorage.setItem("accessToken", data.accessToken);
       // Redirect to main page
       router.push("/");
     } catch (error) {

@@ -1,4 +1,4 @@
-import { ShowWord } from "@/app/ShowWord";
+import { ShowWord } from "@/app/dictionary/ShowWord";
 import { useDictionaryStore } from "@/states/requests/useGetDictionaryWords";
 
 export function ShowWords() {

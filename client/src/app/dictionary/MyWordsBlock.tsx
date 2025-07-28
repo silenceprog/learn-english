@@ -1,10 +1,10 @@
 import { Button } from "@/shared/ui/Button";
 import { RefreshCw } from "lucide-react";
 import { useEffect, useState } from "react";
-import { ShowWords } from "@/app/ShowWords";
+import { ShowWords } from "@/app/dictionary/ShowWords";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
-import Pagination from "@/app/Pagination";
-import CreateWordButton from "@/app/CreateWordButton";
+import Pagination from "@/app/dictionary/Pagination";
+import CreateWordButton from "@/app/dictionary/CreateWordButton";
 import { useDictionaryStore } from "@/states/requests/useGetDictionaryWords";
 
 export function MyWordsBlock() {
@@ -15,7 +15,7 @@ export function MyWordsBlock() {
     setCurrentTab,
     fetchWords,
     setWordsLimit,
-    totalWords,
+    learned,
     setCurrentPage,
     totalPages,
   } = useDictionaryStore();
@@ -51,7 +51,7 @@ export function MyWordsBlock() {
           </div>
         </Button>
       </div>
-      <p className="text-gray-500 py-2">Всего изучено слов: {totalWords}</p>
+      <p className="text-gray-500 py-2">Всего изучено слов: {learned}</p>
       <div className="flex justify-between">
         <div>
           <Button

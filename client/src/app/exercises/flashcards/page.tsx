@@ -23,12 +23,12 @@ export default function FlashCard() {
     {
       id: 1,
       word: "accomplish",
-      transcription: "/əˈkʌm.plɪʃ/",
+      transcriptionUK: "/əˈkʌm.plɪʃ/",
+      audioUK: 123,
+      transcriptionUS: "/əˈkʌm.plɪʃ/",
+      audioUS: 123,
       translation: "достигать, выполнять",
-      partOfSpeech: "глагол",
       example: "She accomplished all her goals for the year.",
-      exampleTranslation: "Она достигла всех своих целей на год.",
-      difficulty: "intermediate",
     },
     {
       id: 2,

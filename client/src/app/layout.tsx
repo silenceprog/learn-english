@@ -4,6 +4,7 @@ import "./globals.css";
 import { Header } from "@/widgets/Header/ui/Header";
 import AddNewWord from "@/modals/addNewWord";
 import Alerts from "@/shared/ui/Alerts";
+import DeleteWordModal from "@/modals/deleteWordModal";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,6 +33,7 @@ export default function RootLayout({
       >
         <Header />
         <AddNewWord />
+        <DeleteWordModal />
         <Alerts />
         {children}
       </body>

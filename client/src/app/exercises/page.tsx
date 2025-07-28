@@ -1,8 +1,12 @@
+"use client";
 import { Section } from "@/shared/ui/Section";
 import CreateExercise from "@/app/exercises/CreateExercise";
 import { BookOpen } from "lucide-react";
+import { Button } from "@/shared/ui/Button";
+import { useAuthStore } from "@/states/authStore";
 
 export default function Exercises() {
+  const { refresh } = useAuthStore();
   return (
     <Section>
       <p className="text-2xl font-bold text-blue-700 md:text-4xl mb-4">
@@ -44,6 +48,7 @@ export default function Exercises() {
           href="/exercises/flashcards"
           difficulty="Hard"
         />
+        <Button onClick={refresh}>123</Button>
       </div>
     </Section>
   );

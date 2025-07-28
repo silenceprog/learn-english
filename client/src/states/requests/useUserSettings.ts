@@ -1,4 +1,5 @@
 import { create } from "zustand/react";
+import { secureFetch } from "@/lib/secureFetch";
 
 type Settings = {
   global_language: string;
@@ -21,7 +22,7 @@ export const useUserSettingsStore = create<SettingsStore>((set) => ({
   },
   fetchSettings: async () => {
     try {
-      const res = await fetch(
+      const res = await secureFetch(
         "https://learn-english-6ufl.onrender.com/api/settings",
         {
           headers: {
