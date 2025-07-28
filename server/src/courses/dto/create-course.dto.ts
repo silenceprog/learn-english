@@ -1,5 +1,5 @@
 import { IsString, IsOptional, IsEnum, IsBoolean, IsArray, IsNumber } from 'class-validator';
-import { CEFRLevel, CoreSkillType, Level } from 'generated/prisma';
+import { CEFRLevel, CoreSkillType } from 'generated/prisma';
 
 export class CreateCourseDto {
   @IsString()

@@ -37,13 +37,6 @@ export class UserProgressController {
     return this.userProgressService.getDailyProgress(userId, days);
   }
 
-  @ApiOperation({ summary: 'Отримати статистику по частинам мови' })
-  @ApiResponse({ status: 200, description: 'Статистика частин мови' })
-  @Get('parts-of-speech')
-  async getPartsOfSpeechStats(@GetCurrentUserId() userId: number) {
-    return this.userProgressService.getPartsOfSpeechStats(userId);
-  }
-
   @ApiOperation({ summary: 'Отримати статистику складності слів' })
   @ApiResponse({ status: 200, description: 'Статистика складності' })
   @Get('difficulty')

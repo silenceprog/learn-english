@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
-import { CEFRLevel, Level, Purpose } from 'generated/prisma';
+import { CEFRLevel, Purpose } from 'generated/prisma';
 import { Strategy } from 'passport-github';
 import { DatabaseService } from 'src/database/database.service';
 
@@ -40,7 +40,6 @@ export class GithubStrategy extends PassportStrategy(Strategy, 'github') {
           username,
           password: '',
           role: 'USER',
-          isEmailVerified: true,
           provider: 'github',
           avatar: photos?.[0]?.value,
           setting: {

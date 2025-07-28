@@ -82,26 +82,6 @@ async getWordsOverview(userId: number) {
     }));
   }
 
-  async getPartsOfSpeechStats(userId: number) {
-    const setting = await this.databaseService.setting.findUnique({
-      where: { userId },
-    });
-
-    if (!setting) {
-      throw new NotFoundException('User settings not found');
-    }
-
-    const stats = await this.databaseService.word.groupBy({
-      by: ['partOfSpeech'],
-      where: { userId, language: setting.current_language },
-      _count: true,
-    });
-
-    return stats.map(stat => ({
-      partOfSpeech: stat.partOfSpeech || 'Unknown',
-      count: stat._count,
-    }));
-  }
 
   async getDifficultyStats(userId: number) {
     const setting = await this.databaseService.setting.findUnique({

@@ -558,24 +558,9 @@ export class ProgressService {
     }
 
     // Перевіряємо карточки, що потребують повторення
-    const dueCards = await this.databaseService.wordSnapshot.count({
-      where: {
-        userId,
-        language,
-        nextReviewAt: {
-          lte: new Date()
-        }
-      }
-    });
+    
 
-    if (dueCards > 0) {
-      recommendations.push({
-        type: 'REVIEW_CARDS',
-        count: dueCards,
-        message: `You have ${dueCards} flashcards ready for review`,
-        priority: 'MEDIUM'
-      });
-    }
+   
 
     return {
       overallLevel: languageProgress.overallCEFR,

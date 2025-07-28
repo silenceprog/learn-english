@@ -1,6 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsArray, IsEnum, IsInt, IsString } from "class-validator";
-import { CEFRLevel, Language, Level, Purpose } from "generated/prisma";
+import { IsArray, IsEnum } from "class-validator";
+import { CEFRLevel, Language, Purpose } from "generated/prisma";
 
 
 export class CreateSettingDto {

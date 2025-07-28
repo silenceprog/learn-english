@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
-import { CEFRLevel, Level, Purpose } from 'generated/prisma';
+import { CEFRLevel, Purpose } from 'generated/prisma';
 import { Strategy, VerifyCallback } from 'passport-google-oauth2';
 import { DatabaseService } from 'src/database/database.service';
 
@@ -48,7 +48,6 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
           username: username,
           password: '',
           role: 'USER',
-          isEmailVerified: true,
           provider: 'google',
           avatar: photos?.[0]?.value,
           setting: {
