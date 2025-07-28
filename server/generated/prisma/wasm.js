@@ -158,6 +158,22 @@ exports.Prisma.WordScalarFieldEnum = {
   userId: 'userId'
 };
 
+exports.Prisma.WordSnapshotScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  word: 'word',
+  language: 'language',
+  masteryLevel: 'masteryLevel',
+  lastReviewedAt: 'lastReviewedAt',
+  nextReviewAt: 'nextReviewAt',
+  reviewInterval: 'reviewInterval',
+  difficulty: 'difficulty',
+  totalAttempts: 'totalAttempts',
+  correctAttempts: 'correctAttempts',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.VideoScalarFieldEnum = {
   id: 'id',
   title: 'title',
@@ -367,6 +383,14 @@ exports.Language = exports.$Enums.Language = {
   DE: 'DE'
 };
 
+exports.MasteryLevel = exports.$Enums.MasteryLevel = {
+  NEW: 'NEW',
+  LEARNING: 'LEARNING',
+  FAMILIAR: 'FAMILIAR',
+  KNOWN: 'KNOWN',
+  MASTERED: 'MASTERED'
+};
+
 exports.CEFRLevel = exports.$Enums.CEFRLevel = {
   PRE_A1: 'PRE_A1',
   A1: 'A1',
@@ -391,7 +415,10 @@ exports.TaskType = exports.$Enums.TaskType = {
   TRUE_FALSE: 'TRUE_FALSE',
   DRAG_AND_DROP: 'DRAG_AND_DROP',
   AUDIO_CHOICE: 'AUDIO_CHOICE',
-  SPEAKING: 'SPEAKING'
+  SPEAKING: 'SPEAKING',
+  WRITING: 'WRITING',
+  READING_COMPREHENSION: 'READING_COMPREHENSION',
+  LISTENING_COMPREHENSION: 'LISTENING_COMPREHENSION'
 };
 
 exports.Purpose = exports.$Enums.Purpose = {
@@ -417,6 +444,7 @@ exports.AchievementType = exports.$Enums.AchievementType = {
 exports.Prisma.ModelName = {
   User: 'User',
   Word: 'Word',
+  WordSnapshot: 'WordSnapshot',
   Video: 'Video',
   Task: 'Task',
   Course: 'Course',

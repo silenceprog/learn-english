@@ -30,6 +30,7 @@ import { RedisOptions } from './app-options';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { GeminiModule } from './gemini/gemini.module';
 import { ProgressModule } from './progress/progress.module';
+import { CardsModule } from './cards/cards.module';
 
 @Module({
   imports: [
@@ -65,6 +66,7 @@ import { ProgressModule } from './progress/progress.module';
     TranslateModule,
     GeminiModule,
     ProgressModule,
+    CardsModule,
   ],
   controllers: [AppController, EmailController],
   providers: [

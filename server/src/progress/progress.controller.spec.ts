@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { ProgressController } from './progress.controller';
+import { ProgressController } from './user-progress.controller';
 
 describe('ProgressController', () => {
   let controller: ProgressController;

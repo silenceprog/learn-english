@@ -38,16 +38,17 @@ model User {
   lastActiveAt       DateTime?
 
   // Зв'язки
-  setting         Setting?
-  words Word[]
+  setting            Setting?
+  words              Word[]
+  wordSnapshots      WordSnapshot[]
   languageProgresses LanguageProgress[]
   skillProgresses    SkillProgress[]
   achievements       UserAchievement[]
   dailyStats         DailyStats[]
-  enrollments     Enrollment[]
-  courses         Course[]
-  tasks           Task[]
-  wordProgresses  WordTaskProgress[] @relation("UserWordProgresses")
+  enrollments        Enrollment[]
+  courses            Course[]
+  tasks              Task[]
+  wordProgresses     WordTaskProgress[] @relation("UserWordProgresses")
 }
 
 model Word {
@@ -73,6 +74,33 @@ model Word {
   progresses    WordTaskProgress[] @relation("WordProgresses")
 
   @@unique([userId, text, language])
+}
+
+model WordSnapshot {
+  id              Int          @id @default(autoincrement())
+  userId          Int
+  user            User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  word            String
+  language        Language
+  masteryLevel    MasteryLevel
+  
+  // Spaced repetition
+  lastReviewedAt  DateTime?
+  nextReviewAt    DateTime?
+  reviewInterval  Int          @default(1)
+  difficulty      Float        @default(2.5)  // SM-2 алгоритм
+  
+  // Статистика
+  totalAttempts   Int          @default(0)
+  correctAttempts Int          @default(0)
+  
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+  
+  @@unique([userId, word, language])
+  @@index([nextReviewAt])
+  @@index([userId, language, masteryLevel])
 }
 
 model Video {
@@ -335,6 +363,14 @@ model UserAchievement {
   @@unique([userId, achievementId])
 }
 
+enum MasteryLevel {
+  NEW  
+  LEARNING     
+  FAMILIAR    
+  KNOWN        
+  MASTERED     
+}
+
 enum Role {
   OWNER
   USER
@@ -348,6 +384,9 @@ enum TaskType {
   DRAG_AND_DROP
   AUDIO_CHOICE
   SPEAKING
+  WRITING
+  READING_COMPREHENSION
+  LISTENING_COMPREHENSION
 }
 
 enum Language {

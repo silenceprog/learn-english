@@ -1,277 +1,585 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { CEFRLevel, CoreSkillType, Language } from 'generated/prisma';
 import { DatabaseService } from 'src/database/database.service';
+
+interface SkillUpdateData {
+  isCorrect: boolean;
+  xpEarned: number;
+  timeSpent: number;
+  wordLearned?: boolean;
+}
+
+interface Recommendation {
+  type: 'FOCUS_SKILL' | 'REVIEW_CARDS';
+  skillType?: CoreSkillType;
+  count?: number;
+  message: string;
+  priority: 'HIGH' | 'MEDIUM' | 'LOW';
+}
 
 @Injectable()
 export class ProgressService {
    constructor(private readonly databaseService: DatabaseService) {}
 
-  async getWordsOverview(userId: number) {
-    const setting = await this.databaseService.setting.findUnique({
-      where: { userId },
-    });
+   async updateSkillProgress(
+    userId: number, 
+    language: Language, 
+    skillType: CoreSkillType, 
+    updateData: SkillUpdateData
+  ) {
+    const { isCorrect, xpEarned, timeSpent, wordLearned = false } = updateData;
 
-    if (!setting) {
-      throw new NotFoundException('User settings not found');
-    }
+    // Знаходимо або створюємо Language Progress
+    const languageProgress = await this.getOrCreateLanguageProgress(userId, language);
 
-    const [total, learned, learning, todayLearned] = await Promise.all([
-      this.databaseService.word.count({
-        where: { userId, language: setting.current_language },
-      }),
-      this.databaseService.word.count({
-        where: { userId, language: setting.current_language, isLearned: true },
-      }),
-      this.databaseService.word.count({
-        where: { userId, language: setting.current_language, isLearned: false },
-      }),
-      this.databaseService.word.count({
-        where: {
+    // Знаходимо або створюємо Skill Progress
+    let skillProgress = await this.databaseService.skillProgress.findUnique({
+      where: {
+        userId_languageProgressId_skillType: {
           userId,
-          language: setting.current_language,
-          createdAt: {
-            gte: new Date(new Date().setHours(0, 0, 0, 0)),
-          },
-        },
-      }),
-    ]);
-
-    const averageProgress = total > 0 
-      ? await this.databaseService.word.aggregate({
-          where: { userId, language: setting.current_language },
-          _avg: { totalProgress: true },
-        }).then(result => result._avg.totalProgress || 0)
-      : 0;
-
-    return {
-      total,
-      learned,
-      learning,
-      todayLearned,
-      averageProgress: Math.round(averageProgress),
-      completionRate: total > 0 ? Math.round((learned / total) * 100) : 0,
-    };
-  }
-
-  async getDailyProgress(userId: number, days: number) {
-    const setting = await this.databaseService.setting.findUnique({
-      where: { userId },
+          languageProgressId: languageProgress.id,
+          skillType
+        }
+      }
     });
 
-    if (!setting) {
-      throw new NotFoundException('User settings not found');
+    if (!skillProgress) {
+      skillProgress = await this.databaseService.skillProgress.create({
+        data: {
+          userId,
+          languageProgressId: languageProgress.id,
+          skillType,
+          cefrLevel: 'PRE_A1',
+          levelProgress: 0.0,
+        }
+      });
     }
 
-    const startDate = new Date();
-    startDate.setDate(startDate.getDate() - days);
-    startDate.setHours(0, 0, 0, 0);
+    // Оновлюємо статистику навички
+    const updatedStats = {
+      totalPracticed: skillProgress.totalPracticed + 1,
+      totalAnswers: skillProgress.totalAnswers + 1,
+      correctAnswers: skillProgress.correctAnswers + (isCorrect ? 1 : 0),
+      xpEarned: skillProgress.xpEarned + xpEarned,
+      timeSpent: skillProgress.timeSpent + timeSpent,
+      totalWordsStudied: skillProgress.totalWordsStudied,
+      wordsLearned: skillProgress.wordsLearned,
+      currentAccuracy: 0, // Will be calculated below
+      cefrLevel: skillProgress.cefrLevel,
+      levelProgress: skillProgress.levelProgress,
+    };
 
-    const dailyStats = await this.databaseService.dailyStats.findMany({
+    // Для словника додаємо специфічні метрики
+    if (skillType === 'VOCABULARY') {
+      updatedStats.totalWordsStudied = skillProgress.totalWordsStudied + 1;
+      if (wordLearned) {
+        updatedStats.wordsLearned = skillProgress.wordsLearned + 1;
+      }
+    }
+
+    // Розраховуємо поточну точність
+    updatedStats.currentAccuracy = 
+      (updatedStats.correctAnswers / updatedStats.totalAnswers) * 100;
+
+    // Перевіряємо можливість підвищення рівня
+    const levelCheck = await this.checkLevelUp(skillProgress.cefrLevel, skillType, updatedStats);
+
+    if (levelCheck.canLevelUp && levelCheck.newLevel) {
+      updatedStats.cefrLevel = levelCheck.newLevel;
+      updatedStats.levelProgress = 0.0;
+      
+      // Додаємо досягнення за підвищення рівня
+      await this.createLevelUpAchievement(userId, skillType, levelCheck.newLevel);
+    } else {
+      updatedStats.levelProgress = levelCheck.progress;
+    }
+
+    // Оновлюємо навичку
+    skillProgress = await this.databaseService.skillProgress.update({
+      where: { id: skillProgress.id },
+      data: {
+        ...updatedStats,
+        lastPracticed: new Date(),
+        updatedAt: new Date(),
+      }
+    });
+
+    // Оновлюємо загальний прогрес по мові
+    await this.updateOverallLanguageProgress(userId, language);
+
+    // Оновлюємо загальний XP користувача
+    await this.updateUserTotalXP(userId, xpEarned);
+
+    return skillProgress;
+  }
+
+  // Отримання або створення Language Progress
+  private async getOrCreateLanguageProgress(userId: number, language: Language) {
+    return await this.databaseService.languageProgress.upsert({
       where: {
-        userId,
-        language: setting.current_language,
-        date: { gte: startDate },
+        userId_language: {
+          userId,
+          language
+        }
       },
-      orderBy: { date: 'asc' },
+      create: {
+        userId,
+        language,
+        overallCEFR: 'PRE_A1',
+        overallProgress: 0.0,
+      },
+      update: {
+        lastActiveAt: new Date(),
+        updatedAt: new Date(),
+      }
     });
-
-    return dailyStats.map(stat => ({
-      date: stat.date,
-      newWords: stat.newWordsLearned,
-      wordsReviewed: stat.wordsReviewed,
-      xpGained: stat.totalXP,
-      timeSpent: stat.totalTime,
-    }));
   }
 
-  async getPartsOfSpeechStats(userId: number) {
-    const setting = await this.databaseService.setting.findUnique({
-      where: { userId },
-    });
-
-    if (!setting) {
-      throw new NotFoundException('User settings not found');
+  // Перевірка можливості підвищення рівня
+  private async checkLevelUp(currentLevel: CEFRLevel, skillType: CoreSkillType, stats: any): Promise<{
+    canLevelUp: boolean;
+    progress: number;
+    newLevel?: CEFRLevel;
+  }> {
+    const nextLevel = this.getNextCEFRLevel(currentLevel);
+    if (!nextLevel) {
+      return { canLevelUp: false, progress: 100.0 };
     }
 
-    const stats = await this.databaseService.word.groupBy({
-      by: ['partOfSpeech'],
-      where: { userId, language: setting.current_language },
-      _count: true,
+    // Отримуємо вимоги для наступного рівня
+    const requirements = await this.databaseService.skillLevelRequirements.findUnique({
+      where: {
+        skillType_cefrLevel: {
+          skillType,
+          cefrLevel: nextLevel
+        }
+      }
     });
 
-    return stats.map(stat => ({
-      partOfSpeech: stat.partOfSpeech || 'Unknown',
-      count: stat._count,
-    }));
+    if (!requirements) {
+      // Якщо немає вимог, створюємо базові
+      await this.createDefaultRequirements(skillType, nextLevel);
+      return { canLevelUp: false, progress: 0.0 };
+    }
+
+    // Перевіряємо всі вимоги
+    const checks = {
+      xp: stats.xpEarned >= requirements.minXP,
+      accuracy: stats.currentAccuracy >= requirements.minAccuracy,
+      practiced: stats.totalPracticed >= requirements.minPracticed,
+      time: stats.timeSpent >= requirements.minTimeSpent,
+      words: !requirements.minWordsLearned || stats.wordsLearned >= requirements.minWordsLearned
+    };
+
+    const canLevelUp = Object.values(checks).every(check => check);
+
+    if (canLevelUp) {
+      return { canLevelUp: true, newLevel: nextLevel, progress: 100.0 };
+    }
+
+    // Розраховуємо прогрес до наступного рівня
+    const progress = this.calculateLevelProgress(requirements, stats);
+    return { canLevelUp: false, progress };
   }
 
-  async getDifficultyStats(userId: number) {
-    const setting = await this.databaseService.setting.findUnique({
-      where: { userId },
-    });
+  // Розрахунок прогресу в межах рівня
+  private calculateLevelProgress(requirements: any, stats: any): number {
+    const factors: number[] = [];
 
-    if (!setting) {
-      throw new NotFoundException('User settings not found');
+    // XP прогрес
+    if (requirements.minXP > 0) {
+      factors.push(Math.min(100, (stats.xpEarned / requirements.minXP) * 100));
     }
 
-    const words = await this.databaseService.word.findMany({
-      where: { userId, language: setting.current_language },
-      select: { totalProgress: true },
+    // Точність
+    if (requirements.minAccuracy > 0) {
+      factors.push(Math.min(100, (stats.currentAccuracy / requirements.minAccuracy) * 100));
+    }
+
+    // Кількість вправ
+    if (requirements.minPracticed > 0) {
+      factors.push(Math.min(100, (stats.totalPracticed / requirements.minPracticed) * 100));
+    }
+
+    // Час
+    if (requirements.minTimeSpent > 0) {
+      factors.push(Math.min(100, (stats.timeSpent / requirements.minTimeSpent) * 100));
+    }
+
+    // Слова (для vocabulary)
+    if (requirements.minWordsLearned > 0) {
+      factors.push(Math.min(100, (stats.wordsLearned / requirements.minWordsLearned) * 100));
+    }
+
+    return factors.length > 0 ? Math.round(factors.reduce((a, b) => a + b) / factors.length) : 0;
+  }
+
+  // Оновлення загального прогресу по мові
+  private async updateOverallLanguageProgress(userId: number, language: Language) {
+    // Отримуємо всі навички користувача для мови
+    const skillProgresses = await this.databaseService.skillProgress.findMany({
+      where: {
+        userId,
+        languageProgress: {
+          language
+        }
+      }
     });
 
-    const easy = words.filter(w => w.totalProgress >= 80).length;
-    const medium = words.filter(w => w.totalProgress >= 40 && w.totalProgress < 80).length;
-    const hard = words.filter(w => w.totalProgress < 40).length;
+    if (skillProgresses.length === 0) return;
+
+    // Розраховуємо загальний CEFR за допомогою зваженої середньої
+    const overallResult = this.calculateOverallCEFR(skillProgresses);
+
+    // Розраховуємо загальний XP та час
+    const totalXP = skillProgresses.reduce((sum, skill) => sum + skill.xpEarned, 0);
+    const totalTime = skillProgresses.reduce((sum, skill) => sum + skill.timeSpent, 0);
+
+    // Оновлюємо загальний прогрес
+    await this.databaseService.languageProgress.update({
+      where: {
+        userId_language: {
+          userId,
+          language
+        }
+      },
+      data: {
+        overallProgress: overallResult.progress,
+        totalXP,
+        totalTime,
+        lastActiveAt: new Date(),
+        updatedAt: new Date()
+      }
+    });
+
+    return overallResult;
+  }
+
+  // Розрахунок загального CEFR рівня
+  private calculateOverallCEFR(skillProgresses: any[]) {
+    // Ваги для кожної навички
+    const skillWeights = {
+      'VOCABULARY': 0.25,  // словник - основа
+      'READING': 0.20,
+      'LISTENING': 0.20,
+      'SPEAKING': 0.20,
+      'WRITING': 0.15
+    } as const;
+
+    let totalWeightedScore = 0;
+    let totalWeight = 0;
+
+    skillProgresses.forEach(skill => {
+      const numericLevel = this.cefrToNumeric(skill.cefrLevel);
+      const progressBonus = skill.levelProgress / 100; // 0-1
+      const skillScore = numericLevel + progressBonus;
+      
+      const weight = skillWeights[skill.skillType as keyof typeof skillWeights] || 0.2;
+      totalWeightedScore += skillScore * weight;
+      totalWeight += weight;
+    });
+
+    if (totalWeight === 0) {
+      return { cefrLevel: 'PRE_A1' as CEFRLevel, progress: 0.0 };
+    }
+
+    const averageScore = totalWeightedScore / totalWeight;
+    const baseLevel = Math.floor(averageScore);
+    const progress = (averageScore - baseLevel) * 100;
 
     return {
-      easy,
-      medium,
-      hard,
-      total: words.length,
+      cefrLevel: this.numericToCEFR(baseLevel),
+      progress: Math.round(progress * 10) / 10
     };
   }
 
-  async getMostDifficultWords(userId: number, limit: number) {
-    const setting = await this.databaseService.setting.findUnique({
-      where: { userId },
-    });
+  // Конвертація CEFR у числове значення
+  private cefrToNumeric(cefrLevel: CEFRLevel): number {
+    const levels = {
+      'PRE_A1': 0, 'A1_MINUS': 1, 'A1': 2, 'A1_PLUS': 3,
+      'A2_MINUS': 4, 'A2': 5, 'A2_PLUS': 6,
+      'B1_MINUS': 7, 'B1': 8, 'B1_PLUS': 9,
+      'B2_MINUS': 10, 'B2': 11, 'B2_PLUS': 12,
+      'C1_MINUS': 13, 'C1': 14, 'C1_PLUS': 15,
+      'C2': 16, 'NATIVE': 17
+    } as const;
+    return levels[cefrLevel] || 0;
+  }
 
-    if (!setting) {
-      throw new NotFoundException('User settings not found');
-    }
+  // Конвертація числового значення у CEFR
+  private numericToCEFR(numeric: number): CEFRLevel {
+    const levels = [
+      'PRE_A1', 'A1_MINUS', 'A1', 'A1_PLUS',
+      'A2_MINUS', 'A2', 'A2_PLUS',
+      'B1_MINUS', 'B1', 'B1_PLUS',
+      'B2_MINUS', 'B2', 'B2_PLUS',
+      'C1_MINUS', 'C1', 'C1_PLUS', 'C2', 'NATIVE'
+    ] as const;
+    return levels[Math.floor(numeric)] as CEFRLevel || 'PRE_A1';
+  }
 
-    return this.databaseService.word.findMany({
-      where: { userId, language: setting.current_language },
-      orderBy: { totalProgress: 'asc' },
-      take: limit,
+  // Отримання наступного CEFR рівня
+  private getNextCEFRLevel(currentLevel: CEFRLevel): CEFRLevel | null {
+    const levels = [
+      'PRE_A1', 'A1_MINUS', 'A1', 'A1_PLUS',
+      'A2_MINUS', 'A2', 'A2_PLUS',
+      'B1_MINUS', 'B1', 'B1_PLUS',
+      'B2_MINUS', 'B2', 'B2_PLUS',
+      'C1_MINUS', 'C1', 'C1_PLUS', 'C2', 'NATIVE'
+    ] as const;
+    
+    const currentIndex = levels.indexOf(currentLevel);
+    return currentIndex < levels.length - 1 ? levels[currentIndex + 1] as CEFRLevel : null;
+  }
+
+  // Створення базових вимог для рівня
+  private async createDefaultRequirements(skillType: CoreSkillType, cefrLevel: CEFRLevel) {
+    const baseRequirements = this.getBaseRequirements(skillType, cefrLevel);
+    
+    await this.databaseService.skillLevelRequirements.create({
+      data: {
+        skillType,
+        cefrLevel,
+        ...baseRequirements
+      }
     });
   }
 
-  async getStudyRecommendations(userId: number) {
-    const setting = await this.databaseService.setting.findUnique({
-      where: { userId },
+  // Базові вимоги для різних рівнів і навичок
+  private getBaseRequirements(skillType: CoreSkillType, cefrLevel: CEFRLevel) {
+    const levelMultiplier = this.cefrToNumeric(cefrLevel) + 1;
+    
+    const base = {
+      'VOCABULARY': {
+        minXP: 100 * levelMultiplier,
+        minAccuracy: 60 + (levelMultiplier * 2),
+        minPracticed: 20 * levelMultiplier,
+        minTimeSpent: 1800 * levelMultiplier, // 30 хв * рівень
+        minWordsLearned: 50 * levelMultiplier,
+        weightInOverall: 0.25,
+        displayName: `${cefrLevel} Vocabulary`,
+        description: `Vocabulary skills at ${cefrLevel} level`,
+        color: '#4CAF50'
+      },
+      'READING': {
+        minXP: 80 * levelMultiplier,
+        minAccuracy: 65 + (levelMultiplier * 2),
+        minPracticed: 15 * levelMultiplier,
+        minTimeSpent: 1200 * levelMultiplier,
+        minWordsLearned: null,
+        weightInOverall: 0.20,
+        displayName: `${cefrLevel} Reading`,
+        description: `Reading skills at ${cefrLevel} level`,
+        color: '#2196F3'
+      },
+      'LISTENING': {
+        minXP: 80 * levelMultiplier,
+        minAccuracy: 60 + (levelMultiplier * 2),
+        minPracticed: 15 * levelMultiplier,
+        minTimeSpent: 1200 * levelMultiplier,
+        minWordsLearned: null,
+        weightInOverall: 0.20,
+        displayName: `${cefrLevel} Listening`,
+        description: `Listening skills at ${cefrLevel} level`,
+        color: '#FF9800'
+      },
+      'SPEAKING': {
+        minXP: 70 * levelMultiplier,
+        minAccuracy: 55 + (levelMultiplier * 2),
+        minPracticed: 10 * levelMultiplier,
+        minTimeSpent: 900 * levelMultiplier,
+        minWordsLearned: null,
+        weightInOverall: 0.20,
+        displayName: `${cefrLevel} Speaking`,
+        description: `Speaking skills at ${cefrLevel} level`,
+        color: '#E91E63'
+      },
+      'WRITING': {
+        minXP: 60 * levelMultiplier,
+        minAccuracy: 70 + (levelMultiplier * 2),
+        minPracticed: 10 * levelMultiplier,
+        minTimeSpent: 1500 * levelMultiplier,
+        minWordsLearned: null,
+        weightInOverall: 0.15,
+        displayName: `${cefrLevel} Writing`,
+        description: `Writing skills at ${cefrLevel} level`,
+        color: '#9C27B0'
+      }
+    } as const;
+
+    return base[skillType] || base['VOCABULARY'];
+  }
+
+  // Створення досягнення за підвищення рівня
+  private async createLevelUpAchievement(userId: number, skillType: CoreSkillType, newLevel: CEFRLevel) {
+    // Перевіряємо, чи існує досягнення для цього рівня навички
+    let achievement = await this.databaseService.achievement.findFirst({
+      where: {
+        type: 'SKILL_LEVEL',
+        requiredSkill: skillType,
+        requiredLevel: newLevel
+      }
     });
 
-    if (!setting) {
-      throw new NotFoundException('User settings not found');
+    if (!achievement) {
+      // Створюємо нове досягнення
+      achievement = await this.databaseService.achievement.create({
+        data: {
+          name: `${skillType} ${newLevel} Master`,
+          description: `Reached ${newLevel} level in ${skillType}`,
+          type: 'SKILL_LEVEL',
+          requiredSkill: skillType,
+          requiredLevel: newLevel,
+          xpReward: this.cefrToNumeric(newLevel) * 50,
+          badge: `${skillType.toLowerCase()}_${newLevel.toLowerCase()}`,
+          isActive: true
+        }
+      });
     }
 
-    const recommendations = await this.databaseService.word.findMany({
+    // Додаємо досягнення користувачу
+    await this.databaseService.userAchievement.upsert({
       where: {
+        userId_achievementId: {
+          userId,
+          achievementId: achievement.id
+        }
+      },
+      create: {
         userId,
-        language: setting.current_language,
-        isLearned: false,
-        totalProgress: { lt: 70 },
+        achievementId: achievement.id
+      },
+      update: {}
+    });
+
+    return achievement;
+  }
+
+  // Оновлення загального XP користувача
+  private async updateUserTotalXP(userId: number, xpEarned: number) {
+    await this.databaseService.user.update({
+      where: { id: userId },
+      data: {
+        totalXP: {
+          increment: xpEarned
+        },
+        lastActiveAt: new Date()
+      }
+    });
+  }
+
+  // Публічні методи для отримання статистики
+
+  // Отримання прогресу користувача по мові
+  async getLanguageProgress(userId: number, language: Language) {
+    const languageProgress = await this.databaseService.languageProgress.findUnique({
+      where: {
+        userId_language: {
+          userId,
+          language
+        }
+      },
+      include: {
+        skillProgresses: true
+      }
+    });
+
+    if (!languageProgress) {
+      return null;
+    }
+
+    return {
+      ...languageProgress,
+      skillBreakdown: languageProgress.skillProgresses.map(skill => ({
+        skillType: skill.skillType,
+        cefrLevel: skill.cefrLevel,
+        levelProgress: skill.levelProgress,
+        xpEarned: skill.xpEarned,
+        currentAccuracy: skill.currentAccuracy,
+        lastPracticed: skill.lastPracticed
+      }))
+    };
+  }
+
+  // Отримання топ користувачів по мові
+  async getLanguageLeaderboard(language: Language, limit: number = 10) {
+    const topUsers = await this.databaseService.languageProgress.findMany({
+      where: { language },
+      include: {
+        user: {
+          select: {
+            id: true,
+            username: true,
+            avatar: true
+          }
+        }
       },
       orderBy: [
-        { totalProgress: 'asc' },
-        { createdAt: 'asc' }
+        { totalXP: 'desc' },
+        { updatedAt: 'desc' }
       ],
-      take: 20,
+      take: limit
     });
 
-    return recommendations.map(word => ({
-      ...word,
-      recommendedReason: this.getRecommendationReason(word),
-      priority: this.calculatePriority(word),
+    return topUsers.map((progress, index) => ({
+      rank: index + 1,
+      user: progress.user,
+      overallCEFR: progress.overallCEFR,
+      overallProgress: progress.overallProgress,
+      totalXP: progress.totalXP,
+      totalTime: progress.totalTime
     }));
   }
 
-  async getVocabularyAchievements(userId: number) {
-    const userAchievements = await this.databaseService.userAchievement.findMany({
-      where: {
-        userId,
-        achievement: {
-          type: 'VOCABULARY_GURU',
-        },
-      },
-      include: { achievement: true },
-    });
-
-    const setting = await this.databaseService.setting.findUnique({
-      where: { userId },
-    });
-
-    if (!setting) return { achievements: [], progress: {} };
-
-    const wordsCount = await this.databaseService.word.count({
-      where: { userId, language: setting.current_language, isLearned: true },
-    });
-
-    return {
-      achievements: userAchievements,
-      progress: {
-        wordsLearned: wordsCount,
-        nextMilestone: this.getNextWordMilestone(wordsCount),
-      },
-    };
-  }
-
-  async getLearningChart(userId: number, period: string) {
-    const setting = await this.databaseService.setting.findUnique({
-      where: { userId },
-    });
-
-    if (!setting) {
-      throw new NotFoundException('User settings not found');
+  // Отримання рекомендацій для навчання
+  async getLearningRecommendations(userId: number, language: Language) {
+    const languageProgress = await this.getLanguageProgress(userId, language);
+    
+    if (!languageProgress) {
+      return {
+        message: 'Start learning to get recommendations',
+        recommendations: []
+      };
     }
 
-    let startDate = new Date();
-    let groupBy: any = { date: true };
+    const recommendations: Recommendation[] = [];
+    
+    // Знаходимо найслабшу навичку
+    const weakestSkill = languageProgress.skillBreakdown
+      .sort((a, b) => this.cefrToNumeric(a.cefrLevel) - this.cefrToNumeric(b.cefrLevel))[0];
 
-    switch (period) {
-      case 'week':
-        startDate.setDate(startDate.getDate() - 7);
-        break;
-      case 'month':
-        startDate.setMonth(startDate.getMonth() - 1);
-        break;
-      case 'year':
-        startDate.setFullYear(startDate.getFullYear() - 1);
-        break;
+    if (weakestSkill) {
+      recommendations.push({
+        type: 'FOCUS_SKILL',
+        skillType: weakestSkill.skillType,
+        message: `Focus on ${weakestSkill.skillType} - it's your weakest skill`,
+        priority: 'HIGH'
+      });
     }
 
-    startDate.setHours(0, 0, 0, 0);
-
-    const chartData = await this.databaseService.dailyStats.findMany({
+    // Перевіряємо карточки, що потребують повторення
+    const dueCards = await this.databaseService.wordSnapshot.count({
       where: {
         userId,
-        language: setting.current_language,
-        date: { gte: startDate },
-      },
-      orderBy: { date: 'asc' },
+        language,
+        nextReviewAt: {
+          lte: new Date()
+        }
+      }
     });
 
+    if (dueCards > 0) {
+      recommendations.push({
+        type: 'REVIEW_CARDS',
+        count: dueCards,
+        message: `You have ${dueCards} flashcards ready for review`,
+        priority: 'MEDIUM'
+      });
+    }
+
     return {
-      period,
-      data: chartData.map(item => ({
-        date: item.date,
-        newWords: item.newWordsLearned,
-        reviewed: item.wordsReviewed,
-        xp: item.totalXP,
-        time: item.totalTime,
-      })),
+      overallLevel: languageProgress.overallCEFR,
+      recommendations
     };
-  }
-
-  private getRecommendationReason(word: any): string {
-    if (word.totalProgress < 30) return 'Needs initial learning';
-    if (word.totalProgress < 60) return 'Requires more practice';
-    return 'Almost mastered, final review needed';
-  }
-
-  private calculatePriority(word: any): number {
-    const progressFactor = (100 - word.totalProgress) / 100;
-    const timeFactor = this.getTimeFactor(word.createdAt);
-    return Math.round((progressFactor + timeFactor) * 5);
-  }
-
-  private getTimeFactor(createdAt: Date): number {
-    const daysSince = (Date.now() - new Date(createdAt).getTime()) / (1000 * 60 * 60 * 24);
-    return Math.min(daysSince / 30, 1);
-  }
-
-  private getNextWordMilestone(current: number): number {
-    const milestones = [10, 25, 50, 100, 250, 500, 1000, 2500, 5000];
-    return milestones.find(m => m > current) || current + 1000;
   }
 }
