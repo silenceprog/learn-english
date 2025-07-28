@@ -4,7 +4,9 @@ import { GetFlashcardsDto } from './dto/flashcard.dto';
 import { CreateFlashcardDto} from './dto/create-card.dto';
 import {FlashcardAnswerDto} from './dto/flashcard-answer.dto';
 import { GetCurrentUserId } from 'src/decorators/get-current-user-id.decorator';
+import { ApiBearerAuth } from '@nestjs/swagger';
 
+@ApiBearerAuth('access-token')
 @Controller('flashcards')
 export class FlashcardController {
   constructor(private readonly flashcardService: FlashCardService) {}

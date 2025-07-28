@@ -18,6 +18,7 @@ export class EmailService {
     private readonly jwtService: JwtService,
     private userService: UsersService,
     private configService: ConfigService,
+    
   ) {}
 
   async sendEmailConfirmation(emailSend: EmailSend) {
@@ -109,7 +110,7 @@ export class EmailService {
   async confirmEmail(token: string) {
     try {
       const payload = (await this.jwtService.verifyAsync(token, {
-        secret: process.env.JWT_SECRET,
+        secret: this.configService.get<string>("JWT_SECRET"),
       })) as { id: number };
 
       const user = await this.userService.findById(payload.id);
@@ -126,7 +127,7 @@ export class EmailService {
   async resetPassword(token: string, newPassword: string) {
     try {
       const payload = (await this.jwtService.verifyAsync(token, {
-        secret: process.env.JWT_SECRET,
+        secret: this.configService.get<string>("JWT_SECRET"),
       })) as { id: number };
 
       const user = await this.userService.findById(payload.id);
@@ -175,7 +176,8 @@ export class EmailService {
     if (!user) throw new Error('User not found');
     const payload = { id: user.id, email: user.email, role: user.role };
     return {
-      access_token: this.jwtService.sign(payload, { expiresIn: '1h' }),
+      access_token: this.jwtService.sign(payload, { expiresIn: '1h',
+      secret: this.configService.get<string>('JWT_SECRET') }),
     };
   }
 }

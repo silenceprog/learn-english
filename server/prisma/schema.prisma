@@ -22,7 +22,6 @@ model User {
   password        String
   role            Role               @default(USER)
   avatar          String?            @default("none")
-  isEmailVerified Boolean            @default(false)
   createdAt       DateTime           @default(now())
   updatedAt       DateTime           @updatedAt
   deleteAt        DateTime?
@@ -40,7 +39,6 @@ model User {
   // Зв'язки
   setting            Setting?
   words              Word[]
-  wordSnapshots      WordSnapshot[]
   languageProgresses LanguageProgress[]
   skillProgresses    SkillProgress[]
   achievements       UserAchievement[]
@@ -57,10 +55,7 @@ model Word {
   language      Language           @default(EN)
   translate     String[]
   definitions   String[]           @default([])
-  synonyms      String[]           @default([])
-  antonyms      String[]           @default([])
   examples      String[]           @default([])
-  partOfSpeech  String?
   createdAt     DateTime           @default(now())
   totalProgress Int                @default(0)
   isLearned     Boolean            @default(false)
@@ -74,33 +69,6 @@ model Word {
   progresses    WordTaskProgress[] @relation("WordProgresses")
 
   @@unique([userId, text, language])
-}
-
-model WordSnapshot {
-  id              Int          @id @default(autoincrement())
-  userId          Int
-  user            User         @relation(fields: [userId], references: [id], onDelete: Cascade)
-  
-  word            String
-  language        Language
-  masteryLevel    MasteryLevel
-  
-  // Spaced repetition
-  lastReviewedAt  DateTime?
-  nextReviewAt    DateTime?
-  reviewInterval  Int          @default(1)
-  difficulty      Float        @default(2.5)  // SM-2 алгоритм
-  
-  // Статистика
-  totalAttempts   Int          @default(0)
-  correctAttempts Int          @default(0)
-  
-  createdAt       DateTime     @default(now())
-  updatedAt       DateTime     @updatedAt
-  
-  @@unique([userId, word, language])
-  @@index([nextReviewAt])
-  @@index([userId, language, masteryLevel])
 }
 
 model Video {
@@ -189,6 +157,7 @@ model Setting {
   current_language Language  @default(EN)
   purposes         Purpose[] @default([NONE])
   current_level    CEFRLevel     @default(PRE_A1)
+  isEmailVerified Boolean            @default(false)
 
   dailyXPGoal      Int       @default(50)
   dailyTimeGoal    Int       @default(15)   // хвилини
@@ -403,16 +372,6 @@ enum Purpose {
   SELF_DEV
   COMMUNICATION
   HOBBY
-}
-
-enum Level {
-  NONE
-  A1
-  A2
-  B1
-  B2
-  C1
-  C2
 }
 
 enum CEFRLevel {

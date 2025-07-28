@@ -24,11 +24,6 @@ export type User = $Result.DefaultSelection<Prisma.$UserPayload>
  */
 export type Word = $Result.DefaultSelection<Prisma.$WordPayload>
 /**
- * Model WordSnapshot
- * 
- */
-export type WordSnapshot = $Result.DefaultSelection<Prisma.$WordSnapshotPayload>
-/**
  * Model Video
  * 
  */
@@ -150,19 +145,6 @@ export const Purpose: {
 export type Purpose = (typeof Purpose)[keyof typeof Purpose]
 
 
-export const Level: {
-  NONE: 'NONE',
-  A1: 'A1',
-  A2: 'A2',
-  B1: 'B1',
-  B2: 'B2',
-  C1: 'C1',
-  C2: 'C2'
-};
-
-export type Level = (typeof Level)[keyof typeof Level]
-
-
 export const CEFRLevel: {
   PRE_A1: 'PRE_A1',
   A1: 'A1',
@@ -230,10 +212,6 @@ export const Language: typeof $Enums.Language
 export type Purpose = $Enums.Purpose
 
 export const Purpose: typeof $Enums.Purpose
-
-export type Level = $Enums.Level
-
-export const Level: typeof $Enums.Level
 
 export type CEFRLevel = $Enums.CEFRLevel
 
@@ -395,16 +373,6 @@ export class PrismaClient<
     * ```
     */
   get word(): Prisma.WordDelegate<ExtArgs, ClientOptions>;
-
-  /**
-   * `prisma.wordSnapshot`: Exposes CRUD operations for the **WordSnapshot** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more WordSnapshots
-    * const wordSnapshots = await prisma.wordSnapshot.findMany()
-    * ```
-    */
-  get wordSnapshot(): Prisma.WordSnapshotDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.video`: Exposes CRUD operations for the **Video** model.
@@ -967,7 +935,6 @@ export namespace Prisma {
   export const ModelName: {
     User: 'User',
     Word: 'Word',
-    WordSnapshot: 'WordSnapshot',
     Video: 'Video',
     Task: 'Task',
     Course: 'Course',
@@ -998,7 +965,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "word" | "wordSnapshot" | "video" | "task" | "course" | "enrollment" | "setting" | "languageProgress" | "skillProgress" | "skillLevelRequirements" | "wordTaskProgress" | "dailyStats" | "achievement" | "userAchievement"
+      modelProps: "user" | "word" | "video" | "task" | "course" | "enrollment" | "setting" | "languageProgress" | "skillProgress" | "skillLevelRequirements" | "wordTaskProgress" | "dailyStats" | "achievement" | "userAchievement"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1147,80 +1114,6 @@ export namespace Prisma {
           count: {
             args: Prisma.WordCountArgs<ExtArgs>
             result: $Utils.Optional<WordCountAggregateOutputType> | number
-          }
-        }
-      }
-      WordSnapshot: {
-        payload: Prisma.$WordSnapshotPayload<ExtArgs>
-        fields: Prisma.WordSnapshotFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.WordSnapshotFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$WordSnapshotPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.WordSnapshotFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$WordSnapshotPayload>
-          }
-          findFirst: {
-            args: Prisma.WordSnapshotFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$WordSnapshotPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.WordSnapshotFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$WordSnapshotPayload>
-          }
-          findMany: {
-            args: Prisma.WordSnapshotFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$WordSnapshotPayload>[]
-          }
-          create: {
-            args: Prisma.WordSnapshotCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$WordSnapshotPayload>
-          }
-          createMany: {
-            args: Prisma.WordSnapshotCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.WordSnapshotCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$WordSnapshotPayload>[]
-          }
-          delete: {
-            args: Prisma.WordSnapshotDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$WordSnapshotPayload>
-          }
-          update: {
-            args: Prisma.WordSnapshotUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$WordSnapshotPayload>
-          }
-          deleteMany: {
-            args: Prisma.WordSnapshotDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.WordSnapshotUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.WordSnapshotUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$WordSnapshotPayload>[]
-          }
-          upsert: {
-            args: Prisma.WordSnapshotUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$WordSnapshotPayload>
-          }
-          aggregate: {
-            args: Prisma.WordSnapshotAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateWordSnapshot>
-          }
-          groupBy: {
-            args: Prisma.WordSnapshotGroupByArgs<ExtArgs>
-            result: $Utils.Optional<WordSnapshotGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.WordSnapshotCountArgs<ExtArgs>
-            result: $Utils.Optional<WordSnapshotCountAggregateOutputType> | number
           }
         }
       }
@@ -2198,7 +2091,6 @@ export namespace Prisma {
   export type GlobalOmitConfig = {
     user?: UserOmit
     word?: WordOmit
-    wordSnapshot?: WordSnapshotOmit
     video?: VideoOmit
     task?: TaskOmit
     course?: CourseOmit
@@ -2306,7 +2198,6 @@ export namespace Prisma {
 
   export type UserCountOutputType = {
     words: number
-    wordSnapshots: number
     languageProgresses: number
     skillProgresses: number
     achievements: number
@@ -2319,7 +2210,6 @@ export namespace Prisma {
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     words?: boolean | UserCountOutputTypeCountWordsArgs
-    wordSnapshots?: boolean | UserCountOutputTypeCountWordSnapshotsArgs
     languageProgresses?: boolean | UserCountOutputTypeCountLanguageProgressesArgs
     skillProgresses?: boolean | UserCountOutputTypeCountSkillProgressesArgs
     achievements?: boolean | UserCountOutputTypeCountAchievementsArgs
@@ -2346,13 +2236,6 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountWordsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: WordWhereInput
-  }
-
-  /**
-   * UserCountOutputType without action
-   */
-  export type UserCountOutputTypeCountWordSnapshotsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: WordSnapshotWhereInput
   }
 
   /**
@@ -2624,7 +2507,6 @@ export namespace Prisma {
     password: string | null
     role: $Enums.Role | null
     avatar: string | null
-    isEmailVerified: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
     deleteAt: Date | null
@@ -2645,7 +2527,6 @@ export namespace Prisma {
     password: string | null
     role: $Enums.Role | null
     avatar: string | null
-    isEmailVerified: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
     deleteAt: Date | null
@@ -2666,7 +2547,6 @@ export namespace Prisma {
     password: number
     role: number
     avatar: number
-    isEmailVerified: number
     createdAt: number
     updatedAt: number
     deleteAt: number
@@ -2705,7 +2585,6 @@ export namespace Prisma {
     password?: true
     role?: true
     avatar?: true
-    isEmailVerified?: true
     createdAt?: true
     updatedAt?: true
     deleteAt?: true
@@ -2726,7 +2605,6 @@ export namespace Prisma {
     password?: true
     role?: true
     avatar?: true
-    isEmailVerified?: true
     createdAt?: true
     updatedAt?: true
     deleteAt?: true
@@ -2747,7 +2625,6 @@ export namespace Prisma {
     password?: true
     role?: true
     avatar?: true
-    isEmailVerified?: true
     createdAt?: true
     updatedAt?: true
     deleteAt?: true
@@ -2855,7 +2732,6 @@ export namespace Prisma {
     password: string
     role: $Enums.Role
     avatar: string | null
-    isEmailVerified: boolean
     createdAt: Date
     updatedAt: Date
     deleteAt: Date | null
@@ -2895,7 +2771,6 @@ export namespace Prisma {
     password?: boolean
     role?: boolean
     avatar?: boolean
-    isEmailVerified?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     deleteAt?: boolean
@@ -2909,7 +2784,6 @@ export namespace Prisma {
     lastActiveAt?: boolean
     setting?: boolean | User$settingArgs<ExtArgs>
     words?: boolean | User$wordsArgs<ExtArgs>
-    wordSnapshots?: boolean | User$wordSnapshotsArgs<ExtArgs>
     languageProgresses?: boolean | User$languageProgressesArgs<ExtArgs>
     skillProgresses?: boolean | User$skillProgressesArgs<ExtArgs>
     achievements?: boolean | User$achievementsArgs<ExtArgs>
@@ -2928,7 +2802,6 @@ export namespace Prisma {
     password?: boolean
     role?: boolean
     avatar?: boolean
-    isEmailVerified?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     deleteAt?: boolean
@@ -2949,7 +2822,6 @@ export namespace Prisma {
     password?: boolean
     role?: boolean
     avatar?: boolean
-    isEmailVerified?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     deleteAt?: boolean
@@ -2970,7 +2842,6 @@ export namespace Prisma {
     password?: boolean
     role?: boolean
     avatar?: boolean
-    isEmailVerified?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     deleteAt?: boolean
@@ -2984,11 +2855,10 @@ export namespace Prisma {
     lastActiveAt?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "username" | "password" | "role" | "avatar" | "isEmailVerified" | "createdAt" | "updatedAt" | "deleteAt" | "lastLoginAt" | "provider" | "refreshToken" | "totalXP" | "currentStreak" | "longestStreak" | "totalLearningTime" | "lastActiveAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "username" | "password" | "role" | "avatar" | "createdAt" | "updatedAt" | "deleteAt" | "lastLoginAt" | "provider" | "refreshToken" | "totalXP" | "currentStreak" | "longestStreak" | "totalLearningTime" | "lastActiveAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     setting?: boolean | User$settingArgs<ExtArgs>
     words?: boolean | User$wordsArgs<ExtArgs>
-    wordSnapshots?: boolean | User$wordSnapshotsArgs<ExtArgs>
     languageProgresses?: boolean | User$languageProgressesArgs<ExtArgs>
     skillProgresses?: boolean | User$skillProgressesArgs<ExtArgs>
     achievements?: boolean | User$achievementsArgs<ExtArgs>
@@ -3007,7 +2877,6 @@ export namespace Prisma {
     objects: {
       setting: Prisma.$SettingPayload<ExtArgs> | null
       words: Prisma.$WordPayload<ExtArgs>[]
-      wordSnapshots: Prisma.$WordSnapshotPayload<ExtArgs>[]
       languageProgresses: Prisma.$LanguageProgressPayload<ExtArgs>[]
       skillProgresses: Prisma.$SkillProgressPayload<ExtArgs>[]
       achievements: Prisma.$UserAchievementPayload<ExtArgs>[]
@@ -3024,7 +2893,6 @@ export namespace Prisma {
       password: string
       role: $Enums.Role
       avatar: string | null
-      isEmailVerified: boolean
       createdAt: Date
       updatedAt: Date
       deleteAt: Date | null
@@ -3432,7 +3300,6 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     setting<T extends User$settingArgs<ExtArgs> = {}>(args?: Subset<T, User$settingArgs<ExtArgs>>): Prisma__SettingClient<$Result.GetResult<Prisma.$SettingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     words<T extends User$wordsArgs<ExtArgs> = {}>(args?: Subset<T, User$wordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WordPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    wordSnapshots<T extends User$wordSnapshotsArgs<ExtArgs> = {}>(args?: Subset<T, User$wordSnapshotsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WordSnapshotPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     languageProgresses<T extends User$languageProgressesArgs<ExtArgs> = {}>(args?: Subset<T, User$languageProgressesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LanguageProgressPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     skillProgresses<T extends User$skillProgressesArgs<ExtArgs> = {}>(args?: Subset<T, User$skillProgressesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SkillProgressPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     achievements<T extends User$achievementsArgs<ExtArgs> = {}>(args?: Subset<T, User$achievementsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserAchievementPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -3476,7 +3343,6 @@ export namespace Prisma {
     readonly password: FieldRef<"User", 'String'>
     readonly role: FieldRef<"User", 'Role'>
     readonly avatar: FieldRef<"User", 'String'>
-    readonly isEmailVerified: FieldRef<"User", 'Boolean'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
     readonly updatedAt: FieldRef<"User", 'DateTime'>
     readonly deleteAt: FieldRef<"User", 'DateTime'>
@@ -3919,30 +3785,6 @@ export namespace Prisma {
   }
 
   /**
-   * User.wordSnapshots
-   */
-  export type User$wordSnapshotsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the WordSnapshot
-     */
-    select?: WordSnapshotSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the WordSnapshot
-     */
-    omit?: WordSnapshotOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: WordSnapshotInclude<ExtArgs> | null
-    where?: WordSnapshotWhereInput
-    orderBy?: WordSnapshotOrderByWithRelationInput | WordSnapshotOrderByWithRelationInput[]
-    cursor?: WordSnapshotWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: WordSnapshotScalarFieldEnum | WordSnapshotScalarFieldEnum[]
-  }
-
-  /**
    * User.languageProgresses
    */
   export type User$languageProgressesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4181,7 +4023,6 @@ export namespace Prisma {
     id: number | null
     text: string | null
     language: $Enums.Language | null
-    partOfSpeech: string | null
     createdAt: Date | null
     totalProgress: number | null
     isLearned: boolean | null
@@ -4196,7 +4037,6 @@ export namespace Prisma {
     id: number | null
     text: string | null
     language: $Enums.Language | null
-    partOfSpeech: string | null
     createdAt: Date | null
     totalProgress: number | null
     isLearned: boolean | null
@@ -4213,10 +4053,7 @@ export namespace Prisma {
     language: number
     translate: number
     definitions: number
-    synonyms: number
-    antonyms: number
     examples: number
-    partOfSpeech: number
     createdAt: number
     totalProgress: number
     isLearned: number
@@ -4245,7 +4082,6 @@ export namespace Prisma {
     id?: true
     text?: true
     language?: true
-    partOfSpeech?: true
     createdAt?: true
     totalProgress?: true
     isLearned?: true
@@ -4260,7 +4096,6 @@ export namespace Prisma {
     id?: true
     text?: true
     language?: true
-    partOfSpeech?: true
     createdAt?: true
     totalProgress?: true
     isLearned?: true
@@ -4277,10 +4112,7 @@ export namespace Prisma {
     language?: true
     translate?: true
     definitions?: true
-    synonyms?: true
-    antonyms?: true
     examples?: true
-    partOfSpeech?: true
     createdAt?: true
     totalProgress?: true
     isLearned?: true
@@ -4384,10 +4216,7 @@ export namespace Prisma {
     language: $Enums.Language
     translate: string[]
     definitions: string[]
-    synonyms: string[]
-    antonyms: string[]
     examples: string[]
-    partOfSpeech: string | null
     createdAt: Date
     totalProgress: number
     isLearned: boolean
@@ -4423,10 +4252,7 @@ export namespace Prisma {
     language?: boolean
     translate?: boolean
     definitions?: boolean
-    synonyms?: boolean
-    antonyms?: boolean
     examples?: boolean
-    partOfSpeech?: boolean
     createdAt?: boolean
     totalProgress?: boolean
     isLearned?: boolean
@@ -4446,10 +4272,7 @@ export namespace Prisma {
     language?: boolean
     translate?: boolean
     definitions?: boolean
-    synonyms?: boolean
-    antonyms?: boolean
     examples?: boolean
-    partOfSpeech?: boolean
     createdAt?: boolean
     totalProgress?: boolean
     isLearned?: boolean
@@ -4467,10 +4290,7 @@ export namespace Prisma {
     language?: boolean
     translate?: boolean
     definitions?: boolean
-    synonyms?: boolean
-    antonyms?: boolean
     examples?: boolean
-    partOfSpeech?: boolean
     createdAt?: boolean
     totalProgress?: boolean
     isLearned?: boolean
@@ -4488,10 +4308,7 @@ export namespace Prisma {
     language?: boolean
     translate?: boolean
     definitions?: boolean
-    synonyms?: boolean
-    antonyms?: boolean
     examples?: boolean
-    partOfSpeech?: boolean
     createdAt?: boolean
     totalProgress?: boolean
     isLearned?: boolean
@@ -4502,7 +4319,7 @@ export namespace Prisma {
     userId?: boolean
   }
 
-  export type WordOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "text" | "language" | "translate" | "definitions" | "synonyms" | "antonyms" | "examples" | "partOfSpeech" | "createdAt" | "totalProgress" | "isLearned" | "phonetic" | "audio" | "phoneticUS" | "audioUS" | "userId", ExtArgs["result"]["word"]>
+  export type WordOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "text" | "language" | "translate" | "definitions" | "examples" | "createdAt" | "totalProgress" | "isLearned" | "phonetic" | "audio" | "phoneticUS" | "audioUS" | "userId", ExtArgs["result"]["word"]>
   export type WordInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     progresses?: boolean | Word$progressesArgs<ExtArgs>
@@ -4527,10 +4344,7 @@ export namespace Prisma {
       language: $Enums.Language
       translate: string[]
       definitions: string[]
-      synonyms: string[]
-      antonyms: string[]
       examples: string[]
-      partOfSpeech: string | null
       createdAt: Date
       totalProgress: number
       isLearned: boolean
@@ -4969,10 +4783,7 @@ export namespace Prisma {
     readonly language: FieldRef<"Word", 'Language'>
     readonly translate: FieldRef<"Word", 'String[]'>
     readonly definitions: FieldRef<"Word", 'String[]'>
-    readonly synonyms: FieldRef<"Word", 'String[]'>
-    readonly antonyms: FieldRef<"Word", 'String[]'>
     readonly examples: FieldRef<"Word", 'String[]'>
-    readonly partOfSpeech: FieldRef<"Word", 'String'>
     readonly createdAt: FieldRef<"Word", 'DateTime'>
     readonly totalProgress: FieldRef<"Word", 'Int'>
     readonly isLearned: FieldRef<"Word", 'Boolean'>
@@ -5416,1222 +5227,6 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: WordInclude<ExtArgs> | null
-  }
-
-
-  /**
-   * Model WordSnapshot
-   */
-
-  export type AggregateWordSnapshot = {
-    _count: WordSnapshotCountAggregateOutputType | null
-    _avg: WordSnapshotAvgAggregateOutputType | null
-    _sum: WordSnapshotSumAggregateOutputType | null
-    _min: WordSnapshotMinAggregateOutputType | null
-    _max: WordSnapshotMaxAggregateOutputType | null
-  }
-
-  export type WordSnapshotAvgAggregateOutputType = {
-    id: number | null
-    userId: number | null
-    reviewInterval: number | null
-    difficulty: number | null
-    totalAttempts: number | null
-    correctAttempts: number | null
-  }
-
-  export type WordSnapshotSumAggregateOutputType = {
-    id: number | null
-    userId: number | null
-    reviewInterval: number | null
-    difficulty: number | null
-    totalAttempts: number | null
-    correctAttempts: number | null
-  }
-
-  export type WordSnapshotMinAggregateOutputType = {
-    id: number | null
-    userId: number | null
-    word: string | null
-    language: $Enums.Language | null
-    masteryLevel: $Enums.MasteryLevel | null
-    lastReviewedAt: Date | null
-    nextReviewAt: Date | null
-    reviewInterval: number | null
-    difficulty: number | null
-    totalAttempts: number | null
-    correctAttempts: number | null
-    createdAt: Date | null
-    updatedAt: Date | null
-  }
-
-  export type WordSnapshotMaxAggregateOutputType = {
-    id: number | null
-    userId: number | null
-    word: string | null
-    language: $Enums.Language | null
-    masteryLevel: $Enums.MasteryLevel | null
-    lastReviewedAt: Date | null
-    nextReviewAt: Date | null
-    reviewInterval: number | null
-    difficulty: number | null
-    totalAttempts: number | null
-    correctAttempts: number | null
-    createdAt: Date | null
-    updatedAt: Date | null
-  }
-
-  export type WordSnapshotCountAggregateOutputType = {
-    id: number
-    userId: number
-    word: number
-    language: number
-    masteryLevel: number
-    lastReviewedAt: number
-    nextReviewAt: number
-    reviewInterval: number
-    difficulty: number
-    totalAttempts: number
-    correctAttempts: number
-    createdAt: number
-    updatedAt: number
-    _all: number
-  }
-
-
-  export type WordSnapshotAvgAggregateInputType = {
-    id?: true
-    userId?: true
-    reviewInterval?: true
-    difficulty?: true
-    totalAttempts?: true
-    correctAttempts?: true
-  }
-
-  export type WordSnapshotSumAggregateInputType = {
-    id?: true
-    userId?: true
-    reviewInterval?: true
-    difficulty?: true
-    totalAttempts?: true
-    correctAttempts?: true
-  }
-
-  export type WordSnapshotMinAggregateInputType = {
-    id?: true
-    userId?: true
-    word?: true
-    language?: true
-    masteryLevel?: true
-    lastReviewedAt?: true
-    nextReviewAt?: true
-    reviewInterval?: true
-    difficulty?: true
-    totalAttempts?: true
-    correctAttempts?: true
-    createdAt?: true
-    updatedAt?: true
-  }
-
-  export type WordSnapshotMaxAggregateInputType = {
-    id?: true
-    userId?: true
-    word?: true
-    language?: true
-    masteryLevel?: true
-    lastReviewedAt?: true
-    nextReviewAt?: true
-    reviewInterval?: true
-    difficulty?: true
-    totalAttempts?: true
-    correctAttempts?: true
-    createdAt?: true
-    updatedAt?: true
-  }
-
-  export type WordSnapshotCountAggregateInputType = {
-    id?: true
-    userId?: true
-    word?: true
-    language?: true
-    masteryLevel?: true
-    lastReviewedAt?: true
-    nextReviewAt?: true
-    reviewInterval?: true
-    difficulty?: true
-    totalAttempts?: true
-    correctAttempts?: true
-    createdAt?: true
-    updatedAt?: true
-    _all?: true
-  }
-
-  export type WordSnapshotAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which WordSnapshot to aggregate.
-     */
-    where?: WordSnapshotWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of WordSnapshots to fetch.
-     */
-    orderBy?: WordSnapshotOrderByWithRelationInput | WordSnapshotOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: WordSnapshotWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` WordSnapshots from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` WordSnapshots.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned WordSnapshots
-    **/
-    _count?: true | WordSnapshotCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: WordSnapshotAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: WordSnapshotSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: WordSnapshotMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: WordSnapshotMaxAggregateInputType
-  }
-
-  export type GetWordSnapshotAggregateType<T extends WordSnapshotAggregateArgs> = {
-        [P in keyof T & keyof AggregateWordSnapshot]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateWordSnapshot[P]>
-      : GetScalarType<T[P], AggregateWordSnapshot[P]>
-  }
-
-
-
-
-  export type WordSnapshotGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: WordSnapshotWhereInput
-    orderBy?: WordSnapshotOrderByWithAggregationInput | WordSnapshotOrderByWithAggregationInput[]
-    by: WordSnapshotScalarFieldEnum[] | WordSnapshotScalarFieldEnum
-    having?: WordSnapshotScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: WordSnapshotCountAggregateInputType | true
-    _avg?: WordSnapshotAvgAggregateInputType
-    _sum?: WordSnapshotSumAggregateInputType
-    _min?: WordSnapshotMinAggregateInputType
-    _max?: WordSnapshotMaxAggregateInputType
-  }
-
-  export type WordSnapshotGroupByOutputType = {
-    id: number
-    userId: number
-    word: string
-    language: $Enums.Language
-    masteryLevel: $Enums.MasteryLevel
-    lastReviewedAt: Date | null
-    nextReviewAt: Date | null
-    reviewInterval: number
-    difficulty: number
-    totalAttempts: number
-    correctAttempts: number
-    createdAt: Date
-    updatedAt: Date
-    _count: WordSnapshotCountAggregateOutputType | null
-    _avg: WordSnapshotAvgAggregateOutputType | null
-    _sum: WordSnapshotSumAggregateOutputType | null
-    _min: WordSnapshotMinAggregateOutputType | null
-    _max: WordSnapshotMaxAggregateOutputType | null
-  }
-
-  type GetWordSnapshotGroupByPayload<T extends WordSnapshotGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<WordSnapshotGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof WordSnapshotGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], WordSnapshotGroupByOutputType[P]>
-            : GetScalarType<T[P], WordSnapshotGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type WordSnapshotSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    userId?: boolean
-    word?: boolean
-    language?: boolean
-    masteryLevel?: boolean
-    lastReviewedAt?: boolean
-    nextReviewAt?: boolean
-    reviewInterval?: boolean
-    difficulty?: boolean
-    totalAttempts?: boolean
-    correctAttempts?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["wordSnapshot"]>
-
-  export type WordSnapshotSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    userId?: boolean
-    word?: boolean
-    language?: boolean
-    masteryLevel?: boolean
-    lastReviewedAt?: boolean
-    nextReviewAt?: boolean
-    reviewInterval?: boolean
-    difficulty?: boolean
-    totalAttempts?: boolean
-    correctAttempts?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["wordSnapshot"]>
-
-  export type WordSnapshotSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    userId?: boolean
-    word?: boolean
-    language?: boolean
-    masteryLevel?: boolean
-    lastReviewedAt?: boolean
-    nextReviewAt?: boolean
-    reviewInterval?: boolean
-    difficulty?: boolean
-    totalAttempts?: boolean
-    correctAttempts?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    user?: boolean | UserDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["wordSnapshot"]>
-
-  export type WordSnapshotSelectScalar = {
-    id?: boolean
-    userId?: boolean
-    word?: boolean
-    language?: boolean
-    masteryLevel?: boolean
-    lastReviewedAt?: boolean
-    nextReviewAt?: boolean
-    reviewInterval?: boolean
-    difficulty?: boolean
-    totalAttempts?: boolean
-    correctAttempts?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-  }
-
-  export type WordSnapshotOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "word" | "language" | "masteryLevel" | "lastReviewedAt" | "nextReviewAt" | "reviewInterval" | "difficulty" | "totalAttempts" | "correctAttempts" | "createdAt" | "updatedAt", ExtArgs["result"]["wordSnapshot"]>
-  export type WordSnapshotInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
-  }
-  export type WordSnapshotIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
-  }
-  export type WordSnapshotIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | UserDefaultArgs<ExtArgs>
-  }
-
-  export type $WordSnapshotPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "WordSnapshot"
-    objects: {
-      user: Prisma.$UserPayload<ExtArgs>
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      id: number
-      userId: number
-      word: string
-      language: $Enums.Language
-      masteryLevel: $Enums.MasteryLevel
-      lastReviewedAt: Date | null
-      nextReviewAt: Date | null
-      reviewInterval: number
-      difficulty: number
-      totalAttempts: number
-      correctAttempts: number
-      createdAt: Date
-      updatedAt: Date
-    }, ExtArgs["result"]["wordSnapshot"]>
-    composites: {}
-  }
-
-  type WordSnapshotGetPayload<S extends boolean | null | undefined | WordSnapshotDefaultArgs> = $Result.GetResult<Prisma.$WordSnapshotPayload, S>
-
-  type WordSnapshotCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<WordSnapshotFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: WordSnapshotCountAggregateInputType | true
-    }
-
-  export interface WordSnapshotDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['WordSnapshot'], meta: { name: 'WordSnapshot' } }
-    /**
-     * Find zero or one WordSnapshot that matches the filter.
-     * @param {WordSnapshotFindUniqueArgs} args - Arguments to find a WordSnapshot
-     * @example
-     * // Get one WordSnapshot
-     * const wordSnapshot = await prisma.wordSnapshot.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends WordSnapshotFindUniqueArgs>(args: SelectSubset<T, WordSnapshotFindUniqueArgs<ExtArgs>>): Prisma__WordSnapshotClient<$Result.GetResult<Prisma.$WordSnapshotPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one WordSnapshot that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {WordSnapshotFindUniqueOrThrowArgs} args - Arguments to find a WordSnapshot
-     * @example
-     * // Get one WordSnapshot
-     * const wordSnapshot = await prisma.wordSnapshot.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends WordSnapshotFindUniqueOrThrowArgs>(args: SelectSubset<T, WordSnapshotFindUniqueOrThrowArgs<ExtArgs>>): Prisma__WordSnapshotClient<$Result.GetResult<Prisma.$WordSnapshotPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first WordSnapshot that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {WordSnapshotFindFirstArgs} args - Arguments to find a WordSnapshot
-     * @example
-     * // Get one WordSnapshot
-     * const wordSnapshot = await prisma.wordSnapshot.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends WordSnapshotFindFirstArgs>(args?: SelectSubset<T, WordSnapshotFindFirstArgs<ExtArgs>>): Prisma__WordSnapshotClient<$Result.GetResult<Prisma.$WordSnapshotPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first WordSnapshot that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {WordSnapshotFindFirstOrThrowArgs} args - Arguments to find a WordSnapshot
-     * @example
-     * // Get one WordSnapshot
-     * const wordSnapshot = await prisma.wordSnapshot.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends WordSnapshotFindFirstOrThrowArgs>(args?: SelectSubset<T, WordSnapshotFindFirstOrThrowArgs<ExtArgs>>): Prisma__WordSnapshotClient<$Result.GetResult<Prisma.$WordSnapshotPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more WordSnapshots that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {WordSnapshotFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all WordSnapshots
-     * const wordSnapshots = await prisma.wordSnapshot.findMany()
-     * 
-     * // Get first 10 WordSnapshots
-     * const wordSnapshots = await prisma.wordSnapshot.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const wordSnapshotWithIdOnly = await prisma.wordSnapshot.findMany({ select: { id: true } })
-     * 
-     */
-    findMany<T extends WordSnapshotFindManyArgs>(args?: SelectSubset<T, WordSnapshotFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WordSnapshotPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a WordSnapshot.
-     * @param {WordSnapshotCreateArgs} args - Arguments to create a WordSnapshot.
-     * @example
-     * // Create one WordSnapshot
-     * const WordSnapshot = await prisma.wordSnapshot.create({
-     *   data: {
-     *     // ... data to create a WordSnapshot
-     *   }
-     * })
-     * 
-     */
-    create<T extends WordSnapshotCreateArgs>(args: SelectSubset<T, WordSnapshotCreateArgs<ExtArgs>>): Prisma__WordSnapshotClient<$Result.GetResult<Prisma.$WordSnapshotPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many WordSnapshots.
-     * @param {WordSnapshotCreateManyArgs} args - Arguments to create many WordSnapshots.
-     * @example
-     * // Create many WordSnapshots
-     * const wordSnapshot = await prisma.wordSnapshot.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends WordSnapshotCreateManyArgs>(args?: SelectSubset<T, WordSnapshotCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many WordSnapshots and returns the data saved in the database.
-     * @param {WordSnapshotCreateManyAndReturnArgs} args - Arguments to create many WordSnapshots.
-     * @example
-     * // Create many WordSnapshots
-     * const wordSnapshot = await prisma.wordSnapshot.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many WordSnapshots and only return the `id`
-     * const wordSnapshotWithIdOnly = await prisma.wordSnapshot.createManyAndReturn({
-     *   select: { id: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends WordSnapshotCreateManyAndReturnArgs>(args?: SelectSubset<T, WordSnapshotCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WordSnapshotPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a WordSnapshot.
-     * @param {WordSnapshotDeleteArgs} args - Arguments to delete one WordSnapshot.
-     * @example
-     * // Delete one WordSnapshot
-     * const WordSnapshot = await prisma.wordSnapshot.delete({
-     *   where: {
-     *     // ... filter to delete one WordSnapshot
-     *   }
-     * })
-     * 
-     */
-    delete<T extends WordSnapshotDeleteArgs>(args: SelectSubset<T, WordSnapshotDeleteArgs<ExtArgs>>): Prisma__WordSnapshotClient<$Result.GetResult<Prisma.$WordSnapshotPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one WordSnapshot.
-     * @param {WordSnapshotUpdateArgs} args - Arguments to update one WordSnapshot.
-     * @example
-     * // Update one WordSnapshot
-     * const wordSnapshot = await prisma.wordSnapshot.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends WordSnapshotUpdateArgs>(args: SelectSubset<T, WordSnapshotUpdateArgs<ExtArgs>>): Prisma__WordSnapshotClient<$Result.GetResult<Prisma.$WordSnapshotPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more WordSnapshots.
-     * @param {WordSnapshotDeleteManyArgs} args - Arguments to filter WordSnapshots to delete.
-     * @example
-     * // Delete a few WordSnapshots
-     * const { count } = await prisma.wordSnapshot.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends WordSnapshotDeleteManyArgs>(args?: SelectSubset<T, WordSnapshotDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more WordSnapshots.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {WordSnapshotUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many WordSnapshots
-     * const wordSnapshot = await prisma.wordSnapshot.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends WordSnapshotUpdateManyArgs>(args: SelectSubset<T, WordSnapshotUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more WordSnapshots and returns the data updated in the database.
-     * @param {WordSnapshotUpdateManyAndReturnArgs} args - Arguments to update many WordSnapshots.
-     * @example
-     * // Update many WordSnapshots
-     * const wordSnapshot = await prisma.wordSnapshot.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more WordSnapshots and only return the `id`
-     * const wordSnapshotWithIdOnly = await prisma.wordSnapshot.updateManyAndReturn({
-     *   select: { id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends WordSnapshotUpdateManyAndReturnArgs>(args: SelectSubset<T, WordSnapshotUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WordSnapshotPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one WordSnapshot.
-     * @param {WordSnapshotUpsertArgs} args - Arguments to update or create a WordSnapshot.
-     * @example
-     * // Update or create a WordSnapshot
-     * const wordSnapshot = await prisma.wordSnapshot.upsert({
-     *   create: {
-     *     // ... data to create a WordSnapshot
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the WordSnapshot we want to update
-     *   }
-     * })
-     */
-    upsert<T extends WordSnapshotUpsertArgs>(args: SelectSubset<T, WordSnapshotUpsertArgs<ExtArgs>>): Prisma__WordSnapshotClient<$Result.GetResult<Prisma.$WordSnapshotPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of WordSnapshots.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {WordSnapshotCountArgs} args - Arguments to filter WordSnapshots to count.
-     * @example
-     * // Count the number of WordSnapshots
-     * const count = await prisma.wordSnapshot.count({
-     *   where: {
-     *     // ... the filter for the WordSnapshots we want to count
-     *   }
-     * })
-    **/
-    count<T extends WordSnapshotCountArgs>(
-      args?: Subset<T, WordSnapshotCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], WordSnapshotCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a WordSnapshot.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {WordSnapshotAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends WordSnapshotAggregateArgs>(args: Subset<T, WordSnapshotAggregateArgs>): Prisma.PrismaPromise<GetWordSnapshotAggregateType<T>>
-
-    /**
-     * Group by WordSnapshot.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {WordSnapshotGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends WordSnapshotGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: WordSnapshotGroupByArgs['orderBy'] }
-        : { orderBy?: WordSnapshotGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, WordSnapshotGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetWordSnapshotGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the WordSnapshot model
-   */
-  readonly fields: WordSnapshotFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for WordSnapshot.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__WordSnapshotClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the WordSnapshot model
-   */
-  interface WordSnapshotFieldRefs {
-    readonly id: FieldRef<"WordSnapshot", 'Int'>
-    readonly userId: FieldRef<"WordSnapshot", 'Int'>
-    readonly word: FieldRef<"WordSnapshot", 'String'>
-    readonly language: FieldRef<"WordSnapshot", 'Language'>
-    readonly masteryLevel: FieldRef<"WordSnapshot", 'MasteryLevel'>
-    readonly lastReviewedAt: FieldRef<"WordSnapshot", 'DateTime'>
-    readonly nextReviewAt: FieldRef<"WordSnapshot", 'DateTime'>
-    readonly reviewInterval: FieldRef<"WordSnapshot", 'Int'>
-    readonly difficulty: FieldRef<"WordSnapshot", 'Float'>
-    readonly totalAttempts: FieldRef<"WordSnapshot", 'Int'>
-    readonly correctAttempts: FieldRef<"WordSnapshot", 'Int'>
-    readonly createdAt: FieldRef<"WordSnapshot", 'DateTime'>
-    readonly updatedAt: FieldRef<"WordSnapshot", 'DateTime'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * WordSnapshot findUnique
-   */
-  export type WordSnapshotFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the WordSnapshot
-     */
-    select?: WordSnapshotSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the WordSnapshot
-     */
-    omit?: WordSnapshotOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: WordSnapshotInclude<ExtArgs> | null
-    /**
-     * Filter, which WordSnapshot to fetch.
-     */
-    where: WordSnapshotWhereUniqueInput
-  }
-
-  /**
-   * WordSnapshot findUniqueOrThrow
-   */
-  export type WordSnapshotFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the WordSnapshot
-     */
-    select?: WordSnapshotSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the WordSnapshot
-     */
-    omit?: WordSnapshotOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: WordSnapshotInclude<ExtArgs> | null
-    /**
-     * Filter, which WordSnapshot to fetch.
-     */
-    where: WordSnapshotWhereUniqueInput
-  }
-
-  /**
-   * WordSnapshot findFirst
-   */
-  export type WordSnapshotFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the WordSnapshot
-     */
-    select?: WordSnapshotSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the WordSnapshot
-     */
-    omit?: WordSnapshotOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: WordSnapshotInclude<ExtArgs> | null
-    /**
-     * Filter, which WordSnapshot to fetch.
-     */
-    where?: WordSnapshotWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of WordSnapshots to fetch.
-     */
-    orderBy?: WordSnapshotOrderByWithRelationInput | WordSnapshotOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for WordSnapshots.
-     */
-    cursor?: WordSnapshotWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` WordSnapshots from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` WordSnapshots.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of WordSnapshots.
-     */
-    distinct?: WordSnapshotScalarFieldEnum | WordSnapshotScalarFieldEnum[]
-  }
-
-  /**
-   * WordSnapshot findFirstOrThrow
-   */
-  export type WordSnapshotFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the WordSnapshot
-     */
-    select?: WordSnapshotSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the WordSnapshot
-     */
-    omit?: WordSnapshotOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: WordSnapshotInclude<ExtArgs> | null
-    /**
-     * Filter, which WordSnapshot to fetch.
-     */
-    where?: WordSnapshotWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of WordSnapshots to fetch.
-     */
-    orderBy?: WordSnapshotOrderByWithRelationInput | WordSnapshotOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for WordSnapshots.
-     */
-    cursor?: WordSnapshotWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` WordSnapshots from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` WordSnapshots.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of WordSnapshots.
-     */
-    distinct?: WordSnapshotScalarFieldEnum | WordSnapshotScalarFieldEnum[]
-  }
-
-  /**
-   * WordSnapshot findMany
-   */
-  export type WordSnapshotFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the WordSnapshot
-     */
-    select?: WordSnapshotSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the WordSnapshot
-     */
-    omit?: WordSnapshotOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: WordSnapshotInclude<ExtArgs> | null
-    /**
-     * Filter, which WordSnapshots to fetch.
-     */
-    where?: WordSnapshotWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of WordSnapshots to fetch.
-     */
-    orderBy?: WordSnapshotOrderByWithRelationInput | WordSnapshotOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing WordSnapshots.
-     */
-    cursor?: WordSnapshotWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` WordSnapshots from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` WordSnapshots.
-     */
-    skip?: number
-    distinct?: WordSnapshotScalarFieldEnum | WordSnapshotScalarFieldEnum[]
-  }
-
-  /**
-   * WordSnapshot create
-   */
-  export type WordSnapshotCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the WordSnapshot
-     */
-    select?: WordSnapshotSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the WordSnapshot
-     */
-    omit?: WordSnapshotOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: WordSnapshotInclude<ExtArgs> | null
-    /**
-     * The data needed to create a WordSnapshot.
-     */
-    data: XOR<WordSnapshotCreateInput, WordSnapshotUncheckedCreateInput>
-  }
-
-  /**
-   * WordSnapshot createMany
-   */
-  export type WordSnapshotCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many WordSnapshots.
-     */
-    data: WordSnapshotCreateManyInput | WordSnapshotCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * WordSnapshot createManyAndReturn
-   */
-  export type WordSnapshotCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the WordSnapshot
-     */
-    select?: WordSnapshotSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the WordSnapshot
-     */
-    omit?: WordSnapshotOmit<ExtArgs> | null
-    /**
-     * The data used to create many WordSnapshots.
-     */
-    data: WordSnapshotCreateManyInput | WordSnapshotCreateManyInput[]
-    skipDuplicates?: boolean
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: WordSnapshotIncludeCreateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * WordSnapshot update
-   */
-  export type WordSnapshotUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the WordSnapshot
-     */
-    select?: WordSnapshotSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the WordSnapshot
-     */
-    omit?: WordSnapshotOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: WordSnapshotInclude<ExtArgs> | null
-    /**
-     * The data needed to update a WordSnapshot.
-     */
-    data: XOR<WordSnapshotUpdateInput, WordSnapshotUncheckedUpdateInput>
-    /**
-     * Choose, which WordSnapshot to update.
-     */
-    where: WordSnapshotWhereUniqueInput
-  }
-
-  /**
-   * WordSnapshot updateMany
-   */
-  export type WordSnapshotUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update WordSnapshots.
-     */
-    data: XOR<WordSnapshotUpdateManyMutationInput, WordSnapshotUncheckedUpdateManyInput>
-    /**
-     * Filter which WordSnapshots to update
-     */
-    where?: WordSnapshotWhereInput
-    /**
-     * Limit how many WordSnapshots to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * WordSnapshot updateManyAndReturn
-   */
-  export type WordSnapshotUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the WordSnapshot
-     */
-    select?: WordSnapshotSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the WordSnapshot
-     */
-    omit?: WordSnapshotOmit<ExtArgs> | null
-    /**
-     * The data used to update WordSnapshots.
-     */
-    data: XOR<WordSnapshotUpdateManyMutationInput, WordSnapshotUncheckedUpdateManyInput>
-    /**
-     * Filter which WordSnapshots to update
-     */
-    where?: WordSnapshotWhereInput
-    /**
-     * Limit how many WordSnapshots to update.
-     */
-    limit?: number
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: WordSnapshotIncludeUpdateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * WordSnapshot upsert
-   */
-  export type WordSnapshotUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the WordSnapshot
-     */
-    select?: WordSnapshotSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the WordSnapshot
-     */
-    omit?: WordSnapshotOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: WordSnapshotInclude<ExtArgs> | null
-    /**
-     * The filter to search for the WordSnapshot to update in case it exists.
-     */
-    where: WordSnapshotWhereUniqueInput
-    /**
-     * In case the WordSnapshot found by the `where` argument doesn't exist, create a new WordSnapshot with this data.
-     */
-    create: XOR<WordSnapshotCreateInput, WordSnapshotUncheckedCreateInput>
-    /**
-     * In case the WordSnapshot was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<WordSnapshotUpdateInput, WordSnapshotUncheckedUpdateInput>
-  }
-
-  /**
-   * WordSnapshot delete
-   */
-  export type WordSnapshotDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the WordSnapshot
-     */
-    select?: WordSnapshotSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the WordSnapshot
-     */
-    omit?: WordSnapshotOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: WordSnapshotInclude<ExtArgs> | null
-    /**
-     * Filter which WordSnapshot to delete.
-     */
-    where: WordSnapshotWhereUniqueInput
-  }
-
-  /**
-   * WordSnapshot deleteMany
-   */
-  export type WordSnapshotDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which WordSnapshots to delete
-     */
-    where?: WordSnapshotWhereInput
-    /**
-     * Limit how many WordSnapshots to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * WordSnapshot without action
-   */
-  export type WordSnapshotDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the WordSnapshot
-     */
-    select?: WordSnapshotSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the WordSnapshot
-     */
-    omit?: WordSnapshotOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: WordSnapshotInclude<ExtArgs> | null
   }
 
 
@@ -11641,6 +10236,7 @@ export namespace Prisma {
     global_language: $Enums.Language | null
     current_language: $Enums.Language | null
     current_level: $Enums.CEFRLevel | null
+    isEmailVerified: boolean | null
     dailyXPGoal: number | null
     dailyTimeGoal: number | null
     weeklyGoal: number | null
@@ -11652,6 +10248,7 @@ export namespace Prisma {
     global_language: $Enums.Language | null
     current_language: $Enums.Language | null
     current_level: $Enums.CEFRLevel | null
+    isEmailVerified: boolean | null
     dailyXPGoal: number | null
     dailyTimeGoal: number | null
     weeklyGoal: number | null
@@ -11664,6 +10261,7 @@ export namespace Prisma {
     current_language: number
     purposes: number
     current_level: number
+    isEmailVerified: number
     dailyXPGoal: number
     dailyTimeGoal: number
     weeklyGoal: number
@@ -11693,6 +10291,7 @@ export namespace Prisma {
     global_language?: true
     current_language?: true
     current_level?: true
+    isEmailVerified?: true
     dailyXPGoal?: true
     dailyTimeGoal?: true
     weeklyGoal?: true
@@ -11704,6 +10303,7 @@ export namespace Prisma {
     global_language?: true
     current_language?: true
     current_level?: true
+    isEmailVerified?: true
     dailyXPGoal?: true
     dailyTimeGoal?: true
     weeklyGoal?: true
@@ -11716,6 +10316,7 @@ export namespace Prisma {
     current_language?: true
     purposes?: true
     current_level?: true
+    isEmailVerified?: true
     dailyXPGoal?: true
     dailyTimeGoal?: true
     weeklyGoal?: true
@@ -11815,6 +10416,7 @@ export namespace Prisma {
     current_language: $Enums.Language
     purposes: $Enums.Purpose[]
     current_level: $Enums.CEFRLevel
+    isEmailVerified: boolean
     dailyXPGoal: number
     dailyTimeGoal: number
     weeklyGoal: number
@@ -11846,6 +10448,7 @@ export namespace Prisma {
     current_language?: boolean
     purposes?: boolean
     current_level?: boolean
+    isEmailVerified?: boolean
     dailyXPGoal?: boolean
     dailyTimeGoal?: boolean
     weeklyGoal?: boolean
@@ -11859,6 +10462,7 @@ export namespace Prisma {
     current_language?: boolean
     purposes?: boolean
     current_level?: boolean
+    isEmailVerified?: boolean
     dailyXPGoal?: boolean
     dailyTimeGoal?: boolean
     weeklyGoal?: boolean
@@ -11872,6 +10476,7 @@ export namespace Prisma {
     current_language?: boolean
     purposes?: boolean
     current_level?: boolean
+    isEmailVerified?: boolean
     dailyXPGoal?: boolean
     dailyTimeGoal?: boolean
     weeklyGoal?: boolean
@@ -11885,12 +10490,13 @@ export namespace Prisma {
     current_language?: boolean
     purposes?: boolean
     current_level?: boolean
+    isEmailVerified?: boolean
     dailyXPGoal?: boolean
     dailyTimeGoal?: boolean
     weeklyGoal?: boolean
   }
 
-  export type SettingOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "global_language" | "current_language" | "purposes" | "current_level" | "dailyXPGoal" | "dailyTimeGoal" | "weeklyGoal", ExtArgs["result"]["setting"]>
+  export type SettingOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "global_language" | "current_language" | "purposes" | "current_level" | "isEmailVerified" | "dailyXPGoal" | "dailyTimeGoal" | "weeklyGoal", ExtArgs["result"]["setting"]>
   export type SettingInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
   }
@@ -11913,6 +10519,7 @@ export namespace Prisma {
       current_language: $Enums.Language
       purposes: $Enums.Purpose[]
       current_level: $Enums.CEFRLevel
+      isEmailVerified: boolean
       dailyXPGoal: number
       dailyTimeGoal: number
       weeklyGoal: number
@@ -12346,6 +10953,7 @@ export namespace Prisma {
     readonly current_language: FieldRef<"Setting", 'Language'>
     readonly purposes: FieldRef<"Setting", 'Purpose[]'>
     readonly current_level: FieldRef<"Setting", 'CEFRLevel'>
+    readonly isEmailVerified: FieldRef<"Setting", 'Boolean'>
     readonly dailyXPGoal: FieldRef<"Setting", 'Int'>
     readonly dailyTimeGoal: FieldRef<"Setting", 'Int'>
     readonly weeklyGoal: FieldRef<"Setting", 'Int'>
@@ -21223,7 +19831,6 @@ export namespace Prisma {
     password: 'password',
     role: 'role',
     avatar: 'avatar',
-    isEmailVerified: 'isEmailVerified',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
     deleteAt: 'deleteAt',
@@ -21246,10 +19853,7 @@ export namespace Prisma {
     language: 'language',
     translate: 'translate',
     definitions: 'definitions',
-    synonyms: 'synonyms',
-    antonyms: 'antonyms',
     examples: 'examples',
-    partOfSpeech: 'partOfSpeech',
     createdAt: 'createdAt',
     totalProgress: 'totalProgress',
     isLearned: 'isLearned',
@@ -21261,25 +19865,6 @@ export namespace Prisma {
   };
 
   export type WordScalarFieldEnum = (typeof WordScalarFieldEnum)[keyof typeof WordScalarFieldEnum]
-
-
-  export const WordSnapshotScalarFieldEnum: {
-    id: 'id',
-    userId: 'userId',
-    word: 'word',
-    language: 'language',
-    masteryLevel: 'masteryLevel',
-    lastReviewedAt: 'lastReviewedAt',
-    nextReviewAt: 'nextReviewAt',
-    reviewInterval: 'reviewInterval',
-    difficulty: 'difficulty',
-    totalAttempts: 'totalAttempts',
-    correctAttempts: 'correctAttempts',
-    createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
-  };
-
-  export type WordSnapshotScalarFieldEnum = (typeof WordSnapshotScalarFieldEnum)[keyof typeof WordSnapshotScalarFieldEnum]
 
 
   export const VideoScalarFieldEnum: {
@@ -21358,6 +19943,7 @@ export namespace Prisma {
     current_language: 'current_language',
     purposes: 'purposes',
     current_level: 'current_level',
+    isEmailVerified: 'isEmailVerified',
     dailyXPGoal: 'dailyXPGoal',
     dailyTimeGoal: 'dailyTimeGoal',
     weeklyGoal: 'weeklyGoal'
@@ -21579,13 +20165,6 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'Boolean'
-   */
-  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
-    
-
-
-  /**
    * Reference to a field of type 'DateTime'
    */
   export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
@@ -21614,30 +20193,9 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'MasteryLevel'
+   * Reference to a field of type 'Boolean'
    */
-  export type EnumMasteryLevelFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MasteryLevel'>
-    
-
-
-  /**
-   * Reference to a field of type 'MasteryLevel[]'
-   */
-  export type ListEnumMasteryLevelFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MasteryLevel[]'>
-    
-
-
-  /**
-   * Reference to a field of type 'Float'
-   */
-  export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
-    
-
-
-  /**
-   * Reference to a field of type 'Float[]'
-   */
-  export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 
@@ -21680,6 +20238,20 @@ export namespace Prisma {
    * Reference to a field of type 'TaskType[]'
    */
   export type ListEnumTaskTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TaskType[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Float'
+   */
+  export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+    
+
+
+  /**
+   * Reference to a field of type 'Float[]'
+   */
+  export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
     
 
 
@@ -21738,7 +20310,6 @@ export namespace Prisma {
     password?: StringFilter<"User"> | string
     role?: EnumRoleFilter<"User"> | $Enums.Role
     avatar?: StringNullableFilter<"User"> | string | null
-    isEmailVerified?: BoolFilter<"User"> | boolean
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     deleteAt?: DateTimeNullableFilter<"User"> | Date | string | null
@@ -21752,7 +20323,6 @@ export namespace Prisma {
     lastActiveAt?: DateTimeNullableFilter<"User"> | Date | string | null
     setting?: XOR<SettingNullableScalarRelationFilter, SettingWhereInput> | null
     words?: WordListRelationFilter
-    wordSnapshots?: WordSnapshotListRelationFilter
     languageProgresses?: LanguageProgressListRelationFilter
     skillProgresses?: SkillProgressListRelationFilter
     achievements?: UserAchievementListRelationFilter
@@ -21770,7 +20340,6 @@ export namespace Prisma {
     password?: SortOrder
     role?: SortOrder
     avatar?: SortOrderInput | SortOrder
-    isEmailVerified?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     deleteAt?: SortOrderInput | SortOrder
@@ -21784,7 +20353,6 @@ export namespace Prisma {
     lastActiveAt?: SortOrderInput | SortOrder
     setting?: SettingOrderByWithRelationInput
     words?: WordOrderByRelationAggregateInput
-    wordSnapshots?: WordSnapshotOrderByRelationAggregateInput
     languageProgresses?: LanguageProgressOrderByRelationAggregateInput
     skillProgresses?: SkillProgressOrderByRelationAggregateInput
     achievements?: UserAchievementOrderByRelationAggregateInput
@@ -21805,7 +20373,6 @@ export namespace Prisma {
     password?: StringFilter<"User"> | string
     role?: EnumRoleFilter<"User"> | $Enums.Role
     avatar?: StringNullableFilter<"User"> | string | null
-    isEmailVerified?: BoolFilter<"User"> | boolean
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     deleteAt?: DateTimeNullableFilter<"User"> | Date | string | null
@@ -21819,7 +20386,6 @@ export namespace Prisma {
     lastActiveAt?: DateTimeNullableFilter<"User"> | Date | string | null
     setting?: XOR<SettingNullableScalarRelationFilter, SettingWhereInput> | null
     words?: WordListRelationFilter
-    wordSnapshots?: WordSnapshotListRelationFilter
     languageProgresses?: LanguageProgressListRelationFilter
     skillProgresses?: SkillProgressListRelationFilter
     achievements?: UserAchievementListRelationFilter
@@ -21837,7 +20403,6 @@ export namespace Prisma {
     password?: SortOrder
     role?: SortOrder
     avatar?: SortOrderInput | SortOrder
-    isEmailVerified?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     deleteAt?: SortOrderInput | SortOrder
@@ -21866,7 +20431,6 @@ export namespace Prisma {
     password?: StringWithAggregatesFilter<"User"> | string
     role?: EnumRoleWithAggregatesFilter<"User"> | $Enums.Role
     avatar?: StringNullableWithAggregatesFilter<"User"> | string | null
-    isEmailVerified?: BoolWithAggregatesFilter<"User"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     deleteAt?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
@@ -21889,10 +20453,7 @@ export namespace Prisma {
     language?: EnumLanguageFilter<"Word"> | $Enums.Language
     translate?: StringNullableListFilter<"Word">
     definitions?: StringNullableListFilter<"Word">
-    synonyms?: StringNullableListFilter<"Word">
-    antonyms?: StringNullableListFilter<"Word">
     examples?: StringNullableListFilter<"Word">
-    partOfSpeech?: StringNullableFilter<"Word"> | string | null
     createdAt?: DateTimeFilter<"Word"> | Date | string
     totalProgress?: IntFilter<"Word"> | number
     isLearned?: BoolFilter<"Word"> | boolean
@@ -21911,10 +20472,7 @@ export namespace Prisma {
     language?: SortOrder
     translate?: SortOrder
     definitions?: SortOrder
-    synonyms?: SortOrder
-    antonyms?: SortOrder
     examples?: SortOrder
-    partOfSpeech?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     totalProgress?: SortOrder
     isLearned?: SortOrder
@@ -21937,10 +20495,7 @@ export namespace Prisma {
     language?: EnumLanguageFilter<"Word"> | $Enums.Language
     translate?: StringNullableListFilter<"Word">
     definitions?: StringNullableListFilter<"Word">
-    synonyms?: StringNullableListFilter<"Word">
-    antonyms?: StringNullableListFilter<"Word">
     examples?: StringNullableListFilter<"Word">
-    partOfSpeech?: StringNullableFilter<"Word"> | string | null
     createdAt?: DateTimeFilter<"Word"> | Date | string
     totalProgress?: IntFilter<"Word"> | number
     isLearned?: BoolFilter<"Word"> | boolean
@@ -21959,10 +20514,7 @@ export namespace Prisma {
     language?: SortOrder
     translate?: SortOrder
     definitions?: SortOrder
-    synonyms?: SortOrder
-    antonyms?: SortOrder
     examples?: SortOrder
-    partOfSpeech?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     totalProgress?: SortOrder
     isLearned?: SortOrder
@@ -21987,10 +20539,7 @@ export namespace Prisma {
     language?: EnumLanguageWithAggregatesFilter<"Word"> | $Enums.Language
     translate?: StringNullableListFilter<"Word">
     definitions?: StringNullableListFilter<"Word">
-    synonyms?: StringNullableListFilter<"Word">
-    antonyms?: StringNullableListFilter<"Word">
     examples?: StringNullableListFilter<"Word">
-    partOfSpeech?: StringNullableWithAggregatesFilter<"Word"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Word"> | Date | string
     totalProgress?: IntWithAggregatesFilter<"Word"> | number
     isLearned?: BoolWithAggregatesFilter<"Word"> | boolean
@@ -21999,104 +20548,6 @@ export namespace Prisma {
     phoneticUS?: StringNullableWithAggregatesFilter<"Word"> | string | null
     audioUS?: StringNullableWithAggregatesFilter<"Word"> | string | null
     userId?: IntWithAggregatesFilter<"Word"> | number
-  }
-
-  export type WordSnapshotWhereInput = {
-    AND?: WordSnapshotWhereInput | WordSnapshotWhereInput[]
-    OR?: WordSnapshotWhereInput[]
-    NOT?: WordSnapshotWhereInput | WordSnapshotWhereInput[]
-    id?: IntFilter<"WordSnapshot"> | number
-    userId?: IntFilter<"WordSnapshot"> | number
-    word?: StringFilter<"WordSnapshot"> | string
-    language?: EnumLanguageFilter<"WordSnapshot"> | $Enums.Language
-    masteryLevel?: EnumMasteryLevelFilter<"WordSnapshot"> | $Enums.MasteryLevel
-    lastReviewedAt?: DateTimeNullableFilter<"WordSnapshot"> | Date | string | null
-    nextReviewAt?: DateTimeNullableFilter<"WordSnapshot"> | Date | string | null
-    reviewInterval?: IntFilter<"WordSnapshot"> | number
-    difficulty?: FloatFilter<"WordSnapshot"> | number
-    totalAttempts?: IntFilter<"WordSnapshot"> | number
-    correctAttempts?: IntFilter<"WordSnapshot"> | number
-    createdAt?: DateTimeFilter<"WordSnapshot"> | Date | string
-    updatedAt?: DateTimeFilter<"WordSnapshot"> | Date | string
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
-  }
-
-  export type WordSnapshotOrderByWithRelationInput = {
-    id?: SortOrder
-    userId?: SortOrder
-    word?: SortOrder
-    language?: SortOrder
-    masteryLevel?: SortOrder
-    lastReviewedAt?: SortOrderInput | SortOrder
-    nextReviewAt?: SortOrderInput | SortOrder
-    reviewInterval?: SortOrder
-    difficulty?: SortOrder
-    totalAttempts?: SortOrder
-    correctAttempts?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    user?: UserOrderByWithRelationInput
-  }
-
-  export type WordSnapshotWhereUniqueInput = Prisma.AtLeast<{
-    id?: number
-    userId_word_language?: WordSnapshotUserIdWordLanguageCompoundUniqueInput
-    AND?: WordSnapshotWhereInput | WordSnapshotWhereInput[]
-    OR?: WordSnapshotWhereInput[]
-    NOT?: WordSnapshotWhereInput | WordSnapshotWhereInput[]
-    userId?: IntFilter<"WordSnapshot"> | number
-    word?: StringFilter<"WordSnapshot"> | string
-    language?: EnumLanguageFilter<"WordSnapshot"> | $Enums.Language
-    masteryLevel?: EnumMasteryLevelFilter<"WordSnapshot"> | $Enums.MasteryLevel
-    lastReviewedAt?: DateTimeNullableFilter<"WordSnapshot"> | Date | string | null
-    nextReviewAt?: DateTimeNullableFilter<"WordSnapshot"> | Date | string | null
-    reviewInterval?: IntFilter<"WordSnapshot"> | number
-    difficulty?: FloatFilter<"WordSnapshot"> | number
-    totalAttempts?: IntFilter<"WordSnapshot"> | number
-    correctAttempts?: IntFilter<"WordSnapshot"> | number
-    createdAt?: DateTimeFilter<"WordSnapshot"> | Date | string
-    updatedAt?: DateTimeFilter<"WordSnapshot"> | Date | string
-    user?: XOR<UserScalarRelationFilter, UserWhereInput>
-  }, "id" | "userId_word_language">
-
-  export type WordSnapshotOrderByWithAggregationInput = {
-    id?: SortOrder
-    userId?: SortOrder
-    word?: SortOrder
-    language?: SortOrder
-    masteryLevel?: SortOrder
-    lastReviewedAt?: SortOrderInput | SortOrder
-    nextReviewAt?: SortOrderInput | SortOrder
-    reviewInterval?: SortOrder
-    difficulty?: SortOrder
-    totalAttempts?: SortOrder
-    correctAttempts?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    _count?: WordSnapshotCountOrderByAggregateInput
-    _avg?: WordSnapshotAvgOrderByAggregateInput
-    _max?: WordSnapshotMaxOrderByAggregateInput
-    _min?: WordSnapshotMinOrderByAggregateInput
-    _sum?: WordSnapshotSumOrderByAggregateInput
-  }
-
-  export type WordSnapshotScalarWhereWithAggregatesInput = {
-    AND?: WordSnapshotScalarWhereWithAggregatesInput | WordSnapshotScalarWhereWithAggregatesInput[]
-    OR?: WordSnapshotScalarWhereWithAggregatesInput[]
-    NOT?: WordSnapshotScalarWhereWithAggregatesInput | WordSnapshotScalarWhereWithAggregatesInput[]
-    id?: IntWithAggregatesFilter<"WordSnapshot"> | number
-    userId?: IntWithAggregatesFilter<"WordSnapshot"> | number
-    word?: StringWithAggregatesFilter<"WordSnapshot"> | string
-    language?: EnumLanguageWithAggregatesFilter<"WordSnapshot"> | $Enums.Language
-    masteryLevel?: EnumMasteryLevelWithAggregatesFilter<"WordSnapshot"> | $Enums.MasteryLevel
-    lastReviewedAt?: DateTimeNullableWithAggregatesFilter<"WordSnapshot"> | Date | string | null
-    nextReviewAt?: DateTimeNullableWithAggregatesFilter<"WordSnapshot"> | Date | string | null
-    reviewInterval?: IntWithAggregatesFilter<"WordSnapshot"> | number
-    difficulty?: FloatWithAggregatesFilter<"WordSnapshot"> | number
-    totalAttempts?: IntWithAggregatesFilter<"WordSnapshot"> | number
-    correctAttempts?: IntWithAggregatesFilter<"WordSnapshot"> | number
-    createdAt?: DateTimeWithAggregatesFilter<"WordSnapshot"> | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter<"WordSnapshot"> | Date | string
   }
 
   export type VideoWhereInput = {
@@ -22484,6 +20935,7 @@ export namespace Prisma {
     current_language?: EnumLanguageFilter<"Setting"> | $Enums.Language
     purposes?: EnumPurposeNullableListFilter<"Setting">
     current_level?: EnumCEFRLevelFilter<"Setting"> | $Enums.CEFRLevel
+    isEmailVerified?: BoolFilter<"Setting"> | boolean
     dailyXPGoal?: IntFilter<"Setting"> | number
     dailyTimeGoal?: IntFilter<"Setting"> | number
     weeklyGoal?: IntFilter<"Setting"> | number
@@ -22497,6 +20949,7 @@ export namespace Prisma {
     current_language?: SortOrder
     purposes?: SortOrder
     current_level?: SortOrder
+    isEmailVerified?: SortOrder
     dailyXPGoal?: SortOrder
     dailyTimeGoal?: SortOrder
     weeklyGoal?: SortOrder
@@ -22513,6 +20966,7 @@ export namespace Prisma {
     current_language?: EnumLanguageFilter<"Setting"> | $Enums.Language
     purposes?: EnumPurposeNullableListFilter<"Setting">
     current_level?: EnumCEFRLevelFilter<"Setting"> | $Enums.CEFRLevel
+    isEmailVerified?: BoolFilter<"Setting"> | boolean
     dailyXPGoal?: IntFilter<"Setting"> | number
     dailyTimeGoal?: IntFilter<"Setting"> | number
     weeklyGoal?: IntFilter<"Setting"> | number
@@ -22526,6 +20980,7 @@ export namespace Prisma {
     current_language?: SortOrder
     purposes?: SortOrder
     current_level?: SortOrder
+    isEmailVerified?: SortOrder
     dailyXPGoal?: SortOrder
     dailyTimeGoal?: SortOrder
     weeklyGoal?: SortOrder
@@ -22546,6 +21001,7 @@ export namespace Prisma {
     current_language?: EnumLanguageWithAggregatesFilter<"Setting"> | $Enums.Language
     purposes?: EnumPurposeNullableListFilter<"Setting">
     current_level?: EnumCEFRLevelWithAggregatesFilter<"Setting"> | $Enums.CEFRLevel
+    isEmailVerified?: BoolWithAggregatesFilter<"Setting"> | boolean
     dailyXPGoal?: IntWithAggregatesFilter<"Setting"> | number
     dailyTimeGoal?: IntWithAggregatesFilter<"Setting"> | number
     weeklyGoal?: IntWithAggregatesFilter<"Setting"> | number
@@ -23211,7 +21667,6 @@ export namespace Prisma {
     password: string
     role?: $Enums.Role
     avatar?: string | null
-    isEmailVerified?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     deleteAt?: Date | string | null
@@ -23225,7 +21680,6 @@ export namespace Prisma {
     lastActiveAt?: Date | string | null
     setting?: SettingCreateNestedOneWithoutUserInput
     words?: WordCreateNestedManyWithoutUserInput
-    wordSnapshots?: WordSnapshotCreateNestedManyWithoutUserInput
     languageProgresses?: LanguageProgressCreateNestedManyWithoutUserInput
     skillProgresses?: SkillProgressCreateNestedManyWithoutUserInput
     achievements?: UserAchievementCreateNestedManyWithoutUserInput
@@ -23243,7 +21697,6 @@ export namespace Prisma {
     password: string
     role?: $Enums.Role
     avatar?: string | null
-    isEmailVerified?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     deleteAt?: Date | string | null
@@ -23257,7 +21710,6 @@ export namespace Prisma {
     lastActiveAt?: Date | string | null
     setting?: SettingUncheckedCreateNestedOneWithoutUserInput
     words?: WordUncheckedCreateNestedManyWithoutUserInput
-    wordSnapshots?: WordSnapshotUncheckedCreateNestedManyWithoutUserInput
     languageProgresses?: LanguageProgressUncheckedCreateNestedManyWithoutUserInput
     skillProgresses?: SkillProgressUncheckedCreateNestedManyWithoutUserInput
     achievements?: UserAchievementUncheckedCreateNestedManyWithoutUserInput
@@ -23274,7 +21726,6 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
-    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -23288,7 +21739,6 @@ export namespace Prisma {
     lastActiveAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     setting?: SettingUpdateOneWithoutUserNestedInput
     words?: WordUpdateManyWithoutUserNestedInput
-    wordSnapshots?: WordSnapshotUpdateManyWithoutUserNestedInput
     languageProgresses?: LanguageProgressUpdateManyWithoutUserNestedInput
     skillProgresses?: SkillProgressUpdateManyWithoutUserNestedInput
     achievements?: UserAchievementUpdateManyWithoutUserNestedInput
@@ -23306,7 +21756,6 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
-    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -23320,7 +21769,6 @@ export namespace Prisma {
     lastActiveAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     setting?: SettingUncheckedUpdateOneWithoutUserNestedInput
     words?: WordUncheckedUpdateManyWithoutUserNestedInput
-    wordSnapshots?: WordSnapshotUncheckedUpdateManyWithoutUserNestedInput
     languageProgresses?: LanguageProgressUncheckedUpdateManyWithoutUserNestedInput
     skillProgresses?: SkillProgressUncheckedUpdateManyWithoutUserNestedInput
     achievements?: UserAchievementUncheckedUpdateManyWithoutUserNestedInput
@@ -23338,7 +21786,6 @@ export namespace Prisma {
     password: string
     role?: $Enums.Role
     avatar?: string | null
-    isEmailVerified?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     deleteAt?: Date | string | null
@@ -23358,7 +21805,6 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
-    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -23379,7 +21825,6 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
-    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -23398,10 +21843,7 @@ export namespace Prisma {
     language?: $Enums.Language
     translate?: WordCreatetranslateInput | string[]
     definitions?: WordCreatedefinitionsInput | string[]
-    synonyms?: WordCreatesynonymsInput | string[]
-    antonyms?: WordCreateantonymsInput | string[]
     examples?: WordCreateexamplesInput | string[]
-    partOfSpeech?: string | null
     createdAt?: Date | string
     totalProgress?: number
     isLearned?: boolean
@@ -23419,10 +21861,7 @@ export namespace Prisma {
     language?: $Enums.Language
     translate?: WordCreatetranslateInput | string[]
     definitions?: WordCreatedefinitionsInput | string[]
-    synonyms?: WordCreatesynonymsInput | string[]
-    antonyms?: WordCreateantonymsInput | string[]
     examples?: WordCreateexamplesInput | string[]
-    partOfSpeech?: string | null
     createdAt?: Date | string
     totalProgress?: number
     isLearned?: boolean
@@ -23439,10 +21878,7 @@ export namespace Prisma {
     language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
     translate?: WordUpdatetranslateInput | string[]
     definitions?: WordUpdatedefinitionsInput | string[]
-    synonyms?: WordUpdatesynonymsInput | string[]
-    antonyms?: WordUpdateantonymsInput | string[]
     examples?: WordUpdateexamplesInput | string[]
-    partOfSpeech?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     totalProgress?: IntFieldUpdateOperationsInput | number
     isLearned?: BoolFieldUpdateOperationsInput | boolean
@@ -23460,10 +21896,7 @@ export namespace Prisma {
     language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
     translate?: WordUpdatetranslateInput | string[]
     definitions?: WordUpdatedefinitionsInput | string[]
-    synonyms?: WordUpdatesynonymsInput | string[]
-    antonyms?: WordUpdateantonymsInput | string[]
     examples?: WordUpdateexamplesInput | string[]
-    partOfSpeech?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     totalProgress?: IntFieldUpdateOperationsInput | number
     isLearned?: BoolFieldUpdateOperationsInput | boolean
@@ -23481,10 +21914,7 @@ export namespace Prisma {
     language?: $Enums.Language
     translate?: WordCreatetranslateInput | string[]
     definitions?: WordCreatedefinitionsInput | string[]
-    synonyms?: WordCreatesynonymsInput | string[]
-    antonyms?: WordCreateantonymsInput | string[]
     examples?: WordCreateexamplesInput | string[]
-    partOfSpeech?: string | null
     createdAt?: Date | string
     totalProgress?: number
     isLearned?: boolean
@@ -23500,10 +21930,7 @@ export namespace Prisma {
     language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
     translate?: WordUpdatetranslateInput | string[]
     definitions?: WordUpdatedefinitionsInput | string[]
-    synonyms?: WordUpdatesynonymsInput | string[]
-    antonyms?: WordUpdateantonymsInput | string[]
     examples?: WordUpdateexamplesInput | string[]
-    partOfSpeech?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     totalProgress?: IntFieldUpdateOperationsInput | number
     isLearned?: BoolFieldUpdateOperationsInput | boolean
@@ -23519,10 +21946,7 @@ export namespace Prisma {
     language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
     translate?: WordUpdatetranslateInput | string[]
     definitions?: WordUpdatedefinitionsInput | string[]
-    synonyms?: WordUpdatesynonymsInput | string[]
-    antonyms?: WordUpdateantonymsInput | string[]
     examples?: WordUpdateexamplesInput | string[]
-    partOfSpeech?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     totalProgress?: IntFieldUpdateOperationsInput | number
     isLearned?: BoolFieldUpdateOperationsInput | boolean
@@ -23531,114 +21955,6 @@ export namespace Prisma {
     phoneticUS?: NullableStringFieldUpdateOperationsInput | string | null
     audioUS?: NullableStringFieldUpdateOperationsInput | string | null
     userId?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type WordSnapshotCreateInput = {
-    word: string
-    language: $Enums.Language
-    masteryLevel: $Enums.MasteryLevel
-    lastReviewedAt?: Date | string | null
-    nextReviewAt?: Date | string | null
-    reviewInterval?: number
-    difficulty?: number
-    totalAttempts?: number
-    correctAttempts?: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    user: UserCreateNestedOneWithoutWordSnapshotsInput
-  }
-
-  export type WordSnapshotUncheckedCreateInput = {
-    id?: number
-    userId: number
-    word: string
-    language: $Enums.Language
-    masteryLevel: $Enums.MasteryLevel
-    lastReviewedAt?: Date | string | null
-    nextReviewAt?: Date | string | null
-    reviewInterval?: number
-    difficulty?: number
-    totalAttempts?: number
-    correctAttempts?: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type WordSnapshotUpdateInput = {
-    word?: StringFieldUpdateOperationsInput | string
-    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
-    masteryLevel?: EnumMasteryLevelFieldUpdateOperationsInput | $Enums.MasteryLevel
-    lastReviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    nextReviewAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    reviewInterval?: IntFieldUpdateOperationsInput | number
-    difficulty?: FloatFieldUpdateOperationsInput | number
-    totalAttempts?: IntFieldUpdateOperationsInput | number
-    correctAttempts?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutWordSnapshotsNestedInput
-  }
-
-  export type WordSnapshotUncheckedUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    userId?: IntFieldUpdateOperationsInput | number
-    word?: StringFieldUpdateOperationsInput | string
-    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
-    masteryLevel?: EnumMasteryLevelFieldUpdateOperationsInput | $Enums.MasteryLevel
-    lastReviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    nextReviewAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    reviewInterval?: IntFieldUpdateOperationsInput | number
-    difficulty?: FloatFieldUpdateOperationsInput | number
-    totalAttempts?: IntFieldUpdateOperationsInput | number
-    correctAttempts?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type WordSnapshotCreateManyInput = {
-    id?: number
-    userId: number
-    word: string
-    language: $Enums.Language
-    masteryLevel: $Enums.MasteryLevel
-    lastReviewedAt?: Date | string | null
-    nextReviewAt?: Date | string | null
-    reviewInterval?: number
-    difficulty?: number
-    totalAttempts?: number
-    correctAttempts?: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type WordSnapshotUpdateManyMutationInput = {
-    word?: StringFieldUpdateOperationsInput | string
-    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
-    masteryLevel?: EnumMasteryLevelFieldUpdateOperationsInput | $Enums.MasteryLevel
-    lastReviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    nextReviewAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    reviewInterval?: IntFieldUpdateOperationsInput | number
-    difficulty?: FloatFieldUpdateOperationsInput | number
-    totalAttempts?: IntFieldUpdateOperationsInput | number
-    correctAttempts?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type WordSnapshotUncheckedUpdateManyInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    userId?: IntFieldUpdateOperationsInput | number
-    word?: StringFieldUpdateOperationsInput | string
-    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
-    masteryLevel?: EnumMasteryLevelFieldUpdateOperationsInput | $Enums.MasteryLevel
-    lastReviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    nextReviewAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    reviewInterval?: IntFieldUpdateOperationsInput | number
-    difficulty?: FloatFieldUpdateOperationsInput | number
-    totalAttempts?: IntFieldUpdateOperationsInput | number
-    correctAttempts?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type VideoCreateInput = {
@@ -24042,6 +22358,7 @@ export namespace Prisma {
     current_language?: $Enums.Language
     purposes?: SettingCreatepurposesInput | $Enums.Purpose[]
     current_level?: $Enums.CEFRLevel
+    isEmailVerified?: boolean
     dailyXPGoal?: number
     dailyTimeGoal?: number
     weeklyGoal?: number
@@ -24055,6 +22372,7 @@ export namespace Prisma {
     current_language?: $Enums.Language
     purposes?: SettingCreatepurposesInput | $Enums.Purpose[]
     current_level?: $Enums.CEFRLevel
+    isEmailVerified?: boolean
     dailyXPGoal?: number
     dailyTimeGoal?: number
     weeklyGoal?: number
@@ -24065,6 +22383,7 @@ export namespace Prisma {
     current_language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
     purposes?: SettingUpdatepurposesInput | $Enums.Purpose[]
     current_level?: EnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel
+    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
     dailyXPGoal?: IntFieldUpdateOperationsInput | number
     dailyTimeGoal?: IntFieldUpdateOperationsInput | number
     weeklyGoal?: IntFieldUpdateOperationsInput | number
@@ -24078,6 +22397,7 @@ export namespace Prisma {
     current_language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
     purposes?: SettingUpdatepurposesInput | $Enums.Purpose[]
     current_level?: EnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel
+    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
     dailyXPGoal?: IntFieldUpdateOperationsInput | number
     dailyTimeGoal?: IntFieldUpdateOperationsInput | number
     weeklyGoal?: IntFieldUpdateOperationsInput | number
@@ -24090,6 +22410,7 @@ export namespace Prisma {
     current_language?: $Enums.Language
     purposes?: SettingCreatepurposesInput | $Enums.Purpose[]
     current_level?: $Enums.CEFRLevel
+    isEmailVerified?: boolean
     dailyXPGoal?: number
     dailyTimeGoal?: number
     weeklyGoal?: number
@@ -24100,6 +22421,7 @@ export namespace Prisma {
     current_language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
     purposes?: SettingUpdatepurposesInput | $Enums.Purpose[]
     current_level?: EnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel
+    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
     dailyXPGoal?: IntFieldUpdateOperationsInput | number
     dailyTimeGoal?: IntFieldUpdateOperationsInput | number
     weeklyGoal?: IntFieldUpdateOperationsInput | number
@@ -24112,6 +22434,7 @@ export namespace Prisma {
     current_language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
     purposes?: SettingUpdatepurposesInput | $Enums.Purpose[]
     current_level?: EnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel
+    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
     dailyXPGoal?: IntFieldUpdateOperationsInput | number
     dailyTimeGoal?: IntFieldUpdateOperationsInput | number
     weeklyGoal?: IntFieldUpdateOperationsInput | number
@@ -24872,11 +23195,6 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
-  export type BoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
-  }
-
   export type DateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -24908,12 +23226,6 @@ export namespace Prisma {
     every?: WordWhereInput
     some?: WordWhereInput
     none?: WordWhereInput
-  }
-
-  export type WordSnapshotListRelationFilter = {
-    every?: WordSnapshotWhereInput
-    some?: WordSnapshotWhereInput
-    none?: WordSnapshotWhereInput
   }
 
   export type LanguageProgressListRelationFilter = {
@@ -24973,10 +23285,6 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
-  export type WordSnapshotOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
   export type LanguageProgressOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -25016,7 +23324,6 @@ export namespace Prisma {
     password?: SortOrder
     role?: SortOrder
     avatar?: SortOrder
-    isEmailVerified?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     deleteAt?: SortOrder
@@ -25045,7 +23352,6 @@ export namespace Prisma {
     password?: SortOrder
     role?: SortOrder
     avatar?: SortOrder
-    isEmailVerified?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     deleteAt?: SortOrder
@@ -25066,7 +23372,6 @@ export namespace Prisma {
     password?: SortOrder
     role?: SortOrder
     avatar?: SortOrder
-    isEmailVerified?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     deleteAt?: SortOrder
@@ -25150,14 +23455,6 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
-  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
-  }
-
   export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -25201,6 +23498,11 @@ export namespace Prisma {
     isEmpty?: boolean
   }
 
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type UserScalarRelationFilter = {
     is?: UserWhereInput
     isNot?: UserWhereInput
@@ -25218,10 +23520,7 @@ export namespace Prisma {
     language?: SortOrder
     translate?: SortOrder
     definitions?: SortOrder
-    synonyms?: SortOrder
-    antonyms?: SortOrder
     examples?: SortOrder
-    partOfSpeech?: SortOrder
     createdAt?: SortOrder
     totalProgress?: SortOrder
     isLearned?: SortOrder
@@ -25242,7 +23541,6 @@ export namespace Prisma {
     id?: SortOrder
     text?: SortOrder
     language?: SortOrder
-    partOfSpeech?: SortOrder
     createdAt?: SortOrder
     totalProgress?: SortOrder
     isLearned?: SortOrder
@@ -25257,7 +23555,6 @@ export namespace Prisma {
     id?: SortOrder
     text?: SortOrder
     language?: SortOrder
-    partOfSpeech?: SortOrder
     createdAt?: SortOrder
     totalProgress?: SortOrder
     isLearned?: SortOrder
@@ -25284,120 +23581,12 @@ export namespace Prisma {
     _max?: NestedEnumLanguageFilter<$PrismaModel>
   }
 
-  export type EnumMasteryLevelFilter<$PrismaModel = never> = {
-    equals?: $Enums.MasteryLevel | EnumMasteryLevelFieldRefInput<$PrismaModel>
-    in?: $Enums.MasteryLevel[] | ListEnumMasteryLevelFieldRefInput<$PrismaModel>
-    notIn?: $Enums.MasteryLevel[] | ListEnumMasteryLevelFieldRefInput<$PrismaModel>
-    not?: NestedEnumMasteryLevelFilter<$PrismaModel> | $Enums.MasteryLevel
-  }
-
-  export type FloatFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatFilter<$PrismaModel> | number
-  }
-
-  export type WordSnapshotUserIdWordLanguageCompoundUniqueInput = {
-    userId: number
-    word: string
-    language: $Enums.Language
-  }
-
-  export type WordSnapshotCountOrderByAggregateInput = {
-    id?: SortOrder
-    userId?: SortOrder
-    word?: SortOrder
-    language?: SortOrder
-    masteryLevel?: SortOrder
-    lastReviewedAt?: SortOrder
-    nextReviewAt?: SortOrder
-    reviewInterval?: SortOrder
-    difficulty?: SortOrder
-    totalAttempts?: SortOrder
-    correctAttempts?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type WordSnapshotAvgOrderByAggregateInput = {
-    id?: SortOrder
-    userId?: SortOrder
-    reviewInterval?: SortOrder
-    difficulty?: SortOrder
-    totalAttempts?: SortOrder
-    correctAttempts?: SortOrder
-  }
-
-  export type WordSnapshotMaxOrderByAggregateInput = {
-    id?: SortOrder
-    userId?: SortOrder
-    word?: SortOrder
-    language?: SortOrder
-    masteryLevel?: SortOrder
-    lastReviewedAt?: SortOrder
-    nextReviewAt?: SortOrder
-    reviewInterval?: SortOrder
-    difficulty?: SortOrder
-    totalAttempts?: SortOrder
-    correctAttempts?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type WordSnapshotMinOrderByAggregateInput = {
-    id?: SortOrder
-    userId?: SortOrder
-    word?: SortOrder
-    language?: SortOrder
-    masteryLevel?: SortOrder
-    lastReviewedAt?: SortOrder
-    nextReviewAt?: SortOrder
-    reviewInterval?: SortOrder
-    difficulty?: SortOrder
-    totalAttempts?: SortOrder
-    correctAttempts?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type WordSnapshotSumOrderByAggregateInput = {
-    id?: SortOrder
-    userId?: SortOrder
-    reviewInterval?: SortOrder
-    difficulty?: SortOrder
-    totalAttempts?: SortOrder
-    correctAttempts?: SortOrder
-  }
-
-  export type EnumMasteryLevelWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.MasteryLevel | EnumMasteryLevelFieldRefInput<$PrismaModel>
-    in?: $Enums.MasteryLevel[] | ListEnumMasteryLevelFieldRefInput<$PrismaModel>
-    notIn?: $Enums.MasteryLevel[] | ListEnumMasteryLevelFieldRefInput<$PrismaModel>
-    not?: NestedEnumMasteryLevelWithAggregatesFilter<$PrismaModel> | $Enums.MasteryLevel
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
     _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumMasteryLevelFilter<$PrismaModel>
-    _max?: NestedEnumMasteryLevelFilter<$PrismaModel>
-  }
-
-  export type FloatWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedFloatFilter<$PrismaModel>
-    _min?: NestedFloatFilter<$PrismaModel>
-    _max?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type EnumCEFRLevelFilter<$PrismaModel = never> = {
@@ -25698,6 +23887,17 @@ export namespace Prisma {
     authorId?: SortOrder
   }
 
+  export type FloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
   export type CourseScalarRelationFilter = {
     is?: CourseWhereInput
     isNot?: CourseWhereInput
@@ -25746,6 +23946,22 @@ export namespace Prisma {
     progress?: SortOrder
   }
 
+  export type FloatWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedFloatFilter<$PrismaModel>
+    _max?: NestedFloatFilter<$PrismaModel>
+  }
+
   export type EnumPurposeNullableListFilter<$PrismaModel = never> = {
     equals?: $Enums.Purpose[] | ListEnumPurposeFieldRefInput<$PrismaModel> | null
     has?: $Enums.Purpose | EnumPurposeFieldRefInput<$PrismaModel> | null
@@ -25761,6 +23977,7 @@ export namespace Prisma {
     current_language?: SortOrder
     purposes?: SortOrder
     current_level?: SortOrder
+    isEmailVerified?: SortOrder
     dailyXPGoal?: SortOrder
     dailyTimeGoal?: SortOrder
     weeklyGoal?: SortOrder
@@ -25780,6 +23997,7 @@ export namespace Prisma {
     global_language?: SortOrder
     current_language?: SortOrder
     current_level?: SortOrder
+    isEmailVerified?: SortOrder
     dailyXPGoal?: SortOrder
     dailyTimeGoal?: SortOrder
     weeklyGoal?: SortOrder
@@ -25791,6 +24009,7 @@ export namespace Prisma {
     global_language?: SortOrder
     current_language?: SortOrder
     current_level?: SortOrder
+    isEmailVerified?: SortOrder
     dailyXPGoal?: SortOrder
     dailyTimeGoal?: SortOrder
     weeklyGoal?: SortOrder
@@ -26461,13 +24680,6 @@ export namespace Prisma {
     connect?: WordWhereUniqueInput | WordWhereUniqueInput[]
   }
 
-  export type WordSnapshotCreateNestedManyWithoutUserInput = {
-    create?: XOR<WordSnapshotCreateWithoutUserInput, WordSnapshotUncheckedCreateWithoutUserInput> | WordSnapshotCreateWithoutUserInput[] | WordSnapshotUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: WordSnapshotCreateOrConnectWithoutUserInput | WordSnapshotCreateOrConnectWithoutUserInput[]
-    createMany?: WordSnapshotCreateManyUserInputEnvelope
-    connect?: WordSnapshotWhereUniqueInput | WordSnapshotWhereUniqueInput[]
-  }
-
   export type LanguageProgressCreateNestedManyWithoutUserInput = {
     create?: XOR<LanguageProgressCreateWithoutUserInput, LanguageProgressUncheckedCreateWithoutUserInput> | LanguageProgressCreateWithoutUserInput[] | LanguageProgressUncheckedCreateWithoutUserInput[]
     connectOrCreate?: LanguageProgressCreateOrConnectWithoutUserInput | LanguageProgressCreateOrConnectWithoutUserInput[]
@@ -26535,13 +24747,6 @@ export namespace Prisma {
     connectOrCreate?: WordCreateOrConnectWithoutUserInput | WordCreateOrConnectWithoutUserInput[]
     createMany?: WordCreateManyUserInputEnvelope
     connect?: WordWhereUniqueInput | WordWhereUniqueInput[]
-  }
-
-  export type WordSnapshotUncheckedCreateNestedManyWithoutUserInput = {
-    create?: XOR<WordSnapshotCreateWithoutUserInput, WordSnapshotUncheckedCreateWithoutUserInput> | WordSnapshotCreateWithoutUserInput[] | WordSnapshotUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: WordSnapshotCreateOrConnectWithoutUserInput | WordSnapshotCreateOrConnectWithoutUserInput[]
-    createMany?: WordSnapshotCreateManyUserInputEnvelope
-    connect?: WordSnapshotWhereUniqueInput | WordSnapshotWhereUniqueInput[]
   }
 
   export type LanguageProgressUncheckedCreateNestedManyWithoutUserInput = {
@@ -26612,10 +24817,6 @@ export namespace Prisma {
     set?: string | null
   }
 
-  export type BoolFieldUpdateOperationsInput = {
-    set?: boolean
-  }
-
   export type DateTimeFieldUpdateOperationsInput = {
     set?: Date | string
   }
@@ -26654,20 +24855,6 @@ export namespace Prisma {
     update?: WordUpdateWithWhereUniqueWithoutUserInput | WordUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: WordUpdateManyWithWhereWithoutUserInput | WordUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: WordScalarWhereInput | WordScalarWhereInput[]
-  }
-
-  export type WordSnapshotUpdateManyWithoutUserNestedInput = {
-    create?: XOR<WordSnapshotCreateWithoutUserInput, WordSnapshotUncheckedCreateWithoutUserInput> | WordSnapshotCreateWithoutUserInput[] | WordSnapshotUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: WordSnapshotCreateOrConnectWithoutUserInput | WordSnapshotCreateOrConnectWithoutUserInput[]
-    upsert?: WordSnapshotUpsertWithWhereUniqueWithoutUserInput | WordSnapshotUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: WordSnapshotCreateManyUserInputEnvelope
-    set?: WordSnapshotWhereUniqueInput | WordSnapshotWhereUniqueInput[]
-    disconnect?: WordSnapshotWhereUniqueInput | WordSnapshotWhereUniqueInput[]
-    delete?: WordSnapshotWhereUniqueInput | WordSnapshotWhereUniqueInput[]
-    connect?: WordSnapshotWhereUniqueInput | WordSnapshotWhereUniqueInput[]
-    update?: WordSnapshotUpdateWithWhereUniqueWithoutUserInput | WordSnapshotUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: WordSnapshotUpdateManyWithWhereWithoutUserInput | WordSnapshotUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: WordSnapshotScalarWhereInput | WordSnapshotScalarWhereInput[]
   }
 
   export type LanguageProgressUpdateManyWithoutUserNestedInput = {
@@ -26806,20 +24993,6 @@ export namespace Prisma {
     deleteMany?: WordScalarWhereInput | WordScalarWhereInput[]
   }
 
-  export type WordSnapshotUncheckedUpdateManyWithoutUserNestedInput = {
-    create?: XOR<WordSnapshotCreateWithoutUserInput, WordSnapshotUncheckedCreateWithoutUserInput> | WordSnapshotCreateWithoutUserInput[] | WordSnapshotUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: WordSnapshotCreateOrConnectWithoutUserInput | WordSnapshotCreateOrConnectWithoutUserInput[]
-    upsert?: WordSnapshotUpsertWithWhereUniqueWithoutUserInput | WordSnapshotUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: WordSnapshotCreateManyUserInputEnvelope
-    set?: WordSnapshotWhereUniqueInput | WordSnapshotWhereUniqueInput[]
-    disconnect?: WordSnapshotWhereUniqueInput | WordSnapshotWhereUniqueInput[]
-    delete?: WordSnapshotWhereUniqueInput | WordSnapshotWhereUniqueInput[]
-    connect?: WordSnapshotWhereUniqueInput | WordSnapshotWhereUniqueInput[]
-    update?: WordSnapshotUpdateWithWhereUniqueWithoutUserInput | WordSnapshotUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: WordSnapshotUpdateManyWithWhereWithoutUserInput | WordSnapshotUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: WordSnapshotScalarWhereInput | WordSnapshotScalarWhereInput[]
-  }
-
   export type LanguageProgressUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<LanguageProgressCreateWithoutUserInput, LanguageProgressUncheckedCreateWithoutUserInput> | LanguageProgressCreateWithoutUserInput[] | LanguageProgressUncheckedCreateWithoutUserInput[]
     connectOrCreate?: LanguageProgressCreateOrConnectWithoutUserInput | LanguageProgressCreateOrConnectWithoutUserInput[]
@@ -26940,14 +25113,6 @@ export namespace Prisma {
     set: string[]
   }
 
-  export type WordCreatesynonymsInput = {
-    set: string[]
-  }
-
-  export type WordCreateantonymsInput = {
-    set: string[]
-  }
-
   export type WordCreateexamplesInput = {
     set: string[]
   }
@@ -26986,19 +25151,13 @@ export namespace Prisma {
     push?: string | string[]
   }
 
-  export type WordUpdatesynonymsInput = {
-    set?: string[]
-    push?: string | string[]
-  }
-
-  export type WordUpdateantonymsInput = {
-    set?: string[]
-    push?: string | string[]
-  }
-
   export type WordUpdateexamplesInput = {
     set?: string[]
     push?: string | string[]
+  }
+
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
   }
 
   export type UserUpdateOneRequiredWithoutWordsNestedInput = {
@@ -27035,32 +25194,6 @@ export namespace Prisma {
     update?: WordTaskProgressUpdateWithWhereUniqueWithoutWordInput | WordTaskProgressUpdateWithWhereUniqueWithoutWordInput[]
     updateMany?: WordTaskProgressUpdateManyWithWhereWithoutWordInput | WordTaskProgressUpdateManyWithWhereWithoutWordInput[]
     deleteMany?: WordTaskProgressScalarWhereInput | WordTaskProgressScalarWhereInput[]
-  }
-
-  export type UserCreateNestedOneWithoutWordSnapshotsInput = {
-    create?: XOR<UserCreateWithoutWordSnapshotsInput, UserUncheckedCreateWithoutWordSnapshotsInput>
-    connectOrCreate?: UserCreateOrConnectWithoutWordSnapshotsInput
-    connect?: UserWhereUniqueInput
-  }
-
-  export type EnumMasteryLevelFieldUpdateOperationsInput = {
-    set?: $Enums.MasteryLevel
-  }
-
-  export type FloatFieldUpdateOperationsInput = {
-    set?: number
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
-  }
-
-  export type UserUpdateOneRequiredWithoutWordSnapshotsNestedInput = {
-    create?: XOR<UserCreateWithoutWordSnapshotsInput, UserUncheckedCreateWithoutWordSnapshotsInput>
-    connectOrCreate?: UserCreateOrConnectWithoutWordSnapshotsInput
-    upsert?: UserUpsertWithoutWordSnapshotsInput
-    connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutWordSnapshotsInput, UserUpdateWithoutWordSnapshotsInput>, UserUncheckedUpdateWithoutWordSnapshotsInput>
   }
 
   export type VideoCreateskillTypesInput = {
@@ -27379,6 +25512,14 @@ export namespace Prisma {
     connect?: CourseWhereUniqueInput
   }
 
+  export type FloatFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
   export type UserUpdateOneRequiredWithoutEnrollmentsNestedInput = {
     create?: XOR<UserCreateWithoutEnrollmentsInput, UserUncheckedCreateWithoutEnrollmentsInput>
     connectOrCreate?: UserCreateOrConnectWithoutEnrollmentsInput
@@ -27684,11 +25825,6 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
-  export type NestedBoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
-  }
-
   export type NestedDateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -27793,14 +25929,6 @@ export namespace Prisma {
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
-  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
-  }
-
   export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -27836,6 +25964,11 @@ export namespace Prisma {
     not?: NestedEnumLanguageFilter<$PrismaModel> | $Enums.Language
   }
 
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type NestedEnumLanguageWithAggregatesFilter<$PrismaModel = never> = {
     equals?: $Enums.Language | EnumLanguageFieldRefInput<$PrismaModel>
     in?: $Enums.Language[] | ListEnumLanguageFieldRefInput<$PrismaModel>
@@ -27846,37 +25979,12 @@ export namespace Prisma {
     _max?: NestedEnumLanguageFilter<$PrismaModel>
   }
 
-  export type NestedEnumMasteryLevelFilter<$PrismaModel = never> = {
-    equals?: $Enums.MasteryLevel | EnumMasteryLevelFieldRefInput<$PrismaModel>
-    in?: $Enums.MasteryLevel[] | ListEnumMasteryLevelFieldRefInput<$PrismaModel>
-    notIn?: $Enums.MasteryLevel[] | ListEnumMasteryLevelFieldRefInput<$PrismaModel>
-    not?: NestedEnumMasteryLevelFilter<$PrismaModel> | $Enums.MasteryLevel
-  }
-
-  export type NestedEnumMasteryLevelWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.MasteryLevel | EnumMasteryLevelFieldRefInput<$PrismaModel>
-    in?: $Enums.MasteryLevel[] | ListEnumMasteryLevelFieldRefInput<$PrismaModel>
-    notIn?: $Enums.MasteryLevel[] | ListEnumMasteryLevelFieldRefInput<$PrismaModel>
-    not?: NestedEnumMasteryLevelWithAggregatesFilter<$PrismaModel> | $Enums.MasteryLevel
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
     _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumMasteryLevelFilter<$PrismaModel>
-    _max?: NestedEnumMasteryLevelFilter<$PrismaModel>
-  }
-
-  export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedFloatFilter<$PrismaModel>
-    _min?: NestedFloatFilter<$PrismaModel>
-    _max?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type NestedEnumCEFRLevelFilter<$PrismaModel = never> = {
@@ -27955,6 +26063,22 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumCoreSkillTypeFilter<$PrismaModel>
     _max?: NestedEnumCoreSkillTypeFilter<$PrismaModel>
+  }
+
+  export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedFloatFilter<$PrismaModel>
+    _max?: NestedFloatFilter<$PrismaModel>
   }
   export type NestedJsonFilter<$PrismaModel = never> =
     | PatchUndefined<
@@ -28069,6 +26193,7 @@ export namespace Prisma {
     current_language?: $Enums.Language
     purposes?: SettingCreatepurposesInput | $Enums.Purpose[]
     current_level?: $Enums.CEFRLevel
+    isEmailVerified?: boolean
     dailyXPGoal?: number
     dailyTimeGoal?: number
     weeklyGoal?: number
@@ -28080,6 +26205,7 @@ export namespace Prisma {
     current_language?: $Enums.Language
     purposes?: SettingCreatepurposesInput | $Enums.Purpose[]
     current_level?: $Enums.CEFRLevel
+    isEmailVerified?: boolean
     dailyXPGoal?: number
     dailyTimeGoal?: number
     weeklyGoal?: number
@@ -28095,10 +26221,7 @@ export namespace Prisma {
     language?: $Enums.Language
     translate?: WordCreatetranslateInput | string[]
     definitions?: WordCreatedefinitionsInput | string[]
-    synonyms?: WordCreatesynonymsInput | string[]
-    antonyms?: WordCreateantonymsInput | string[]
     examples?: WordCreateexamplesInput | string[]
-    partOfSpeech?: string | null
     createdAt?: Date | string
     totalProgress?: number
     isLearned?: boolean
@@ -28115,10 +26238,7 @@ export namespace Prisma {
     language?: $Enums.Language
     translate?: WordCreatetranslateInput | string[]
     definitions?: WordCreatedefinitionsInput | string[]
-    synonyms?: WordCreatesynonymsInput | string[]
-    antonyms?: WordCreateantonymsInput | string[]
     examples?: WordCreateexamplesInput | string[]
-    partOfSpeech?: string | null
     createdAt?: Date | string
     totalProgress?: number
     isLearned?: boolean
@@ -28136,45 +26256,6 @@ export namespace Prisma {
 
   export type WordCreateManyUserInputEnvelope = {
     data: WordCreateManyUserInput | WordCreateManyUserInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type WordSnapshotCreateWithoutUserInput = {
-    word: string
-    language: $Enums.Language
-    masteryLevel: $Enums.MasteryLevel
-    lastReviewedAt?: Date | string | null
-    nextReviewAt?: Date | string | null
-    reviewInterval?: number
-    difficulty?: number
-    totalAttempts?: number
-    correctAttempts?: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type WordSnapshotUncheckedCreateWithoutUserInput = {
-    id?: number
-    word: string
-    language: $Enums.Language
-    masteryLevel: $Enums.MasteryLevel
-    lastReviewedAt?: Date | string | null
-    nextReviewAt?: Date | string | null
-    reviewInterval?: number
-    difficulty?: number
-    totalAttempts?: number
-    correctAttempts?: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type WordSnapshotCreateOrConnectWithoutUserInput = {
-    where: WordSnapshotWhereUniqueInput
-    create: XOR<WordSnapshotCreateWithoutUserInput, WordSnapshotUncheckedCreateWithoutUserInput>
-  }
-
-  export type WordSnapshotCreateManyUserInputEnvelope = {
-    data: WordSnapshotCreateManyUserInput | WordSnapshotCreateManyUserInput[]
     skipDuplicates?: boolean
   }
 
@@ -28492,6 +26573,7 @@ export namespace Prisma {
     current_language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
     purposes?: SettingUpdatepurposesInput | $Enums.Purpose[]
     current_level?: EnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel
+    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
     dailyXPGoal?: IntFieldUpdateOperationsInput | number
     dailyTimeGoal?: IntFieldUpdateOperationsInput | number
     weeklyGoal?: IntFieldUpdateOperationsInput | number
@@ -28503,6 +26585,7 @@ export namespace Prisma {
     current_language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
     purposes?: SettingUpdatepurposesInput | $Enums.Purpose[]
     current_level?: EnumCEFRLevelFieldUpdateOperationsInput | $Enums.CEFRLevel
+    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
     dailyXPGoal?: IntFieldUpdateOperationsInput | number
     dailyTimeGoal?: IntFieldUpdateOperationsInput | number
     weeklyGoal?: IntFieldUpdateOperationsInput | number
@@ -28533,10 +26616,7 @@ export namespace Prisma {
     language?: EnumLanguageFilter<"Word"> | $Enums.Language
     translate?: StringNullableListFilter<"Word">
     definitions?: StringNullableListFilter<"Word">
-    synonyms?: StringNullableListFilter<"Word">
-    antonyms?: StringNullableListFilter<"Word">
     examples?: StringNullableListFilter<"Word">
-    partOfSpeech?: StringNullableFilter<"Word"> | string | null
     createdAt?: DateTimeFilter<"Word"> | Date | string
     totalProgress?: IntFilter<"Word"> | number
     isLearned?: BoolFilter<"Word"> | boolean
@@ -28545,41 +26625,6 @@ export namespace Prisma {
     phoneticUS?: StringNullableFilter<"Word"> | string | null
     audioUS?: StringNullableFilter<"Word"> | string | null
     userId?: IntFilter<"Word"> | number
-  }
-
-  export type WordSnapshotUpsertWithWhereUniqueWithoutUserInput = {
-    where: WordSnapshotWhereUniqueInput
-    update: XOR<WordSnapshotUpdateWithoutUserInput, WordSnapshotUncheckedUpdateWithoutUserInput>
-    create: XOR<WordSnapshotCreateWithoutUserInput, WordSnapshotUncheckedCreateWithoutUserInput>
-  }
-
-  export type WordSnapshotUpdateWithWhereUniqueWithoutUserInput = {
-    where: WordSnapshotWhereUniqueInput
-    data: XOR<WordSnapshotUpdateWithoutUserInput, WordSnapshotUncheckedUpdateWithoutUserInput>
-  }
-
-  export type WordSnapshotUpdateManyWithWhereWithoutUserInput = {
-    where: WordSnapshotScalarWhereInput
-    data: XOR<WordSnapshotUpdateManyMutationInput, WordSnapshotUncheckedUpdateManyWithoutUserInput>
-  }
-
-  export type WordSnapshotScalarWhereInput = {
-    AND?: WordSnapshotScalarWhereInput | WordSnapshotScalarWhereInput[]
-    OR?: WordSnapshotScalarWhereInput[]
-    NOT?: WordSnapshotScalarWhereInput | WordSnapshotScalarWhereInput[]
-    id?: IntFilter<"WordSnapshot"> | number
-    userId?: IntFilter<"WordSnapshot"> | number
-    word?: StringFilter<"WordSnapshot"> | string
-    language?: EnumLanguageFilter<"WordSnapshot"> | $Enums.Language
-    masteryLevel?: EnumMasteryLevelFilter<"WordSnapshot"> | $Enums.MasteryLevel
-    lastReviewedAt?: DateTimeNullableFilter<"WordSnapshot"> | Date | string | null
-    nextReviewAt?: DateTimeNullableFilter<"WordSnapshot"> | Date | string | null
-    reviewInterval?: IntFilter<"WordSnapshot"> | number
-    difficulty?: FloatFilter<"WordSnapshot"> | number
-    totalAttempts?: IntFilter<"WordSnapshot"> | number
-    correctAttempts?: IntFilter<"WordSnapshot"> | number
-    createdAt?: DateTimeFilter<"WordSnapshot"> | Date | string
-    updatedAt?: DateTimeFilter<"WordSnapshot"> | Date | string
   }
 
   export type LanguageProgressUpsertWithWhereUniqueWithoutUserInput = {
@@ -28857,7 +26902,6 @@ export namespace Prisma {
     password: string
     role?: $Enums.Role
     avatar?: string | null
-    isEmailVerified?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     deleteAt?: Date | string | null
@@ -28870,7 +26914,6 @@ export namespace Prisma {
     totalLearningTime?: number
     lastActiveAt?: Date | string | null
     setting?: SettingCreateNestedOneWithoutUserInput
-    wordSnapshots?: WordSnapshotCreateNestedManyWithoutUserInput
     languageProgresses?: LanguageProgressCreateNestedManyWithoutUserInput
     skillProgresses?: SkillProgressCreateNestedManyWithoutUserInput
     achievements?: UserAchievementCreateNestedManyWithoutUserInput
@@ -28888,7 +26931,6 @@ export namespace Prisma {
     password: string
     role?: $Enums.Role
     avatar?: string | null
-    isEmailVerified?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     deleteAt?: Date | string | null
@@ -28901,7 +26943,6 @@ export namespace Prisma {
     totalLearningTime?: number
     lastActiveAt?: Date | string | null
     setting?: SettingUncheckedCreateNestedOneWithoutUserInput
-    wordSnapshots?: WordSnapshotUncheckedCreateNestedManyWithoutUserInput
     languageProgresses?: LanguageProgressUncheckedCreateNestedManyWithoutUserInput
     skillProgresses?: SkillProgressUncheckedCreateNestedManyWithoutUserInput
     achievements?: UserAchievementUncheckedCreateNestedManyWithoutUserInput
@@ -28977,7 +27018,6 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
-    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -28990,7 +27030,6 @@ export namespace Prisma {
     totalLearningTime?: IntFieldUpdateOperationsInput | number
     lastActiveAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     setting?: SettingUpdateOneWithoutUserNestedInput
-    wordSnapshots?: WordSnapshotUpdateManyWithoutUserNestedInput
     languageProgresses?: LanguageProgressUpdateManyWithoutUserNestedInput
     skillProgresses?: SkillProgressUpdateManyWithoutUserNestedInput
     achievements?: UserAchievementUpdateManyWithoutUserNestedInput
@@ -29008,7 +27047,6 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
-    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -29021,7 +27059,6 @@ export namespace Prisma {
     totalLearningTime?: IntFieldUpdateOperationsInput | number
     lastActiveAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     setting?: SettingUncheckedUpdateOneWithoutUserNestedInput
-    wordSnapshots?: WordSnapshotUncheckedUpdateManyWithoutUserNestedInput
     languageProgresses?: LanguageProgressUncheckedUpdateManyWithoutUserNestedInput
     skillProgresses?: SkillProgressUncheckedUpdateManyWithoutUserNestedInput
     achievements?: UserAchievementUncheckedUpdateManyWithoutUserNestedInput
@@ -29046,144 +27083,6 @@ export namespace Prisma {
   export type WordTaskProgressUpdateManyWithWhereWithoutWordInput = {
     where: WordTaskProgressScalarWhereInput
     data: XOR<WordTaskProgressUpdateManyMutationInput, WordTaskProgressUncheckedUpdateManyWithoutWordInput>
-  }
-
-  export type UserCreateWithoutWordSnapshotsInput = {
-    email: string
-    username: string
-    password: string
-    role?: $Enums.Role
-    avatar?: string | null
-    isEmailVerified?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    deleteAt?: Date | string | null
-    lastLoginAt?: Date | string | null
-    provider?: string | null
-    refreshToken?: string | null
-    totalXP?: number
-    currentStreak?: number
-    longestStreak?: number
-    totalLearningTime?: number
-    lastActiveAt?: Date | string | null
-    setting?: SettingCreateNestedOneWithoutUserInput
-    words?: WordCreateNestedManyWithoutUserInput
-    languageProgresses?: LanguageProgressCreateNestedManyWithoutUserInput
-    skillProgresses?: SkillProgressCreateNestedManyWithoutUserInput
-    achievements?: UserAchievementCreateNestedManyWithoutUserInput
-    dailyStats?: DailyStatsCreateNestedManyWithoutUserInput
-    enrollments?: EnrollmentCreateNestedManyWithoutUserInput
-    courses?: CourseCreateNestedManyWithoutAuthorInput
-    tasks?: TaskCreateNestedManyWithoutAuthorInput
-    wordProgresses?: WordTaskProgressCreateNestedManyWithoutUserInput
-  }
-
-  export type UserUncheckedCreateWithoutWordSnapshotsInput = {
-    id?: number
-    email: string
-    username: string
-    password: string
-    role?: $Enums.Role
-    avatar?: string | null
-    isEmailVerified?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    deleteAt?: Date | string | null
-    lastLoginAt?: Date | string | null
-    provider?: string | null
-    refreshToken?: string | null
-    totalXP?: number
-    currentStreak?: number
-    longestStreak?: number
-    totalLearningTime?: number
-    lastActiveAt?: Date | string | null
-    setting?: SettingUncheckedCreateNestedOneWithoutUserInput
-    words?: WordUncheckedCreateNestedManyWithoutUserInput
-    languageProgresses?: LanguageProgressUncheckedCreateNestedManyWithoutUserInput
-    skillProgresses?: SkillProgressUncheckedCreateNestedManyWithoutUserInput
-    achievements?: UserAchievementUncheckedCreateNestedManyWithoutUserInput
-    dailyStats?: DailyStatsUncheckedCreateNestedManyWithoutUserInput
-    enrollments?: EnrollmentUncheckedCreateNestedManyWithoutUserInput
-    courses?: CourseUncheckedCreateNestedManyWithoutAuthorInput
-    tasks?: TaskUncheckedCreateNestedManyWithoutAuthorInput
-    wordProgresses?: WordTaskProgressUncheckedCreateNestedManyWithoutUserInput
-  }
-
-  export type UserCreateOrConnectWithoutWordSnapshotsInput = {
-    where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutWordSnapshotsInput, UserUncheckedCreateWithoutWordSnapshotsInput>
-  }
-
-  export type UserUpsertWithoutWordSnapshotsInput = {
-    update: XOR<UserUpdateWithoutWordSnapshotsInput, UserUncheckedUpdateWithoutWordSnapshotsInput>
-    create: XOR<UserCreateWithoutWordSnapshotsInput, UserUncheckedCreateWithoutWordSnapshotsInput>
-    where?: UserWhereInput
-  }
-
-  export type UserUpdateToOneWithWhereWithoutWordSnapshotsInput = {
-    where?: UserWhereInput
-    data: XOR<UserUpdateWithoutWordSnapshotsInput, UserUncheckedUpdateWithoutWordSnapshotsInput>
-  }
-
-  export type UserUpdateWithoutWordSnapshotsInput = {
-    email?: StringFieldUpdateOperationsInput | string
-    username?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    avatar?: NullableStringFieldUpdateOperationsInput | string | null
-    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    provider?: NullableStringFieldUpdateOperationsInput | string | null
-    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
-    totalXP?: IntFieldUpdateOperationsInput | number
-    currentStreak?: IntFieldUpdateOperationsInput | number
-    longestStreak?: IntFieldUpdateOperationsInput | number
-    totalLearningTime?: IntFieldUpdateOperationsInput | number
-    lastActiveAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    setting?: SettingUpdateOneWithoutUserNestedInput
-    words?: WordUpdateManyWithoutUserNestedInput
-    languageProgresses?: LanguageProgressUpdateManyWithoutUserNestedInput
-    skillProgresses?: SkillProgressUpdateManyWithoutUserNestedInput
-    achievements?: UserAchievementUpdateManyWithoutUserNestedInput
-    dailyStats?: DailyStatsUpdateManyWithoutUserNestedInput
-    enrollments?: EnrollmentUpdateManyWithoutUserNestedInput
-    courses?: CourseUpdateManyWithoutAuthorNestedInput
-    tasks?: TaskUpdateManyWithoutAuthorNestedInput
-    wordProgresses?: WordTaskProgressUpdateManyWithoutUserNestedInput
-  }
-
-  export type UserUncheckedUpdateWithoutWordSnapshotsInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    email?: StringFieldUpdateOperationsInput | string
-    username?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    avatar?: NullableStringFieldUpdateOperationsInput | string | null
-    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    lastLoginAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    provider?: NullableStringFieldUpdateOperationsInput | string | null
-    refreshToken?: NullableStringFieldUpdateOperationsInput | string | null
-    totalXP?: IntFieldUpdateOperationsInput | number
-    currentStreak?: IntFieldUpdateOperationsInput | number
-    longestStreak?: IntFieldUpdateOperationsInput | number
-    totalLearningTime?: IntFieldUpdateOperationsInput | number
-    lastActiveAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    setting?: SettingUncheckedUpdateOneWithoutUserNestedInput
-    words?: WordUncheckedUpdateManyWithoutUserNestedInput
-    languageProgresses?: LanguageProgressUncheckedUpdateManyWithoutUserNestedInput
-    skillProgresses?: SkillProgressUncheckedUpdateManyWithoutUserNestedInput
-    achievements?: UserAchievementUncheckedUpdateManyWithoutUserNestedInput
-    dailyStats?: DailyStatsUncheckedUpdateManyWithoutUserNestedInput
-    enrollments?: EnrollmentUncheckedUpdateManyWithoutUserNestedInput
-    courses?: CourseUncheckedUpdateManyWithoutAuthorNestedInput
-    tasks?: TaskUncheckedUpdateManyWithoutAuthorNestedInput
-    wordProgresses?: WordTaskProgressUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type TaskCreateWithoutVideoInput = {
@@ -29341,7 +27240,6 @@ export namespace Prisma {
     password: string
     role?: $Enums.Role
     avatar?: string | null
-    isEmailVerified?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     deleteAt?: Date | string | null
@@ -29355,7 +27253,6 @@ export namespace Prisma {
     lastActiveAt?: Date | string | null
     setting?: SettingCreateNestedOneWithoutUserInput
     words?: WordCreateNestedManyWithoutUserInput
-    wordSnapshots?: WordSnapshotCreateNestedManyWithoutUserInput
     languageProgresses?: LanguageProgressCreateNestedManyWithoutUserInput
     skillProgresses?: SkillProgressCreateNestedManyWithoutUserInput
     achievements?: UserAchievementCreateNestedManyWithoutUserInput
@@ -29372,7 +27269,6 @@ export namespace Prisma {
     password: string
     role?: $Enums.Role
     avatar?: string | null
-    isEmailVerified?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     deleteAt?: Date | string | null
@@ -29386,7 +27282,6 @@ export namespace Prisma {
     lastActiveAt?: Date | string | null
     setting?: SettingUncheckedCreateNestedOneWithoutUserInput
     words?: WordUncheckedCreateNestedManyWithoutUserInput
-    wordSnapshots?: WordSnapshotUncheckedCreateNestedManyWithoutUserInput
     languageProgresses?: LanguageProgressUncheckedCreateNestedManyWithoutUserInput
     skillProgresses?: SkillProgressUncheckedCreateNestedManyWithoutUserInput
     achievements?: UserAchievementUncheckedCreateNestedManyWithoutUserInput
@@ -29488,7 +27383,6 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
-    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -29502,7 +27396,6 @@ export namespace Prisma {
     lastActiveAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     setting?: SettingUpdateOneWithoutUserNestedInput
     words?: WordUpdateManyWithoutUserNestedInput
-    wordSnapshots?: WordSnapshotUpdateManyWithoutUserNestedInput
     languageProgresses?: LanguageProgressUpdateManyWithoutUserNestedInput
     skillProgresses?: SkillProgressUpdateManyWithoutUserNestedInput
     achievements?: UserAchievementUpdateManyWithoutUserNestedInput
@@ -29519,7 +27412,6 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
-    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -29533,7 +27425,6 @@ export namespace Prisma {
     lastActiveAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     setting?: SettingUncheckedUpdateOneWithoutUserNestedInput
     words?: WordUncheckedUpdateManyWithoutUserNestedInput
-    wordSnapshots?: WordSnapshotUncheckedUpdateManyWithoutUserNestedInput
     languageProgresses?: LanguageProgressUncheckedUpdateManyWithoutUserNestedInput
     skillProgresses?: SkillProgressUncheckedUpdateManyWithoutUserNestedInput
     achievements?: UserAchievementUncheckedUpdateManyWithoutUserNestedInput
@@ -29736,7 +27627,6 @@ export namespace Prisma {
     password: string
     role?: $Enums.Role
     avatar?: string | null
-    isEmailVerified?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     deleteAt?: Date | string | null
@@ -29750,7 +27640,6 @@ export namespace Prisma {
     lastActiveAt?: Date | string | null
     setting?: SettingCreateNestedOneWithoutUserInput
     words?: WordCreateNestedManyWithoutUserInput
-    wordSnapshots?: WordSnapshotCreateNestedManyWithoutUserInput
     languageProgresses?: LanguageProgressCreateNestedManyWithoutUserInput
     skillProgresses?: SkillProgressCreateNestedManyWithoutUserInput
     achievements?: UserAchievementCreateNestedManyWithoutUserInput
@@ -29767,7 +27656,6 @@ export namespace Prisma {
     password: string
     role?: $Enums.Role
     avatar?: string | null
-    isEmailVerified?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     deleteAt?: Date | string | null
@@ -29781,7 +27669,6 @@ export namespace Prisma {
     lastActiveAt?: Date | string | null
     setting?: SettingUncheckedCreateNestedOneWithoutUserInput
     words?: WordUncheckedCreateNestedManyWithoutUserInput
-    wordSnapshots?: WordSnapshotUncheckedCreateNestedManyWithoutUserInput
     languageProgresses?: LanguageProgressUncheckedCreateNestedManyWithoutUserInput
     skillProgresses?: SkillProgressUncheckedCreateNestedManyWithoutUserInput
     achievements?: UserAchievementUncheckedCreateNestedManyWithoutUserInput
@@ -29877,7 +27764,6 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
-    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -29891,7 +27777,6 @@ export namespace Prisma {
     lastActiveAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     setting?: SettingUpdateOneWithoutUserNestedInput
     words?: WordUpdateManyWithoutUserNestedInput
-    wordSnapshots?: WordSnapshotUpdateManyWithoutUserNestedInput
     languageProgresses?: LanguageProgressUpdateManyWithoutUserNestedInput
     skillProgresses?: SkillProgressUpdateManyWithoutUserNestedInput
     achievements?: UserAchievementUpdateManyWithoutUserNestedInput
@@ -29908,7 +27793,6 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
-    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -29922,7 +27806,6 @@ export namespace Prisma {
     lastActiveAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     setting?: SettingUncheckedUpdateOneWithoutUserNestedInput
     words?: WordUncheckedUpdateManyWithoutUserNestedInput
-    wordSnapshots?: WordSnapshotUncheckedUpdateManyWithoutUserNestedInput
     languageProgresses?: LanguageProgressUncheckedUpdateManyWithoutUserNestedInput
     skillProgresses?: SkillProgressUncheckedUpdateManyWithoutUserNestedInput
     achievements?: UserAchievementUncheckedUpdateManyWithoutUserNestedInput
@@ -29938,7 +27821,6 @@ export namespace Prisma {
     password: string
     role?: $Enums.Role
     avatar?: string | null
-    isEmailVerified?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     deleteAt?: Date | string | null
@@ -29952,7 +27834,6 @@ export namespace Prisma {
     lastActiveAt?: Date | string | null
     setting?: SettingCreateNestedOneWithoutUserInput
     words?: WordCreateNestedManyWithoutUserInput
-    wordSnapshots?: WordSnapshotCreateNestedManyWithoutUserInput
     languageProgresses?: LanguageProgressCreateNestedManyWithoutUserInput
     skillProgresses?: SkillProgressCreateNestedManyWithoutUserInput
     achievements?: UserAchievementCreateNestedManyWithoutUserInput
@@ -29969,7 +27850,6 @@ export namespace Prisma {
     password: string
     role?: $Enums.Role
     avatar?: string | null
-    isEmailVerified?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     deleteAt?: Date | string | null
@@ -29983,7 +27863,6 @@ export namespace Prisma {
     lastActiveAt?: Date | string | null
     setting?: SettingUncheckedCreateNestedOneWithoutUserInput
     words?: WordUncheckedCreateNestedManyWithoutUserInput
-    wordSnapshots?: WordSnapshotUncheckedCreateNestedManyWithoutUserInput
     languageProgresses?: LanguageProgressUncheckedCreateNestedManyWithoutUserInput
     skillProgresses?: SkillProgressUncheckedCreateNestedManyWithoutUserInput
     achievements?: UserAchievementUncheckedCreateNestedManyWithoutUserInput
@@ -30055,7 +27934,6 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
-    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -30069,7 +27947,6 @@ export namespace Prisma {
     lastActiveAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     setting?: SettingUpdateOneWithoutUserNestedInput
     words?: WordUpdateManyWithoutUserNestedInput
-    wordSnapshots?: WordSnapshotUpdateManyWithoutUserNestedInput
     languageProgresses?: LanguageProgressUpdateManyWithoutUserNestedInput
     skillProgresses?: SkillProgressUpdateManyWithoutUserNestedInput
     achievements?: UserAchievementUpdateManyWithoutUserNestedInput
@@ -30086,7 +27963,6 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
-    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -30100,7 +27976,6 @@ export namespace Prisma {
     lastActiveAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     setting?: SettingUncheckedUpdateOneWithoutUserNestedInput
     words?: WordUncheckedUpdateManyWithoutUserNestedInput
-    wordSnapshots?: WordSnapshotUncheckedUpdateManyWithoutUserNestedInput
     languageProgresses?: LanguageProgressUncheckedUpdateManyWithoutUserNestedInput
     skillProgresses?: SkillProgressUncheckedUpdateManyWithoutUserNestedInput
     achievements?: UserAchievementUncheckedUpdateManyWithoutUserNestedInput
@@ -30162,7 +28037,6 @@ export namespace Prisma {
     password: string
     role?: $Enums.Role
     avatar?: string | null
-    isEmailVerified?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     deleteAt?: Date | string | null
@@ -30175,7 +28049,6 @@ export namespace Prisma {
     totalLearningTime?: number
     lastActiveAt?: Date | string | null
     words?: WordCreateNestedManyWithoutUserInput
-    wordSnapshots?: WordSnapshotCreateNestedManyWithoutUserInput
     languageProgresses?: LanguageProgressCreateNestedManyWithoutUserInput
     skillProgresses?: SkillProgressCreateNestedManyWithoutUserInput
     achievements?: UserAchievementCreateNestedManyWithoutUserInput
@@ -30193,7 +28066,6 @@ export namespace Prisma {
     password: string
     role?: $Enums.Role
     avatar?: string | null
-    isEmailVerified?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     deleteAt?: Date | string | null
@@ -30206,7 +28078,6 @@ export namespace Prisma {
     totalLearningTime?: number
     lastActiveAt?: Date | string | null
     words?: WordUncheckedCreateNestedManyWithoutUserInput
-    wordSnapshots?: WordSnapshotUncheckedCreateNestedManyWithoutUserInput
     languageProgresses?: LanguageProgressUncheckedCreateNestedManyWithoutUserInput
     skillProgresses?: SkillProgressUncheckedCreateNestedManyWithoutUserInput
     achievements?: UserAchievementUncheckedCreateNestedManyWithoutUserInput
@@ -30239,7 +28110,6 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
-    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -30252,7 +28122,6 @@ export namespace Prisma {
     totalLearningTime?: IntFieldUpdateOperationsInput | number
     lastActiveAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     words?: WordUpdateManyWithoutUserNestedInput
-    wordSnapshots?: WordSnapshotUpdateManyWithoutUserNestedInput
     languageProgresses?: LanguageProgressUpdateManyWithoutUserNestedInput
     skillProgresses?: SkillProgressUpdateManyWithoutUserNestedInput
     achievements?: UserAchievementUpdateManyWithoutUserNestedInput
@@ -30270,7 +28139,6 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
-    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -30283,7 +28151,6 @@ export namespace Prisma {
     totalLearningTime?: IntFieldUpdateOperationsInput | number
     lastActiveAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     words?: WordUncheckedUpdateManyWithoutUserNestedInput
-    wordSnapshots?: WordSnapshotUncheckedUpdateManyWithoutUserNestedInput
     languageProgresses?: LanguageProgressUncheckedUpdateManyWithoutUserNestedInput
     skillProgresses?: SkillProgressUncheckedUpdateManyWithoutUserNestedInput
     achievements?: UserAchievementUncheckedUpdateManyWithoutUserNestedInput
@@ -30300,7 +28167,6 @@ export namespace Prisma {
     password: string
     role?: $Enums.Role
     avatar?: string | null
-    isEmailVerified?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     deleteAt?: Date | string | null
@@ -30314,7 +28180,6 @@ export namespace Prisma {
     lastActiveAt?: Date | string | null
     setting?: SettingCreateNestedOneWithoutUserInput
     words?: WordCreateNestedManyWithoutUserInput
-    wordSnapshots?: WordSnapshotCreateNestedManyWithoutUserInput
     skillProgresses?: SkillProgressCreateNestedManyWithoutUserInput
     achievements?: UserAchievementCreateNestedManyWithoutUserInput
     dailyStats?: DailyStatsCreateNestedManyWithoutUserInput
@@ -30331,7 +28196,6 @@ export namespace Prisma {
     password: string
     role?: $Enums.Role
     avatar?: string | null
-    isEmailVerified?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     deleteAt?: Date | string | null
@@ -30345,7 +28209,6 @@ export namespace Prisma {
     lastActiveAt?: Date | string | null
     setting?: SettingUncheckedCreateNestedOneWithoutUserInput
     words?: WordUncheckedCreateNestedManyWithoutUserInput
-    wordSnapshots?: WordSnapshotUncheckedCreateNestedManyWithoutUserInput
     skillProgresses?: SkillProgressUncheckedCreateNestedManyWithoutUserInput
     achievements?: UserAchievementUncheckedCreateNestedManyWithoutUserInput
     dailyStats?: DailyStatsUncheckedCreateNestedManyWithoutUserInput
@@ -30424,7 +28287,6 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
-    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -30438,7 +28300,6 @@ export namespace Prisma {
     lastActiveAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     setting?: SettingUpdateOneWithoutUserNestedInput
     words?: WordUpdateManyWithoutUserNestedInput
-    wordSnapshots?: WordSnapshotUpdateManyWithoutUserNestedInput
     skillProgresses?: SkillProgressUpdateManyWithoutUserNestedInput
     achievements?: UserAchievementUpdateManyWithoutUserNestedInput
     dailyStats?: DailyStatsUpdateManyWithoutUserNestedInput
@@ -30455,7 +28316,6 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
-    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -30469,7 +28329,6 @@ export namespace Prisma {
     lastActiveAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     setting?: SettingUncheckedUpdateOneWithoutUserNestedInput
     words?: WordUncheckedUpdateManyWithoutUserNestedInput
-    wordSnapshots?: WordSnapshotUncheckedUpdateManyWithoutUserNestedInput
     skillProgresses?: SkillProgressUncheckedUpdateManyWithoutUserNestedInput
     achievements?: UserAchievementUncheckedUpdateManyWithoutUserNestedInput
     dailyStats?: DailyStatsUncheckedUpdateManyWithoutUserNestedInput
@@ -30501,7 +28360,6 @@ export namespace Prisma {
     password: string
     role?: $Enums.Role
     avatar?: string | null
-    isEmailVerified?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     deleteAt?: Date | string | null
@@ -30515,7 +28373,6 @@ export namespace Prisma {
     lastActiveAt?: Date | string | null
     setting?: SettingCreateNestedOneWithoutUserInput
     words?: WordCreateNestedManyWithoutUserInput
-    wordSnapshots?: WordSnapshotCreateNestedManyWithoutUserInput
     languageProgresses?: LanguageProgressCreateNestedManyWithoutUserInput
     achievements?: UserAchievementCreateNestedManyWithoutUserInput
     dailyStats?: DailyStatsCreateNestedManyWithoutUserInput
@@ -30532,7 +28389,6 @@ export namespace Prisma {
     password: string
     role?: $Enums.Role
     avatar?: string | null
-    isEmailVerified?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     deleteAt?: Date | string | null
@@ -30546,7 +28402,6 @@ export namespace Prisma {
     lastActiveAt?: Date | string | null
     setting?: SettingUncheckedCreateNestedOneWithoutUserInput
     words?: WordUncheckedCreateNestedManyWithoutUserInput
-    wordSnapshots?: WordSnapshotUncheckedCreateNestedManyWithoutUserInput
     languageProgresses?: LanguageProgressUncheckedCreateNestedManyWithoutUserInput
     achievements?: UserAchievementUncheckedCreateNestedManyWithoutUserInput
     dailyStats?: DailyStatsUncheckedCreateNestedManyWithoutUserInput
@@ -30608,7 +28463,6 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
-    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -30622,7 +28476,6 @@ export namespace Prisma {
     lastActiveAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     setting?: SettingUpdateOneWithoutUserNestedInput
     words?: WordUpdateManyWithoutUserNestedInput
-    wordSnapshots?: WordSnapshotUpdateManyWithoutUserNestedInput
     languageProgresses?: LanguageProgressUpdateManyWithoutUserNestedInput
     achievements?: UserAchievementUpdateManyWithoutUserNestedInput
     dailyStats?: DailyStatsUpdateManyWithoutUserNestedInput
@@ -30639,7 +28492,6 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
-    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -30653,7 +28505,6 @@ export namespace Prisma {
     lastActiveAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     setting?: SettingUncheckedUpdateOneWithoutUserNestedInput
     words?: WordUncheckedUpdateManyWithoutUserNestedInput
-    wordSnapshots?: WordSnapshotUncheckedUpdateManyWithoutUserNestedInput
     languageProgresses?: LanguageProgressUncheckedUpdateManyWithoutUserNestedInput
     achievements?: UserAchievementUncheckedUpdateManyWithoutUserNestedInput
     dailyStats?: DailyStatsUncheckedUpdateManyWithoutUserNestedInput
@@ -30704,10 +28555,7 @@ export namespace Prisma {
     language?: $Enums.Language
     translate?: WordCreatetranslateInput | string[]
     definitions?: WordCreatedefinitionsInput | string[]
-    synonyms?: WordCreatesynonymsInput | string[]
-    antonyms?: WordCreateantonymsInput | string[]
     examples?: WordCreateexamplesInput | string[]
-    partOfSpeech?: string | null
     createdAt?: Date | string
     totalProgress?: number
     isLearned?: boolean
@@ -30724,10 +28572,7 @@ export namespace Prisma {
     language?: $Enums.Language
     translate?: WordCreatetranslateInput | string[]
     definitions?: WordCreatedefinitionsInput | string[]
-    synonyms?: WordCreatesynonymsInput | string[]
-    antonyms?: WordCreateantonymsInput | string[]
     examples?: WordCreateexamplesInput | string[]
-    partOfSpeech?: string | null
     createdAt?: Date | string
     totalProgress?: number
     isLearned?: boolean
@@ -30749,7 +28594,6 @@ export namespace Prisma {
     password: string
     role?: $Enums.Role
     avatar?: string | null
-    isEmailVerified?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     deleteAt?: Date | string | null
@@ -30763,7 +28607,6 @@ export namespace Prisma {
     lastActiveAt?: Date | string | null
     setting?: SettingCreateNestedOneWithoutUserInput
     words?: WordCreateNestedManyWithoutUserInput
-    wordSnapshots?: WordSnapshotCreateNestedManyWithoutUserInput
     languageProgresses?: LanguageProgressCreateNestedManyWithoutUserInput
     skillProgresses?: SkillProgressCreateNestedManyWithoutUserInput
     achievements?: UserAchievementCreateNestedManyWithoutUserInput
@@ -30780,7 +28623,6 @@ export namespace Prisma {
     password: string
     role?: $Enums.Role
     avatar?: string | null
-    isEmailVerified?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     deleteAt?: Date | string | null
@@ -30794,7 +28636,6 @@ export namespace Prisma {
     lastActiveAt?: Date | string | null
     setting?: SettingUncheckedCreateNestedOneWithoutUserInput
     words?: WordUncheckedCreateNestedManyWithoutUserInput
-    wordSnapshots?: WordSnapshotUncheckedCreateNestedManyWithoutUserInput
     languageProgresses?: LanguageProgressUncheckedCreateNestedManyWithoutUserInput
     skillProgresses?: SkillProgressUncheckedCreateNestedManyWithoutUserInput
     achievements?: UserAchievementUncheckedCreateNestedManyWithoutUserInput
@@ -30825,10 +28666,7 @@ export namespace Prisma {
     language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
     translate?: WordUpdatetranslateInput | string[]
     definitions?: WordUpdatedefinitionsInput | string[]
-    synonyms?: WordUpdatesynonymsInput | string[]
-    antonyms?: WordUpdateantonymsInput | string[]
     examples?: WordUpdateexamplesInput | string[]
-    partOfSpeech?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     totalProgress?: IntFieldUpdateOperationsInput | number
     isLearned?: BoolFieldUpdateOperationsInput | boolean
@@ -30845,10 +28683,7 @@ export namespace Prisma {
     language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
     translate?: WordUpdatetranslateInput | string[]
     definitions?: WordUpdatedefinitionsInput | string[]
-    synonyms?: WordUpdatesynonymsInput | string[]
-    antonyms?: WordUpdateantonymsInput | string[]
     examples?: WordUpdateexamplesInput | string[]
-    partOfSpeech?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     totalProgress?: IntFieldUpdateOperationsInput | number
     isLearned?: BoolFieldUpdateOperationsInput | boolean
@@ -30876,7 +28711,6 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
-    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -30890,7 +28724,6 @@ export namespace Prisma {
     lastActiveAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     setting?: SettingUpdateOneWithoutUserNestedInput
     words?: WordUpdateManyWithoutUserNestedInput
-    wordSnapshots?: WordSnapshotUpdateManyWithoutUserNestedInput
     languageProgresses?: LanguageProgressUpdateManyWithoutUserNestedInput
     skillProgresses?: SkillProgressUpdateManyWithoutUserNestedInput
     achievements?: UserAchievementUpdateManyWithoutUserNestedInput
@@ -30907,7 +28740,6 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
-    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -30921,7 +28753,6 @@ export namespace Prisma {
     lastActiveAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     setting?: SettingUncheckedUpdateOneWithoutUserNestedInput
     words?: WordUncheckedUpdateManyWithoutUserNestedInput
-    wordSnapshots?: WordSnapshotUncheckedUpdateManyWithoutUserNestedInput
     languageProgresses?: LanguageProgressUncheckedUpdateManyWithoutUserNestedInput
     skillProgresses?: SkillProgressUncheckedUpdateManyWithoutUserNestedInput
     achievements?: UserAchievementUncheckedUpdateManyWithoutUserNestedInput
@@ -30937,7 +28768,6 @@ export namespace Prisma {
     password: string
     role?: $Enums.Role
     avatar?: string | null
-    isEmailVerified?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     deleteAt?: Date | string | null
@@ -30951,7 +28781,6 @@ export namespace Prisma {
     lastActiveAt?: Date | string | null
     setting?: SettingCreateNestedOneWithoutUserInput
     words?: WordCreateNestedManyWithoutUserInput
-    wordSnapshots?: WordSnapshotCreateNestedManyWithoutUserInput
     languageProgresses?: LanguageProgressCreateNestedManyWithoutUserInput
     skillProgresses?: SkillProgressCreateNestedManyWithoutUserInput
     achievements?: UserAchievementCreateNestedManyWithoutUserInput
@@ -30968,7 +28797,6 @@ export namespace Prisma {
     password: string
     role?: $Enums.Role
     avatar?: string | null
-    isEmailVerified?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     deleteAt?: Date | string | null
@@ -30982,7 +28810,6 @@ export namespace Prisma {
     lastActiveAt?: Date | string | null
     setting?: SettingUncheckedCreateNestedOneWithoutUserInput
     words?: WordUncheckedCreateNestedManyWithoutUserInput
-    wordSnapshots?: WordSnapshotUncheckedCreateNestedManyWithoutUserInput
     languageProgresses?: LanguageProgressUncheckedCreateNestedManyWithoutUserInput
     skillProgresses?: SkillProgressUncheckedCreateNestedManyWithoutUserInput
     achievements?: UserAchievementUncheckedCreateNestedManyWithoutUserInput
@@ -31014,7 +28841,6 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
-    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -31028,7 +28854,6 @@ export namespace Prisma {
     lastActiveAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     setting?: SettingUpdateOneWithoutUserNestedInput
     words?: WordUpdateManyWithoutUserNestedInput
-    wordSnapshots?: WordSnapshotUpdateManyWithoutUserNestedInput
     languageProgresses?: LanguageProgressUpdateManyWithoutUserNestedInput
     skillProgresses?: SkillProgressUpdateManyWithoutUserNestedInput
     achievements?: UserAchievementUpdateManyWithoutUserNestedInput
@@ -31045,7 +28870,6 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
-    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -31059,7 +28883,6 @@ export namespace Prisma {
     lastActiveAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     setting?: SettingUncheckedUpdateOneWithoutUserNestedInput
     words?: WordUncheckedUpdateManyWithoutUserNestedInput
-    wordSnapshots?: WordSnapshotUncheckedUpdateManyWithoutUserNestedInput
     languageProgresses?: LanguageProgressUncheckedUpdateManyWithoutUserNestedInput
     skillProgresses?: SkillProgressUncheckedUpdateManyWithoutUserNestedInput
     achievements?: UserAchievementUncheckedUpdateManyWithoutUserNestedInput
@@ -31114,7 +28937,6 @@ export namespace Prisma {
     password: string
     role?: $Enums.Role
     avatar?: string | null
-    isEmailVerified?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     deleteAt?: Date | string | null
@@ -31128,7 +28950,6 @@ export namespace Prisma {
     lastActiveAt?: Date | string | null
     setting?: SettingCreateNestedOneWithoutUserInput
     words?: WordCreateNestedManyWithoutUserInput
-    wordSnapshots?: WordSnapshotCreateNestedManyWithoutUserInput
     languageProgresses?: LanguageProgressCreateNestedManyWithoutUserInput
     skillProgresses?: SkillProgressCreateNestedManyWithoutUserInput
     dailyStats?: DailyStatsCreateNestedManyWithoutUserInput
@@ -31145,7 +28966,6 @@ export namespace Prisma {
     password: string
     role?: $Enums.Role
     avatar?: string | null
-    isEmailVerified?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     deleteAt?: Date | string | null
@@ -31159,7 +28979,6 @@ export namespace Prisma {
     lastActiveAt?: Date | string | null
     setting?: SettingUncheckedCreateNestedOneWithoutUserInput
     words?: WordUncheckedCreateNestedManyWithoutUserInput
-    wordSnapshots?: WordSnapshotUncheckedCreateNestedManyWithoutUserInput
     languageProgresses?: LanguageProgressUncheckedCreateNestedManyWithoutUserInput
     skillProgresses?: SkillProgressUncheckedCreateNestedManyWithoutUserInput
     dailyStats?: DailyStatsUncheckedCreateNestedManyWithoutUserInput
@@ -31227,7 +29046,6 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
-    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -31241,7 +29059,6 @@ export namespace Prisma {
     lastActiveAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     setting?: SettingUpdateOneWithoutUserNestedInput
     words?: WordUpdateManyWithoutUserNestedInput
-    wordSnapshots?: WordSnapshotUpdateManyWithoutUserNestedInput
     languageProgresses?: LanguageProgressUpdateManyWithoutUserNestedInput
     skillProgresses?: SkillProgressUpdateManyWithoutUserNestedInput
     dailyStats?: DailyStatsUpdateManyWithoutUserNestedInput
@@ -31258,7 +29075,6 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
-    isEmailVerified?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     deleteAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -31272,7 +29088,6 @@ export namespace Prisma {
     lastActiveAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     setting?: SettingUncheckedUpdateOneWithoutUserNestedInput
     words?: WordUncheckedUpdateManyWithoutUserNestedInput
-    wordSnapshots?: WordSnapshotUncheckedUpdateManyWithoutUserNestedInput
     languageProgresses?: LanguageProgressUncheckedUpdateManyWithoutUserNestedInput
     skillProgresses?: SkillProgressUncheckedUpdateManyWithoutUserNestedInput
     dailyStats?: DailyStatsUncheckedUpdateManyWithoutUserNestedInput
@@ -31330,10 +29145,7 @@ export namespace Prisma {
     language?: $Enums.Language
     translate?: WordCreatetranslateInput | string[]
     definitions?: WordCreatedefinitionsInput | string[]
-    synonyms?: WordCreatesynonymsInput | string[]
-    antonyms?: WordCreateantonymsInput | string[]
     examples?: WordCreateexamplesInput | string[]
-    partOfSpeech?: string | null
     createdAt?: Date | string
     totalProgress?: number
     isLearned?: boolean
@@ -31341,21 +29153,6 @@ export namespace Prisma {
     audio?: string
     phoneticUS?: string | null
     audioUS?: string | null
-  }
-
-  export type WordSnapshotCreateManyUserInput = {
-    id?: number
-    word: string
-    language: $Enums.Language
-    masteryLevel: $Enums.MasteryLevel
-    lastReviewedAt?: Date | string | null
-    nextReviewAt?: Date | string | null
-    reviewInterval?: number
-    difficulty?: number
-    totalAttempts?: number
-    correctAttempts?: number
-    createdAt?: Date | string
-    updatedAt?: Date | string
   }
 
   export type LanguageProgressCreateManyUserInput = {
@@ -31472,10 +29269,7 @@ export namespace Prisma {
     language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
     translate?: WordUpdatetranslateInput | string[]
     definitions?: WordUpdatedefinitionsInput | string[]
-    synonyms?: WordUpdatesynonymsInput | string[]
-    antonyms?: WordUpdateantonymsInput | string[]
     examples?: WordUpdateexamplesInput | string[]
-    partOfSpeech?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     totalProgress?: IntFieldUpdateOperationsInput | number
     isLearned?: BoolFieldUpdateOperationsInput | boolean
@@ -31492,10 +29286,7 @@ export namespace Prisma {
     language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
     translate?: WordUpdatetranslateInput | string[]
     definitions?: WordUpdatedefinitionsInput | string[]
-    synonyms?: WordUpdatesynonymsInput | string[]
-    antonyms?: WordUpdateantonymsInput | string[]
     examples?: WordUpdateexamplesInput | string[]
-    partOfSpeech?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     totalProgress?: IntFieldUpdateOperationsInput | number
     isLearned?: BoolFieldUpdateOperationsInput | boolean
@@ -31512,10 +29303,7 @@ export namespace Prisma {
     language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
     translate?: WordUpdatetranslateInput | string[]
     definitions?: WordUpdatedefinitionsInput | string[]
-    synonyms?: WordUpdatesynonymsInput | string[]
-    antonyms?: WordUpdateantonymsInput | string[]
     examples?: WordUpdateexamplesInput | string[]
-    partOfSpeech?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     totalProgress?: IntFieldUpdateOperationsInput | number
     isLearned?: BoolFieldUpdateOperationsInput | boolean
@@ -31523,50 +29311,6 @@ export namespace Prisma {
     audio?: StringFieldUpdateOperationsInput | string
     phoneticUS?: NullableStringFieldUpdateOperationsInput | string | null
     audioUS?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type WordSnapshotUpdateWithoutUserInput = {
-    word?: StringFieldUpdateOperationsInput | string
-    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
-    masteryLevel?: EnumMasteryLevelFieldUpdateOperationsInput | $Enums.MasteryLevel
-    lastReviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    nextReviewAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    reviewInterval?: IntFieldUpdateOperationsInput | number
-    difficulty?: FloatFieldUpdateOperationsInput | number
-    totalAttempts?: IntFieldUpdateOperationsInput | number
-    correctAttempts?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type WordSnapshotUncheckedUpdateWithoutUserInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    word?: StringFieldUpdateOperationsInput | string
-    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
-    masteryLevel?: EnumMasteryLevelFieldUpdateOperationsInput | $Enums.MasteryLevel
-    lastReviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    nextReviewAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    reviewInterval?: IntFieldUpdateOperationsInput | number
-    difficulty?: FloatFieldUpdateOperationsInput | number
-    totalAttempts?: IntFieldUpdateOperationsInput | number
-    correctAttempts?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type WordSnapshotUncheckedUpdateManyWithoutUserInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    word?: StringFieldUpdateOperationsInput | string
-    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
-    masteryLevel?: EnumMasteryLevelFieldUpdateOperationsInput | $Enums.MasteryLevel
-    lastReviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    nextReviewAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    reviewInterval?: IntFieldUpdateOperationsInput | number
-    difficulty?: FloatFieldUpdateOperationsInput | number
-    totalAttempts?: IntFieldUpdateOperationsInput | number
-    correctAttempts?: IntFieldUpdateOperationsInput | number
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type LanguageProgressUpdateWithoutUserInput = {

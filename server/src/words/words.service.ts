@@ -52,10 +52,7 @@ export class WordsService {
       ? this.translateService.processMeanings(data.meanings)
       : {
           definitions: [],
-          synonyms: [],
-          antonyms: [],
           examples: [],
-          partOfSpeech: '',
         };
 
     const finalDefinitions = [
@@ -63,15 +60,6 @@ export class WordsService {
       ...(dto.definitions || []),
     ];
 
-    const finalSynonyms = [
-      ...processedMeanings.synonyms,
-      ...(dto.synonyms || []),
-    ];
-
-    const finalAntonyms = [
-      ...processedMeanings.antonyms,
-      ...(dto.antonyms || []),
-    ];
 
     const finalExamples = [
       ...processedMeanings.examples,
@@ -85,10 +73,7 @@ export class WordsService {
           language: setting.current_language,
           translate: dto.translate,
           definitions: finalDefinitions,
-          synonyms: finalSynonyms,
-          antonyms: finalAntonyms,
           examples: finalExamples,
-          partOfSpeech: dto.partOfSpeech || processedMeanings.partOfSpeech,
           phonetic: data.phonetic,
           audio: data.audio,
           phoneticUS: data.phoneticUS,

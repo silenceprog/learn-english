@@ -124,7 +124,6 @@ exports.Prisma.UserScalarFieldEnum = {
   password: 'password',
   role: 'role',
   avatar: 'avatar',
-  isEmailVerified: 'isEmailVerified',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   deleteAt: 'deleteAt',
@@ -144,10 +143,7 @@ exports.Prisma.WordScalarFieldEnum = {
   language: 'language',
   translate: 'translate',
   definitions: 'definitions',
-  synonyms: 'synonyms',
-  antonyms: 'antonyms',
   examples: 'examples',
-  partOfSpeech: 'partOfSpeech',
   createdAt: 'createdAt',
   totalProgress: 'totalProgress',
   isLearned: 'isLearned',
@@ -156,22 +152,6 @@ exports.Prisma.WordScalarFieldEnum = {
   phoneticUS: 'phoneticUS',
   audioUS: 'audioUS',
   userId: 'userId'
-};
-
-exports.Prisma.WordSnapshotScalarFieldEnum = {
-  id: 'id',
-  userId: 'userId',
-  word: 'word',
-  language: 'language',
-  masteryLevel: 'masteryLevel',
-  lastReviewedAt: 'lastReviewedAt',
-  nextReviewAt: 'nextReviewAt',
-  reviewInterval: 'reviewInterval',
-  difficulty: 'difficulty',
-  totalAttempts: 'totalAttempts',
-  correctAttempts: 'correctAttempts',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.VideoScalarFieldEnum = {
@@ -238,6 +218,7 @@ exports.Prisma.SettingScalarFieldEnum = {
   current_language: 'current_language',
   purposes: 'purposes',
   current_level: 'current_level',
+  isEmailVerified: 'isEmailVerified',
   dailyXPGoal: 'dailyXPGoal',
   dailyTimeGoal: 'dailyTimeGoal',
   weeklyGoal: 'weeklyGoal'
@@ -383,14 +364,6 @@ exports.Language = exports.$Enums.Language = {
   DE: 'DE'
 };
 
-exports.MasteryLevel = exports.$Enums.MasteryLevel = {
-  NEW: 'NEW',
-  LEARNING: 'LEARNING',
-  FAMILIAR: 'FAMILIAR',
-  KNOWN: 'KNOWN',
-  MASTERED: 'MASTERED'
-};
-
 exports.CEFRLevel = exports.$Enums.CEFRLevel = {
   PRE_A1: 'PRE_A1',
   A1: 'A1',
@@ -444,7 +417,6 @@ exports.AchievementType = exports.$Enums.AchievementType = {
 exports.Prisma.ModelName = {
   User: 'User',
   Word: 'Word',
-  WordSnapshot: 'WordSnapshot',
   Video: 'Video',
   Task: 'Task',
   Course: 'Course',
