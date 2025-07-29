@@ -48,14 +48,15 @@ export class AuthController {
   @Public()
   @Get('google/login')
   @UseGuards(AuthGuard('google'))
-  async googleAuth() {
-
-  }
+  async googleAuth() {}
 
   @Public()
   @Get('google/redirect')
   @UseGuards(AuthGuard('google'))
-  @Redirect('https://learn-english-chi-nine.vercel.app/auth/google/redirect', 302)
+  @Redirect(
+    'https://learn-english-chi-nine.vercel.app/auth/google/redirect',
+    302,
+  )
   async googleAuthRedirect(@GetCurrentUser() user) {
     return this.authService.login(user);
   }
@@ -63,14 +64,15 @@ export class AuthController {
   @Public()
   @Get('github/login')
   @UseGuards(AuthGuard('github'))
-  async githubAuth() {
-
-  }
+  async githubAuth() {}
 
   @Public()
   @Get('github/redirect')
   @UseGuards(AuthGuard('google'))
-  @Redirect('https://learn-english-chi-nine.vercel.app/auth/github/redirect', 302)
+  @Redirect(
+    'https://learn-english-chi-nine.vercel.app/auth/github/redirect',
+    302,
+  )
   async githubAuthRedirect(@GetCurrentUser() user) {
     return this.authService.login(user);
   }
@@ -86,8 +88,8 @@ export class AuthController {
   }
 
   @Throttle({
-    short: { limit: 1, ttl: 1000 },
-    long: { limit: 2, ttl: 60000 },
+    short: { limit: 3, ttl: 1000 },
+    long: { limit: 10, ttl: 60000 },
   })
   @Public()
   @UseGuards(JwtRefreshGuard)
@@ -96,6 +98,8 @@ export class AuthController {
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Відновлення токенів' })
   @ApiResponse({ status: 200, description: 'Токени успішно відновлені' })
+  @ApiResponse({ status: 401, description: 'Недійсний refresh token' })
+  @ApiResponse({ status: 429, description: 'Забагато запитів' })
   async refreshTokens(
     @GetCurrentUserId() userId: number,
     @GetCurrentUser('refreshToken') refreshToken: string,
@@ -105,7 +109,10 @@ export class AuthController {
 
   @UseGuards(AuthGuard('jwt'))
   @Get('/profile')
-  getProfile(@GetCurrentUser() user,@Res({ passthrough: true }) res: Response) {
+  getProfile(
+    @GetCurrentUser() user,
+    @Res({ passthrough: true }) res: Response,
+  ) {
     return user;
   }
 }
