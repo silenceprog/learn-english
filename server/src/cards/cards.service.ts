@@ -99,22 +99,16 @@ export class FlashCardService {
       throw new NotFoundException('Слово не знайдено');
     }
 
-    // Перевіряємо правильність відповіді
     const isCorrect = this.checkAnswerCorrectness(userAnswer, word.translate, word.text);
     
-    // Розраховуємо оцінку
     const score = this.calculateScore(isCorrect, timeSpent, difficulty);
 
-    // Оновлюємо або створюємо прогрес слова
     const progress = await this.updateWordProgress(userId, wordId, isCorrect, score, timeSpent, difficulty);
 
-    // Оновлюємо загальну статистику слова
     await this.updateWordStats(wordId, isCorrect);
 
-    // Оновлюємо статистику навичок користувача
     await this.updateSkillProgress(userId, word.language, isCorrect, score, timeSpent);
 
-    // Оновлюємо щоденну статистику
     await this.updateDailyStats(userId, word.language, score, timeSpent, isCorrect);
 
     return {

@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   ConflictException,
   Injectable,
   NotFoundException,
@@ -9,17 +10,23 @@ import { CreateWordDto } from './dto/create-word.dto';
 import { PaginationDto } from './dto/pagination.dto';
 import { TranslateService } from 'src/translate/translate.service';
 import { CoreSkillType } from 'generated/prisma';
+import { MarkWordsLearnedDto } from './dto/mark-word.dto';
+import { WordResult } from './dto/word-result.dto';
 
 @Injectable()
 export class WordsService {
-   constructor(
+  constructor(
     private readonly databaseService: DatabaseService,
     private readonly translateService: TranslateService,
   ) {}
 
   async createWord(userId: number, dto: CreateWordDto) {
-    const vocabularySkills = [CoreSkillType.VOCABULARY, CoreSkillType.READING, CoreSkillType.LISTENING];
-    
+    const vocabularySkills = [
+      CoreSkillType.VOCABULARY,
+      CoreSkillType.READING,
+      CoreSkillType.LISTENING,
+    ];
+
     const setting = await this.databaseService.setting.findUnique({
       where: { userId },
     });
@@ -60,7 +67,6 @@ export class WordsService {
       ...(dto.definitions || []),
     ];
 
-
     const finalExamples = [
       ...processedMeanings.examples,
       ...(dto.examples || []),
@@ -87,7 +93,7 @@ export class WordsService {
           wordId: word.id,
           userId: userId,
           skillType,
-          nextReviewAt: new Date(), 
+          nextReviewAt: new Date(),
         })),
       });
 
@@ -123,9 +129,11 @@ export class WordsService {
     const word = await this.databaseService.word.findUnique({
       where: { id },
       include: {
-        progresses: userId ? {
-          where: { userId }
-        } : true,
+        progresses: userId
+          ? {
+              where: { userId },
+            }
+          : true,
       },
     });
 
@@ -151,7 +159,7 @@ export class WordsService {
       ...(type === 'LEARNING' && { isLearned: false }),
     };
 
-    const [words, totalCount, learnedCount, learningCount] = 
+    const [words, totalCount, learnedCount, learningCount] =
       await this.databaseService.$transaction([
         this.databaseService.word.findMany({
           where: whereClause,
@@ -168,17 +176,17 @@ export class WordsService {
           where: { userId, language: setting.current_language },
         }),
         this.databaseService.word.count({
-          where: { 
-            userId, 
+          where: {
+            userId,
             language: setting.current_language,
-            isLearned: true 
+            isLearned: true,
           },
         }),
         this.databaseService.word.count({
-          where: { 
-            userId, 
+          where: {
+            userId,
             language: setting.current_language,
-            isLearned: false 
+            isLearned: false,
           },
         }),
       ]);
@@ -228,7 +236,11 @@ export class WordsService {
       });
 
       if (setting) {
-        await this.updateVocabularyProgress(tx, userId, setting.current_language);
+        await this.updateVocabularyProgress(
+          tx,
+          userId,
+          setting.current_language,
+        );
       }
 
       return deletedWord;
@@ -247,9 +259,9 @@ export class WordsService {
     return this.databaseService.$transaction(async (tx) => {
       const updatedWord = await tx.word.update({
         where: { id: wordId },
-        data: { 
+        data: {
           isLearned: true,
-          totalProgress: 100 
+          totalProgress: 100,
         },
       });
 
@@ -261,64 +273,127 @@ export class WordsService {
     });
   }
 
- async getWordsForReview(userId: number, skillType?: CoreSkillType, limit: number = 10) {
-  const setting = await this.databaseService.setting.findUnique({
-    where: { userId },
-  });
+  async markWordsLearned(userId: number, data: MarkWordsLearnedDto) {
+    const { wordIds } = data;
 
-  if (!setting) {
-    throw new NotFoundException('User settings not found');
+    // Отримуємо всі слова користувача
+    const words = await this.databaseService.word.findMany({
+      where: {
+        id: { in: wordIds },
+        userId,
+      },
+      include: {
+        progresses: {
+          where: { userId },
+        },
+      },
+    });
+
+    if (words.length !== wordIds.length) {
+      throw new BadRequestException(
+        'Деякі слова не знайдені або не належать користувачу',
+      );
+    }
+
+    const results: {
+      successful: WordResult[];
+      failed: WordResult[];
+    } = {
+      successful: [],
+      failed: [],
+    };
+
+    for (const word of words) {
+      try {
+        this.markWordAsLearned(userId, word.id);
+
+        results.successful.push({
+          wordId: word.id,
+          word: word.text,
+        });
+      } catch (error) {
+        results.failed.push({
+          wordId: word.id,
+          word: word.text,
+          reason: error.message,
+        });
+      }
+    }
+
+    return {
+      success: true,
+      results,
+      summary: {
+        total: wordIds.length,
+        successful: results.successful.length,
+        failed: results.failed.length,
+      },
+    };
   }
 
-  const wordProgresses = await this.databaseService.wordTaskProgress.findMany({
-    where: {
-      userId,
-      ...(skillType && { skillType }),
-      nextReviewAt: { lte: new Date() },
-      word: {
-        language: setting.current_language,
-      },
-    },
-    orderBy: [
-      { score: 'asc' },     
-      { nextReviewAt: 'asc' } 
-    ],
-    take: limit,
-    include: {
-      word: true,
-    },
-  });
+  async getWordsForReview(
+    userId: number,
+    skillType?: CoreSkillType,
+    limit: number = 10,
+  ) {
+    const setting = await this.databaseService.setting.findUnique({
+      where: { userId },
+    });
 
-  return wordProgresses.map(progress => ({
-    ...progress.word,
-    taskProgress: {
-      skillType: progress.skillType,
-      score: progress.score,
-      attempts: progress.attempts,
-      isPassed: progress.isPassed,
-    },
-  }));
-}
+    if (!setting) {
+      throw new NotFoundException('User settings not found');
+    }
+
+    const wordProgresses = await this.databaseService.wordTaskProgress.findMany(
+      {
+        where: {
+          userId,
+          ...(skillType && { skillType }),
+          nextReviewAt: { lte: new Date() },
+          word: {
+            language: setting.current_language,
+          },
+        },
+        orderBy: [{ score: 'asc' }, { nextReviewAt: 'asc' }],
+        take: limit,
+        include: {
+          word: true,
+        },
+      },
+    );
+
+    return wordProgresses.map((progress) => ({
+      ...progress.word,
+      taskProgress: {
+        skillType: progress.skillType,
+        score: progress.score,
+        attempts: progress.attempts,
+        isPassed: progress.isPassed,
+      },
+    }));
+  }
 
   async updateWordProgress(
-    userId: number, 
-    wordId: number, 
+    userId: number,
+    wordId: number,
     progressData: {
       correct: boolean;
       timeSpent: number;
       skillType: CoreSkillType;
-    }
+    },
   ) {
-    const wordProgress = await this.databaseService.wordTaskProgress.findUnique({
-      where: {
-        wordId_userId_skillType: {
-          wordId,
-          userId,
-          skillType: progressData.skillType,
+    const wordProgress = await this.databaseService.wordTaskProgress.findUnique(
+      {
+        where: {
+          wordId_userId_skillType: {
+            wordId,
+            userId,
+            skillType: progressData.skillType,
+          },
         },
+        include: { word: true },
       },
-      include: { word: true },
-    });
+    );
 
     if (!wordProgress) {
       throw new NotFoundException('Word progress not found');
@@ -326,16 +401,16 @@ export class WordsService {
 
     return this.databaseService.$transaction(async (tx) => {
       const newScore = this.calculateNewScore(
-        wordProgress.score, 
+        wordProgress.score,
         progressData.correct,
-        wordProgress.attempts
+        wordProgress.attempts,
       );
-      
-      const { nextReviewAt, reviewInterval, easeFactor } = 
+
+      const { nextReviewAt, reviewInterval, easeFactor } =
         this.calculateNextReview(
           progressData.correct,
           wordProgress.reviewInterval,
-          wordProgress.easeFactor
+          wordProgress.easeFactor,
         );
 
       const updatedProgress = await tx.wordTaskProgress.update({
@@ -343,10 +418,9 @@ export class WordsService {
         data: {
           score: newScore,
           attempts: { increment: 1 },
-          correctCount: progressData.correct ? 
-            { increment: 1 } : undefined,
+          correctCount: progressData.correct ? { increment: 1 } : undefined,
           timeSpent: { increment: progressData.timeSpent },
-          isPassed: newScore >= 80, 
+          isPassed: newScore >= 80,
           nextReviewAt,
           reviewInterval,
           easeFactor,
@@ -356,16 +430,30 @@ export class WordsService {
 
       await this.checkWordCompletion(tx, wordId, userId);
 
-      await this.updateVocabularyProgress(tx, userId, wordProgress.word.language);
+      await this.updateVocabularyProgress(
+        tx,
+        userId,
+        wordProgress.word.language,
+      );
 
       const xpGain = progressData.correct ? 10 : 5;
-      await this.addXPToUser(tx, userId, wordProgress.word.language, xpGain, progressData.timeSpent);
+      await this.addXPToUser(
+        tx,
+        userId,
+        wordProgress.word.language,
+        xpGain,
+        progressData.timeSpent,
+      );
 
       return updatedProgress;
     });
   }
 
-  private calculateNewScore(currentScore: number, correct: boolean, attempts: number): number {
+  private calculateNewScore(
+    currentScore: number,
+    correct: boolean,
+    attempts: number,
+  ): number {
     if (correct) {
       const increment = Math.max(20 - attempts * 2, 5);
       return Math.min(currentScore + increment, 100);
@@ -375,9 +463,9 @@ export class WordsService {
   }
 
   private calculateNextReview(
-    correct: boolean, 
-    currentInterval: number, 
-    currentEase: number
+    correct: boolean,
+    currentInterval: number,
+    currentEase: number,
   ): { nextReviewAt: Date; reviewInterval: number; easeFactor: number } {
     let newInterval = currentInterval;
     let newEase = currentEase;
@@ -401,8 +489,9 @@ export class WordsService {
       where: { wordId, userId },
     });
 
-    const allPassed = allProgresses.every(p => p.isPassed);
-    const averageScore = allProgresses.reduce((sum, p) => sum + p.score, 0) / allProgresses.length;
+    const allPassed = allProgresses.every((p) => p.isPassed);
+    const averageScore =
+      allProgresses.reduce((sum, p) => sum + p.score, 0) / allProgresses.length;
 
     await tx.word.update({
       where: { id: wordId },
@@ -412,7 +501,11 @@ export class WordsService {
       },
     });
   }
-  private async updateVocabularyProgress(tx: any, userId: number, language: any) {
+  private async updateVocabularyProgress(
+    tx: any,
+    userId: number,
+    language: any,
+  ) {
     let languageProgress = await tx.languageProgress.findUnique({
       where: { userId_language: { userId, language } },
     });
@@ -464,16 +557,16 @@ export class WordsService {
   }
 
   private async addXPForWordLearning(tx: any, userId: number, language: any) {
-    const xpGain = 20; 
+    const xpGain = 20;
     await this.addXPToUser(tx, userId, language, xpGain, 0);
   }
 
   private async addXPToUser(
-    tx: any, 
-    userId: number, 
-    language: any, 
-    xpGain: number, 
-    timeSpent: number
+    tx: any,
+    userId: number,
+    language: any,
+    xpGain: number,
+    timeSpent: number,
   ) {
     await tx.user.update({
       where: { id: userId },
@@ -519,7 +612,7 @@ export class WordsService {
     userId: number,
     language: any,
     xpGain: number,
-    timeSpent: number
+    timeSpent: number,
   ) {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -556,5 +649,4 @@ export class WordsService {
       });
     }
   }
-
 }
