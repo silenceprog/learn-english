@@ -153,15 +153,20 @@ export class WordsController {
   async markWordAsLearned(
     @GetCurrentUserId() userId: number,
     @Param('id', ParseIntPipe) wordId: number,
+    @Query('type') type: CoreSkillType = CoreSkillType.VOCABULARY,
   ) {
-    return this.wordsService.markWordAsLearned(userId, wordId);
+    return this.wordsService.markWordAsLearned(userId, wordId, type);
   }
 
   @Patch('mark-batch-learned')
   @ApiOperation({ summary: 'Позначити множину слів як вивчених' })
   @ApiResponse({ status: 200, description: 'Слова успішно оброблені' })
-  async markWordsLearned(@Req() req: any, @Body() data: MarkWordsLearnedDto) {
-    return this.wordsService.markWordsLearned(req.user.id, data);
+  async markWordsLearned(
+    @Req() req: any,
+    @Body() data: MarkWordsLearnedDto,
+    @Query('type') type: CoreSkillType = CoreSkillType.VOCABULARY,
+  ) {
+    return this.wordsService.markWordsLearned(req.user.id, data, type);
   }
 
   @ApiOperation({ summary: 'Видалення слова' })

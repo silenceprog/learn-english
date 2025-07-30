@@ -97,7 +97,7 @@ export class WordsService {
         })),
       });
 
-      await this.updateVocabularyProgress(tx, userId, setting.current_language);
+      await this.updateVocabularyProgress(tx, userId, setting.current_language,CoreSkillType.VOCABULARY);
 
       return word;
     });
@@ -240,6 +240,7 @@ export class WordsService {
           tx,
           userId,
           setting.current_language,
+          CoreSkillType.VOCABULARY
         );
       }
 
@@ -247,7 +248,7 @@ export class WordsService {
     });
   }
 
-  async markWordAsLearned(userId: number, wordId: number) {
+  async markWordAsLearned(userId: number, wordId: number,type:CoreSkillType) {
     const word = await this.databaseService.word.findFirst({
       where: { id: wordId, userId },
     });
@@ -265,7 +266,7 @@ export class WordsService {
         },
       });
 
-      await this.updateVocabularyProgress(tx, userId, word.language);
+      await this.updateVocabularyProgress(tx, userId, word.language,type);
 
       await this.addXPForWordLearning(tx, userId, word.language);
 
@@ -273,7 +274,7 @@ export class WordsService {
     });
   }
 
-  async markWordsLearned(userId: number, data: MarkWordsLearnedDto) {
+  async markWordsLearned(userId: number, data: MarkWordsLearnedDto,type:CoreSkillType) {
     const { wordIds } = data;
 
     // Отримуємо всі слова користувача
@@ -305,7 +306,7 @@ export class WordsService {
 
     for (const word of words) {
       try {
-        this.markWordAsLearned(userId, word.id);
+        this.markWordAsLearned(userId, word.id,type);
 
         results.successful.push({
           wordId: word.id,
@@ -434,6 +435,7 @@ export class WordsService {
         tx,
         userId,
         wordProgress.word.language,
+        wordProgress.skillType
       );
 
       const xpGain = progressData.correct ? 10 : 5;
@@ -505,6 +507,7 @@ export class WordsService {
     tx: any,
     userId: number,
     language: any,
+    type?:CoreSkillType
   ) {
     let languageProgress = await tx.languageProgress.findUnique({
       where: { userId_language: { userId, language } },
@@ -521,7 +524,7 @@ export class WordsService {
         userId_languageProgressId_skillType: {
           userId,
           languageProgressId: languageProgress.id,
-          skillType: CoreSkillType.VOCABULARY,
+          skillType: type || CoreSkillType.VOCABULARY,
         },
       },
     });
@@ -531,7 +534,7 @@ export class WordsService {
         data: {
           userId,
           languageProgressId: languageProgress.id,
-          skillType: CoreSkillType.VOCABULARY,
+          skillType: type || CoreSkillType.VOCABULARY,
         },
       });
     }
