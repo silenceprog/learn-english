@@ -1,11 +1,11 @@
 import { useAuthStore } from "@/states/authStore";
 
 export async function secureFetch(input: RequestInfo, init: RequestInit = {}) {
-  const { accessToken, refresh } = useAuthStore.getState();
+  const { refresh } = useAuthStore.getState();
 
   const baseHeaders = {
     ...init.headers,
-    Authorization: `Bearer ${accessToken}`,
+    Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
     "Content-Type": "application/json",
   };
 

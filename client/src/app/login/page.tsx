@@ -1,7 +1,6 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useStates } from "@/states/useStates";
 import { Button } from "@/shared/ui/Button";
 import { Loader2 } from "lucide-react";
 import { useAlertStore } from "@/states/alertStore";
@@ -22,7 +21,6 @@ export default function Login() {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
   };
-  const { setIsLoggedIn } = useStates();
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
@@ -51,7 +49,6 @@ export default function Login() {
       }
       addAlert("Login success", "success");
 
-      setIsLoggedIn(true);
       // Redirect to main page
       router.push("/");
     } catch (error) {

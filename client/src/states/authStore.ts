@@ -1,7 +1,7 @@
 import { create } from "zustand";
+import { useAlertStore } from "@/states/alertStore";
 
 type AuthState = {
-  accessToken: string | null;
   isAuthenticated: boolean;
   setAccessToken: (token: string) => void;
   logout: () => void;
@@ -9,8 +9,6 @@ type AuthState = {
 };
 
 export const useAuthStore = create<AuthState>((set, get) => ({
-  accessToken:
-    typeof window !== "undefined" ? localStorage.getItem("accessToken") : null,
   isAuthenticated:
     typeof window !== "undefined"
       ? !!localStorage.getItem("accessToken")
@@ -20,20 +18,42 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     if (typeof window !== "undefined") {
       localStorage.setItem("accessToken", token);
     }
-    set({ accessToken: token, isAuthenticated: true });
+    set({ isAuthenticated: true });
   },
 
-  logout: () => {
-    if (typeof window !== "undefined") {
-      localStorage.removeItem("accessToken");
+  logout: async () => {
+    try {
+      const response = await fetch(
+        "https://learn-english-6ufl.onrender.com/api/auth/logout",
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        },
+      );
+
+      if (!response.ok) {
+        useAlertStore.getState().addAlert("Failed to logout", "error");
+      }
+
+      if (typeof window !== "undefined") {
+        localStorage.removeItem("accessToken");
+      }
+      set({ isAuthenticated: false });
+    } catch (error) {
+      console.error("Logout error:", error);
+      set({ isAuthenticated: false });
+      return null;
     }
-    set({ accessToken: null, isAuthenticated: false });
   },
 
   refresh: async () => {
     try {
       const refreshToken = localStorage.getItem("refreshToken");
-      if (!refreshToken) throw new Error("No refresh token");
+      if (!refreshToken) {
+        useAlertStore.getState().addAlert("No refresh token", "error");
+      }
 
       const response = await fetch(
         "https://learn-english-6ufl.onrender.com/api/auth/refresh",
@@ -45,11 +65,17 @@ export const useAuthStore = create<AuthState>((set, get) => ({
         },
       );
 
-      if (!response.ok) throw new Error("Failed to refresh");
+      if (!response.ok) {
+        useAlertStore.getState().addAlert("Failed to refresh", "error");
+        return null;
+      }
 
       const data = await response.json();
 
-      // Ставимо в Zustand
+      if (!data.accessToken) {
+        useAlertStore.getState().addAlert("No accessToken returned", "error");
+        return null;
+      }
       get().setAccessToken(data.accessToken);
 
       return data.accessToken;

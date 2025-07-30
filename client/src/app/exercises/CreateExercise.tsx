@@ -1,19 +1,19 @@
 import { Button } from "@/shared/ui/Button";
-import Link from "next/link";
 import clsx from "clsx";
 
 export default function CreateExercise({
   name,
   icon,
   text,
-  href,
   difficulty,
+  handleClick,
 }: {
   name: string;
   icon: React.ReactNode;
   text: string;
   href: string;
   difficulty: "Easy" | "Medium" | "Hard";
+  handleClick: () => void;
 }) {
   return (
     <div className="rounded-lg bg-card text-card-foreground shadow-2xs border-2 border-blue-100 hover:border-blue-200 transition-colors">
@@ -37,9 +37,9 @@ export default function CreateExercise({
       </div>
       <div className="p-6 pt-0">
         <p className="text-muted-foreground mb-4">{text}</p>
-        <Link href={href}>
-          <Button className="w-full text-white">Start</Button>
-        </Link>
+        <Button className="w-full text-white" onClick={handleClick}>
+          Start
+        </Button>
       </div>
     </div>
   );

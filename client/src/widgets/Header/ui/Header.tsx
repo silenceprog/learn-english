@@ -9,41 +9,21 @@ import { useEffect } from "react";
 import { DropDownUserAccount } from "@/widgets/Header/ui/DropDownUserAccount";
 import { DropDownUserMenu } from "@/widgets/Header/ui/DropDownUserMenu";
 import { useUserSettingsStore } from "@/states/requests/useUserSettings";
-import { useStates } from "@/states/useStates";
 import { useTranslation } from "next-i18next";
 import { CopyToken } from "@/widgets/Token/CopyToken";
+import { useAuthStore } from "@/states/authStore";
 
 export function Header() {
-  const { isLoggedIn, setIsLoggedIn } = useStates();
-  function isTokenValid(token: string): boolean {
-    try {
-      const payloadBase64 = token.split(".")[1];
-      const decodedPayload = JSON.parse(atob(payloadBase64));
-      const currentTime = Math.floor(Date.now() / 1000);
-      return decodedPayload.exp > currentTime;
-    } catch {
-      return false;
-    }
-  }
+  const { isAuthenticated } = useAuthStore();
   const { fetchSettings, settings } = useUserSettingsStore();
   const { i18n } = useTranslation();
+
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      const token = localStorage.getItem("accessToken");
-      if (token && isTokenValid(token)) {
-        setIsLoggedIn(true);
-        fetchSettings();
-      } else {
-        setIsLoggedIn(false);
-      }
-    }
-  }, []);
-  useEffect(() => {
-    if (isLoggedIn) {
+    if (isAuthenticated) {
       fetchSettings();
       i18n.changeLanguage(settings.global_language);
     }
-  }, [isLoggedIn]);
+  }, [isAuthenticated]);
   const { t } = useTranslation();
   return (
     <Section className="border-b border-gray-200 sticky top-0 z-50 w-full bg-white">
@@ -82,7 +62,7 @@ export function Header() {
         </nav>
         <div className="flex">
           <DropDownLanguageSwitcher />
-          {isLoggedIn ? (
+          {isAuthenticated ? (
             <div>
               <DropDownUserAccount />
               <DropDownUserMenu />
