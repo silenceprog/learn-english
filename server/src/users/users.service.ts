@@ -33,6 +33,7 @@ export class UsersService {
       return this.databaseService.user.findMany({
         where: {
           role,
+          deleteAt: null
         },
       });
     return this.databaseService.user.findMany();
@@ -45,6 +46,7 @@ export class UsersService {
     return this.databaseService.user.findUnique({
       where: {
         email,
+        deleteAt: null
       },
       select: {
         id: true,
@@ -59,6 +61,7 @@ export class UsersService {
     return this.databaseService.user.findUnique({
       where: {
         id,
+        deleteAt: null
       }
     });
   }
@@ -79,11 +82,21 @@ export class UsersService {
     });
   }
 
-  async deleteUser(id: number) {
+  async hardDelete(id: number) {
     return this.databaseService.user.delete({
       where: {
         id,
       },
     });
   }
+
+   async softDelete(id: number) {
+    return this.databaseService.user.update({
+      where: { id },
+      data: {
+        deleteAt: new Date(),
+      },
+    });
+  }
+
 }

@@ -6,10 +6,38 @@ import { DatabaseService } from 'src/database/database.service';
 export class AdminService {
   constructor(private readonly databaseService: DatabaseService) {}
 
-  async deleteUser(id: number) {
+  async softDelete(id: number) {
+    return this.databaseService.user.update({
+      where: { id },
+      data: {
+        deleteAt: new Date(),
+      },
+    });
+  }
+
+  async hardDelete(id: number) {
     return this.databaseService.user.delete({
       where: {
         id,
+      },
+    });
+  }
+
+   async restore(id: number) {
+    return this.databaseService.user.update({
+      where: { id },
+      data: {
+        deleteAt: null,
+      },
+    });
+  }
+
+  async findDeleted() {
+    return this.databaseService.user.findMany({
+      where: {
+        deleteAt: {
+          not: null,
+        },
       },
     });
   }

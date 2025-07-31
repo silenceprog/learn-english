@@ -76,11 +76,17 @@ export class UsersController {
     return this.usersService.updateUser(id, updateUserDto);
   }
 
-  @ApiOperation({ summary: 'Видалення користувача' })
+  @ApiOperation({ summary: 'Видалення користувача назавжди' })
   @ApiResponse({ status: 200 })
-  @Roles(Role.OWNER)
   @Delete()
   deleteUser(@GetCurrentUserId() userId: number) {
-    return this.usersService.deleteUser(userId);
+    return this.usersService.hardDelete(userId);
+  }
+
+  @ApiOperation({ summary: 'Видалення користувача' })
+  @ApiResponse({ status: 200 })
+  @Delete()
+  softDelete(@GetCurrentUserId() id: number) {
+    return this.usersService.softDelete(id);
   }
 }

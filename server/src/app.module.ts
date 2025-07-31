@@ -28,6 +28,7 @@ import { TranslateModule } from './translate/translate.module';
 import { CacheInterceptor, CacheModule } from '@nestjs/cache-manager';
 import { RedisOptions } from './app-options';
 import { APP_INTERCEPTOR } from '@nestjs/core';
+import { CronModule } from './safe-delete/cron.module';
 import { GeminiModule } from './gemini/gemini.module';
 import { ProgressModule } from './progress/progress.module';
 import { CardsModule } from './cards/cards.module';
@@ -64,6 +65,7 @@ import { CardsModule } from './cards/cards.module';
     CoursesModule,
     SettingsModule,
     TranslateModule,
+    CronModule,
     GeminiModule,
     ProgressModule,
     CardsModule,
