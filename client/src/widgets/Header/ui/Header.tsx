@@ -9,41 +9,22 @@ import { useEffect } from "react";
 import { DropDownUserAccount } from "@/widgets/Header/ui/DropDownUserAccount";
 import { DropDownUserMenu } from "@/widgets/Header/ui/DropDownUserMenu";
 import { useUserSettingsStore } from "@/states/requests/useUserSettings";
-import { useStates } from "@/states/useStates";
 import { useTranslation } from "next-i18next";
 import { CopyToken } from "@/widgets/Token/CopyToken";
+import { useAuthStore } from "@/states/authStore";
 
 export function Header() {
-  const { isLoggedIn, setIsLoggedIn } = useStates();
-  function isTokenValid(token: string): boolean {
-    try {
-      const payloadBase64 = token.split(".")[1];
-      const decodedPayload = JSON.parse(atob(payloadBase64));
-      const currentTime = Math.floor(Date.now() / 1000);
-      return decodedPayload.exp > currentTime;
-    } catch {
-      return false;
-    }
-  }
-  const { fetchSettings } = useUserSettingsStore();
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const token = localStorage.getItem("accessToken");
-      if (token && isTokenValid(token)) {
-        setIsLoggedIn(true);
-        fetchSettings();
-      } else {
-        setIsLoggedIn(false);
-      }
-    }
-  }, []);
-  useEffect(() => {
-    if (isLoggedIn) {
-      fetchSettings();
-    }
-  }, [isLoggedIn]);
-  const { t } = useTranslation();
+  const { isAuthenticated } = useAuthStore();
+  const { fetchSettings, settings } = useUserSettingsStore();
+  const { i18n } = useTranslation();
 
+  useEffect(() => {
+    if (isAuthenticated) {
+      fetchSettings();
+      i18n.changeLanguage(settings.global_language);
+    }
+  }, [isAuthenticated]);
+  const { t } = useTranslation();
   return (
     <Section className="border-b border-gray-200 sticky top-0 z-50 w-full bg-white">
       <div className="flex justify-between h-16 items-center">
@@ -61,13 +42,13 @@ export function Header() {
             {t("courses")}
           </Link>
           <Link
-            href="#"
+            href="/exercises"
             className="text-sm font-semibold hover:text-blue-600 transition-colors"
           >
-            {t("practice")}
+            {t("Exercises")}
           </Link>
           <Link
-            href="#"
+            href="/dictionary"
             className="text-sm font-semibold hover:text-blue-600 transition-colors"
           >
             {t("dictionary")}
@@ -81,7 +62,7 @@ export function Header() {
         </nav>
         <div className="flex">
           <DropDownLanguageSwitcher />
-          {isLoggedIn ? (
+          {isAuthenticated ? (
             <div>
               <DropDownUserAccount />
               <DropDownUserMenu />
