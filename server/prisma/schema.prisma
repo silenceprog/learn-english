@@ -59,8 +59,8 @@ model Word {
   createdAt     DateTime           @default(now())
   totalProgress Int                @default(0)
   isLearned     Boolean            @default(false)
-  phonetic      String             @default("none")
-  audio         String             @default("none")
+  phonetic      String?             @default("none")
+  audio         String?             @default("none")
   phoneticUS    String?
   audioUS       String?
 

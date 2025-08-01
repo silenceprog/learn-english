@@ -4220,8 +4220,8 @@ export namespace Prisma {
     createdAt: Date
     totalProgress: number
     isLearned: boolean
-    phonetic: string
-    audio: string
+    phonetic: string | null
+    audio: string | null
     phoneticUS: string | null
     audioUS: string | null
     userId: number
@@ -4348,8 +4348,8 @@ export namespace Prisma {
       createdAt: Date
       totalProgress: number
       isLearned: boolean
-      phonetic: string
-      audio: string
+      phonetic: string | null
+      audio: string | null
       phoneticUS: string | null
       audioUS: string | null
       userId: number
@@ -20457,8 +20457,8 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Word"> | Date | string
     totalProgress?: IntFilter<"Word"> | number
     isLearned?: BoolFilter<"Word"> | boolean
-    phonetic?: StringFilter<"Word"> | string
-    audio?: StringFilter<"Word"> | string
+    phonetic?: StringNullableFilter<"Word"> | string | null
+    audio?: StringNullableFilter<"Word"> | string | null
     phoneticUS?: StringNullableFilter<"Word"> | string | null
     audioUS?: StringNullableFilter<"Word"> | string | null
     userId?: IntFilter<"Word"> | number
@@ -20476,8 +20476,8 @@ export namespace Prisma {
     createdAt?: SortOrder
     totalProgress?: SortOrder
     isLearned?: SortOrder
-    phonetic?: SortOrder
-    audio?: SortOrder
+    phonetic?: SortOrderInput | SortOrder
+    audio?: SortOrderInput | SortOrder
     phoneticUS?: SortOrderInput | SortOrder
     audioUS?: SortOrderInput | SortOrder
     userId?: SortOrder
@@ -20499,8 +20499,8 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Word"> | Date | string
     totalProgress?: IntFilter<"Word"> | number
     isLearned?: BoolFilter<"Word"> | boolean
-    phonetic?: StringFilter<"Word"> | string
-    audio?: StringFilter<"Word"> | string
+    phonetic?: StringNullableFilter<"Word"> | string | null
+    audio?: StringNullableFilter<"Word"> | string | null
     phoneticUS?: StringNullableFilter<"Word"> | string | null
     audioUS?: StringNullableFilter<"Word"> | string | null
     userId?: IntFilter<"Word"> | number
@@ -20518,8 +20518,8 @@ export namespace Prisma {
     createdAt?: SortOrder
     totalProgress?: SortOrder
     isLearned?: SortOrder
-    phonetic?: SortOrder
-    audio?: SortOrder
+    phonetic?: SortOrderInput | SortOrder
+    audio?: SortOrderInput | SortOrder
     phoneticUS?: SortOrderInput | SortOrder
     audioUS?: SortOrderInput | SortOrder
     userId?: SortOrder
@@ -20543,8 +20543,8 @@ export namespace Prisma {
     createdAt?: DateTimeWithAggregatesFilter<"Word"> | Date | string
     totalProgress?: IntWithAggregatesFilter<"Word"> | number
     isLearned?: BoolWithAggregatesFilter<"Word"> | boolean
-    phonetic?: StringWithAggregatesFilter<"Word"> | string
-    audio?: StringWithAggregatesFilter<"Word"> | string
+    phonetic?: StringNullableWithAggregatesFilter<"Word"> | string | null
+    audio?: StringNullableWithAggregatesFilter<"Word"> | string | null
     phoneticUS?: StringNullableWithAggregatesFilter<"Word"> | string | null
     audioUS?: StringNullableWithAggregatesFilter<"Word"> | string | null
     userId?: IntWithAggregatesFilter<"Word"> | number
@@ -21847,8 +21847,8 @@ export namespace Prisma {
     createdAt?: Date | string
     totalProgress?: number
     isLearned?: boolean
-    phonetic?: string
-    audio?: string
+    phonetic?: string | null
+    audio?: string | null
     phoneticUS?: string | null
     audioUS?: string | null
     user: UserCreateNestedOneWithoutWordsInput
@@ -21865,8 +21865,8 @@ export namespace Prisma {
     createdAt?: Date | string
     totalProgress?: number
     isLearned?: boolean
-    phonetic?: string
-    audio?: string
+    phonetic?: string | null
+    audio?: string | null
     phoneticUS?: string | null
     audioUS?: string | null
     userId: number
@@ -21882,8 +21882,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     totalProgress?: IntFieldUpdateOperationsInput | number
     isLearned?: BoolFieldUpdateOperationsInput | boolean
-    phonetic?: StringFieldUpdateOperationsInput | string
-    audio?: StringFieldUpdateOperationsInput | string
+    phonetic?: NullableStringFieldUpdateOperationsInput | string | null
+    audio?: NullableStringFieldUpdateOperationsInput | string | null
     phoneticUS?: NullableStringFieldUpdateOperationsInput | string | null
     audioUS?: NullableStringFieldUpdateOperationsInput | string | null
     user?: UserUpdateOneRequiredWithoutWordsNestedInput
@@ -21900,8 +21900,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     totalProgress?: IntFieldUpdateOperationsInput | number
     isLearned?: BoolFieldUpdateOperationsInput | boolean
-    phonetic?: StringFieldUpdateOperationsInput | string
-    audio?: StringFieldUpdateOperationsInput | string
+    phonetic?: NullableStringFieldUpdateOperationsInput | string | null
+    audio?: NullableStringFieldUpdateOperationsInput | string | null
     phoneticUS?: NullableStringFieldUpdateOperationsInput | string | null
     audioUS?: NullableStringFieldUpdateOperationsInput | string | null
     userId?: IntFieldUpdateOperationsInput | number
@@ -21918,8 +21918,8 @@ export namespace Prisma {
     createdAt?: Date | string
     totalProgress?: number
     isLearned?: boolean
-    phonetic?: string
-    audio?: string
+    phonetic?: string | null
+    audio?: string | null
     phoneticUS?: string | null
     audioUS?: string | null
     userId: number
@@ -21934,8 +21934,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     totalProgress?: IntFieldUpdateOperationsInput | number
     isLearned?: BoolFieldUpdateOperationsInput | boolean
-    phonetic?: StringFieldUpdateOperationsInput | string
-    audio?: StringFieldUpdateOperationsInput | string
+    phonetic?: NullableStringFieldUpdateOperationsInput | string | null
+    audio?: NullableStringFieldUpdateOperationsInput | string | null
     phoneticUS?: NullableStringFieldUpdateOperationsInput | string | null
     audioUS?: NullableStringFieldUpdateOperationsInput | string | null
   }
@@ -21950,8 +21950,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     totalProgress?: IntFieldUpdateOperationsInput | number
     isLearned?: BoolFieldUpdateOperationsInput | boolean
-    phonetic?: StringFieldUpdateOperationsInput | string
-    audio?: StringFieldUpdateOperationsInput | string
+    phonetic?: NullableStringFieldUpdateOperationsInput | string | null
+    audio?: NullableStringFieldUpdateOperationsInput | string | null
     phoneticUS?: NullableStringFieldUpdateOperationsInput | string | null
     audioUS?: NullableStringFieldUpdateOperationsInput | string | null
     userId?: IntFieldUpdateOperationsInput | number
@@ -26225,8 +26225,8 @@ export namespace Prisma {
     createdAt?: Date | string
     totalProgress?: number
     isLearned?: boolean
-    phonetic?: string
-    audio?: string
+    phonetic?: string | null
+    audio?: string | null
     phoneticUS?: string | null
     audioUS?: string | null
     progresses?: WordTaskProgressCreateNestedManyWithoutWordInput
@@ -26242,8 +26242,8 @@ export namespace Prisma {
     createdAt?: Date | string
     totalProgress?: number
     isLearned?: boolean
-    phonetic?: string
-    audio?: string
+    phonetic?: string | null
+    audio?: string | null
     phoneticUS?: string | null
     audioUS?: string | null
     progresses?: WordTaskProgressUncheckedCreateNestedManyWithoutWordInput
@@ -26620,8 +26620,8 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Word"> | Date | string
     totalProgress?: IntFilter<"Word"> | number
     isLearned?: BoolFilter<"Word"> | boolean
-    phonetic?: StringFilter<"Word"> | string
-    audio?: StringFilter<"Word"> | string
+    phonetic?: StringNullableFilter<"Word"> | string | null
+    audio?: StringNullableFilter<"Word"> | string | null
     phoneticUS?: StringNullableFilter<"Word"> | string | null
     audioUS?: StringNullableFilter<"Word"> | string | null
     userId?: IntFilter<"Word"> | number
@@ -28559,8 +28559,8 @@ export namespace Prisma {
     createdAt?: Date | string
     totalProgress?: number
     isLearned?: boolean
-    phonetic?: string
-    audio?: string
+    phonetic?: string | null
+    audio?: string | null
     phoneticUS?: string | null
     audioUS?: string | null
     user: UserCreateNestedOneWithoutWordsInput
@@ -28576,8 +28576,8 @@ export namespace Prisma {
     createdAt?: Date | string
     totalProgress?: number
     isLearned?: boolean
-    phonetic?: string
-    audio?: string
+    phonetic?: string | null
+    audio?: string | null
     phoneticUS?: string | null
     audioUS?: string | null
     userId: number
@@ -28670,8 +28670,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     totalProgress?: IntFieldUpdateOperationsInput | number
     isLearned?: BoolFieldUpdateOperationsInput | boolean
-    phonetic?: StringFieldUpdateOperationsInput | string
-    audio?: StringFieldUpdateOperationsInput | string
+    phonetic?: NullableStringFieldUpdateOperationsInput | string | null
+    audio?: NullableStringFieldUpdateOperationsInput | string | null
     phoneticUS?: NullableStringFieldUpdateOperationsInput | string | null
     audioUS?: NullableStringFieldUpdateOperationsInput | string | null
     user?: UserUpdateOneRequiredWithoutWordsNestedInput
@@ -28687,8 +28687,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     totalProgress?: IntFieldUpdateOperationsInput | number
     isLearned?: BoolFieldUpdateOperationsInput | boolean
-    phonetic?: StringFieldUpdateOperationsInput | string
-    audio?: StringFieldUpdateOperationsInput | string
+    phonetic?: NullableStringFieldUpdateOperationsInput | string | null
+    audio?: NullableStringFieldUpdateOperationsInput | string | null
     phoneticUS?: NullableStringFieldUpdateOperationsInput | string | null
     audioUS?: NullableStringFieldUpdateOperationsInput | string | null
     userId?: IntFieldUpdateOperationsInput | number
@@ -29149,8 +29149,8 @@ export namespace Prisma {
     createdAt?: Date | string
     totalProgress?: number
     isLearned?: boolean
-    phonetic?: string
-    audio?: string
+    phonetic?: string | null
+    audio?: string | null
     phoneticUS?: string | null
     audioUS?: string | null
   }
@@ -29273,8 +29273,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     totalProgress?: IntFieldUpdateOperationsInput | number
     isLearned?: BoolFieldUpdateOperationsInput | boolean
-    phonetic?: StringFieldUpdateOperationsInput | string
-    audio?: StringFieldUpdateOperationsInput | string
+    phonetic?: NullableStringFieldUpdateOperationsInput | string | null
+    audio?: NullableStringFieldUpdateOperationsInput | string | null
     phoneticUS?: NullableStringFieldUpdateOperationsInput | string | null
     audioUS?: NullableStringFieldUpdateOperationsInput | string | null
     progresses?: WordTaskProgressUpdateManyWithoutWordNestedInput
@@ -29290,8 +29290,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     totalProgress?: IntFieldUpdateOperationsInput | number
     isLearned?: BoolFieldUpdateOperationsInput | boolean
-    phonetic?: StringFieldUpdateOperationsInput | string
-    audio?: StringFieldUpdateOperationsInput | string
+    phonetic?: NullableStringFieldUpdateOperationsInput | string | null
+    audio?: NullableStringFieldUpdateOperationsInput | string | null
     phoneticUS?: NullableStringFieldUpdateOperationsInput | string | null
     audioUS?: NullableStringFieldUpdateOperationsInput | string | null
     progresses?: WordTaskProgressUncheckedUpdateManyWithoutWordNestedInput
@@ -29307,8 +29307,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     totalProgress?: IntFieldUpdateOperationsInput | number
     isLearned?: BoolFieldUpdateOperationsInput | boolean
-    phonetic?: StringFieldUpdateOperationsInput | string
-    audio?: StringFieldUpdateOperationsInput | string
+    phonetic?: NullableStringFieldUpdateOperationsInput | string | null
+    audio?: NullableStringFieldUpdateOperationsInput | string | null
     phoneticUS?: NullableStringFieldUpdateOperationsInput | string | null
     audioUS?: NullableStringFieldUpdateOperationsInput | string | null
   }

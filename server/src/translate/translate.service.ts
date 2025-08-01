@@ -122,8 +122,8 @@ export class TranslateService {
     const dictionaryUrl = `https://api.dictionaryapi.dev/api/v2/entries/${fromIso}/${text}`;
 
     try {
-      let phonetic = 'none';
-      let audio = 'none';
+      let phonetic = null;
+      let audio = null;
       let phoneticUS = null;
       let audioUS = null;
       let meanings;
@@ -137,11 +137,11 @@ export class TranslateService {
 
         if (entry?.phonetics?.length) {
           for (const p of entry.phonetics) {
-            if (p.text && phonetic === 'none') {
+            if (p.text && phonetic === null) {
               phonetic = p.text;
             }
 
-            if (p.audio && audio === 'none') {
+            if (p.audio && audio === null) {
               audio = p.audio;
             }
 
