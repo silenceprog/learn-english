@@ -1,17 +1,9 @@
-import { Volume2 } from "lucide-react";
+import { ChevronDown, ChevronUp, Volume2 } from "lucide-react";
 import { Button } from "@/shared/ui/Button";
+import { Word } from "@/states/requests/useGetDictionaryWords";
+import { useState } from "react";
+import { useDeleteModal } from "@/states/modals/useDeleteModal";
 
-export interface Word {
-  text: string;
-  translate: string;
-  example: string;
-  totalProgress: number;
-  voice: string;
-  phonetic?: string;
-  phoneticUS?: string;
-  audio?: string;
-  audioUS?: string;
-}
 interface Props {
   word: Word;
 }
@@ -21,12 +13,28 @@ const playAudio = (thisSong: string) => {
     .play()
     .catch((err) => console.error("Не вдалося відтворити аудіо:", err));
 };
+
 export function ShowWord({ word }: Props) {
+  const [chevronDown, setChevronDown] = useState(true);
+
+  const { setIsOpen, setId } = useDeleteModal();
   return (
     <div className="border rounded-lg p-4 bg-white shadow-sm">
-      <div className="flex justify-between items-start mb-2">
+      <div className="w-full mb-2">
         <div>
-          <h3 className="font-medium">{word.text}</h3>
+          <div className="flex flex-row justify-between">
+            <h3 className="font-medium">{word.text}</h3>
+            <Button
+              size="sm"
+              color="white"
+              onClick={() => {
+                setIsOpen(true);
+                setId(word.id);
+              }}
+            >
+              ❌
+            </Button>
+          </div>
           <p className="text-sm text-blue-700">{word.translate}</p>
           <div className="flex flex-row gap-5">
             {word.phonetic !== "none" && (
@@ -70,7 +78,33 @@ export function ShowWord({ word }: Props) {
           </div>
         </div>
       </div>
-      <p className="text-xs text-gray-500 italic mb-2">{word.example}</p>
+      {chevronDown ? (
+        <div>
+          <p className="text-xs text-gray-500 italic mb-2">
+            {word.examples[0]}
+          </p>
+          <p className="text-xs text-gray-500 italic mb-2">
+            {word.examples[1]}
+          </p>
+        </div>
+      ) : (
+        word.examples.map((word, i) => (
+          <p key={i} className="text-xs text-gray-500 italic mb-2">
+            {word}
+          </p>
+        ))
+      )}
+      {word.examples.length >= 2 && (
+        <Button
+          color="outlineBlue"
+          className="flex flex-row justify-center items-center mb-1 "
+          onClick={() => {
+            setChevronDown(!chevronDown);
+          }}
+        >
+          More {chevronDown ? <ChevronDown /> : <ChevronUp />}
+        </Button>
+      )}
       <div className="w-full bg-gray-200 rounded-full h-1.5">
         <div
           className={`h-1.5 rounded-full ${word.totalProgress >= 80 ? "bg-lime-500" : "bg-blue-600"}`}

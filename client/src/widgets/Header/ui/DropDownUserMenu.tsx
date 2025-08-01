@@ -2,12 +2,10 @@ import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import { Button } from "@/shared/ui/Button";
 import { RxHamburgerMenu } from "react-icons/rx";
 import Link from "next/link";
+import { useAuthStore } from "@/states/authStore";
 
 export function DropDownUserMenu() {
-  const logout = () => {
-    localStorage.removeItem("accessToken");
-    window.location.href = "/"; // або "/" — залежно від логіки
-  };
+  const { logout } = useAuthStore();
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>

@@ -1,28 +1,26 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useStates } from "@/states/useStates";
 import { Button } from "@/shared/ui/Button";
 import { Loader2 } from "lucide-react";
+import { useAlertStore } from "@/states/alertStore";
+import { useAuthStore } from "@/states/authStore";
 
 export default function Login() {
+  const { addAlert } = useAlertStore();
+  const { setAccessToken } = useAuthStore();
   const router = useRouter();
   const [form, setForm] = useState({
     email: "",
     password: "",
   });
 
-  const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
-    setError(null);
-    setSuccess(null);
   };
-  const { setIsLoggedIn } = useStates();
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
@@ -42,20 +40,23 @@ export default function Login() {
       );
 
       const data = await response.json();
+      setAccessToken(data.accessToken);
+      localStorage.setItem("refreshToken", data.refreshToken);
 
       if (!response.ok) {
-        setError(data.message || "Login error");
+        addAlert(data.message || "Login error", "error");
         return;
       }
+      addAlert("Login success", "success");
 
-      setSuccess("Login successful!");
-      setIsLoggedIn(true);
-      // Save token
-      localStorage.setItem("accessToken", data.accessToken);
       // Redirect to main page
       router.push("/");
     } catch (error) {
-      setError("Something went wrong. Please try again later." + error);
+      if (typeof error === "string") {
+        addAlert(error, "error");
+      } else {
+        addAlert("Something went wrong. Please try again later.", "error");
+      }
     } finally {
       setIsLoading(false);
     }
@@ -64,15 +65,6 @@ export default function Login() {
   return (
     <div className="max-w-md mx-auto mt-10 p-6 bg-white shadow-xl rounded-2xl">
       <h1 className="text-2xl font-bold mb-6 text-center">Вхід</h1>
-
-      {error && (
-        <div className="mb-4 text-red-600 font-medium text-center">{error}</div>
-      )}
-      {success && (
-        <div className="mb-4 text-green-600 font-medium text-center">
-          {success}
-        </div>
-      )}
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>

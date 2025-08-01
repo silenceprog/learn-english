@@ -1,16 +1,24 @@
 import { Button } from "@/shared/ui/Button";
 import { RefreshCw } from "lucide-react";
-import { useState } from "react";
-import { ShowWords } from "@/app/ShowWords";
+import { useEffect, useState } from "react";
+import { ShowWords } from "@/app/dictionary/ShowWords";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
-import Pagination from "@/app/Pagination";
-import CreateWordButton from "@/app/CreateWordButton";
+import Pagination from "@/app/dictionary/Pagination";
+import CreateWordButton from "@/app/dictionary/CreateWordButton";
+import { useDictionaryStore } from "@/states/requests/useGetDictionaryWords";
 
 export function MyWordsBlock() {
   const [activeTab, setActiveTab] = useState<"ALL" | "LEARNING" | "LEARNED">(
     "ALL",
   );
-  const [totalWords, setTotalWords] = useState(0);
+  const {
+    setCurrentTab,
+    fetchWords,
+    setWordsLimit,
+    learned,
+    setCurrentPage,
+    totalPages,
+  } = useDictionaryStore();
   const [maxPages, setMaxPages] = useState(1);
   const limits = [1, 2, 3, 5, 10];
   const [page, setPage] = useState(1);
@@ -25,6 +33,13 @@ export function MyWordsBlock() {
       setPage(page - 1);
     }
   };
+  useEffect(() => {
+    setCurrentTab(activeTab);
+    setWordsLimit(wordsOnPage);
+    setCurrentPage(page);
+    setMaxPages(totalPages);
+    fetchWords();
+  }, [activeTab, wordsOnPage, page, totalPages]);
   return (
     <div>
       <div className="text-xl font-bold text-blue-700 flex items-center justify-between">
@@ -36,7 +51,7 @@ export function MyWordsBlock() {
           </div>
         </Button>
       </div>
-      <p className="text-gray-500 py-2">Всего изучено слов: {totalWords}</p>
+      <p className="text-gray-500 py-2">Всего изучено слов: {learned}</p>
       <div className="flex justify-between">
         <div>
           <Button
@@ -92,13 +107,7 @@ export function MyWordsBlock() {
           </DropdownMenu.Root>
         </div>
       </div>
-      <ShowWords
-        currentTab={activeTab}
-        getCountWords={setTotalWords}
-        wordsLimit={wordsOnPage}
-        currentPage={page}
-        maxPages={setMaxPages}
-      />
+      <ShowWords />
       <Pagination
         page={page}
         nextPage={nextPage}

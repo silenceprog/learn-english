@@ -22,7 +22,7 @@ export function DropDownLanguageSwitcher() {
 
       <DropdownMenu.Content
         align="center"
-        className="z-50 min-w-[8rem] bg-white p-1 shadow-md border-1-gray-200"
+        className="z-50 min-w-[8rem] bg-white p-1 shadow-md border-gray-200"
       >
         {LANGUAGES.map((lang) => (
           <DropdownMenu.Item
