@@ -4,24 +4,10 @@ import CreateExercise from "@/app/exercises/CreateExercise";
 import { BookOpen } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useGetFlashcards } from "@/states/requests/useGetFlashcards";
-import { useEffect, useState } from "react";
 
 export default function Exercises() {
   const { flashcards, fetch } = useGetFlashcards();
   const router = useRouter();
-  const [requested, setRequested] = useState(false);
-  useEffect(() => {
-    if (requested && flashcards.length >= 10) {
-      router.push("/exercises/flashcards");
-    }
-  }, [flashcards, requested, router]);
-  async function handleClick() {
-    await fetch();
-    setRequested(true);
-  }
-  function fetchCards2() {
-    console.log("2");
-  }
 
   return (
     <Section>
@@ -35,15 +21,38 @@ export default function Exercises() {
           text="Изучайте новые слова с помощью интерактивных карточек"
           href="/exercises/flashcards"
           difficulty="Easy"
-          handleClick={handleClick}
+          handleClick={async () => {
+            await fetch();
+            if (flashcards.length >= 10) {
+              router.push("/exercises/flashcards");
+            }
+          }}
         />
         <CreateExercise
           name="Reverse Cards"
           icon={<BookOpen />}
           text="Изучайте новые слова с помощью интерактивных карточек"
-          href="/exercises/flashcards"
+          href="/exercises/reverseFlashCards"
           difficulty="Hard"
-          handleClick={fetchCards2}
+          handleClick={async () => {
+            await fetch();
+            if (flashcards.length >= 10) {
+              router.push("/exercises/reverseFlashCards");
+            }
+          }}
+        />
+        <CreateExercise
+          name="Matching Cards"
+          icon={<BookOpen />}
+          text="Изучайте новые слова с помощью интерактивных карточек"
+          href="/exercises/reverseFlashCards"
+          difficulty="Hard"
+          handleClick={async () => {
+            await fetch();
+            if (flashcards.length >= 10) {
+              router.push("/exercises/matching");
+            }
+          }}
         />
       </div>
     </Section>
