@@ -7,14 +7,14 @@ import { useGetFlashcards } from "@/states/requests/useGetFlashcards";
 import { useEffect, useState } from "react";
 
 export default function Exercises() {
-  const { data, fetch } = useGetFlashcards();
+  const { flashcards, fetch } = useGetFlashcards();
   const router = useRouter();
   const [requested, setRequested] = useState(false);
   useEffect(() => {
-    if (requested && data.length >= 10) {
+    if (requested && flashcards.length >= 10) {
       router.push("/exercises/flashcards");
     }
-  }, [data, requested, router]);
+  }, [flashcards, requested, router]);
   async function handleClick() {
     await fetch();
     setRequested(true);

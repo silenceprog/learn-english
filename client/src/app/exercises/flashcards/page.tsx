@@ -12,65 +12,14 @@ import {
 import Link from "next/link";
 import { Button } from "@/shared/ui/Button";
 import { Progress } from "@/app/exercises/progress";
+import { useGetFlashcards } from "@/states/requests/useGetFlashcards";
 
 export default function FlashCard() {
   const [currentCard, setCurrentCard] = useState(0);
   const [isFlipped, setIsFlipped] = useState(false);
   const [knownCards, setKnownCards] = useState<number[]>([]);
   const [unknownCards, setUnknownCards] = useState<number[]>([]);
-
-  const flashcards = [
-    {
-      id: 1,
-      word: "accomplish",
-      transcriptionUK: "/əˈkʌm.plɪʃ/",
-      audioUK: 123,
-      transcriptionUS: "/əˈkʌm.plɪʃ/",
-      audioUS: 123,
-      translation: "достигать, выполнять",
-      example: "She accomplished all her goals for the year.",
-    },
-    {
-      id: 2,
-      word: "brilliant",
-      transcription: "/ˈbrɪl.jənt/",
-      translation: "блестящий, яркий",
-      partOfSpeech: "прилагательное",
-      example: "That was a brilliant idea!",
-      exampleTranslation: "Это была блестящая идея!",
-      difficulty: "intermediate",
-    },
-    {
-      id: 3,
-      word: "challenge",
-      transcription: "/ˈtʃæl.ɪndʒ/",
-      translation: "вызов, испытание",
-      partOfSpeech: "существительное",
-      example: "Learning English is a real challenge.",
-      exampleTranslation: "Изучение английского - настоящий вызов.",
-      difficulty: "beginner",
-    },
-    {
-      id: 4,
-      word: "determine",
-      transcription: "/dɪˈtɜː.mɪn/",
-      translation: "определять, решать",
-      partOfSpeech: "глагол",
-      example: "We need to determine the best solution.",
-      exampleTranslation: "Нам нужно определить лучшее решение.",
-      difficulty: "advanced",
-    },
-    {
-      id: 5,
-      word: "essential",
-      transcription: "/ɪˈsen.ʃəl/",
-      translation: "существенный, важный",
-      partOfSpeech: "прилагательное",
-      example: "Water is essential for life.",
-      exampleTranslation: "Вода необходима для жизни.",
-      difficulty: "intermediate",
-    },
-  ];
+  const { flashcards } = useGetFlashcards();
 
   const currentCardData = flashcards[currentCard];
   const progress = ((currentCard + 1) / flashcards.length) * 100;
@@ -80,23 +29,35 @@ export default function FlashCard() {
   };
 
   const handleKnown = () => {
-    if (!knownCards.includes(currentCard)) {
-      setKnownCards([...knownCards, currentCard]);
+    if (unknownCards.includes(flashcards[currentCard].id)) {
+      setUnknownCards((prev) =>
+        prev.filter((cardId) => cardId !== flashcards[currentCard].id),
+      );
+    }
+    if (!knownCards.includes(flashcards[currentCard].id)) {
+      setKnownCards([...knownCards, flashcards[currentCard].id]);
     }
     nextCard();
   };
 
   const handleUnknown = () => {
-    if (!unknownCards.includes(currentCard)) {
-      setUnknownCards([...unknownCards, currentCard]);
+    if (knownCards.includes(flashcards[currentCard].id)) {
+      setKnownCards((prev) =>
+        prev.filter((cardId) => cardId !== flashcards[currentCard].id),
+      );
+    }
+    if (!unknownCards.includes(flashcards[currentCard].id)) {
+      setUnknownCards([...unknownCards, flashcards[currentCard].id]);
     }
     nextCard();
   };
 
   const nextCard = () => {
-    if (currentCard < flashcards.length - 1) {
+    if (currentCard < flashcards.length) {
       setCurrentCard(currentCard + 1);
       setIsFlipped(false);
+    } else {
+      setCurrentCard(currentCard + 1);
     }
   };
 
@@ -106,8 +67,13 @@ export default function FlashCard() {
       setIsFlipped(false);
     }
   };
-
-  if (currentCard >= flashcards.length) {
+  const playAudio = (thisSong: string) => {
+    const audio = new Audio(thisSong);
+    audio
+      .play()
+      .catch((err) => console.error("Не вдалося відтворити аудіо:", err));
+  };
+  if (currentCard === flashcards.length) {
     return (
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-2xl mx-auto text-center">
@@ -164,7 +130,6 @@ export default function FlashCard() {
       </div>
     );
   }
-
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="mb-6">
@@ -202,15 +167,57 @@ export default function FlashCard() {
               <div className="h-full flex flex-col justify-center items-center p-8 bg-gradient-to-br from-blue-50 to-blue-100">
                 <div className="text-center">
                   <h2 className="text-4xl font-bold text-blue-700 mb-4">
-                    {currentCardData.word}
+                    {currentCardData.text}
                   </h2>
                   <div className="flex items-center justify-center gap-2 mb-4">
-                    <p className="text-lg text-muted-foreground">
-                      {currentCardData.transcription}
-                    </p>
-                    <Button className="rounded-full" color="outlineBlue">
-                      <Volume2 className="h-5 w-5" />
-                    </Button>
+                    {currentCardData.phonetic || currentCardData.audio ? (
+                      <span className="font-semibold">{"UK: "}</span>
+                    ) : null}
+                    {currentCardData.phonetic && (
+                      <div className="flex items-center justify-center gap-2">
+                        <p className="text-lg text-muted-foreground">
+                          {currentCardData.phonetic}
+                        </p>
+                      </div>
+                    )}
+                    {currentCardData.audio ? (
+                      <Button
+                        className="rounded-full mr-4"
+                        color="outlineBlue"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          if (currentCardData.audio) {
+                            playAudio(currentCardData.audio);
+                          }
+                        }}
+                      >
+                        <Volume2 className="h-5 w-5" />
+                      </Button>
+                    ) : null}
+                    {currentCardData.phoneticUS || currentCardData.audioUS ? (
+                      <span className="font-semibold">{"US: "}</span>
+                    ) : null}
+                    {currentCardData.phoneticUS && (
+                      <div className="flex items-center justify-center gap-2">
+                        <p className="text-lg text-muted-foreground">
+                          {currentCardData.phoneticUS}
+                        </p>
+                      </div>
+                    )}
+                    {currentCardData.audioUS ? (
+                      <Button
+                        className="rounded-full"
+                        color="outlineBlue"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          if (currentCardData.audioUS) {
+                            playAudio(currentCardData.audioUS);
+                          }
+                        }}
+                      >
+                        <Volume2 className="h-5 w-5" />
+                      </Button>
+                    ) : null}
                   </div>
                 </div>
                 <div className="absolute bottom-4 text-center">
@@ -226,16 +233,9 @@ export default function FlashCard() {
               <div className="h-full flex flex-col justify-center items-center p-8 bg-gradient-to-br from-green-50 to-green-100">
                 <div className="text-center">
                   <h2 className="text-3xl font-bold text-green-700 mb-6">
-                    {currentCardData.translation}
+                    {currentCardData.translate}
                   </h2>
-                  <div className="space-y-3">
-                    <p className="text-lg italic text-gray-700">
-                      {currentCardData.example}
-                    </p>
-                    <p className="text-base text-muted-foreground">
-                      {currentCardData.exampleTranslation}
-                    </p>
-                  </div>
+                  <div className="space-y-3"></div>
                 </div>
                 <div className="absolute bottom-4 text-center">
                   <p className="text-sm text-muted-foreground">
@@ -270,7 +270,7 @@ export default function FlashCard() {
         <div className="flex justify-between items-center">
           <Button
             onClick={prevCard}
-            color="outline"
+            color={currentCard === 0 ? "disabled" : "outline"}
             disabled={currentCard === 0}
             className="flex flex-row justify-center items-center"
           >
@@ -289,7 +289,9 @@ export default function FlashCard() {
 
           <Button
             onClick={nextCard}
-            color="outline"
+            color={
+              currentCard === flashcards.length - 1 ? "disabled" : "outline"
+            }
             disabled={currentCard === flashcards.length - 1}
             className="flex flex-row justify-center items-center"
           >

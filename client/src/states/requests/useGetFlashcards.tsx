@@ -3,7 +3,7 @@ import { secureFetch } from "@/lib/secureFetch";
 import { useAlertStore } from "@/states/alertStore";
 
 type States = {
-  data: Word[];
+  flashcards: Word[];
   fetch: () => Promise<void>;
   clear: () => void;
 };
@@ -27,7 +27,7 @@ type Word = {
 };
 
 export const useGetFlashcards = create<States>((set) => ({
-  data: [],
+  flashcards: [],
   fetch: async () => {
     try {
       const res = await secureFetch(
@@ -53,7 +53,7 @@ export const useGetFlashcards = create<States>((set) => ({
         useAlertStore.getState().addAlert("Unexpected data format", "error");
         return;
       }
-      set({ data: json });
+      set({ flashcards: json });
 
       console.log(json);
       if (json.length < 10) {
@@ -69,5 +69,5 @@ export const useGetFlashcards = create<States>((set) => ({
       useAlertStore.getState().addAlert("Something went wrong!", "error");
     }
   },
-  clear: () => set({ data: [] }),
+  clear: () => set({ flashcards: [] }),
 }));
