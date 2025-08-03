@@ -8,7 +8,8 @@ export class UpdateProgressDto {
     example: true,
   })
   @IsBoolean()
-  correct: boolean;
+  @IsOptional()
+  correct?: boolean;
 
   @ApiProperty({
     description: 'Час, витрачений на завдання (в секундах)',
@@ -27,4 +28,12 @@ export class UpdateProgressDto {
   @IsOptional()
   @IsEnum(CoreSkillType)
   skillType: CoreSkillType;
+
+  @ApiPropertyOptional({
+    description: 'Чи виконано завдання',
+    example: true,
+  })
+  @IsOptional()
+  @IsBoolean()
+  isPassed: boolean;
 }

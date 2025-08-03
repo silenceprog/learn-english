@@ -12,6 +12,7 @@ import { TranslateService } from 'src/translate/translate.service';
 import { CoreSkillType } from 'generated/prisma';
 import { MarkWordsLearnedDto } from './dto/mark-word.dto';
 import { WordResult } from './dto/word-result.dto';
+import { UpdateProgressDto } from './dto/update-progress';
 
 @Injectable()
 export class WordsService {
@@ -96,8 +97,6 @@ export class WordsService {
           nextReviewAt: new Date(),
         })),
       });
-
-      await this.updateVocabularyProgress(tx, userId, setting.current_language,CoreSkillType.VOCABULARY);
 
       return word;
     });
@@ -235,50 +234,16 @@ export class WordsService {
         where: { userId },
       });
 
-      if (setting) {
-        await this.updateVocabularyProgress(
-          tx,
-          userId,
-          setting.current_language,
-          CoreSkillType.VOCABULARY
-        );
-      }
-
       return deletedWord;
     });
   }
 
-  async markWordAsLearned(userId: number, wordId: number,type:CoreSkillType) {
-    const word = await this.databaseService.word.findFirst({
-      where: { id: wordId, userId },
-    });
-
-    if (!word) {
-      throw new NotFoundException('Word not found or access denied');
-    }
-
-    return this.databaseService.$transaction(async (tx) => {
-      const updatedWord = await tx.word.update({
-        where: { id: wordId },
-        data: {
-          isLearned: true,
-          totalProgress: 100,
-        },
-      });
-
-      await this.updateVocabularyProgress(tx, userId, word.language,type);
-
-      await this.addXPForWordLearning(tx, userId, word.language);
-
-      return updatedWord;
-    });
-  }
-
-  async markWordsLearned(userId: number, data: MarkWordsLearnedDto,type:CoreSkillType) {
-    const { wordIds } = data;
-
-    // Отримуємо всі слова користувача
-    const words = await this.databaseService.word.findMany({
+  async markWordsLearned(
+    userId: number,
+    wordIds: number[],
+    progressData: UpdateProgressDto,
+  ) {
+    const userWords = await this.databaseService.word.findMany({
       where: {
         id: { in: wordIds },
         userId,
@@ -290,10 +255,10 @@ export class WordsService {
       },
     });
 
-    if (words.length !== wordIds.length) {
-      throw new BadRequestException(
-        'Деякі слова не знайдені або не належать користувачу',
-      );
+    if (userWords.length !== wordIds.length) {
+      const foundIds = userWords.map((w) => w.id);
+      const missingIds = wordIds.filter((id) => !foundIds.includes(id));
+      console.warn('Missing word IDs:', missingIds);
     }
 
     const results: {
@@ -304,9 +269,12 @@ export class WordsService {
       failed: [],
     };
 
-    for (const word of words) {
+    for (const word of userWords) {
       try {
-        this.markWordAsLearned(userId, word.id,type);
+        await this.databaseService.$transaction(async (tx) => {
+          await this.updateWordProgress(userId, word.id, progressData);
+          await this.addXPForWordLearning(tx, userId, word.language);
+        });
 
         results.successful.push({
           wordId: word.id,
@@ -325,7 +293,6 @@ export class WordsService {
       success: true,
       results,
       summary: {
-        total: wordIds.length,
         successful: results.successful.length,
         failed: results.failed.length,
       },
@@ -377,11 +344,7 @@ export class WordsService {
   async updateWordProgress(
     userId: number,
     wordId: number,
-    progressData: {
-      correct: boolean;
-      timeSpent: number;
-      skillType: CoreSkillType;
-    },
+    progressData: UpdateProgressDto,
   ) {
     const wordProgress = await this.databaseService.wordTaskProgress.findUnique(
       {
@@ -403,13 +366,13 @@ export class WordsService {
     return this.databaseService.$transaction(async (tx) => {
       const newScore = this.calculateNewScore(
         wordProgress.score,
-        progressData.correct,
+        progressData.correct || false,
         wordProgress.attempts,
       );
 
       const { nextReviewAt, reviewInterval, easeFactor } =
         this.calculateNextReview(
-          progressData.correct,
+          progressData.correct || false,
           wordProgress.reviewInterval,
           wordProgress.easeFactor,
         );
@@ -421,7 +384,7 @@ export class WordsService {
           attempts: { increment: 1 },
           correctCount: progressData.correct ? { increment: 1 } : undefined,
           timeSpent: { increment: progressData.timeSpent },
-          isPassed: newScore >= 80,
+          isPassed: progressData.isPassed || newScore >= 80,
           nextReviewAt,
           reviewInterval,
           easeFactor,
@@ -430,13 +393,6 @@ export class WordsService {
       });
 
       await this.checkWordCompletion(tx, wordId, userId);
-
-      await this.updateVocabularyProgress(
-        tx,
-        userId,
-        wordProgress.word.language,
-        wordProgress.skillType
-      );
 
       const xpGain = progressData.correct ? 10 : 5;
       await this.addXPToUser(
@@ -500,61 +456,6 @@ export class WordsService {
       data: {
         isLearned: allPassed,
         totalProgress: Math.round(averageScore),
-      },
-    });
-  }
-  private async updateVocabularyProgress(
-    tx: any,
-    userId: number,
-    language: any,
-    type?:CoreSkillType
-  ) {
-    let languageProgress = await tx.languageProgress.findUnique({
-      where: { userId_language: { userId, language } },
-    });
-
-    if (!languageProgress) {
-      languageProgress = await tx.languageProgress.create({
-        data: { userId, language },
-      });
-    }
-
-    let skillProgress = await tx.skillProgress.findUnique({
-      where: {
-        userId_languageProgressId_skillType: {
-          userId,
-          languageProgressId: languageProgress.id,
-          skillType: type || CoreSkillType.VOCABULARY,
-        },
-      },
-    });
-
-    if (!skillProgress) {
-      skillProgress = await tx.skillProgress.create({
-        data: {
-          userId,
-          languageProgressId: languageProgress.id,
-          skillType: type || CoreSkillType.VOCABULARY,
-        },
-      });
-    }
-
-    const [totalWords, learnedWords] = await Promise.all([
-      tx.word.count({
-        where: { userId, language },
-      }),
-      tx.word.count({
-        where: { userId, language, isLearned: true },
-      }),
-    ]);
-
-    await tx.skillProgress.update({
-      where: { id: skillProgress.id },
-      data: {
-        totalWordsStudied: totalWords,
-        wordsLearned: learnedWords,
-        wordsReviewing: totalWords - learnedWords,
-        lastPracticed: new Date(),
       },
     });
   }

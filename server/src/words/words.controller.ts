@@ -15,6 +15,7 @@ import { WordsService } from './words.service';
 import {
   ApiBearerAuth,
   ApiOperation,
+  ApiParam,
   ApiQuery,
   ApiResponse,
   ApiTags,
@@ -143,30 +144,18 @@ export class WordsController {
     return this.wordsService.updateWord(id, userId, updateWordDTO);
   }
 
-  @ApiOperation({ summary: 'Позначити слово як вивчене' })
-  @ApiResponse({ status: 200, description: 'Слово позначено як вивчене' })
-  @ApiResponse({
-    status: 404,
-    description: 'Слово не знайдено або немає доступу',
-  })
-  @Patch(':id/mark-learned')
-  async markWordAsLearned(
-    @GetCurrentUserId() userId: number,
-    @Param('id', ParseIntPipe) wordId: number,
-    @Query('type') type: CoreSkillType = CoreSkillType.VOCABULARY,
-  ) {
-    return this.wordsService.markWordAsLearned(userId, wordId, type);
-  }
-
-  @Patch('mark-batch-learned')
+ @Post('mark-batch-learned')
   @ApiOperation({ summary: 'Позначити множину слів як вивчених' })
   @ApiResponse({ status: 200, description: 'Слова успішно оброблені' })
   async markWordsLearned(
-    @Req() req: any,
-    @Body() data: MarkWordsLearnedDto,
-    @Query('type') type: CoreSkillType = CoreSkillType.VOCABULARY,
+    @GetCurrentUserId() userId: number,
+    @Body(ValidationPipe) requestData: MarkWordsLearnedDto,
   ) {
-    return this.wordsService.markWordsLearned(req.user.id, data, type);
+    return this.wordsService.markWordsLearned(
+      userId, 
+      requestData.wordIds, 
+      requestData.progressData
+    );
   }
 
   @ApiOperation({ summary: 'Видалення слова' })
