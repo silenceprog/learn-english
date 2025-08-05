@@ -4,5 +4,12 @@
   "dictionary": "Wörterbuch",
   "community": "Gemeinschaft",
   "login": "Anmeldung",
-  "registration": "Registrierung"
+  "registration": "Registrierung",
+  "exercises": "Übungen",
+  "reverseCardsDescription": "In diesem Modus siehst du das Wort in deiner Muttersprache und sollst die Übersetzung in der Fremdsprache erinnern. So festigst du deinen aktiven Wortschatz effektiver.",
+  "cardsDescription": "Jede Karte zeigt ein Wort – tippe, um die Übersetzung zu sehen und präge sie dir ein.",
+  "matchingDescription": "Ziehe oder tippe, um Begriffe mit ihren richtigen Übersetzungen zu verbinden.",
+  "cards": "Karten",
+  "reverseCards": "Umgekehrte Karten",
+  "matching": "Zuordnen"
 }

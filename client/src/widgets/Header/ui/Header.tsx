@@ -46,7 +46,7 @@ export function Header() {
             href="/exercises"
             className="text-sm font-semibold hover:text-blue-600 transition-colors"
           >
-            {"Exercises"}
+            {t("exercises")}
           </Link>
           <Link
             href="/dictionary"

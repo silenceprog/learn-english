@@ -4,11 +4,12 @@ import CreateExercise from "@/app/exercises/CreateExercise";
 import { BookOpen } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useGetFlashcards } from "@/states/requests/useGetFlashcards";
+import { useTranslations } from "next-intl";
 
 export default function Exercises() {
   const { flashcards, fetch } = useGetFlashcards();
   const router = useRouter();
-
+  const t = useTranslations();
   return (
     <Section>
       <p className="text-2xl font-bold text-blue-700 md:text-4xl mb-4">
@@ -16,9 +17,9 @@ export default function Exercises() {
       </p>
       <div className="grid grid-cols-3 gap-6">
         <CreateExercise
-          name="Cards"
+          name={t("cards")}
           icon={<BookOpen />}
-          text="Изучайте новые слова с помощью интерактивных карточек"
+          text={t("cardsDescription")}
           href="/exercises/flashcards"
           difficulty="Easy"
           handleClick={async () => {
@@ -29,9 +30,9 @@ export default function Exercises() {
           }}
         />
         <CreateExercise
-          name="Reverse Cards"
+          name={t("reverseCards")}
           icon={<BookOpen />}
-          text="Изучайте новые слова с помощью интерактивных карточек"
+          text={t("reverseCardsDescription")}
           href="/exercises/reverseFlashCards"
           difficulty="Hard"
           handleClick={async () => {
@@ -42,9 +43,9 @@ export default function Exercises() {
           }}
         />
         <CreateExercise
-          name="Matching Cards"
+          name={t("matching")}
           icon={<BookOpen />}
-          text="Изучайте новые слова с помощью интерактивных карточек"
+          text={t("matchingDescription")}
           href="/exercises/reverseFlashCards"
           difficulty="Hard"
           handleClick={() => router.push("/exercises/matching")}
