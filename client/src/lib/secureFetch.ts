@@ -2,13 +2,15 @@ import { useAuthStore } from "@/states/authStore";
 
 export async function secureFetch(input: RequestInfo, init: RequestInit = {}) {
   const { refresh } = useAuthStore.getState();
-
+  const { isAuthenticated } = useAuthStore.getState();
   const baseHeaders = {
     ...init.headers,
     Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
     "Content-Type": "application/json",
   };
-
+  if (!isAuthenticated) {
+    throw new Error("Not authenticated");
+  }
   let res = await fetch(input, { ...init, headers: baseHeaders });
 
   if (res.status === 401) {
