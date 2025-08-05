@@ -47,12 +47,7 @@ export default function Exercises() {
           text="Изучайте новые слова с помощью интерактивных карточек"
           href="/exercises/reverseFlashCards"
           difficulty="Hard"
-          handleClick={async () => {
-            await fetch();
-            if (flashcards.length >= 10) {
-              router.push("/exercises/matching");
-            }
-          }}
+          handleClick={() => router.push("/exercises/matching")}
         />
       </div>
     </Section>

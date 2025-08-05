@@ -67,6 +67,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
 
       if (!response.ok) {
         useAlertStore.getState().addAlert("Failed to refresh", "error");
+        get().logout();
         return null;
       }
 
