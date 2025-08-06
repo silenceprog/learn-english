@@ -4,25 +4,12 @@ import CreateExercise from "@/app/exercises/CreateExercise";
 import { BookOpen } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useGetFlashcards } from "@/states/requests/useGetFlashcards";
-import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 
 export default function Exercises() {
-  const { data, fetch } = useGetFlashcards();
+  const { flashcards, fetch } = useGetFlashcards();
   const router = useRouter();
-  const [requested, setRequested] = useState(false);
-  useEffect(() => {
-    if (requested && data.length >= 10) {
-      router.push("/exercises/flashcards");
-    }
-  }, [data, requested, router]);
-  async function handleClick() {
-    await fetch();
-    setRequested(true);
-  }
-  function fetchCards2() {
-    console.log("2");
-  }
-
+  const t = useTranslations();
   return (
     <Section>
       <p className="text-2xl font-bold text-blue-700 md:text-4xl mb-4">
@@ -30,20 +17,38 @@ export default function Exercises() {
       </p>
       <div className="grid grid-cols-3 gap-6">
         <CreateExercise
-          name="Cards"
+          name={t("cards")}
           icon={<BookOpen />}
-          text="Изучайте новые слова с помощью интерактивных карточек"
+          text={t("cardsDescription")}
           href="/exercises/flashcards"
           difficulty="Easy"
-          handleClick={handleClick}
+          handleClick={async () => {
+            await fetch();
+            if (flashcards.length >= 10) {
+              router.push("/exercises/flashcards");
+            }
+          }}
         />
         <CreateExercise
-          name="Reverse Cards"
+          name={t("reverseCards")}
           icon={<BookOpen />}
-          text="Изучайте новые слова с помощью интерактивных карточек"
-          href="/exercises/flashcards"
+          text={t("reverseCardsDescription")}
+          href="/exercises/reverseFlashCards"
           difficulty="Hard"
-          handleClick={fetchCards2}
+          handleClick={async () => {
+            await fetch();
+            if (flashcards.length >= 10) {
+              router.push("/exercises/reverseFlashCards");
+            }
+          }}
+        />
+        <CreateExercise
+          name={t("matching")}
+          icon={<BookOpen />}
+          text={t("matchingDescription")}
+          href="/exercises/reverseFlashCards"
+          difficulty="Hard"
+          handleClick={() => router.push("/exercises/matching")}
         />
       </div>
     </Section>

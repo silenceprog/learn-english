@@ -3,12 +3,13 @@ import { secureFetch } from "@/lib/secureFetch";
 import { useAlertStore } from "@/states/alertStore";
 
 type States = {
-  data: Word[];
+  flashcards: Word[];
   fetch: () => Promise<void>;
+  markAsLearned: (skillType: skillType, IDs: number[]) => Promise<void>;
   clear: () => void;
 };
 
-type Word = {
+export type Word = {
   id: number;
   text: string;
   language: string;
@@ -26,8 +27,12 @@ type Word = {
   correctCount: number;
 };
 
+export type skillType = "VOCABULARY";
+
+const { addAlert } = useAlertStore.getState();
+
 export const useGetFlashcards = create<States>((set) => ({
-  data: [],
+  flashcards: [],
   fetch: async () => {
     try {
       const res = await secureFetch(
@@ -53,7 +58,7 @@ export const useGetFlashcards = create<States>((set) => ({
         useAlertStore.getState().addAlert("Unexpected data format", "error");
         return;
       }
-      set({ data: json });
+      set({ flashcards: json });
 
       console.log(json);
       if (json.length < 10) {
@@ -69,5 +74,39 @@ export const useGetFlashcards = create<States>((set) => ({
       useAlertStore.getState().addAlert("Something went wrong!", "error");
     }
   },
-  clear: () => set({ data: [] }),
+  markAsLearned: async (skillType, IDs) => {
+    try {
+      const res = await secureFetch(
+        "https://learn-english-6ufl.onrender.com/api/words/mark-batch-learned",
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+          body: JSON.stringify({
+            wordIds: IDs,
+            progressData: {
+              timeSpent: 30,
+              skillType: skillType,
+              isPassed: true,
+            },
+          }),
+        },
+      );
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({}));
+        addAlert(
+          `Помилка: ${errorData.message || "Сталася помилка на сервері"}`,
+          "error",
+        );
+        return;
+      }
+
+      addAlert("Прогрес успішно оновлено", "success");
+    } catch (error) {
+      addAlert("Помилка з'єднання з сервером. Спробуйте пізніше.", "error");
+      console.error(error);
+    }
+  },
+  clear: () => set({ flashcards: [] }),
 }));

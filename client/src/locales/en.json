@@ -1,0 +1,15 @@
+{
+  "courses": "Courses",
+  "practice": "Practice",
+  "dictionary": "Dictionary",
+  "community": "Community",
+  "login": "Login",
+  "registration": "Registration",
+  "exercises": "Exercises",
+  "reverseCardsDescription": "In this mode, you’ll see the word in your native language and try to recall the translation in the target language. It helps reinforce your active vocabulary.",
+  "cardsDescription": "Each card shows a word – tap to reveal the translation and memorize it.",
+  "matchingDescription": "Drag or tap to connect each word with its correct meaning.",
+  "cards": "Cards",
+  "reverseCards": "Reverse Cards",
+  "matching": "Matching"
+}

@@ -2,16 +2,16 @@
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import { Button } from "@/shared/ui/Button";
 import { FaEarthAfrica } from "react-icons/fa6";
-import { useTranslation } from "react-i18next";
-import "@/lib/i18n.client";
+import { useLocaleStore } from "@/states/useLocaleStore";
 
 export function DropDownLanguageSwitcher() {
+  const { setLocale } = useLocaleStore();
   const LANGUAGES = [
     { code: "ua", label: "Український" },
     { code: "en", label: "English" },
     { code: "de", label: "Deutsch" },
   ];
-  const { i18n } = useTranslation();
+
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
@@ -29,7 +29,7 @@ export function DropDownLanguageSwitcher() {
             key={lang.code}
             className="text-sm px-2 py-1.5 cursor-pointer hover:bg-gray-100 text-gray-700"
             onSelect={() => {
-              i18n.changeLanguage(lang.code);
+              setLocale(lang.code);
             }}
           >
             {lang.label}

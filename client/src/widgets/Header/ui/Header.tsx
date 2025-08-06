@@ -9,22 +9,23 @@ import { useEffect } from "react";
 import { DropDownUserAccount } from "@/widgets/Header/ui/DropDownUserAccount";
 import { DropDownUserMenu } from "@/widgets/Header/ui/DropDownUserMenu";
 import { useUserSettingsStore } from "@/states/requests/useUserSettings";
-import { useTranslation } from "next-i18next";
 import { CopyToken } from "@/widgets/Token/CopyToken";
 import { useAuthStore } from "@/states/authStore";
+import { useTranslations } from "next-intl";
+import { useLocaleStore } from "@/states/useLocaleStore";
 
 export function Header() {
   const { isAuthenticated } = useAuthStore();
   const { fetchSettings, settings } = useUserSettingsStore();
-  const { i18n } = useTranslation();
+  const { setLocale } = useLocaleStore();
 
   useEffect(() => {
     if (isAuthenticated) {
       fetchSettings();
-      i18n.changeLanguage(settings.global_language);
+      setLocale(settings.global_language);
     }
   }, [isAuthenticated]);
-  const { t } = useTranslation();
+  const t = useTranslations();
   return (
     <Section className="border-b border-gray-200 sticky top-0 z-50 w-full bg-white">
       <div className="flex justify-between h-16 items-center">
@@ -45,7 +46,7 @@ export function Header() {
             href="/exercises"
             className="text-sm font-semibold hover:text-blue-600 transition-colors"
           >
-            {t("Exercises")}
+            {t("exercises")}
           </Link>
           <Link
             href="/dictionary"

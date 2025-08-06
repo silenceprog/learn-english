@@ -1,11 +1,14 @@
 "use client";
-
 import CreateFlashcardsExercise from "@/app/exercises/flashcards/CreateFlashcardsExercise";
 import { useGetFlashcards } from "@/states/requests/useGetFlashcards";
 
-export default function FlashCard() {
+export default function ReverseCards() {
   const { flashcards } = useGetFlashcards();
   return (
-    <CreateFlashcardsExercise flashcards={flashcards} skillType="VOCABULARY" />
+    <CreateFlashcardsExercise
+      flashcards={flashcards}
+      reverse={true}
+      skillType="VOCABULARY"
+    />
   );
 }
