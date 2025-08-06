@@ -1,6 +1,7 @@
 import { ApiProperty, ApiPropertyOptional} from "@nestjs/swagger";
 import { Type } from "class-transformer";
-import { IsInt, IsOptional, IsString, Max, Min } from "class-validator";
+import { IsEnum, IsInt, IsOptional, IsString, Max, Min } from "class-validator";
+import { TaskType } from "generated/prisma";
 
 export class FlashcardAnswerDto {
   @ApiProperty({ description: 'ID слова' })
@@ -25,4 +26,8 @@ export class FlashcardAnswerDto {
   @Min(1)
   @Max(5)
   difficulty?: number;
+
+  @IsOptional()
+  @IsEnum(TaskType)
+  taskType?: TaskType = TaskType.FLASHCARDS;
 }

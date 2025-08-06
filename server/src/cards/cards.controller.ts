@@ -1,58 +1,240 @@
-import { Controller, Post, Get, Body, Param, Query } from '@nestjs/common';
+import { Controller, Post, Get, Body, Param, Query, HttpException, HttpStatus, ParseIntPipe } from '@nestjs/common';
 import { FlashCardService } from './cards.service';
-import { ApiBearerAuth, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiParam,
+  ApiQuery,
+  ApiResponse,
+} from '@nestjs/swagger';
 import { FlashcardAnswerDto } from './dto/flashcard-answer.dto';
 import { FlashcardQueryDto } from './dto/flashcard-query.dto';
 import { GetCurrentUserId } from 'src/decorators/get-current-user-id.decorator';
 import { FlashcardResponseDto } from './dto/flashcard-response.dto';
-import { Language } from 'generated/prisma';
+import { Language, TaskType } from 'generated/prisma';
 
 @ApiBearerAuth('access-token')
 @Controller('flashcards')
 export class FlashcardController {
-  constructor(private readonly flashcardService: FlashCardService) {}
+  constructor(private readonly flashCardService: FlashCardService) {}
 
   @Get()
-  @ApiOperation({ summary: 'Отримати карточки для вивчення' })
+  @ApiOperation({
+    summary: 'Отримати слова для флешкарт',
+    description:
+      'Отримує список слів для вивчення або повторення залежно від параметрів',
+  })
   @ApiResponse({
     status: 200,
     description: 'Список карточок',
     type: [FlashcardResponseDto],
   })
+  @ApiQuery({ name: 'language', enum: Language, required: false })
+  @ApiQuery({ name: 'taskType', enum: TaskType, required: false })
+  @ApiQuery({ name: 'limit', type: Number, required: false })
+  @ApiQuery({ name: 'reviewOnly', type: Boolean, required: false })
+  @ApiQuery({ name: 'level', required: false })
   async getFlashcards(
     @GetCurrentUserId() userId: any,
     @Query() query: FlashcardQueryDto,
   ): Promise<FlashcardResponseDto[]> {
-    return this.flashcardService.getFlashcards(userId, query);
+    try {
+    return this.flashCardService.getFlashcards(userId, query);
+    }
+    catch (error) {
+      throw new HttpException(
+        'Помилка при отриманні флешкарт',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 
-  @Post('check')
-  @ApiOperation({ summary: 'Перевірити відповідь на карточку' })
-  @ApiResponse({ status: 200, description: 'Результат перевірки' })
+ @Post('check-answer')
+  @ApiOperation({ 
+    summary: 'Перевірити відповідь',
+    description: 'Перевіряє правильність відповіді користувача та оновлює прогрес' 
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Результат перевірки відповіді',
+    schema: {
+      properties: {
+        isCorrect: { type: 'boolean' },
+        score: { type: 'number' },
+        correctAnswer: { 
+          oneOf: [
+            { type: 'string' },
+            { type: 'array', items: { type: 'string' } }
+          ]
+        },
+        explanation: { type: 'string', nullable: true },
+        nextReviewAt: { type: 'string', format: 'date-time', nullable: true },
+        taskType: { enum: Object.values(TaskType) },
+        progress: {
+          type: 'object',
+          properties: {
+            attempts: { type: 'number' },
+            correctCount: { type: 'number' },
+            accuracy: { type: 'number' },
+          },
+        },
+      },
+    },
+  })
   async checkAnswer(
-    @GetCurrentUserId() userId: any,
+    @GetCurrentUserId() userId,
     @Body() answer: FlashcardAnswerDto,
   ) {
-    return this.flashcardService.checkAnswer(userId, answer);
+    try {
+      return await this.flashCardService.checkAnswer(userId, answer);
+    } catch (error) {
+      if (error.status === 404) {
+        throw error;
+      }
+      throw new HttpException(
+        'Помилка при перевірці відповіді',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 
+ 
   @Get('stats')
-  @ApiOperation({ summary: 'Отримати статистику карточок' })
-  @ApiResponse({ status: 200, description: 'Статистика карточок' })
+  @ApiOperation({ 
+    summary: 'Отримати статистику флешкарт',
+    description: 'Повертає загальну статистику вивчення слів та прогрес' 
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Статистика флешкарт',
+  })
+  @ApiQuery({ name: 'language', enum: Language, required: false })
+  @ApiQuery({ name: 'taskType', enum: TaskType, required: false })
   async getStats(
-    @GetCurrentUserId() userId: any,
+    @GetCurrentUserId() userId,
     @Query('language') language?: Language,
+    @Query('taskType') taskType?: TaskType,
   ) {
-    return this.flashcardService.getFlashcardStats(userId, language);
+    try {
+      return await this.flashCardService.getFlashcardStats(userId, language, taskType);
+    } catch (error) {
+      throw new HttpException(
+        'Помилка при отриманні статистики',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 
   @Get('review')
-  @ApiOperation({ summary: 'Отримати слова для повторення' })
-  @ApiResponse({ status: 200, description: 'Слова для повторення' })
+  @ApiOperation({ 
+    summary: 'Отримати слова для повторення',
+    description: 'Повертає слова, які потрібно повторити згідно з алгоритмом інтервального повторення' 
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Слова для повторення',
+    type: [FlashcardResponseDto],
+  })
+  @ApiQuery({ name: 'taskType', enum: TaskType, required: false })
+  @ApiQuery({ name: 'limit', type: Number, required: false })
   async getWordsForReview(
-    @GetCurrentUserId() userId: any,
-    @Query('limit') limit?: number,
+   @GetCurrentUserId() userId: any,
+    @Query('taskType') taskType: TaskType = TaskType.FLASHCARDS,
+    @Query('limit', new ParseIntPipe({ optional: true })) limit: number = 20,
   ) {
-    return this.flashcardService.getWordsForReview(userId, limit);
+    try {
+      return await this.flashCardService.getWordsForReview(userId, taskType, limit);
+    } catch (error) {
+      throw new HttpException(
+        'Помилка при отриманні слів для повторення',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
+  @Get('practice')
+  @ApiOperation({ 
+    summary: 'Отримати слова для практики',
+    description: 'Повертає слова, які потребують додаткової практики (не пройдені завдання)' 
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Слова для практики',
+    schema: {
+      type: 'array',
+      items: {
+        allOf: [
+          { $ref: '#/components/schemas/FlashcardResponseDto' },
+          {
+            properties: {
+              progress: { $ref: '#/components/schemas/WordProgressDto' },
+            },
+          },
+        ],
+      },
+    },
+  })
+  @ApiQuery({ name: 'taskType', enum: TaskType, required: false })
+  @ApiQuery({ name: 'limit', type: Number, required: false })
+  async getWordsNeedingPractice(
+    @GetCurrentUserId() userId: any,
+    @Query('taskType') taskType: TaskType = TaskType.FLASHCARDS,
+    @Query('limit', new ParseIntPipe({ optional: true })) limit: number = 20,
+  ) {
+    try {
+      return await this.flashCardService.getWordsNeedingPractice(userId, taskType, limit);
+    } catch (error) {
+      throw new HttpException(
+        'Помилка при отриманні слів для практики',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
+  @Get('types')
+  @ApiOperation({ 
+    summary: 'Отримати доступні типи завдань',
+    description: 'Повертає список всіх доступних типів завдань для флешкарт' 
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Типи завдань',
+    schema: {
+      type: 'array',
+      items: {
+        type: 'object',
+        properties: {
+          value: { type: 'string', enum: Object.values(TaskType) },
+          label: { type: 'string' },
+          description: { type: 'string' },
+        },
+      },
+    },
+  })
+  async getTaskTypes() {
+    const taskTypes = [
+      {
+        value: TaskType.FLASHCARDS,
+        label: 'Флешкарти',
+        description: 'Переклад з рідної мови на іноземну',
+      },
+      {
+        value: TaskType.REVERSE_FLASHCARDS,
+        label: 'Зворотні флешкарти',
+        description: 'Переклад з іноземної мови на рідну',
+      },
+      {
+        value: TaskType.MATCHING,
+        label: 'Співставлення',
+        description: 'Знайти відповідність між словом та перекладом',
+      },
+      {
+        value: TaskType.FILL_IN_THE_BLANK,
+        label: 'Заповнення пропусків',
+        description: 'Вставити правильне слово в речення',
+      },
+    ];
+
+    return taskTypes;
   }
 }

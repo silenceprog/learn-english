@@ -54,23 +54,23 @@ export class ProgressController {
 
  @Post(':language/skills/:skillType/update')
   @ApiOperation({ 
-    summary: 'Update skill progress',
-    description: 'Updates progress for a specific skill after practice session'
+    summary: 'Оновити прогрес у навичках',
+    description: 'Оновлює прогрес для певної навички після тренування'
   })
   @ApiParam({ 
     name: 'language', 
     enum: Language,
-    description: 'Language being practiced'
+    description: 'Мова, що практикується'
   })
   @ApiParam({ 
     name: 'skillType', 
     enum: CoreSkillType,
-    description: 'Type of skill being practiced'
+    description: 'Тип навичок, що практикуються'
   })
   @ApiBody({ type: UpdateSkillProgressDto })
   @ApiResponse({ 
     status: 200, 
-    description: 'Skill progress updated successfully',
+    description: 'Прогрес у навичці успішно оновлено',
     type: SkillProgressResponse
   })
   @ApiResponse({ status: 400, description: 'Invalid input data' })
@@ -91,7 +91,7 @@ export class ProgressController {
 
       return {
         success: true,
-        message: 'Skill progress updated successfully',
+        message: 'Прогрес у навичці успішно оновлено',
         data: result
       };
     } catch (error) {
@@ -104,19 +104,19 @@ export class ProgressController {
 
   @Get(':language')
   @ApiOperation({ 
-    summary: 'Get language progress',
-    description: 'Retrieves detailed progress information for a specific language'
+    summary: 'Отримати прогрес по мові',
+    description: 'Отримати детальну інформацію про прогрес для певної мови'
   })
   @ApiParam({ 
     name: 'language', 
     enum: Language,
-    description: 'Language to get progress for'
+    description: 'Мова, для якої потрібно отримати прогрес'
   })
   @ApiResponse({ 
     status: 200, 
-    description: 'Language progress retrieved successfully'
+    description: 'Прогрес по мові успішно отримано'
   })
-  @ApiResponse({ status: 404, description: 'Language progress not found' })
+  @ApiResponse({ status: 404, description: 'Прогресу в мовленні не знайдено' })
   async getLanguageProgress(
      @GetCurrentUserId() userId: number,
     @Param('language', new ParseEnumPipe(Language)) language: Language
@@ -136,58 +136,19 @@ export class ProgressController {
     };
   }
 
-  @Get(':language/leaderboard')
-  @ApiOperation({ 
-    summary: 'Get language leaderboard',
-    description: 'Retrieves top learners for a specific language'
-  })
-  @ApiParam({ 
-    name: 'language', 
-    enum: Language,
-    description: 'Language to get leaderboard for'
-  })
-  @ApiQuery({ 
-    name: 'limit', 
-    required: false, 
-    type: Number,
-    description: 'Number of top users to return (1-100, default: 10)'
-  })
-  @ApiResponse({ 
-    status: 200, 
-    description: 'Leaderboard retrieved successfully'
-  })
-  async getLanguageLeaderboard(
-    @Param('language', new ParseEnumPipe(Language)) language: Language,
-    @Query('limit', new ParseIntPipe({ optional: true })) limit?: number
-  ) {
-    const leaderboard = await this.progressService.getLanguageLeaderboard(
-      language, 
-      limit || 10
-    );
-
-    return {
-      success: true,
-      data: {
-        language,
-        totalUsers: leaderboard.length,
-        leaderboard
-      }
-    };
-  }
-
   @Get(':language/recommendations')
   @ApiOperation({ 
-    summary: 'Get learning recommendations',
-    description: 'Provides personalized learning recommendations based on current progress'
+    summary: 'Отримати навчальні рекомендації',
+    description: 'Надає персоналізовані рекомендації щодо навчання на основі поточного прогресу'
   })
   @ApiParam({ 
     name: 'language', 
     enum: Language,
-    description: 'Language to get recommendations for'
+    description: 'Мова, для якої потрібно отримувати рекомендації'
   })
   @ApiResponse({ 
     status: 200, 
-    description: 'Recommendations retrieved successfully'
+    description: 'Рекомендації успішно отримано'
   })
   async getLearningRecommendations(
      @GetCurrentUserId() userId: number,
@@ -206,16 +167,15 @@ export class ProgressController {
 
   @Get('overview')
   @ApiOperation({ 
-    summary: 'Get user progress overview',
-    description: 'Retrieves overall progress summary across all languages'
+    summary: 'Отримати прогрес користувача',
+    description: 'Отримати загальний прогрес по всім мовам'
   })
   @ApiResponse({ 
     status: 200, 
-    description: 'Progress overview retrieved successfully'
+    description: 'Прогрес успішно отримано'
   })
   async getProgressOverview( @GetCurrentUserId() userId: number) {
     try {
-      // Отримуємо прогрес по всіх мовах
       const languages = Object.values(Language);
       const progressPromises = languages.map(language => 
         this.progressService.getLanguageProgress(userId, language)
@@ -229,11 +189,9 @@ export class ProgressController {
         } : null)
         .filter(progress => progress !== null);
 
-      // Розраховуємо загальну статистику
       const totalXP = activeLanguages.reduce((sum, lang) => sum + (lang.totalXP || 0), 0);
       const totalTime = activeLanguages.reduce((sum, lang) => sum + (lang.totalTime || 0), 0);
       
-      // Знаходимо найактивнішу мову
       const mostActiveLanguage = activeLanguages.reduce((prev, current) => 
         (current.totalXP > prev.totalXP) ? current : prev, 
         activeLanguages[0] || null

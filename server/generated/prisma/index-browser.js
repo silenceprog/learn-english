@@ -123,34 +123,34 @@ exports.Prisma.UserScalarFieldEnum = {
   username: 'username',
   password: 'password',
   role: 'role',
-  avatar: 'avatar',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   deleteAt: 'deleteAt',
   lastLoginAt: 'lastLoginAt',
   provider: 'provider',
   refreshToken: 'refreshToken',
-  totalXP: 'totalXP',
+  avatar: 'avatar',
   currentStreak: 'currentStreak',
+  lastActiveAt: 'lastActiveAt',
   longestStreak: 'longestStreak',
   totalLearningTime: 'totalLearningTime',
-  lastActiveAt: 'lastActiveAt'
+  totalXP: 'totalXP'
 };
 
 exports.Prisma.WordScalarFieldEnum = {
   id: 'id',
   text: 'text',
+  createdAt: 'createdAt',
   language: 'language',
   translate: 'translate',
+  isLearned: 'isLearned',
+  totalProgress: 'totalProgress',
+  audio: 'audio',
+  audioUS: 'audioUS',
+  phonetic: 'phonetic',
+  phoneticUS: 'phoneticUS',
   definitions: 'definitions',
   examples: 'examples',
-  createdAt: 'createdAt',
-  totalProgress: 'totalProgress',
-  isLearned: 'isLearned',
-  phonetic: 'phonetic',
-  audio: 'audio',
-  phoneticUS: 'phoneticUS',
-  audioUS: 'audioUS',
   userId: 'userId'
 };
 
@@ -159,12 +159,12 @@ exports.Prisma.VideoScalarFieldEnum = {
   title: 'title',
   description: 'description',
   url: 'url',
-  language: 'language',
-  level: 'level',
-  duration: 'duration',
-  skillTypes: 'skillTypes',
+  createdAt: 'createdAt',
   courseId: 'courseId',
-  createdAt: 'createdAt'
+  duration: 'duration',
+  language: 'language',
+  skillTypes: 'skillTypes',
+  level: 'level'
 };
 
 exports.Prisma.TaskScalarFieldEnum = {
@@ -173,18 +173,18 @@ exports.Prisma.TaskScalarFieldEnum = {
   answer: 'answer',
   options: 'options',
   type: 'type',
-  score: 'score',
   createdAt: 'createdAt',
-  order: 'order',
-  explanation: 'explanation',
-  skillType: 'skillType',
-  language: 'language',
-  cefrLevel: 'cefrLevel',
-  xpReward: 'xpReward',
-  timeLimit: 'timeLimit',
-  authorId: 'authorId',
   videoId: 'videoId',
-  courseId: 'courseId'
+  courseId: 'courseId',
+  language: 'language',
+  score: 'score',
+  authorId: 'authorId',
+  explanation: 'explanation',
+  order: 'order',
+  cefrLevel: 'cefrLevel',
+  skillType: 'skillType',
+  timeLimit: 'timeLimit',
+  xpReward: 'xpReward'
 };
 
 exports.Prisma.CourseScalarFieldEnum = {
@@ -192,15 +192,15 @@ exports.Prisma.CourseScalarFieldEnum = {
   title: 'title',
   description: 'description',
   imageUrl: 'imageUrl',
-  level: 'level',
-  targetSkills: 'targetSkills',
   isPublished: 'isPublished',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   tags: 'tags',
+  authorId: 'authorId',
   estimatedHours: 'estimatedHours',
+  targetSkills: 'targetSkills',
   totalXP: 'totalXP',
-  authorId: 'authorId'
+  level: 'level'
 };
 
 exports.Prisma.EnrollmentScalarFieldEnum = {
@@ -217,11 +217,11 @@ exports.Prisma.SettingScalarFieldEnum = {
   global_language: 'global_language',
   current_language: 'current_language',
   purposes: 'purposes',
-  current_level: 'current_level',
-  isEmailVerified: 'isEmailVerified',
-  dailyXPGoal: 'dailyXPGoal',
   dailyTimeGoal: 'dailyTimeGoal',
-  weeklyGoal: 'weeklyGoal'
+  dailyXPGoal: 'dailyXPGoal',
+  weeklyGoal: 'weeklyGoal',
+  current_level: 'current_level',
+  isEmailVerified: 'isEmailVerified'
 };
 
 exports.Prisma.LanguageProgressScalarFieldEnum = {
@@ -274,19 +274,20 @@ exports.Prisma.SkillLevelRequirementsScalarFieldEnum = {
 
 exports.Prisma.WordTaskProgressScalarFieldEnum = {
   id: 'id',
-  wordId: 'wordId',
   userId: 'userId',
-  skillType: 'skillType',
+  wordId: 'wordId',
   isPassed: 'isPassed',
   score: 'score',
   attempts: 'attempts',
   correctCount: 'correctCount',
-  nextReviewAt: 'nextReviewAt',
-  reviewInterval: 'reviewInterval',
+  createdAt: 'createdAt',
   easeFactor: 'easeFactor',
   lastAttempt: 'lastAttempt',
+  nextReviewAt: 'nextReviewAt',
+  reviewInterval: 'reviewInterval',
+  skillType: 'skillType',
+  taskType: 'taskType',
   timeSpent: 'timeSpent',
-  createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
 
@@ -383,15 +384,10 @@ exports.CoreSkillType = exports.$Enums.CoreSkillType = {
 };
 
 exports.TaskType = exports.$Enums.TaskType = {
-  MULTIPLE_CHOICE: 'MULTIPLE_CHOICE',
-  FILL_IN_THE_BLANK: 'FILL_IN_THE_BLANK',
-  TRUE_FALSE: 'TRUE_FALSE',
-  DRAG_AND_DROP: 'DRAG_AND_DROP',
-  AUDIO_CHOICE: 'AUDIO_CHOICE',
-  SPEAKING: 'SPEAKING',
-  WRITING: 'WRITING',
-  READING_COMPREHENSION: 'READING_COMPREHENSION',
-  LISTENING_COMPREHENSION: 'LISTENING_COMPREHENSION'
+  FLASHCARDS: 'FLASHCARDS',
+  REVERSE_FLASHCARDS: 'REVERSE_FLASHCARDS',
+  MATCHING: 'MATCHING',
+  FILL_IN_THE_BLANK: 'FILL_IN_THE_BLANK'
 };
 
 exports.Purpose = exports.$Enums.Purpose = {

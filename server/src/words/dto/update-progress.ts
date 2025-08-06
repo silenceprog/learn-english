@@ -1,6 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsBoolean, IsEnum, IsNumber, IsOptional, Min } from 'class-validator';
-import { CoreSkillType } from 'generated/prisma';
+import { CoreSkillType, TaskType } from 'generated/prisma';
 
 export class UpdateProgressDto {
   @ApiProperty({
@@ -22,12 +22,12 @@ export class UpdateProgressDto {
 
   @ApiPropertyOptional({
     description: 'Тип навички, що тренується',
-    enum: CoreSkillType,
-    example: CoreSkillType.VOCABULARY,
+    enum: TaskType,
+    example: TaskType.FLASHCARDS,
   })
   @IsOptional()
-  @IsEnum(CoreSkillType)
-  skillType: CoreSkillType;
+  @IsEnum(TaskType)
+  taskType: TaskType;
 
   @ApiPropertyOptional({
     description: 'Чи виконано завдання',

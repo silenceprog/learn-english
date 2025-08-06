@@ -1,6 +1,5 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { IsArray, IsEnum, IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
-import { CEFRLevel, CoreSkillType, Language, TaskType } from "generated/prisma";
+import { IsArray, IsEnum, IsNumber, IsOptional, IsString } from "class-validator";
+import { CEFRLevel,  CoreSkillType,  Language, TaskType } from "generated/prisma";
 
 export class CreateTaskDto {
   @IsString()
@@ -13,9 +12,8 @@ export class CreateTaskDto {
   @IsString({ each: true })
   options: string[];
 
-  @IsOptional()
-  @IsEnum(TaskType)
-  type?: TaskType;
+  @IsEnum(CoreSkillType)
+  skillType: CoreSkillType;
 
   @IsOptional()
   @IsNumber()
@@ -29,8 +27,6 @@ export class CreateTaskDto {
   @IsString()
   explanation?: string;
 
-  @IsEnum(CoreSkillType)
-  skillType: CoreSkillType;
 
   @IsOptional()
   @IsEnum(Language)
@@ -47,10 +43,6 @@ export class CreateTaskDto {
   @IsOptional()
   @IsNumber()
   timeLimit?: number;
-
-  @IsOptional()
-  @IsNumber()
-  authorId?: number;
 
   
 }

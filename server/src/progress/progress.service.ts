@@ -29,10 +29,8 @@ export class ProgressService {
   ) {
     const { isCorrect, xpEarned, timeSpent, wordLearned = false } = updateData;
 
-    // Знаходимо або створюємо Language Progress
     const languageProgress = await this.getOrCreateLanguageProgress(userId, language);
 
-    // Знаходимо або створюємо Skill Progress
     let skillProgress = await this.databaseService.skillProgress.findUnique({
       where: {
         userId_languageProgressId_skillType: {
@@ -55,7 +53,6 @@ export class ProgressService {
       });
     }
 
-    // Оновлюємо статистику навички
     const updatedStats = {
       totalPracticed: skillProgress.totalPracticed + 1,
       totalAnswers: skillProgress.totalAnswers + 1,
@@ -64,12 +61,11 @@ export class ProgressService {
       timeSpent: skillProgress.timeSpent + timeSpent,
       totalWordsStudied: skillProgress.totalWordsStudied,
       wordsLearned: skillProgress.wordsLearned,
-      currentAccuracy: 0, // Will be calculated below
+      currentAccuracy: 0, 
       cefrLevel: skillProgress.cefrLevel,
       levelProgress: skillProgress.levelProgress,
     };
 
-    // Для словника додаємо специфічні метрики
     if (skillType === 'VOCABULARY') {
       updatedStats.totalWordsStudied = skillProgress.totalWordsStudied + 1;
       if (wordLearned) {
@@ -77,24 +73,20 @@ export class ProgressService {
       }
     }
 
-    // Розраховуємо поточну точність
     updatedStats.currentAccuracy = 
       (updatedStats.correctAnswers / updatedStats.totalAnswers) * 100;
 
-    // Перевіряємо можливість підвищення рівня
     const levelCheck = await this.checkLevelUp(skillProgress.cefrLevel, skillType, updatedStats);
 
     if (levelCheck.canLevelUp && levelCheck.newLevel) {
       updatedStats.cefrLevel = levelCheck.newLevel;
       updatedStats.levelProgress = 0.0;
       
-      // Додаємо досягнення за підвищення рівня
       await this.createLevelUpAchievement(userId, skillType, levelCheck.newLevel);
     } else {
       updatedStats.levelProgress = levelCheck.progress;
     }
 
-    // Оновлюємо навичку
     skillProgress = await this.databaseService.skillProgress.update({
       where: { id: skillProgress.id },
       data: {
@@ -104,16 +96,13 @@ export class ProgressService {
       }
     });
 
-    // Оновлюємо загальний прогрес по мові
     await this.updateOverallLanguageProgress(userId, language);
 
-    // Оновлюємо загальний XP користувача
     await this.updateUserTotalXP(userId, xpEarned);
 
     return skillProgress;
   }
 
-  // Отримання або створення Language Progress
   private async getOrCreateLanguageProgress(userId: number, language: Language) {
     return await this.databaseService.languageProgress.upsert({
       where: {
@@ -135,7 +124,6 @@ export class ProgressService {
     });
   }
 
-  // Перевірка можливості підвищення рівня
   private async checkLevelUp(currentLevel: CEFRLevel, skillType: CoreSkillType, stats: any): Promise<{
     canLevelUp: boolean;
     progress: number;
@@ -146,7 +134,6 @@ export class ProgressService {
       return { canLevelUp: false, progress: 100.0 };
     }
 
-    // Отримуємо вимоги для наступного рівня
     const requirements = await this.databaseService.skillLevelRequirements.findUnique({
       where: {
         skillType_cefrLevel: {
@@ -157,12 +144,10 @@ export class ProgressService {
     });
 
     if (!requirements) {
-      // Якщо немає вимог, створюємо базові
       await this.createDefaultRequirements(skillType, nextLevel);
       return { canLevelUp: false, progress: 0.0 };
     }
 
-    // Перевіряємо всі вимоги
     const checks = {
       xp: stats.xpEarned >= requirements.minXP,
       accuracy: stats.currentAccuracy >= requirements.minAccuracy,
@@ -177,36 +162,29 @@ export class ProgressService {
       return { canLevelUp: true, newLevel: nextLevel, progress: 100.0 };
     }
 
-    // Розраховуємо прогрес до наступного рівня
     const progress = this.calculateLevelProgress(requirements, stats);
     return { canLevelUp: false, progress };
   }
 
-  // Розрахунок прогресу в межах рівня
   private calculateLevelProgress(requirements: any, stats: any): number {
     const factors: number[] = [];
 
-    // XP прогрес
     if (requirements.minXP > 0) {
       factors.push(Math.min(100, (stats.xpEarned / requirements.minXP) * 100));
     }
 
-    // Точність
     if (requirements.minAccuracy > 0) {
       factors.push(Math.min(100, (stats.currentAccuracy / requirements.minAccuracy) * 100));
     }
 
-    // Кількість вправ
     if (requirements.minPracticed > 0) {
       factors.push(Math.min(100, (stats.totalPracticed / requirements.minPracticed) * 100));
     }
 
-    // Час
     if (requirements.minTimeSpent > 0) {
       factors.push(Math.min(100, (stats.timeSpent / requirements.minTimeSpent) * 100));
     }
 
-    // Слова (для vocabulary)
     if (requirements.minWordsLearned > 0) {
       factors.push(Math.min(100, (stats.wordsLearned / requirements.minWordsLearned) * 100));
     }
@@ -214,9 +192,7 @@ export class ProgressService {
     return factors.length > 0 ? Math.round(factors.reduce((a, b) => a + b) / factors.length) : 0;
   }
 
-  // Оновлення загального прогресу по мові
   private async updateOverallLanguageProgress(userId: number, language: Language) {
-    // Отримуємо всі навички користувача для мови
     const skillProgresses = await this.databaseService.skillProgress.findMany({
       where: {
         userId,
@@ -228,14 +204,11 @@ export class ProgressService {
 
     if (skillProgresses.length === 0) return;
 
-    // Розраховуємо загальний CEFR за допомогою зваженої середньої
     const overallResult = this.calculateOverallCEFR(skillProgresses);
 
-    // Розраховуємо загальний XP та час
     const totalXP = skillProgresses.reduce((sum, skill) => sum + skill.xpEarned, 0);
     const totalTime = skillProgresses.reduce((sum, skill) => sum + skill.timeSpent, 0);
 
-    // Оновлюємо загальний прогрес
     await this.databaseService.languageProgress.update({
       where: {
         userId_language: {
@@ -255,11 +228,9 @@ export class ProgressService {
     return overallResult;
   }
 
-  // Розрахунок загального CEFR рівня
   private calculateOverallCEFR(skillProgresses: any[]) {
-    // Ваги для кожної навички
     const skillWeights = {
-      'VOCABULARY': 0.25,  // словник - основа
+      'VOCABULARY': 0.25, 
       'READING': 0.20,
       'LISTENING': 0.20,
       'SPEAKING': 0.20,
@@ -293,7 +264,6 @@ export class ProgressService {
     };
   }
 
-  // Конвертація CEFR у числове значення
   private cefrToNumeric(cefrLevel: CEFRLevel): number {
     const levels = {
       'PRE_A1': 0, 'A1_MINUS': 1, 'A1': 2, 'A1_PLUS': 3,
@@ -306,7 +276,6 @@ export class ProgressService {
     return levels[cefrLevel] || 0;
   }
 
-  // Конвертація числового значення у CEFR
   private numericToCEFR(numeric: number): CEFRLevel {
     const levels = [
       'PRE_A1', 'A1_MINUS', 'A1', 'A1_PLUS',
@@ -318,7 +287,6 @@ export class ProgressService {
     return levels[Math.floor(numeric)] as CEFRLevel || 'PRE_A1';
   }
 
-  // Отримання наступного CEFR рівня
   private getNextCEFRLevel(currentLevel: CEFRLevel): CEFRLevel | null {
     const levels = [
       'PRE_A1', 'A1_MINUS', 'A1', 'A1_PLUS',
@@ -332,7 +300,6 @@ export class ProgressService {
     return currentIndex < levels.length - 1 ? levels[currentIndex + 1] as CEFRLevel : null;
   }
 
-  // Створення базових вимог для рівня
   private async createDefaultRequirements(skillType: CoreSkillType, cefrLevel: CEFRLevel) {
     const baseRequirements = this.getBaseRequirements(skillType, cefrLevel);
     
@@ -345,7 +312,6 @@ export class ProgressService {
     });
   }
 
-  // Базові вимоги для різних рівнів і навичок
   private getBaseRequirements(skillType: CoreSkillType, cefrLevel: CEFRLevel) {
     const levelMultiplier = this.cefrToNumeric(cefrLevel) + 1;
     
@@ -410,9 +376,7 @@ export class ProgressService {
     return base[skillType] || base['VOCABULARY'];
   }
 
-  // Створення досягнення за підвищення рівня
   private async createLevelUpAchievement(userId: number, skillType: CoreSkillType, newLevel: CEFRLevel) {
-    // Перевіряємо, чи існує досягнення для цього рівня навички
     let achievement = await this.databaseService.achievement.findFirst({
       where: {
         type: 'SKILL_LEVEL',
@@ -422,7 +386,6 @@ export class ProgressService {
     });
 
     if (!achievement) {
-      // Створюємо нове досягнення
       achievement = await this.databaseService.achievement.create({
         data: {
           name: `${skillType} ${newLevel} Master`,
@@ -437,7 +400,6 @@ export class ProgressService {
       });
     }
 
-    // Додаємо досягнення користувачу
     await this.databaseService.userAchievement.upsert({
       where: {
         userId_achievementId: {
@@ -455,7 +417,6 @@ export class ProgressService {
     return achievement;
   }
 
-  // Оновлення загального XP користувача
   private async updateUserTotalXP(userId: number, xpEarned: number) {
     await this.databaseService.user.update({
       where: { id: userId },
@@ -468,9 +429,6 @@ export class ProgressService {
     });
   }
 
-  // Публічні методи для отримання статистики
-
-  // Отримання прогресу користувача по мові
   async getLanguageProgress(userId: number, language: Language) {
     const languageProgress = await this.databaseService.languageProgress.findUnique({
       where: {
@@ -501,37 +459,6 @@ export class ProgressService {
     };
   }
 
-  // Отримання топ користувачів по мові
-  async getLanguageLeaderboard(language: Language, limit: number = 10) {
-    const topUsers = await this.databaseService.languageProgress.findMany({
-      where: { language },
-      include: {
-        user: {
-          select: {
-            id: true,
-            username: true,
-            avatar: true
-          }
-        }
-      },
-      orderBy: [
-        { totalXP: 'desc' },
-        { updatedAt: 'desc' }
-      ],
-      take: limit
-    });
-
-    return topUsers.map((progress, index) => ({
-      rank: index + 1,
-      user: progress.user,
-      overallCEFR: progress.overallCEFR,
-      overallProgress: progress.overallProgress,
-      totalXP: progress.totalXP,
-      totalTime: progress.totalTime
-    }));
-  }
-
-  // Отримання рекомендацій для навчання
   async getLearningRecommendations(userId: number, language: Language) {
     const languageProgress = await this.getLanguageProgress(userId, language);
     
@@ -544,7 +471,6 @@ export class ProgressService {
 
     const recommendations: Recommendation[] = [];
     
-    // Знаходимо найслабшу навичку
     const weakestSkill = languageProgress.skillBreakdown
       .sort((a, b) => this.cefrToNumeric(a.cefrLevel) - this.cefrToNumeric(b.cefrLevel))[0];
 
@@ -556,12 +482,7 @@ export class ProgressService {
         priority: 'HIGH'
       });
     }
-
-    // Перевіряємо карточки, що потребують повторення
     
-
-   
-
     return {
       overallLevel: languageProgress.overallCEFR,
       recommendations

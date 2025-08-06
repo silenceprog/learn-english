@@ -9,7 +9,7 @@ import { DatabaseService } from 'src/database/database.service';
 import { CreateWordDto } from './dto/create-word.dto';
 import { PaginationDto } from './dto/pagination.dto';
 import { TranslateService } from 'src/translate/translate.service';
-import { CoreSkillType } from 'generated/prisma';
+import { CoreSkillType, TaskType } from 'generated/prisma';
 import { MarkWordsLearnedDto } from './dto/mark-word.dto';
 import { WordResult } from './dto/word-result.dto';
 import { UpdateProgressDto } from './dto/update-progress';
@@ -22,10 +22,11 @@ export class WordsService {
   ) {}
 
   async createWord(userId: number, dto: CreateWordDto) {
-    const vocabularySkills = [
-      CoreSkillType.VOCABULARY,
-      CoreSkillType.READING,
-      CoreSkillType.LISTENING,
+    const taskType = [
+     TaskType.FLASHCARDS,
+     TaskType.REVERSE_FLASHCARDS,
+     TaskType.MATCHING,
+     TaskType.FILL_IN_THE_BLANK,
     ];
 
     const setting = await this.databaseService.setting.findUnique({
@@ -90,10 +91,10 @@ export class WordsService {
       });
 
       await tx.wordTaskProgress.createMany({
-        data: vocabularySkills.map((skillType) => ({
+        data: taskType.map((taskType) => ({
           wordId: word.id,
           userId: userId,
-          skillType,
+          taskType,
           nextReviewAt: new Date(),
         })),
       });
@@ -333,7 +334,7 @@ export class WordsService {
     return wordProgresses.map((progress) => ({
       ...progress.word,
       taskProgress: {
-        skillType: progress.skillType,
+        skillType: progress.taskType,
         score: progress.score,
         attempts: progress.attempts,
         isPassed: progress.isPassed,
@@ -349,10 +350,10 @@ export class WordsService {
     const wordProgress = await this.databaseService.wordTaskProgress.findUnique(
       {
         where: {
-          wordId_userId_skillType: {
+          wordId_userId_taskType: {
             wordId,
             userId,
-            skillType: progressData.skillType,
+            taskType: progressData.taskType,
           },
         },
         include: { word: true },
@@ -499,7 +500,7 @@ export class WordsService {
         where: {
           userId,
           languageProgressId: languageProgress.id,
-          skillType: CoreSkillType.VOCABULARY,
+          TaskType: TaskType.FLASHCARDS,
         },
         data: {
           xpEarned: { increment: xpGain },

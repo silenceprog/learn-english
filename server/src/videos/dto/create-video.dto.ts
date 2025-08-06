@@ -1,6 +1,14 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { IsArray, IsEnum, IsNotEmpty, IsNumber, IsOptional, IsString, IsUrl } from "class-validator";
-import { CEFRLevel, CoreSkillType, Language } from "generated/prisma";
+import { ApiProperty } from '@nestjs/swagger';
+import {
+  IsArray,
+  IsEnum,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+  IsUrl,
+} from 'class-validator';
+import { CEFRLevel, CoreSkillType, Language, TaskType } from 'generated/prisma';
 
 export class CreateVideoDto {
   @IsString()
@@ -29,8 +37,4 @@ export class CreateVideoDto {
   @IsArray()
   @IsEnum(CoreSkillType, { each: true })
   skillTypes?: CoreSkillType[];
-
-  @IsOptional()
-  @IsNumber()
-  courseId?: number;
 }

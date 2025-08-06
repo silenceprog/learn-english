@@ -29,7 +29,7 @@ export class TaskEntity {
   @IsArray()
   options: string[];
 
-  @ApiProperty({ enum: TaskType, default: TaskType.MULTIPLE_CHOICE })
+  @ApiProperty({ enum: TaskType, default: TaskType.FLASHCARDS })
   @IsEnum(TaskType)
   type: TaskType;
 

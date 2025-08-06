@@ -3,7 +3,7 @@ import { FlashcardQueryDto } from './dto/flashcard-query.dto';
 import {FlashcardAnswerDto} from './dto/flashcard-answer.dto';
 import { DatabaseService } from 'src/database/database.service';
 import { FlashcardResponseDto } from './dto/flashcard-response.dto';
-import { Language } from 'generated/prisma';
+import { Language, TaskType } from 'generated/prisma';
 
 @Injectable()
 export class FlashCardService {
@@ -11,9 +11,8 @@ export class FlashCardService {
     private databaseService: DatabaseService
   ) {}
  async getFlashcards(userId: number, query: FlashcardQueryDto): Promise<FlashcardResponseDto[]> {
-    const { language, limit, reviewOnly, level } = query;
+    const { language, limit, reviewOnly, level, taskType = TaskType.FLASHCARDS } = query;
     
-    // Базовий фільтр
     const where: any = {
       userId,
       ...(language && { language }),
@@ -21,76 +20,60 @@ export class FlashCardService {
 
     let words;
 
-    if (reviewOnly) {
-      // Слова для повторення (spaced repetition)
-      const wordProgresses = await this.databaseService.wordTaskProgress.findMany({
-        where: {
-          userId,
-          nextReviewAt: {
-            lte: new Date(),
-          },
-          isPassed: true,
-        },
-        include: {
-          word: true,
-        },
-        take: limit,
-        orderBy: {
-          nextReviewAt: 'asc',
-        },
-      });
-
-      words = wordProgresses.map(progress => ({
-        ...progress.word,
-        nextReviewAt: progress.nextReviewAt,
-        reviewInterval: progress.reviewInterval,
-        attempts: progress.attempts,
-        correctCount: progress.correctCount,
-      }));
+     if (reviewOnly) {
+      words = await this.getWordsForReview(userId, taskType, limit);
     } else {
-      // Нові слова або всі слова
-      words = await this.databaseService.word.findMany({
-        where,
-        include: {
-          progresses: {
-            where: { userId },
-            select: {
-              nextReviewAt: true,
-              reviewInterval: true,
-              attempts: true,
-              correctCount: true,
-              isPassed: true,
-            },
+      words = await this.getWordsForNewTask(userId, taskType, where, limit);
+    }
+
+    return words.map(word => this.formatFlashcardResponse(word, taskType));
+  }
+
+   private async getWordsForNewTask(userId: number, taskType: TaskType, where: any, limit?: number) {
+    const words = await this.databaseService.word.findMany({
+      where,
+      include: {
+        progresses: {
+          where: { 
+            userId,
+            taskType,
+          },
+          select: {
+            nextReviewAt: true,
+            reviewInterval: true,
+            attempts: true,
+            correctCount: true,
+            isPassed: true,
+            taskType: true,
           },
         },
-        take: limit,
-        orderBy: [
-          { isLearned: 'asc' }, // Спочатку не вивчені
-          { totalProgress: 'asc' }, // Потім з меншим прогресом
-          { createdAt: 'desc' }, // Потім нові
-        ],
-      });
+      },
+      take: limit,
+      orderBy: [
+        { isLearned: 'asc' }, 
+        { totalProgress: 'asc' }, 
+        { createdAt: 'desc' }, 
+      ],
+    });
 
-      // Форматування даних
-      words = words.map(word => ({
+    return words
+      .filter(word => 
+        word.progresses.length === 0 || 
+        !word.progresses.some(p => p.isPassed && p.taskType === taskType)
+      )
+      .map(word => ({
         ...word,
         nextReviewAt: word.progresses[0]?.nextReviewAt,
         reviewInterval: word.progresses[0]?.reviewInterval || 1,
         attempts: word.progresses[0]?.attempts || 0,
         correctCount: word.progresses[0]?.correctCount || 0,
+        taskType,
       }));
     }
 
-    return words.map(word => this.formatFlashcardResponse(word));
-  }
-
-  /**
-   * Перевірка відповіді на карточку
-   */
   async checkAnswer(userId: number, answer: FlashcardAnswerDto) {
-    const { wordId, userAnswer, timeSpent, difficulty } = answer;
+    const { wordId, userAnswer, timeSpent, difficulty, taskType = TaskType.FLASHCARDS } = answer;
 
-    // Перевіряємо чи існує слово
     const word = await this.databaseService.word.findFirst({
       where: { id: wordId, userId },
     });
@@ -99,24 +82,21 @@ export class FlashCardService {
       throw new NotFoundException('Слово не знайдено');
     }
 
-    const isCorrect = this.checkAnswerCorrectness(userAnswer, word.translate, word.text);
-    
+    const isCorrect = this.checkAnswerCorrectness(userAnswer, word.translate, word.text, taskType);
     const score = this.calculateScore(isCorrect, timeSpent, difficulty);
-
-    const progress = await this.updateWordProgress(userId, wordId, isCorrect, score, timeSpent, difficulty);
+    const progress = await this.updateWordProgress(userId, wordId, isCorrect, score, timeSpent, difficulty, taskType);
 
     await this.updateWordStats(wordId, isCorrect);
-
     await this.updateSkillProgress(userId, word.language, isCorrect, score, timeSpent);
-
     await this.updateDailyStats(userId, word.language, score, timeSpent, isCorrect);
 
     return {
       isCorrect,
       score,
-      correctAnswer: word.translate,
+      correctAnswer: this.getCorrectAnswer(word, taskType),
       explanation: word.definitions[0] || null,
       nextReviewAt: progress.nextReviewAt,
+      taskType,
       progress: {
         attempts: progress.attempts,
         correctCount: progress.correctCount,
@@ -125,10 +105,7 @@ export class FlashCardService {
     };
   }
 
-  /**
-   * Отримання статистики карточок
-   */
-  async getFlashcardStats(userId: number, language?: Language) {
+  async getFlashcardStats(userId: number, language?: Language, taskType?: TaskType) {
     const where: any = { userId };
     if (language) where.language = language;
 
@@ -137,13 +114,32 @@ export class FlashCardService {
       where: { ...where, isLearned: true } 
     });
 
-    const reviewWords = await this.databaseService.wordTaskProgress.count({
-      where: {
-        userId,
-        nextReviewAt: { lte: new Date() },
-        isPassed: true,
-      },
-    });
+    let taskTypeStats = {};
+    if (taskType) {
+      const reviewWords = await this.databaseService.wordTaskProgress.count({
+        where: {
+          userId,
+          taskType,
+          nextReviewAt: { lte: new Date() },
+          isPassed: true,
+        },
+      });
+
+      const completedWords = await this.databaseService.wordTaskProgress.count({
+        where: {
+          userId,
+          taskType,
+          isPassed: true,
+        },
+      });
+
+      taskTypeStats = {
+        taskType,
+        reviewWords,
+        completedWords,
+        newWords: totalWords - completedWords,
+      };
+    }
 
     const todayStats = await this.databaseService.dailyStats.findFirst({
       where: {
@@ -156,8 +152,8 @@ export class FlashCardService {
     return {
       totalWords,
       learnedWords,
-      reviewWords,
       learningWords: totalWords - learnedWords,
+      ...(taskType && { taskTypeStats }),
       todayStats: {
         wordsStudied: todayStats?.newWordsLearned || 0,
         wordsReviewed: todayStats?.wordsReviewed || 0,
@@ -167,13 +163,12 @@ export class FlashCardService {
     };
   }
 
-  /**
-   * Отримання слів для повторення
-   */
-  async getWordsForReview(userId: number, limit: number = 20) {
-    return await this.databaseService.wordTaskProgress.findMany({
+
+   async getWordsForReview(userId: number, taskType: TaskType = TaskType.FLASHCARDS, limit: number = 20) {
+    const wordProgresses = await this.databaseService.wordTaskProgress.findMany({
       where: {
         userId,
+        taskType,
         nextReviewAt: { lte: new Date() },
         isPassed: true,
       },
@@ -185,9 +180,81 @@ export class FlashCardService {
         nextReviewAt: 'asc',
       },
     });
+
+    return wordProgresses.map(progress => ({
+      ...progress.word,
+      nextReviewAt: progress.nextReviewAt,
+      reviewInterval: progress.reviewInterval,
+      attempts: progress.attempts,
+      correctCount: progress.correctCount,
+      taskType: progress.taskType,
+    }));
   }
 
-   private formatFlashcardResponse(word: any): FlashcardResponseDto {
+  async getWordTaskProgress(userId: number, wordId: number, taskType: TaskType) {
+    return await this.databaseService.wordTaskProgress.findUnique({
+      where: {
+        wordId_userId_taskType: {
+          wordId,
+          userId,
+          taskType,
+        },
+      },
+    });
+  }
+
+    async upsertWordTaskProgress(userId: number, wordId: number, taskType: TaskType, data: any) {
+    return await this.databaseService.wordTaskProgress.upsert({
+      where: {
+        wordId_userId_taskType: {
+          wordId,
+          userId,
+          taskType,
+        },
+      },
+      create: {
+        wordId,
+        userId,
+        taskType,
+        ...data,
+      },
+      update: data,
+    });
+  }
+
+   async getWordsNeedingPractice(userId: number, taskType: TaskType, limit: number = 20) {
+    const words = await this.databaseService.word.findMany({
+      where: {
+        userId,
+        progresses: {
+          some: {
+            userId,
+            taskType,
+            isPassed: false,
+          },
+        },
+      },
+      include: {
+        progresses: {
+          where: {
+            userId,
+            taskType,
+          },
+        },
+      },
+      take: limit,
+      orderBy: {
+        createdAt: 'desc', 
+      },
+    });
+
+    return words.map((word: any) => ({
+      ...word,
+      progress: word.progresses?.[0] || null,
+    }));
+  }
+
+  private formatFlashcardResponse(word: any, taskType?: TaskType): FlashcardResponseDto {
     return {
       id: word.id,
       text: word.text,
@@ -204,31 +271,75 @@ export class FlashCardService {
       reviewInterval: word.reviewInterval,
       attempts: word.attempts,
       correctCount: word.correctCount,
+      taskType: taskType || TaskType.FLASHCARDS,
     };
   }
 
-  private checkAnswerCorrectness(userAnswer: string, correctAnswers: string[], originalWord: string): boolean {
+  private checkAnswerCorrectness(
+    userAnswer: string, 
+    correctAnswers: string[], 
+    originalWord: string, 
+    taskType: TaskType
+  ): boolean {
     const normalizedUserAnswer = userAnswer.toLowerCase().trim();
     
-    // Перевіряємо всі можливі переклади
-    return correctAnswers.some(answer => 
-      answer.toLowerCase().trim() === normalizedUserAnswer
-    );
+    switch (taskType) {
+      case TaskType.FLASHCARDS:
+        // Перевіряємо переклад
+        return correctAnswers.some(answer => 
+          answer.toLowerCase().trim() === normalizedUserAnswer
+        );
+      
+      case TaskType.REVERSE_FLASHCARDS:
+        // Перевіряємо оригінальне слово
+        return originalWord.toLowerCase().trim() === normalizedUserAnswer;
+      
+      case TaskType.FILL_IN_THE_BLANK:
+        // Для заповнення пропусків - можливі варіанти відповідей
+        return correctAnswers.some(answer => 
+          answer.toLowerCase().trim() === normalizedUserAnswer
+        ) || originalWord.toLowerCase().trim() === normalizedUserAnswer;
+      
+      case TaskType.MATCHING:
+        // Для matching задач - точне співпадіння
+        return correctAnswers.some(answer => 
+          answer.toLowerCase().trim() === normalizedUserAnswer
+        );
+      
+      default:
+        return correctAnswers.some(answer => 
+          answer.toLowerCase().trim() === normalizedUserAnswer
+        );
+    }
   }
 
-  private calculateScore(isCorrect: boolean, timeSpent: number, difficulty?: number): number {
+  private getCorrectAnswer(word: any, taskType: TaskType): string | string[] {
+    switch (taskType) {
+      case TaskType.FLASHCARDS:
+        return word.translate;
+      case TaskType.REVERSE_FLASHCARDS:
+        return word.text;
+      case TaskType.FILL_IN_THE_BLANK:
+      case TaskType.MATCHING:
+        return word.translate;
+      default:
+        return word.translate;
+    }
+  }
+
+   private calculateScore(isCorrect: boolean, timeSpent: number, difficulty?: number): number {
     if (!isCorrect) return 0;
 
     let baseScore = 10;
     
-    // Бонус за швидкість (менше 10 секунд = бонус)
+    // Бонус за швидкість
     if (timeSpent < 10) baseScore += 5;
     else if (timeSpent > 30) baseScore -= 2;
 
     // Штраф/бонус за складність
     if (difficulty) {
-      if (difficulty <= 2) baseScore += 3; // Легко
-      else if (difficulty >= 4) baseScore -= 2; // Важко
+      if (difficulty <= 2) baseScore += 3;
+      else if (difficulty >= 4) baseScore -= 2;
     }
 
     return Math.max(1, baseScore);
@@ -240,14 +351,15 @@ export class FlashCardService {
     isCorrect: boolean, 
     score: number, 
     timeSpent: number,
-    difficulty?: number
+    difficulty?: number,
+    taskType: TaskType = TaskType.FLASHCARDS
   ) {
     const existingProgress = await this.databaseService.wordTaskProgress.findUnique({
       where: {
-        wordId_userId_skillType: {
+        wordId_userId_taskType: {
           wordId,
           userId,
-          skillType: 'VOCABULARY',
+          taskType,
         },
       },
     });
@@ -258,7 +370,7 @@ export class FlashCardService {
     let easeFactor: number;
 
     if (existingProgress) {
-      // Алгоритм інтервального повторення (схожий на SM-2)
+      // Алгоритм інтервального повторення
       if (isCorrect) {
         reviewInterval = Math.ceil(existingProgress.reviewInterval * existingProgress.easeFactor);
         easeFactor = existingProgress.easeFactor + (0.1 - (5 - (difficulty || 3)) * (0.08 + (5 - (difficulty || 3)) * 0.02));
@@ -272,10 +384,10 @@ export class FlashCardService {
 
       return await this.databaseService.wordTaskProgress.update({
         where: {
-          wordId_userId_skillType: {
+          wordId_userId_taskType: {
             wordId,
             userId,
-            skillType: 'VOCABULARY',
+            taskType,
           },
         },
         data: {
@@ -301,7 +413,7 @@ export class FlashCardService {
         data: {
           wordId,
           userId,
-          skillType: 'VOCABULARY',
+          taskType,
           attempts: 1,
           correctCount: isCorrect ? 1 : 0,
           score,
@@ -333,7 +445,7 @@ export class FlashCardService {
         where: { id: wordId },
         data: {
           totalProgress: progress,
-          isLearned: progress >= 80 && totalAttempts >= 3, // 80% точності + мінімум 3 спроби
+          isLearned: progress >= 80 && totalAttempts >= 3,
         },
       });
     }
@@ -346,7 +458,6 @@ export class FlashCardService {
     score: number, 
     timeSpent: number
   ) {
-    // Знаходимо мовний прогрес
     const languageProgress = await this.databaseService.languageProgress.findUnique({
       where: {
         userId_language: { userId, language },
@@ -355,7 +466,6 @@ export class FlashCardService {
 
     if (!languageProgress) return;
 
-    // Оновлюємо прогрес навички VOCABULARY
     await this.databaseService.skillProgress.upsert({
       where: {
         userId_languageProgressId_skillType: {
@@ -387,12 +497,11 @@ export class FlashCardService {
         totalWordsStudied: { increment: 1 },
         lastPracticed: new Date(),
         currentAccuracy: {
-          set: 0, // Буде перераховано в окремому запиті
+          set: 0,
         },
       },
     });
 
-    // Перераховуємо точність
     const skillProgress = await this.databaseService.skillProgress.findUnique({
       where: {
         userId_languageProgressId_skillType: {

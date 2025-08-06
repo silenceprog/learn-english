@@ -1,4 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
+import { TaskType } from "generated/prisma";
 
 export class FlashcardResponseDto {
   @ApiProperty()
@@ -45,4 +46,7 @@ export class FlashcardResponseDto {
 
   @ApiProperty()
   correctCount: number;
+
+  @ApiProperty()
+  taskType?: TaskType;
 }
