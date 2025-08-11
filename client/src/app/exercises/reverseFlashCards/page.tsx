@@ -8,7 +8,7 @@ export default function ReverseCards() {
     <CreateFlashcardsExercise
       flashcards={flashcards}
       reverse={true}
-      skillType="VOCABULARY"
+      skillType="REVERSE_FLASHCARDS"
     />
   );
 }
