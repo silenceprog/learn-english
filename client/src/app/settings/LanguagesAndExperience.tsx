@@ -18,6 +18,7 @@ import { useUserSettingsStore } from "@/states/requests/useUserSettings";
 import { useAlertStore } from "@/states/alertStore";
 import { useEffect, useState } from "react";
 import Flag from "react-world-flags";
+import { useTranslations } from "next-intl";
 
 export default function LanguagesAndExperience() {
   const INTERFACE_LANGUAGES = [
@@ -49,50 +50,51 @@ export default function LanguagesAndExperience() {
       label: "Deutsch",
     },
   ];
+  const t = useTranslations();
+
   const LEVELS_KNOWELEDGES = [
     {
       icon: <CircleDot className="w-5 h-5 mr-2" />,
       code: "A1",
-      label: "Початковий (А1)",
+      label: t("level_A1"),
     },
     {
       icon: <Circle className="w-5 h-5 mr-2" />,
       code: "A2",
-      label: "Елементарний (A2)",
+      label: t("level_A2"),
     },
     {
       icon: <BarChart className="w-5 h-5 mr-2" />,
       code: "B1",
-      label: "Середній (B1)",
+      label: t("level_B1"),
     },
     {
       icon: <LineChart className="w-5 h-5 mr-2" />,
       code: "B2",
-      label: "Вище середнього (B2)",
+      label: t("level_B2"),
     },
     {
       icon: <Rocket className="w-5 h-5 mr-2" />,
       code: "C1",
-      label: "Просунутий (C1)",
+      label: t("level_C1"),
     },
     {
       icon: <Trophy className="w-5 h-5 mr-2" />,
       code: "C2",
-      label: "Вільне володіння (C2)",
+      label: t("level_C2"),
     },
   ];
-
   const GOALS = [
-    { label: "Для роботи/кар'єри", value: "WORK", icon: "💼" },
-    { label: "Для подорожей", value: "TRAVEL", icon: "✈️" },
-    { label: "Для навчання/освіти", value: "EDUCATION", icon: "📚" },
-    { label: "Для особистого розвитку", value: "SELF_DEV", icon: "🌱" },
+    { label: t("goal_work"), value: "WORK", icon: "💼" },
+    { label: t("goal_travel"), value: "TRAVEL", icon: "✈️" },
+    { label: t("goal_study"), value: "EDUCATION", icon: "📚" },
+    { label: t("goal_growth"), value: "SELF_DEV", icon: "🌱" },
     {
-      label: "Для спілкування з друзями/родиною",
+      label: t("goal_communication"),
       value: "COMMUNICATION",
       icon: "🧑‍🤝‍🧑",
     },
-    { label: "Як хобі", value: "HOBBY", icon: "🎨" },
+    { label: t("goal_hobby"), value: "HOBBY", icon: "🎨" },
   ];
   const { settings, fetchSettings } = useUserSettingsStore();
   useEffect(() => {
@@ -101,8 +103,8 @@ export default function LanguagesAndExperience() {
     setSelectedCurrentLevel(settings.current_level);
     setSelectedGoals(settings.purposes);
   }, [settings]);
-  const { addAlert } = useAlertStore();
 
+  const { addAlert } = useAlertStore();
   const [selectedInterfaceLanguage, setSelectedInterfaceLanguage] =
     useState<string>(settings.global_language);
   const [selectedStudyLanguage, setSelectedStudyLanguage] = useState(
@@ -151,32 +153,32 @@ export default function LanguagesAndExperience() {
   };
   return (
     <SettingsSection
-      title="Налаштування профілю"
+      title={t("profileSettings")}
       icon={<Globe />}
-      subTitle="Налаштуйте мови інтерфейсу та навчання відповідно до ваших потреб"
+      subTitle={t("profileSettingsDescription")}
     >
       <AddSelectLanguageBlock
-        title="Мова інтерфейсу"
+        title={t("interfaceLanguage")}
         icon={<Globe />}
         selectedLanguage={selectedInterfaceLanguage}
         LANGUAGES={INTERFACE_LANGUAGES}
         onLanguageSelect={setSelectedInterfaceLanguage}
-        whatIsIt="Мова, якою відображатиметься інтерфейс додатку"
+        whatIsIt={t("interfaceLanguageDescription")}
       />
 
       <AddSelectLanguageBlock
-        title="Мова навчання"
+        title={t("learningLanguage")}
         icon={<Languages />}
         selectedLanguage={selectedStudyLanguage}
         LANGUAGES={STUDY_LANGUAGES}
         onLanguageSelect={setSelectedStudyLanguage}
-        whatIsIt="Мова, яку ви хочете вивчати або вдосконалювати"
+        whatIsIt={t("learningLanguageDescription")}
       />
 
       <div>
         <div className="flex flex-row items-center">
           <Target className="w-4 h-4 mr-2" />
-          <p className="font-semibold">Мета вивчення мови</p>
+          <p className="font-semibold">{t("learningGoal")}</p>
         </div>
         <div className="space-y-2">
           {GOALS.map((goal) => (
@@ -195,23 +197,21 @@ export default function LanguagesAndExperience() {
             </label>
           ))}
         </div>
-        <div className="text-gray-400 font-extralight">
-          Оберіть одну або декілька цілей для персоналізації навчання
-        </div>
+        <div className="text-gray-400 font-extralight">{t("chooseGoals")}</div>
       </div>
 
       <AddSelectLanguageBlock
-        title="Поточний рівень знань"
+        title={t("currentLevel")}
         icon={<BookText />}
         selectedLanguage={selectedCurrentLevel}
         LANGUAGES={LEVELS_KNOWELEDGES}
         onLanguageSelect={setSelectedCurrentLevel}
-        whatIsIt="Оцініть свій поточний рівень володіння мовою"
+        whatIsIt={t("levelAssessment")}
       />
       <div className="pt-6 border-t-1"></div>
       <div className="flex flex-row items-center justify-end">
         <Button onClick={handleSave} color="outline">
-          Save
+          {t("save")}
         </Button>
       </div>
     </SettingsSection>

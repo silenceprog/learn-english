@@ -3,9 +3,11 @@ import { Button } from "@/shared/ui/Button";
 import { RxHamburgerMenu } from "react-icons/rx";
 import Link from "next/link";
 import { useAuthStore } from "@/states/authStore";
+import { useTranslations } from "next-intl";
 
 export function DropDownUserMenu() {
   const { logout } = useAuthStore();
+  const t = useTranslations();
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
@@ -22,13 +24,13 @@ export function DropDownUserMenu() {
           className="text-sm px-2 py-1.5 cursor-pointer hover:bg-gray-100 text-gray-700"
           // onSelect={() => {}}
         >
-          <Link href="/admin-panel">AdminPanel</Link>
+          <Link href="/admin-panel"> {t("adminPanel")}</Link>
         </DropdownMenu.Item>
         <DropdownMenu.Item
           className="text-sm px-2 py-1.5 cursor-pointer hover:bg-gray-100 text-gray-700"
           // onSelect={() => {}}
         >
-          <p onClick={logout}>LogOut</p>
+          <p onClick={logout}>{t("logOut")}</p>
         </DropdownMenu.Item>
       </DropdownMenu.Content>
     </DropdownMenu.Root>

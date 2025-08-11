@@ -11,5 +11,61 @@
   "matchingDescription": "Перетягуйте або натискайте, щоб з’єднати слово з правильним перекладом.",
   "cards": "Картки",
   "reverseCards": "Картки",
-  "matching": "Відповідності"
+  "matching": "Відповідності",
+  "settings": "Налаштування",
+  "logOut": "Вийти",
+  "adminPanel": "Адмін Панель",
+  "appName": "LinguaLearn",
+  "copyAccessToken": "Копіювати токен доступу",
+
+  "profileSettings": "Налаштування профілю",
+  "profileSettingsDescription": "Налаштуйте мови інтерфейсу та навчання відповідно до ваших потреб",
+
+  "interfaceLanguage": "Мова інтерфейсу",
+  "interfaceLanguageDescription": "Мова, якою відображатиметься інтерфейс додатку",
+
+  "learningLanguage": "Мова навчання",
+  "learningLanguageDescription": "Мова, яку ви хочете вивчати або вдосконалювати",
+  "level_A1": "Початковий (А1)",
+  "level_A2": "Елементарний (A2)",
+  "level_B1": "Середній (B1)",
+  "level_B2": "Вище середнього (B2)",
+  "level_C1": "Просунутий (C1)",
+  "level_C2": "Вільне володіння (C2)",
+  "learningGoal": "Мета вивчення мови",
+  "goal_work": "Для роботи/кар'єри",
+  "goal_travel": "Для подорожей",
+  "goal_study": "Для навчання/освіти",
+  "goal_growth": "Для особистого розвитку",
+  "goal_communication": "Для спілкування з друзями/родиною",
+  "goal_hobby": "Як хобі",
+  "chooseGoals": "Оберіть одну або декілька цілей для персоналізації навчання",
+
+  "currentLevel": "Поточний рівень знань",
+  "levelAssessment": "Оцініть свій поточний рівень володіння мовою",
+
+  "save": "Зберегти",
+
+  "accountSecurity": "Безпека акаунту",
+  "changePasswordDescription": "Змініть пароль та підтвердіть електронну пошту",
+
+  "changePassword": "Зміна паролю",
+  "currentPassword": "Поточний пароль",
+  "newPassword": "Новий пароль",
+  "enterNewPassword": "Введіть новий пароль",
+  "updatePassword": "Змінити пароль",
+
+  "emailConfirmation": "Підтвердження електронної пошти",
+  "email": "Електронна пошта",
+  "confirmEmail": "Підтвердити",
+  "confirmationNote": "Ми надішлемо лист для підтвердження на вашу пошту",
+  "emailConfirmed": "Електронна пошта підтверджена",
+  "myDictionary": "Мій словник",
+  "repeatWords": "Повторити слова",
+  "totalLearnedWords": "Всього вивчено слів: ",
+  "allWords": "Всі слова",
+  "learningWords": "Вивчаємо",
+  "learnedWords": "Вивчені",
+  "wordsPerPage": "К-сть слів на сторінку: "
+
 }

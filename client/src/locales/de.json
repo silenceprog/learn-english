@@ -11,5 +11,60 @@
   "matchingDescription": "Ziehe oder tippe, um Begriffe mit ihren richtigen Übersetzungen zu verbinden.",
   "cards": "Karten",
   "reverseCards": "Umgekehrte Karten",
-  "matching": "Zuordnen"
+  "matching": "Zuordnen",
+  "settings": "Einstellungen",
+  "logOut": "Abmelden",
+  "adminPanel": "Admin-Bereich",
+  "appName": "LinguaLearn",
+  "copyAccessToken": "Zugangstoken kopieren",
+
+  "profileSettings": "Profileinstellungen",
+  "profileSettingsDescription": "Stellen Sie die Interface- und Lernsprachen nach Ihren Bedürfnissen ein",
+
+  "interfaceLanguage": "Interface-Sprache",
+  "interfaceLanguageDescription": "Die Sprache, in der die App-Oberfläche angezeigt wird",
+
+  "learningLanguage": "Lernsprache",
+  "learningLanguageDescription": "Die Sprache, die Sie lernen oder verbessern möchten",
+  "level_A1": "Anfänger (A1)",
+  "level_A2": "Grundkenntnisse (A2)",
+  "level_B1": "Mittelstufe (B1)",
+  "level_B2": "Fortgeschrittene Mittelstufe (B2)",
+  "level_C1": "Fortgeschritten (C1)",
+  "level_C2": "Fließend (C2)",
+  "learningGoal": "Sprachlernziel",
+  "goal_work": "Für Arbeit/Karriere",
+  "goal_travel": "Für Reisen",
+  "goal_study": "Für Studium/Ausbildung",
+  "goal_growth": "Für persönliche Entwicklung",
+  "goal_communication": "Für Kommunikation mit Freunden/Familie",
+  "goal_hobby": "Als Hobby",
+  "chooseGoals": "Wählen Sie ein oder mehrere Ziele zur Personalisierung des Lernens",
+
+  "currentLevel": "Aktuelles Wissensniveau",
+  "levelAssessment": "Bewerten Sie Ihr aktuelles Sprachniveau",
+
+  "save": "Speichern",
+
+  "accountSecurity": "Kontosicherheit",
+  "changePasswordDescription": "Ändern Sie Ihr Passwort und bestätigen Sie Ihre E-Mail",
+
+  "changePassword": "Passwort ändern",
+  "currentPassword": "Aktuelles Passwort",
+  "newPassword": "Neues Passwort",
+  "enterNewPassword": "Neues Passwort eingeben",
+  "updatePassword": "Passwort aktualisieren",
+
+  "emailConfirmation": "E-Mail-Bestätigung",
+  "email": "E-Mail",
+  "confirmEmail": "Bestätigen",
+  "confirmationNote": "Wir senden eine Bestätigungs-E-Mail an Ihre Adresse",
+  "emailConfirmed": "E-Mail bestätigt",
+  "myDictionary": "Mein Wörterbuch",
+  "repeatWords": "Wörter wiederholen",
+  "totalLearnedWords": "Insgesamt gelernte Wörter: ",
+  "allWords": "Alle Wörter",
+  "learningWords": "Lernend",
+  "learnedWords": "Gelernt",
+  "wordsPerPage": "Wörter pro Seite: "
 }

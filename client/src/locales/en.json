@@ -11,5 +11,60 @@
   "matchingDescription": "Drag or tap to connect each word with its correct meaning.",
   "cards": "Cards",
   "reverseCards": "Reverse Cards",
-  "matching": "Matching"
+  "matching": "Matching",
+  "logOut": "Log out",
+  "settings": "Settings",
+  "adminPanel": "Admin Panel",
+  "appName": "LinguaLearn",
+  "copyAccessToken": "Copy access token",
+
+  "profileSettings": "Profile settings",
+  "profileSettingsDescription": "Set interface and learning languages according to your needs",
+
+  "interfaceLanguage": "Interface language",
+  "interfaceLanguageDescription": "The language in which the app interface will be displayed",
+
+  "learningLanguage": "Learning language",
+  "learningLanguageDescription": "The language you want to learn or improve",
+  "level_A1": "Beginner (A1)",
+  "level_A2": "Elementary (A2)",
+  "level_B1": "Intermediate (B1)",
+  "level_B2": "Upper Intermediate (B2)",
+  "level_C1": "Advanced (C1)",
+  "level_C2": "Proficient (C2)",
+  "learningGoal": "Language learning goal",
+  "goal_work": "For work/career",
+  "goal_travel": "For travel",
+  "goal_study": "For study/education",
+  "goal_growth": "For personal growth",
+  "goal_communication": "For communication with friends/family",
+  "goal_hobby": "As a hobby",
+  "chooseGoals": "Choose one or several goals to personalize learning",
+
+  "currentLevel": "Current knowledge level",
+  "levelAssessment": "Assess your current proficiency level",
+
+  "save": "Save",
+
+  "accountSecurity": "Account security",
+  "changePasswordDescription": "Change your password and confirm your email",
+
+  "changePassword": "Change password",
+  "currentPassword": "Current password",
+  "newPassword": "New password",
+  "enterNewPassword": "Enter a new password",
+  "updatePassword": "Update password",
+
+  "emailConfirmation": "Email confirmation",
+  "email": "Email",
+  "confirmEmail": "Confirm",
+  "confirmationNote": "We will send a confirmation email to your address",
+  "emailConfirmed": "Email confirmed",
+  "myDictionary": "My dictionary",
+  "repeatWords": "Repeat words",
+  "totalLearnedWords": "Total learned words: ",
+  "allWords": "All words",
+  "learningWords": "Learning",
+  "learnedWords": "Learned",
+  "wordsPerPage": "Words per page: "
 }

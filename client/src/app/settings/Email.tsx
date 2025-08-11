@@ -3,6 +3,7 @@ import { Mail } from "lucide-react";
 import { Button } from "@/shared/ui/Button";
 import { useState } from "react";
 import { useAlertStore } from "@/states/alertStore";
+import { useTranslations } from "next-intl";
 
 export default function Email() {
   const { addAlert } = useAlertStore();
@@ -34,14 +35,15 @@ export default function Email() {
       addAlert("Email sent successfully.", "success");
     });
   }
+  const t = useTranslations();
   return (
     <SettingsSection
-      title="Підтвердження електронної пошти"
-      subTitle="Електронна пошта"
+      title={t("emailConfirmation")}
+      subTitle={t("email")}
       icon={<Mail />}
     >
       <div className="mb-2">
-        <div className="font-medium">Електрона пошта</div>
+        <div className="font-medium">{t("email")}</div>
         <div className="relative w-full flex flex-row gap-2">
           <input
             type="email"
@@ -58,14 +60,12 @@ export default function Email() {
             onClick={() => fetchData()}
           >
             <Mail />
-            Підтвердити
+            {t("confirmEmail")}
           </Button>
         </div>
-        <p className="text-gray-400 my-2">
-          Ми надішлемо лист для підтвердження на вашу пошту
-        </p>
+        <p className="text-gray-400 my-2">{t("confirmationNote")}</p>
         <div className="bg-green-300 p-2 rounded-md text-center">
-          Електронна пошта підтверджена
+          {t("emailConfirmed")}
         </div>
       </div>
     </SettingsSection>
