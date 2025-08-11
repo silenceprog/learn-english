@@ -37,8 +37,9 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const locale = "en"; // або отримати з params/headers
   return (
-    <html lang="en">
+    <html lang={locale}>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
@@ -55,7 +56,7 @@ export default function RootLayout({
 }
 
 function LanguageLoader({ children }: { children: ReactNode }) {
-  const locale = useLocaleStore((state) => state.locale);
+  const locale = useLocaleStore((state) => state.locale) || "en";
   const [messages, setMessages] = useState<Record<string, string> | null>(null);
 
   useEffect(() => {
