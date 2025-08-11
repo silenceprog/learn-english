@@ -39,7 +39,7 @@ export class FlashcardController {
     @Query() query: FlashcardQueryDto,
   ): Promise<FlashcardResponseDto[]> {
     try {
-    return this.flashCardService.getFlashcards(userId, query);
+    return this.flashCardService.getTaskWords(userId, query);
     }
     catch (error) {
       throw new HttpException(

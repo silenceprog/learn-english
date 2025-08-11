@@ -36,7 +36,6 @@ import { MarkWordsLearnedDto } from './dto/mark-word.dto';
 export class WordsController {
   constructor(
     private readonly wordsService: WordsService,
-    private readonly progresService: ProgressService,
   ) {}
 
   @ApiOperation({ summary: 'Створення слова' })

@@ -79,7 +79,7 @@ export class WordsService {
         data: {
           text: dto.text,
           language: setting.current_language,
-          translate: dto.translate,
+          translate:data.translate || dto.translate,
           definitions: finalDefinitions,
           examples: finalExamples,
           phonetic: data.phonetic,

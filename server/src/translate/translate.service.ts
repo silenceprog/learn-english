@@ -11,6 +11,8 @@ import { firstValueFrom } from 'rxjs';
 import { Language } from 'generated/prisma';
 import { DatabaseService } from 'src/database/database.service';
 import { AutocompleteResponse, DatamuseSuggestion } from './dto/autocomplete-response.dto';
+import { translate as translateText } from '@vitalets/google-translate-api';
+
 
 @Injectable()
 export class TranslateService {
@@ -121,6 +123,8 @@ export class TranslateService {
 
     const dictionaryUrl = `https://api.dictionaryapi.dev/api/v2/entries/${fromIso}/${text}`;
 
+    const translateResult = await this.translateText(text, fromIso, toIso);
+
     try {
       let phonetic = null;
       let audio = null;
@@ -153,7 +157,9 @@ export class TranslateService {
         }
       }
 
+
       return {
+        translate: translateResult,
         phonetic,
         audio,
         phoneticUS,
@@ -166,6 +172,15 @@ export class TranslateService {
       }
 
       throw new BadRequestException(error.message || 'Translation failed');
+    }
+  }
+
+   async translateText(text: string, from: string, to: string)  {
+    try {
+      const result = await translateText(text, { from, to }); 
+      return [result.text];
+    }  catch (backupError) {
+        throw new Error('All translation services failed');
     }
   }
 

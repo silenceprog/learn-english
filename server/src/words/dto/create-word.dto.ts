@@ -6,7 +6,8 @@ export class CreateWordDto {
   @IsString()
   text: string;
 
-  @ApiProperty({ example: ['яблуко'], description: 'Переклад слова', type: [String] })
+  @ApiProperty({ example: ['яблуко'], description: 'Переклад слова', type: [String], required: false })
+  @IsOptional()
   @IsArray()
   translate: string[];
 

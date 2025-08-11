@@ -10,7 +10,7 @@ export class FlashCardService {
   constructor(
     private databaseService: DatabaseService
   ) {}
- async getFlashcards(userId: number, query: FlashcardQueryDto): Promise<FlashcardResponseDto[]> {
+ async getTaskWords(userId: number, query: FlashcardQueryDto): Promise<FlashcardResponseDto[]> {
     const { language, limit, reviewOnly, level, taskType = TaskType.FLASHCARDS } = query;
     
     const where: any = {
