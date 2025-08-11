@@ -240,65 +240,66 @@ export class WordsService {
   }
 
   async markWordsLearned(
-    userId: number,
-    wordIds: number[],
-    progressData: UpdateProgressDto,
-  ) {
-    const userWords = await this.databaseService.word.findMany({
-      where: {
-        id: { in: wordIds },
-        userId,
+  userId: number,
+  wordIds: number[],
+  progressData: UpdateProgressDto,
+) {
+  const userWords = await this.databaseService.word.findMany({
+    where: {
+      id: { in: wordIds },
+      userId,
+    },
+    include: {
+      progresses: {
+        where: { userId },
       },
-      include: {
-        progresses: {
-          where: { userId },
-        },
-      },
-    });
+    },
+  });
 
-    if (userWords.length !== wordIds.length) {
-      const foundIds = userWords.map((w) => w.id);
-      const missingIds = wordIds.filter((id) => !foundIds.includes(id));
-      console.warn('Missing word IDs:', missingIds);
-    }
-
-    const results: {
-      successful: WordResult[];
-      failed: WordResult[];
-    } = {
-      successful: [],
-      failed: [],
-    };
-
-    for (const word of userWords) {
-      try {
-        await this.databaseService.$transaction(async (tx) => {
-          await this.updateWordProgress(userId, word.id, progressData);
-          await this.addXPForWordLearning(tx, userId, word.language);
-        });
-
-        results.successful.push({
-          wordId: word.id,
-          word: word.text,
-        });
-      } catch (error) {
-        results.failed.push({
-          wordId: word.id,
-          word: word.text,
-          reason: error.message,
-        });
-      }
-    }
-
-    return {
-      success: true,
-      results,
-      summary: {
-        successful: results.successful.length,
-        failed: results.failed.length,
-      },
-    };
+  if (userWords.length !== wordIds.length) {
+    const foundIds = userWords.map((w) => w.id);
+    const missingIds = wordIds.filter((id) => !foundIds.includes(id));
+    console.warn('Missing word IDs:', missingIds);
   }
+
+  const results: {
+    successful: WordResult[];
+    failed: WordResult[];
+  } = {
+    successful: [],
+    failed: [],
+  };
+
+  for (const word of userWords) {
+    try {
+      await this.databaseService.$transaction(async (tx) => {
+        await this.updateWordProgress(userId, word.id, progressData,tx);
+        await this.addXPForWordLearning(tx, userId, word.language);
+      });
+
+      results.successful.push({
+        wordId: word.id,
+        word: word.text,
+      });
+    } catch (error) {
+      console.error(`Error processing word ${word.id}:`, error);
+      results.failed.push({
+        wordId: word.id,
+        word: word.text,
+        reason: error.message,
+      });
+    }
+  }
+
+  return {
+    success: true,
+    results,
+    summary: {
+      successful: results.successful.length,
+      failed: results.failed.length,
+    },
+  };
+}
 
   async getWordsForReview(
     userId: number,
@@ -343,70 +344,68 @@ export class WordsService {
   }
 
   async updateWordProgress(
-    userId: number,
-    wordId: number,
-    progressData: UpdateProgressDto,
-  ) {
-    const wordProgress = await this.databaseService.wordTaskProgress.findUnique(
-      {
-        where: {
-          wordId_userId_taskType: {
-            wordId,
-            userId,
-            taskType: progressData.taskType,
-          },
-        },
-        include: { word: true },
+  userId: number,
+  wordId: number,
+  progressData: UpdateProgressDto,
+  tx?: any, 
+) {
+  const wordProgress = await tx.wordTaskProgress.findUnique({
+    where: {
+      wordId_userId_taskType: {
+        wordId,
+        userId,
+        taskType: progressData.taskType,
       },
+    },
+    include: { word: true },
+  });
+
+  if (!wordProgress) {
+    throw new NotFoundException('Word progress not found');
+  }
+
+  const newScore = this.calculateNewScore(
+    wordProgress.score,
+    progressData.correct || false,
+    wordProgress.attempts,
+  );
+
+  const { nextReviewAt, reviewInterval, easeFactor } =
+    this.calculateNextReview(
+      progressData.correct || false,
+      wordProgress.reviewInterval,
+      wordProgress.easeFactor,
     );
 
-    if (!wordProgress) {
-      throw new NotFoundException('Word progress not found');
-    }
+  const updatedProgress = await tx.wordTaskProgress.update({
+    where: { id: wordProgress.id },
+    data: {
+      score: newScore,
+      attempts: { increment: 1 },
+      correctCount: progressData.correct ? { increment: 1 } : undefined,
+      timeSpent: { increment: progressData.timeSpent },
+      isPassed: progressData.isPassed || newScore >= 80,
+      nextReviewAt,
+      reviewInterval,
+      easeFactor,
+      lastAttempt: new Date(),
+    },
+  });
 
-    return this.databaseService.$transaction(async (tx) => {
-      const newScore = this.calculateNewScore(
-        wordProgress.score,
-        progressData.correct || false,
-        wordProgress.attempts,
-      );
+  // Передаем tx в checkWordCompletion
+  await this.checkWordCompletion(tx, wordId, userId);
 
-      const { nextReviewAt, reviewInterval, easeFactor } =
-        this.calculateNextReview(
-          progressData.correct || false,
-          wordProgress.reviewInterval,
-          wordProgress.easeFactor,
-        );
+  const xpGain = progressData.correct ? 10 : 5;
+  await this.addXPToUser(
+    tx,
+    userId,
+    wordProgress.word.language,
+    xpGain,
+    progressData.timeSpent,
+  );
 
-      const updatedProgress = await tx.wordTaskProgress.update({
-        where: { id: wordProgress.id },
-        data: {
-          score: newScore,
-          attempts: { increment: 1 },
-          correctCount: progressData.correct ? { increment: 1 } : undefined,
-          timeSpent: { increment: progressData.timeSpent },
-          isPassed: progressData.isPassed || newScore >= 80,
-          nextReviewAt,
-          reviewInterval,
-          easeFactor,
-          lastAttempt: new Date(),
-        },
-      });
-
-      await this.checkWordCompletion(tx, wordId, userId);
-
-      const xpGain = progressData.correct ? 10 : 5;
-      await this.addXPToUser(
-        tx,
-        userId,
-        wordProgress.word.language,
-        xpGain,
-        progressData.timeSpent,
-      );
-
-      return updatedProgress;
-    });
-  }
+  return updatedProgress;
+}
 
   private calculateNewScore(
     currentScore: number,
