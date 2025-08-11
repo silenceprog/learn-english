@@ -1,5 +1,6 @@
 import { create } from "zustand/react";
 import { secureFetch } from "@/lib/secureFetch";
+import { useLocaleStore } from "@/states/useLocaleStore";
 
 type Settings = {
   global_language: string;
@@ -12,7 +13,6 @@ type SettingsStore = {
   settings: Settings;
   fetchSettings: () => void;
 };
-
 export const useUserSettingsStore = create<SettingsStore>((set) => ({
   settings: {
     global_language: "",
@@ -39,7 +39,7 @@ export const useUserSettingsStore = create<SettingsStore>((set) => ({
 
       const data = await res.json();
       set({ settings: data });
-      console.log(data);
+      useLocaleStore.getState().setLocale(data.global_language.toLowerCase());
     } catch (err) {
       console.error(err);
     }
