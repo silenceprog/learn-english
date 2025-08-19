@@ -424,7 +424,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "E:\\study\\nest\\learn-english\\server\\generated\\prisma",
+      "value": "/home/silence/Desktop/Study/nest/learn-english/server/generated/prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -433,7 +433,7 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "windows",
+        "value": "debian-openssl-3.0.x",
         "native": true
       },
       {
@@ -446,7 +446,7 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "E:\\study\\nest\\learn-english\\server\\prisma\\schema.prisma",
+    "sourceFilePath": "/home/silence/Desktop/Study/nest/learn-english/server/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
@@ -460,11 +460,12 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
+  "postinstall": true,
   "inlineDatasources": {
     "db": {
       "url": {
         "fromEnvVar": "DATABASE_URL",
-        "value": "postgresql://neondb_owner:npg_qe5F3PCNTyAK@ep-polished-dream-a9rcdv5f-pooler.gwc.azure.neon.tech/english_bd?sslmode=require&channel_binding=require"
+        "value": null
       }
     }
   },

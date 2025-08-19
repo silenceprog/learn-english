@@ -10,8 +10,8 @@ import { AutocompleteResponse } from './dto/autocomplete-response.dto';
 export class TranslateController {
   constructor(private readonly translateService: TranslateService) {}
 
-  @Get()
-  @ApiOperation({ summary: 'Переклад слова та отримання визначення' })
+  @Get('info')
+  @ApiOperation({ summary: 'отримання інформації про слово' })
   @ApiQuery({ name: 'text', type: String })
   @ApiQuery({ name: 'from', enum: Language, required: true })
   @ApiQuery({ name: 'to', enum: Language, required: true })
@@ -21,6 +21,19 @@ export class TranslateController {
     @Query('to') to: Language,
   ) {
     return this.translateService.wordTranslate(text, from, to);
+  }
+
+  @Get()
+  @ApiOperation({ summary: 'Переклад слова' })
+  @ApiQuery({ name: 'text', type: String })
+  @ApiQuery({ name: 'from', enum: Language, required: true })
+  @ApiQuery({ name: 'to', enum: Language, required: true })
+  async getTranslate(
+    @Query('text') text: string,
+    @Query('from') from: Language,
+    @Query('to') to: Language,
+  ) {
+    return this.translateService.translateText(text, from, to);
   }
 
   @Get('suggestions')
