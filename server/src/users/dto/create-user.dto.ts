@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsBoolean, IsEmail, IsEnum, IsNotEmpty, IsOptional, MinLength } from 'class-validator';
+import { IsBoolean, IsEmail, IsEnum, IsNotEmpty, IsOptional, IsString, MinLength } from 'class-validator';
 import { Role } from 'generated/prisma/client';
 
 
@@ -25,4 +25,14 @@ export class CreateUserDto {
   @IsOptional()
   @IsBoolean()
   isEmailVerified?: boolean;
+
+  @ApiProperty({default: "none"})
+  @IsString()
+  @IsOptional()
+  avatar?: string;
+
+  @ApiProperty({example: "google"})
+  @IsString()
+  @IsOptional()
+  provider?: string
 }

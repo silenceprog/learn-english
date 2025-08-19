@@ -12,6 +12,14 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 
+# Prisma
+prisma/migrations/*
+!prisma/migrations/.keep
+prisma/dev.db
+prisma/dev.db-journal
+prisma/*.db
+prisma/*.db-journal
+
 # OS
 .DS_Store
 

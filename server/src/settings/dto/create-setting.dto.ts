@@ -1,6 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsArray, IsEnum, IsInt, IsString } from "class-validator";
-import { Language, Level, Purpose } from "generated/prisma";
+import { IsArray, IsEnum } from "class-validator";
+import { CEFRLevel, Language, Purpose } from "generated/prisma";
 
 
 export class CreateSettingDto {
@@ -18,6 +18,6 @@ export class CreateSettingDto {
   purposes: Purpose[];
 
   @ApiProperty({ example: 'A2', description: 'Поточний рівень володіння мовою' })
-  @IsEnum(Level)
-  current_level: Level;
+  @IsEnum( CEFRLevel)
+  current_level: CEFRLevel;
 }

@@ -1,4 +1,4 @@
-import { Language, Level, Purpose } from 'generated/prisma';
+import { Language } from 'generated/prisma';
 import { CreateSettingDto } from './create-setting.dto';
 import { PartialType } from '@nestjs/swagger';
 

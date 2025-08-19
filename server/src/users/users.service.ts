@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Level, Purpose, Role } from 'generated/prisma/client';
+import { CEFRLevel, Purpose, Role } from 'generated/prisma/client';
 import { DatabaseService } from 'src/database/database.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -18,7 +18,7 @@ export class UsersService {
             global_language: 'UA',
             current_language: 'EN',
             purposes: [Purpose.NONE],
-            current_level: Level.NONE,
+            current_level: CEFRLevel.PRE_A1,
           },
         },
       },
@@ -33,6 +33,7 @@ export class UsersService {
       return this.databaseService.user.findMany({
         where: {
           role,
+          deleteAt: null
         },
       });
     return this.databaseService.user.findMany();
@@ -45,6 +46,7 @@ export class UsersService {
     return this.databaseService.user.findUnique({
       where: {
         email,
+        deleteAt: null
       },
       select: {
         id: true,
@@ -59,7 +61,8 @@ export class UsersService {
     return this.databaseService.user.findUnique({
       where: {
         id,
-      },
+        deleteAt: null
+      }
     });
   }
 
@@ -72,11 +75,28 @@ export class UsersService {
     });
   }
 
-  async deleteUser(id: number) {
+   async updateRefreshToken(userId: number, refreshToken: string | null): Promise<void> {
+    await this.databaseService.user.update({
+      where: { id: userId },
+      data: { refreshToken },
+    });
+  }
+
+  async hardDelete(id: number) {
     return this.databaseService.user.delete({
       where: {
         id,
       },
     });
   }
+
+   async softDelete(id: number) {
+    return this.databaseService.user.update({
+      where: { id },
+      data: {
+        deleteAt: new Date(),
+      },
+    });
+  }
+
 }

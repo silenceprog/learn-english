@@ -123,20 +123,35 @@ exports.Prisma.UserScalarFieldEnum = {
   username: 'username',
   password: 'password',
   role: 'role',
-  isEmailVerified: 'isEmailVerified',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  deleteAt: 'deleteAt',
+  lastLoginAt: 'lastLoginAt',
+  provider: 'provider',
+  refreshToken: 'refreshToken',
+  avatar: 'avatar',
+  currentStreak: 'currentStreak',
+  lastActiveAt: 'lastActiveAt',
+  longestStreak: 'longestStreak',
+  totalLearningTime: 'totalLearningTime',
+  totalXP: 'totalXP'
 };
 
 exports.Prisma.WordScalarFieldEnum = {
   id: 'id',
   text: 'text',
+  createdAt: 'createdAt',
   language: 'language',
   translate: 'translate',
-  meaning: 'meaning',
-  example: 'example',
-  partOfSpeech: 'partOfSpeech',
-  createdAt: 'createdAt'
+  isLearned: 'isLearned',
+  totalProgress: 'totalProgress',
+  audio: 'audio',
+  audioUS: 'audioUS',
+  phonetic: 'phonetic',
+  phoneticUS: 'phoneticUS',
+  definitions: 'definitions',
+  examples: 'examples',
+  userId: 'userId'
 };
 
 exports.Prisma.VideoScalarFieldEnum = {
@@ -144,10 +159,12 @@ exports.Prisma.VideoScalarFieldEnum = {
   title: 'title',
   description: 'description',
   url: 'url',
-  level: 'level',
   createdAt: 'createdAt',
-  tags: 'tags',
-  courseId: 'courseId'
+  courseId: 'courseId',
+  duration: 'duration',
+  language: 'language',
+  skillTypes: 'skillTypes',
+  level: 'level'
 };
 
 exports.Prisma.TaskScalarFieldEnum = {
@@ -156,11 +173,18 @@ exports.Prisma.TaskScalarFieldEnum = {
   answer: 'answer',
   options: 'options',
   type: 'type',
-  score: 'score',
   createdAt: 'createdAt',
-  language: 'language',
   videoId: 'videoId',
-  courseId: 'courseId'
+  courseId: 'courseId',
+  language: 'language',
+  score: 'score',
+  authorId: 'authorId',
+  explanation: 'explanation',
+  order: 'order',
+  cefrLevel: 'cefrLevel',
+  skillType: 'skillType',
+  timeLimit: 'timeLimit',
+  xpReward: 'xpReward'
 };
 
 exports.Prisma.CourseScalarFieldEnum = {
@@ -168,11 +192,15 @@ exports.Prisma.CourseScalarFieldEnum = {
   title: 'title',
   description: 'description',
   imageUrl: 'imageUrl',
-  level: 'level',
   isPublished: 'isPublished',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  tags: 'tags'
+  tags: 'tags',
+  authorId: 'authorId',
+  estimatedHours: 'estimatedHours',
+  targetSkills: 'targetSkills',
+  totalXP: 'totalXP',
+  level: 'level'
 };
 
 exports.Prisma.EnrollmentScalarFieldEnum = {
@@ -189,20 +217,125 @@ exports.Prisma.SettingScalarFieldEnum = {
   global_language: 'global_language',
   current_language: 'current_language',
   purposes: 'purposes',
-  current_level: 'current_level'
+  dailyTimeGoal: 'dailyTimeGoal',
+  dailyXPGoal: 'dailyXPGoal',
+  weeklyGoal: 'weeklyGoal',
+  current_level: 'current_level',
+  isEmailVerified: 'isEmailVerified'
 };
 
-exports.Prisma.WordProgressScalarFieldEnum = {
+exports.Prisma.LanguageProgressScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  language: 'language',
+  overallCEFR: 'overallCEFR',
+  overallProgress: 'overallProgress',
+  totalXP: 'totalXP',
+  totalTime: 'totalTime',
+  lastActiveAt: 'lastActiveAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.SkillProgressScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  languageProgressId: 'languageProgressId',
+  skillType: 'skillType',
+  cefrLevel: 'cefrLevel',
+  levelProgress: 'levelProgress',
+  xpEarned: 'xpEarned',
+  totalPracticed: 'totalPracticed',
+  correctAnswers: 'correctAnswers',
+  totalAnswers: 'totalAnswers',
+  currentAccuracy: 'currentAccuracy',
+  timeSpent: 'timeSpent',
+  totalWordsStudied: 'totalWordsStudied',
+  wordsLearned: 'wordsLearned',
+  wordsReviewing: 'wordsReviewing',
+  lastPracticed: 'lastPracticed',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.SkillLevelRequirementsScalarFieldEnum = {
+  id: 'id',
+  skillType: 'skillType',
+  cefrLevel: 'cefrLevel',
+  minXP: 'minXP',
+  minAccuracy: 'minAccuracy',
+  minPracticed: 'minPracticed',
+  minTimeSpent: 'minTimeSpent',
+  minWordsLearned: 'minWordsLearned',
+  weightInOverall: 'weightInOverall',
+  displayName: 'displayName',
+  description: 'description',
+  color: 'color'
+};
+
+exports.Prisma.WordTaskProgressScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   wordId: 'wordId',
-  progress: 'progress',
-  isLearned: 'isLearned'
+  isPassed: 'isPassed',
+  score: 'score',
+  attempts: 'attempts',
+  correctCount: 'correctCount',
+  createdAt: 'createdAt',
+  easeFactor: 'easeFactor',
+  lastAttempt: 'lastAttempt',
+  nextReviewAt: 'nextReviewAt',
+  reviewInterval: 'reviewInterval',
+  skillType: 'skillType',
+  taskType: 'taskType',
+  timeSpent: 'timeSpent',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.DailyStatsScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  language: 'language',
+  date: 'date',
+  totalXP: 'totalXP',
+  totalTime: 'totalTime',
+  tasksCompleted: 'tasksCompleted',
+  averageAccuracy: 'averageAccuracy',
+  skillsStats: 'skillsStats',
+  newWordsLearned: 'newWordsLearned',
+  wordsReviewed: 'wordsReviewed'
+};
+
+exports.Prisma.AchievementScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  type: 'type',
+  requiredSkill: 'requiredSkill',
+  requiredLevel: 'requiredLevel',
+  requiredOverall: 'requiredOverall',
+  requiredXP: 'requiredXP',
+  requiredStreak: 'requiredStreak',
+  requiredAccuracy: 'requiredAccuracy',
+  xpReward: 'xpReward',
+  badge: 'badge',
+  isActive: 'isActive'
+};
+
+exports.Prisma.UserAchievementScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  achievementId: 'achievementId',
+  unlockedAt: 'unlockedAt',
+  language: 'language'
 };
 
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
+};
+
+exports.Prisma.JsonNullValueInput = {
+  JsonNull: Prisma.JsonNull
 };
 
 exports.Prisma.QueryMode = {
@@ -213,6 +346,12 @@ exports.Prisma.QueryMode = {
 exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
+};
+
+exports.Prisma.JsonNullValueFilter = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull,
+  AnyNull: Prisma.AnyNull
 };
 exports.Role = exports.$Enums.Role = {
   OWNER: 'OWNER',
@@ -226,8 +365,8 @@ exports.Language = exports.$Enums.Language = {
   DE: 'DE'
 };
 
-exports.Level = exports.$Enums.Level = {
-  NONE: 'NONE',
+exports.CEFRLevel = exports.$Enums.CEFRLevel = {
+  PRE_A1: 'PRE_A1',
   A1: 'A1',
   A2: 'A2',
   B1: 'B1',
@@ -236,17 +375,39 @@ exports.Level = exports.$Enums.Level = {
   C2: 'C2'
 };
 
+exports.CoreSkillType = exports.$Enums.CoreSkillType = {
+  READING: 'READING',
+  LISTENING: 'LISTENING',
+  SPEAKING: 'SPEAKING',
+  WRITING: 'WRITING',
+  VOCABULARY: 'VOCABULARY'
+};
+
 exports.TaskType = exports.$Enums.TaskType = {
-  MULTIPLE_CHOICE: 'MULTIPLE_CHOICE',
-  FILL_IN_THE_BLANK: 'FILL_IN_THE_BLANK',
-  TRUE_FALSE: 'TRUE_FALSE'
+  FLASHCARDS: 'FLASHCARDS',
+  REVERSE_FLASHCARDS: 'REVERSE_FLASHCARDS',
+  MATCHING: 'MATCHING',
+  FILL_IN_THE_BLANK: 'FILL_IN_THE_BLANK'
 };
 
 exports.Purpose = exports.$Enums.Purpose = {
   NONE: 'NONE',
-  EXAM: 'EXAM',
+  WORK: 'WORK',
   TRAVEL: 'TRAVEL',
-  WORK: 'WORK'
+  EDUCATION: 'EDUCATION',
+  SELF_DEV: 'SELF_DEV',
+  COMMUNICATION: 'COMMUNICATION',
+  HOBBY: 'HOBBY'
+};
+
+exports.AchievementType = exports.$Enums.AchievementType = {
+  SKILL_LEVEL: 'SKILL_LEVEL',
+  OVERALL_LEVEL: 'OVERALL_LEVEL',
+  XP_MILESTONE: 'XP_MILESTONE',
+  STREAK_MASTER: 'STREAK_MASTER',
+  ACCURACY_EXPERT: 'ACCURACY_EXPERT',
+  VOCABULARY_GURU: 'VOCABULARY_GURU',
+  PERFECTIONIST: 'PERFECTIONIST'
 };
 
 exports.Prisma.ModelName = {
@@ -257,7 +418,13 @@ exports.Prisma.ModelName = {
   Course: 'Course',
   Enrollment: 'Enrollment',
   Setting: 'Setting',
-  WordProgress: 'WordProgress'
+  LanguageProgress: 'LanguageProgress',
+  SkillProgress: 'SkillProgress',
+  SkillLevelRequirements: 'SkillLevelRequirements',
+  WordTaskProgress: 'WordTaskProgress',
+  DailyStats: 'DailyStats',
+  Achievement: 'Achievement',
+  UserAchievement: 'UserAchievement'
 };
 
 /**
