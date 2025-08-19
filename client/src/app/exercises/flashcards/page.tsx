@@ -6,6 +6,6 @@ import { useGetFlashcards } from "@/states/requests/useGetFlashcards";
 export default function FlashCard() {
   const { flashcards } = useGetFlashcards();
   return (
-    <CreateFlashcardsExercise flashcards={flashcards} skillType="VOCABULARY" />
+    <CreateFlashcardsExercise flashcards={flashcards} skillType="FLASHCARDS" />
   );
 }

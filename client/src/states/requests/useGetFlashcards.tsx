@@ -27,7 +27,11 @@ export type Word = {
   correctCount: number;
 };
 
-export type skillType = "VOCABULARY";
+export type skillType =
+  | "FLASHCARDS"
+  | "REVERSE_FLASHCARDS"
+  | "MATCHING"
+  | "FILL_IN_THE_BLANK";
 
 const { addAlert } = useAlertStore.getState();
 
@@ -87,7 +91,7 @@ export const useGetFlashcards = create<States>((set) => ({
             wordIds: IDs,
             progressData: {
               timeSpent: 30,
-              skillType: skillType,
+              taskType: skillType,
               isPassed: true,
             },
           }),

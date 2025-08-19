@@ -6,6 +6,7 @@ import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import Pagination from "@/app/dictionary/Pagination";
 import CreateWordButton from "@/app/dictionary/CreateWordButton";
 import { useDictionaryStore } from "@/states/requests/useGetDictionaryWords";
+import { useTranslations } from "next-intl";
 
 export function MyWordsBlock() {
   const [activeTab, setActiveTab] = useState<"ALL" | "LEARNING" | "LEARNED">(
@@ -40,18 +41,21 @@ export function MyWordsBlock() {
     setMaxPages(totalPages);
     fetchWords();
   }, [activeTab, wordsOnPage, page, totalPages]);
+  const t = useTranslations();
   return (
     <div>
       <div className="text-xl font-bold text-blue-700 flex items-center justify-between">
-        <span>Мой словарь</span>
+        <span>{t("myDictionary")}</span>
         <Button color="outlineBlue" className="text-blue-700">
           <div className="flex items-center justify-center flex-row">
             <RefreshCw className="h-4 w-4 mr-2" />
-            <span className="text-xl">Повторить слова</span>
+            <span className="text-xl">{t("repeatWords")}</span>
           </div>
         </Button>
       </div>
-      <p className="text-gray-500 py-2">Всего изучено слов: {learned}</p>
+      <p className="text-gray-500 py-2">
+        {t("totalLearnedWords")} {learned}
+      </p>
       <div className="flex justify-between">
         <div>
           <Button
@@ -61,7 +65,7 @@ export function MyWordsBlock() {
               setActiveTab("ALL");
             }}
           >
-            Все слова
+            {t("allWords")}
           </Button>
           <Button
             color={activeTab === "LEARNING" ? "active" : "outline"}
@@ -70,7 +74,7 @@ export function MyWordsBlock() {
               setActiveTab("LEARNING");
             }}
           >
-            Изучаемые
+            {t("learningWords")}
           </Button>
           <Button
             color={activeTab === "LEARNED" ? "active" : "outline"}
@@ -79,14 +83,14 @@ export function MyWordsBlock() {
               setActiveTab("LEARNED");
             }}
           >
-            Изученные
+            {t("learnedWords")}
           </Button>
 
           <CreateWordButton />
         </div>
         <div>
           <DropdownMenu.Root>
-            К-сть слов на сторінку:
+            {t("wordsPerPage")}
             <DropdownMenu.Trigger className="ml-1 border py-2 px-4 cursor-pointer hover:bg-gray-100 rounded-md">
               {wordsOnPage}
             </DropdownMenu.Trigger>

@@ -3,24 +3,26 @@ import InputField from "@/app/settings/InputField";
 import { Button } from "@/shared/ui/Button";
 import SettingsSection from "@/app/settings/settingsBlock";
 import { useChangePassword } from "@/states/requests/useChangePassword";
+import { useTranslations } from "next-intl";
 
 export default function Password() {
   const { fetch } = useChangePassword();
+  const t = useTranslations();
   return (
     <SettingsSection
-      title="Безпека акаунту"
+      title={t("accountSecurity")}
       icon={<LockKeyhole />}
-      subTitle="Змініть пароль та підтвердіть електронну пошту"
+      subTitle={t("changePasswordDescription")}
     >
-      <p className="text-lg font-medium mb-2">Зміна паролю</p>
+      <p className="text-lg font-medium mb-2">{t("changePassword")}</p>
       <InputField
-        title="Поточний пароль"
+        title={t("currentPassword")}
         placeholder="Введіть поточний пароль"
         oldPassword={true}
       />
       <InputField
-        title="Новий пароль"
-        placeholder="Введіть новий пароль"
+        title={t("newPassword")}
+        placeholder={t("enterNewPassword")}
         newPassword={true}
       />
       <Button
@@ -31,7 +33,7 @@ export default function Password() {
         }}
       >
         <LockKeyhole />
-        Змінити пароль
+        {t("updatePassword")}
       </Button>
     </SettingsSection>
   );

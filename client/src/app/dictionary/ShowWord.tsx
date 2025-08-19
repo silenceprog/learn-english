@@ -35,7 +35,11 @@ export function ShowWord({ word }: Props) {
               ❌
             </Button>
           </div>
-          <p className="text-sm text-blue-700">{word.translate}</p>
+          <p className="text-sm text-blue-700">
+            {Array.isArray(word.translate)
+              ? word.translate.join(" / ")
+              : word.translate}
+          </p>
           <div className="flex flex-row gap-5">
             {word.phonetic !== "none" && (
               <div className="flex flex-row justify-center items-center gap-1">
