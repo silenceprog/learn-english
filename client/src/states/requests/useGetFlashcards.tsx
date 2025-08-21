@@ -4,7 +4,7 @@ import { useAlertStore } from "@/states/alertStore";
 
 type States = {
   flashcards: Word[];
-  fetch: () => Promise<void>;
+  fetch: (skillType: skillType) => Promise<void>;
   markAsLearned: (skillType: skillType, IDs: number[]) => Promise<void>;
   clear: () => void;
 };
@@ -37,16 +37,21 @@ const { addAlert } = useAlertStore.getState();
 
 export const useGetFlashcards = create<States>((set) => ({
   flashcards: [],
-  fetch: async () => {
+  fetch: async (skillType) => {
     try {
-      const res = await secureFetch(
-        "https://learn-english-6ufl.onrender.com/api/flashcards?limit=10",
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-          },
+      const baseUrl = "https://learn-english-6ufl.onrender.com/api/flashcards";
+      const params = new URLSearchParams({
+        limit: "10",
+        taskType: skillType,
+      });
+
+      const url = `${baseUrl}?${params.toString()}`;
+
+      const res = await secureFetch(url, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
         },
-      );
+      });
       const json = await res.json().catch(() => null);
 
       if (!res.ok) {
@@ -90,6 +95,7 @@ export const useGetFlashcards = create<States>((set) => ({
           body: JSON.stringify({
             wordIds: IDs,
             progressData: {
+              correct: true,
               timeSpent: 30,
               taskType: skillType,
               isPassed: true,

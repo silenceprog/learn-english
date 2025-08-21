@@ -15,6 +15,7 @@ import {
 import { Button } from "@/shared/ui/Button";
 import Link from "next/link";
 import { Progress } from "@/app/exercises/progress";
+import { useTranslations } from "next-intl";
 
 export default function CreateFlashcardsExercise({
   flashcards,
@@ -92,7 +93,7 @@ export default function CreateFlashcardsExercise({
       .play()
       .catch((err) => console.error("Не вдалося відтворити аудіо:", err));
   };
-
+  const t = useTranslations();
   const showYesNoButtons = () => {
     return (
       <div className="flex gap-4 justify-center mb-6">
@@ -102,14 +103,14 @@ export default function CreateFlashcardsExercise({
           className="flex-1 max-w-40 border-red-200 text-red-700 hover:bg-red-50 bg-transparent flex flex-row justify-center items-center"
         >
           <XCircle className="h-4 w-4 mr-2" />
-          Не знаю
+          {t("dontKnow")}
         </Button>
         <Button
           onClick={handleKnown}
           className="flex-1 max-w-40 bg-green-600 hover:bg-green-700 flex flex-row justify-center items-center"
         >
           <CheckCircle className="h-4 w-4 mr-2" />
-          Знаю
+          {t("know")}
         </Button>
       </div>
     );
@@ -125,9 +126,11 @@ export default function CreateFlashcardsExercise({
             <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <CheckCircle className="h-10 w-10 text-green-600" />
             </div>
-            <h1 className="text-3xl font-bold text-blue-700 mb-2">Отлично!</h1>
+            <h1 className="text-3xl font-bold text-blue-700 mb-2">
+              {t("excellent")}
+            </h1>
             <p className="text-lg text-muted-foreground">
-              Вы завершили изучение карточек
+              {t("cardsCompleted")}
             </p>
           </div>
 
@@ -138,7 +141,7 @@ export default function CreateFlashcardsExercise({
                 <p className="text-2xl font-bold text-green-700">
                   {knownCards.length}
                 </p>
-                <p className="text-sm text-muted-foreground">Знаю</p>
+                <p className="text-sm text-muted-foreground">{t("know")}</p>
               </div>
             </div>
             <div className="border-2 border-red-100">
@@ -147,7 +150,7 @@ export default function CreateFlashcardsExercise({
                 <p className="text-2xl font-bold text-red-700">
                   {unknownCards.length}
                 </p>
-                <p className="text-sm text-muted-foreground">Не знаю</p>
+                <p className="text-sm text-muted-foreground">{t("dontKnow")}</p>
               </div>
             </div>
           </div>
@@ -162,11 +165,11 @@ export default function CreateFlashcardsExercise({
               }}
               className="w-full bg-blue-600 hover:bg-blue-700"
             >
-              Повторить заново
+              {t("repeatAgain")}
             </Button>
             <Link href="/exercises">
               <Button color="outline" className="w-full bg-transparent">
-                Вернуться к упражнениям
+                {t("backToExercises")}
               </Button>
             </Link>
           </div>
@@ -182,17 +185,17 @@ export default function CreateFlashcardsExercise({
           className="inline-flex items-center gap-1 text-blue-600 hover:text-blue-800 mb-4"
         >
           <ArrowLeft className="h-4 w-4" />
-          <span>Назад к упражнениям</span>
+          <span>{t("backToExercises")}</span>
         </Link>
 
         <div className="flex justify-between items-center mb-4">
-          <h1 className="text-2xl font-bold text-blue-700">Карточки</h1>
+          <h1 className="text-2xl font-bold text-blue-700">{t("cards")}</h1>
         </div>
 
         <div className="flex justify-between items-center mb-2">
-          <span className="text-sm font-medium">Прогресс</span>
+          <span className="text-sm font-medium">{t("progress")}</span>
           <span className="text-sm text-muted-foreground">
-            {currentCard + 1} из {flashcards.length}
+            {currentCard + 1} {t("from")} {flashcards.length}
           </span>
         </div>
         <Progress value={progress} className="h-2 mb-6" />
@@ -266,7 +269,7 @@ export default function CreateFlashcardsExercise({
                 </div>
                 <div className="absolute bottom-4 text-center">
                   <p className="text-sm text-muted-foreground">
-                    Нажмите для перевода
+                    {t("clickToTranslate")}
                   </p>
                 </div>
               </div>
@@ -283,7 +286,7 @@ export default function CreateFlashcardsExercise({
                 </div>
                 <div className="absolute bottom-4 text-center">
                   <p className="text-sm text-muted-foreground">
-                    Нажмите чтобы вернуться
+                    {t("clickToTranslate")}
                   </p>
                 </div>
               </div>
@@ -303,7 +306,7 @@ export default function CreateFlashcardsExercise({
             className="flex flex-row justify-center items-center"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
-            Назад
+            {t("back")}
           </Button>
 
           <Button
@@ -312,7 +315,7 @@ export default function CreateFlashcardsExercise({
             className="gap-2 bg-transparent flex flex-row justify-center items-center"
           >
             <RotateCcw className="h-4 w-4" />
-            Перевернуть
+            {t("flip")}
           </Button>
 
           <Button
@@ -323,7 +326,7 @@ export default function CreateFlashcardsExercise({
             disabled={currentCard === flashcards.length - 1}
             className="flex flex-row justify-center items-center"
           >
-            Вперед
+            {t("forward")}
             <ArrowRight className="h-4 w-4 ml-2" />
           </Button>
         </div>
@@ -332,11 +335,11 @@ export default function CreateFlashcardsExercise({
           <div className="flex justify-center gap-4 text-sm text-muted-foreground">
             <span className="flex items-center gap-1">
               <CheckCircle className="h-4 w-4 text-green-600" />
-              Знаю: {knownCards.length}
+              {t("know")}: {knownCards.length}
             </span>
             <span className="flex items-center gap-1">
               <XCircle className="h-4 w-4 text-red-600" />
-              Не знаю: {unknownCards.length}
+              {t("dontKnow")}: {unknownCards.length}
             </span>
           </div>
         </div>

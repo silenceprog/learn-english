@@ -66,5 +66,18 @@
   "allWords": "Alle Wörter",
   "learningWords": "Lernend",
   "learnedWords": "Gelernt",
-  "wordsPerPage": "Wörter pro Seite: "
+  "wordsPerPage": "Wörter pro Seite: ",
+  "exercisesWithWords": "Übungen mit Wörtern",
+  "dontKnow": "Ich weiß nicht",
+  "know": "Ich weiß",
+  "excellent": "Ausgezeichnet!",
+  "cardsCompleted": "Sie haben das Lernen der Karten abgeschlossen",
+  "repeatAgain": "Noch einmal wiederholen",
+  "backToExercises": "Zurück zu den Übungen",
+  "clickToTranslate": "Zum Übersetzen klicken",
+  "progress": "Fortschritt",
+  "from": "aus",
+  "flip": "Umdrehen",
+  "forward": "Vorwärts",
+  "back": "Zurück"
 }

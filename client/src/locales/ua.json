@@ -10,7 +10,7 @@
   "cardsDescription": "Кожна картка показує слово — натисніть, щоб побачити переклад і запам’ятати його.",
   "matchingDescription": "Перетягуйте або натискайте, щоб з’єднати слово з правильним перекладом.",
   "cards": "Картки",
-  "reverseCards": "Картки",
+  "reverseCards": "Картки навпаки",
   "matching": "Відповідності",
   "settings": "Налаштування",
   "logOut": "Вийти",
@@ -66,6 +66,18 @@
   "allWords": "Всі слова",
   "learningWords": "Вивчаємо",
   "learnedWords": "Вивчені",
-  "wordsPerPage": "К-сть слів на сторінку: "
-
+  "wordsPerPage": "К-сть слів на сторінку: ",
+  "exercisesWithWords": "Вправи зі словами",
+  "dontKnow": "Не знаю",
+  "know": "Знаю",
+  "excellent": "Чудово!",
+  "cardsCompleted": "Ви завершили вивчення карток",
+  "repeatAgain": "Повторити заново",
+  "backToExercises": "Повернутися до вправ",
+  "clickToTranslate": "Натисніть для перекладу",
+  "progress": "Прогрес",
+  "from": "з",
+  "flip": "Перевернути",
+  "forward": "Вперед",
+  "back": "Назад"
 }
