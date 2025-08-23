@@ -116,7 +116,7 @@ export class EmailService {
       const user = await this.userService.findById(payload.id);
       if (!user) throw new Error('User not found');
 
-      await this.userService.updateUser(user.id, { isEmailVerified: true });
+      // await this.userService.updateUser(user.id, { isEmailVerified: true });
 
       return { message: 'Email successfully confirmed' };
     } catch (err) {

@@ -8,7 +8,6 @@ import {
   UseGuards,
   BadRequestException,
   Res,
-  Req,
   Redirect,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
