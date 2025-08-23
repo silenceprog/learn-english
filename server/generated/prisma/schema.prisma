@@ -1,13 +1,7 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider      = "prisma-client-js"
-  binaryTargets = ["native", "windows", "debian-openssl-3.0.x"]
   output        = "../generated/prisma"
+  binaryTargets = ["native", "windows", "debian-openssl-3.0.x"]
 }
 
 datasource db {
@@ -16,77 +10,112 @@ datasource db {
 }
 
 model User {
-  id              Int            @id @default(autoincrement())
-  email           String         @unique
-  username        String         @unique
-  password        String
-  role            Role           @default(USER)
-  isEmailVerified Boolean        @default(false)
-  createdAt       DateTime       @default(now())
-  updatedAt       DateTime       @updatedAt
-  enrollments     Enrollment[]
-  wordProgresses  WordProgress[]
-  setting         Setting?
+  id                 Int                @id @default(autoincrement())
+  email              String             @unique
+  username           String             @unique
+  password           String
+  role               Role               @default(USER)
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
+  deleteAt           DateTime?
+  lastLoginAt        DateTime?
+  provider           String?
+  refreshToken       String?
+  avatar             String?            @default("none")
+  currentStreak      Int                @default(0)
+  lastActiveAt       DateTime?
+  longestStreak      Int                @default(0)
+  totalLearningTime  Int                @default(0)
+  totalXP            Int                @default(0)
+  courses            Course[]
+  dailyStats         DailyStats[]
+  enrollments        Enrollment[]
+  languageProgresses LanguageProgress[]
+  setting            Setting?
+  skillProgresses    SkillProgress[]
+  tasks              Task[]
+  achievements       UserAchievement[]
+  words              Word[]
+  wordProgresses     WordTaskProgress[] @relation("UserWordProgresses")
 }
 
 model Word {
-  id           Int            @id @default(autoincrement())
-  text         String
-  language     Language
-  translate    String[]
-  meaning      String[]
-  example      String?
-  partOfSpeech String?
-  createdAt    DateTime       @default(now())
-  progresses   WordProgress[]
+  id            Int                @id @default(autoincrement())
+  text          String
+  createdAt     DateTime           @default(now())
+  language      Language           @default(EN)
+  translate     String[]
+  isLearned     Boolean            @default(false)
+  totalProgress Int                @default(0)
+  audio         String?            @default("none")
+  audioUS       String?
+  phonetic      String?            @default("none")
+  phoneticUS    String?
+  definitions   String[]           @default([])
+  examples      String[]           @default([])
+  userId        Int
+  user          User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  progresses    WordTaskProgress[] @relation("WordProgresses")
+
+  @@unique([userId, text, language])
 }
 
 model Video {
-  id          Int      @id @default(autoincrement())
+  id          Int             @id @default(autoincrement())
   title       String
   description String?
-  url         String   @unique
-  level       Level?
-  createdAt   DateTime @default(now())
-  tags        String[] @default([])
-
-  tasks    Task[]
-  courseId Int?
-  course   Course? @relation(fields: [courseId], references: [id])
+  url         String          @unique
+  createdAt   DateTime        @default(now())
+  courseId    Int?
+  duration    Int?
+  language    Language        @default(EN)
+  skillTypes  CoreSkillType[] @default([])
+  level       CEFRLevel       @default(PRE_A1)
+  tasks       Task[]
+  course      Course?         @relation(fields: [courseId], references: [id])
 }
 
 model Task {
-  id        Int      @id @default(autoincrement())
-  question  String
-  answer    String
-  options   String[]
-  type      TaskType @default(MULTIPLE_CHOICE)
-  score     Int?
-  createdAt DateTime @default(now())
-  language  Language @default(EN)
-
-  video   Video? @relation(fields: [videoId], references: [id])
-  videoId Int?
-
-  course   Course? @relation(fields: [courseId], references: [id])
-  courseId Int?
+  id          Int           @id @default(autoincrement())
+  question    String
+  answer      String
+  options     String[]
+  type        TaskType      @default(FLASHCARDS)
+  createdAt   DateTime      @default(now())
+  videoId     Int?
+  courseId    Int?
+  language    Language      @default(EN)
+  score       Int?
+  authorId    Int?
+  explanation String?
+  order       Int?
+  cefrLevel   CEFRLevel     @default(PRE_A1)
+  skillType   CoreSkillType
+  timeLimit   Int?
+  xpReward    Int           @default(10)
+  author      User?         @relation(fields: [authorId], references: [id])
+  course      Course?       @relation(fields: [courseId], references: [id])
+  video       Video?        @relation(fields: [videoId], references: [id])
 }
 
 model Course {
-  id          Int      @id @default(autoincrement())
-  title       String
-  description String?
-  imageUrl    String?
-  level       Level    @default(NONE)
-  isPublished Boolean  @default(false)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  tags        String[] @default([])
-
-  tasks Task[]
-
-  enrollments Enrollment[]
-  videos      Video[]
+  id             Int             @id @default(autoincrement())
+  title          String
+  description    String?
+  imageUrl       String?
+  isPublished    Boolean         @default(false)
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  tags           String[]        @default([])
+  authorId       Int?
+  estimatedHours Int?
+  targetSkills   CoreSkillType[] @default([])
+  totalXP        Int             @default(0)
+  level          CEFRLevel       @default(PRE_A1)
+  author         User?           @relation(fields: [authorId], references: [id])
+  enrollments    Enrollment[]
+  tasks          Task[]
+  videos         Video[]
 }
 
 model Enrollment {
@@ -94,9 +123,9 @@ model Enrollment {
   userId     Int
   courseId   Int
   progress   Float    @default(0.0)
-  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  course     Course   @relation(fields: [courseId], references: [id])
   enrolledAt DateTime @default(now())
+  course     Course   @relation(fields: [courseId], references: [id])
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId, courseId])
 }
@@ -104,25 +133,155 @@ model Enrollment {
 model Setting {
   id               Int       @id @default(autoincrement())
   userId           Int       @unique
-  user             User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   global_language  Language  @default(UA)
   current_language Language  @default(EN)
   purposes         Purpose[] @default([NONE])
-  current_level    Level     @default(NONE)
+  dailyTimeGoal    Int       @default(15)
+  dailyXPGoal      Int       @default(50)
+  weeklyGoal       Int       @default(5)
+  current_level    CEFRLevel @default(PRE_A1)
+  isEmailVerified  Boolean   @default(false)
+  user             User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
-model WordProgress {
-  id     Int  @id @default(autoincrement())
-  userId Int
-  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+model LanguageProgress {
+  id              Int             @id @default(autoincrement())
+  userId          Int
+  language        Language
+  overallCEFR     CEFRLevel       @default(PRE_A1)
+  overallProgress Float           @default(0.0)
+  totalXP         Int             @default(0)
+  totalTime       Int             @default(0)
+  lastActiveAt    DateTime?
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+  user            User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  skillProgresses SkillProgress[]
 
-  wordId Int
-  word   Word @relation(fields: [wordId], references: [id])
+  @@unique([userId, language])
+}
 
-  progress  Int     @default(0)
-  isLearned Boolean @default(false)
+model SkillProgress {
+  id                 Int              @id @default(autoincrement())
+  userId             Int
+  languageProgressId Int
+  skillType          CoreSkillType
+  cefrLevel          CEFRLevel        @default(PRE_A1)
+  levelProgress      Float            @default(0.0)
+  xpEarned           Int              @default(0)
+  totalPracticed     Int              @default(0)
+  correctAnswers     Int              @default(0)
+  totalAnswers       Int              @default(0)
+  currentAccuracy    Float            @default(0.0)
+  timeSpent          Int              @default(0)
+  totalWordsStudied  Int              @default(0)
+  wordsLearned       Int              @default(0)
+  wordsReviewing     Int              @default(0)
+  lastPracticed      DateTime?
+  updatedAt          DateTime         @updatedAt
+  languageProgress   LanguageProgress @relation(fields: [languageProgressId], references: [id], onDelete: Cascade)
+  user               User             @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@unique([userId, wordId])
+  @@unique([userId, languageProgressId, skillType])
+}
+
+model SkillLevelRequirements {
+  id              Int           @id @default(autoincrement())
+  skillType       CoreSkillType
+  cefrLevel       CEFRLevel
+  minXP           Int
+  minAccuracy     Float
+  minPracticed    Int
+  minTimeSpent    Int
+  minWordsLearned Int?
+  weightInOverall Float         @default(0.2)
+  displayName     String
+  description     String
+  color           String
+
+  @@unique([skillType, cefrLevel])
+}
+
+model WordTaskProgress {
+  id             Int           @id @default(autoincrement())
+  userId         Int
+  wordId         Int
+  isPassed       Boolean       @default(false)
+  score          Int           @default(0)
+  attempts       Int           @default(0)
+  correctCount   Int           @default(0)
+  createdAt      DateTime      @default(now())
+  easeFactor     Float         @default(2.5)
+  lastAttempt    DateTime?
+  nextReviewAt   DateTime?
+  reviewInterval Int           @default(1)
+  skillType      CoreSkillType @default(VOCABULARY)
+  taskType       TaskType      @default(FLASHCARDS)
+  timeSpent      Int           @default(0)
+  updatedAt      DateTime      @updatedAt
+  user           User          @relation("UserWordProgresses", fields: [userId], references: [id], onDelete: Cascade)
+  word           Word          @relation("WordProgresses", fields: [wordId], references: [id], onDelete: Cascade)
+
+  @@unique([wordId, userId, taskType])
+  @@index([userId, nextReviewAt])
+  @@index([userId, taskType])
+  @@index([taskType, nextReviewAt])
+  @@index([userId, isPassed, taskType])
+  @@index([wordId, userId, skillType])
+}
+
+model DailyStats {
+  id              Int      @id @default(autoincrement())
+  userId          Int
+  language        Language
+  date            DateTime @db.Date
+  totalXP         Int      @default(0)
+  totalTime       Int      @default(0)
+  tasksCompleted  Int      @default(0)
+  averageAccuracy Float    @default(0.0)
+  skillsStats     Json     @default("{}")
+  newWordsLearned Int      @default(0)
+  wordsReviewed   Int      @default(0)
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, language, date])
+}
+
+model Achievement {
+  id               Int               @id @default(autoincrement())
+  name             String
+  description      String
+  type             AchievementType
+  requiredSkill    CoreSkillType?
+  requiredLevel    CEFRLevel?
+  requiredOverall  CEFRLevel?
+  requiredXP       Int?
+  requiredStreak   Int?
+  requiredAccuracy Float?
+  xpReward         Int               @default(0)
+  badge            String?
+  isActive         Boolean           @default(true)
+  users            UserAchievement[]
+}
+
+model UserAchievement {
+  id            Int         @id @default(autoincrement())
+  userId        Int
+  achievementId Int
+  unlockedAt    DateTime    @default(now())
+  language      Language?
+  achievement   Achievement @relation(fields: [achievementId], references: [id])
+  user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, achievementId])
+}
+
+enum MasteryLevel {
+  NEW
+  LEARNING
+  FAMILIAR
+  KNOWN
+  MASTERED
 }
 
 enum Role {
@@ -132,9 +291,10 @@ enum Role {
 }
 
 enum TaskType {
-  MULTIPLE_CHOICE
+  FLASHCARDS
+  REVERSE_FLASHCARDS
+  MATCHING
   FILL_IN_THE_BLANK
-  TRUE_FALSE
 }
 
 enum Language {
@@ -145,17 +305,45 @@ enum Language {
 
 enum Purpose {
   NONE
-  EXAM
-  TRAVEL
   WORK
+  TRAVEL
+  EDUCATION
+  SELF_DEV
+  COMMUNICATION
+  HOBBY
 }
 
-enum Level {
-  NONE
+enum CEFRLevel {
+  PRE_A1
   A1
   A2
   B1
   B2
   C1
   C2
+}
+
+enum CoreSkillType {
+  READING
+  LISTENING
+  SPEAKING
+  WRITING
+  VOCABULARY
+}
+
+enum AchievementType {
+  SKILL_LEVEL
+  OVERALL_LEVEL
+  XP_MILESTONE
+  STREAK_MASTER
+  ACCURACY_EXPERT
+  VOCABULARY_GURU
+  PERFECTIONIST
+}
+
+enum DifficultyPreference {
+  EASY
+  MEDIUM
+  HARD
+  ADAPTIVE
 }

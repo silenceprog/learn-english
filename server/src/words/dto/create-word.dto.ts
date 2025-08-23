@@ -1,26 +1,38 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsArray, IsEnum, IsNotEmpty, IsOptional, IsString } from "class-validator";
-import { Language } from "generated/prisma";
+import { IsArray, IsOptional, IsString } from "class-validator";
 
 export class CreateWordDto {
   @ApiProperty({ example: 'apple', description: 'Слово англійською або іншою мовою' })
   @IsString()
   text: string;
 
-  @ApiProperty({ enum: Language, example: Language.EN, description: 'Мова слова' })
-  @IsEnum(Language)
-  language: Language;
-
-  @ApiProperty({ example: ['яблуко'], description: 'Переклад слова', type: [String] })
+  @ApiProperty({ example: ['яблуко'], description: 'Переклад слова', type: [String], required: false })
+  @IsOptional()
   @IsArray()
   translate: string[];
 
-  @ApiProperty({ example: ['a round fruit with shiny red or green skin that is fairly hard and white inside'], description: 'Значення слова', type: [String] })
-  @IsArray()
-  meaning: string[];
-
-  @ApiProperty({ example: 'I ate an apple in the morning.', description: 'Приклад використання', required: false })
+  @ApiProperty({ example: 'noun', description: 'Частина мови', required: false })
   @IsOptional()
   @IsString()
-  example?: string;
-  }
+  partOfSpeech?: string;
+
+  @ApiProperty({ example: ['a round fruit'], description: 'Визначення слова', type: [String], required: false })
+  @IsOptional()
+  @IsArray()
+  definitions?: string[];
+
+  @ApiProperty({ example: ['fruit'], description: 'Синоніми', type: [String], required: false })
+  @IsOptional()
+  @IsArray()
+  synonyms?: string[];
+
+  @ApiProperty({ example: [], description: 'Антоніми', type: [String], required: false })
+  @IsOptional()
+  @IsArray()
+  antonyms?: string[];
+
+  @ApiProperty({ example: ['I ate an apple in the morning.', 'She bought a red apple.'], description: 'Приклади використання', type: [String], required: false })
+  @IsOptional()
+  @IsArray()
+  examples?: string[];
+}

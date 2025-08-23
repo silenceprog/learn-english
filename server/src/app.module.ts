@@ -24,10 +24,19 @@ import { CoursesModule } from './courses/courses.module';
 import { EmailController } from './auth/email/email.controller';
 import { SettingsModule } from './settings/settings.module';
 import { RequestLoggerMiddleware } from './middleware/request-logger.middleware';
+import { TranslateModule } from './translate/translate.module';
+import { CacheInterceptor, CacheModule } from '@nestjs/cache-manager';
+import { RedisOptions } from './app-options';
+import { APP_INTERCEPTOR } from '@nestjs/core';
+import { CronModule } from './safe-delete/cron.module';
+import { GeminiModule } from './gemini/gemini.module';
+import { ProgressModule } from './progress/progress.module';
+import { CardsModule } from './cards/cards.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
+    CacheModule.register({RedisOptions,ttl:60*60}),
     UsersModule,
     AuthModule,
     DatabaseModule,
@@ -55,6 +64,11 @@ import { RequestLoggerMiddleware } from './middleware/request-logger.middleware'
     EmailModule,
     CoursesModule,
     SettingsModule,
+    TranslateModule,
+    CronModule,
+    GeminiModule,
+    ProgressModule,
+    CardsModule,
   ],
   controllers: [AppController, EmailController],
   providers: [
@@ -70,6 +84,10 @@ import { RequestLoggerMiddleware } from './middleware/request-logger.middleware'
     {
       provide: APP_GUARD,
       useClass: RolesGuard,
+    },
+    {
+      provide: APP_INTERCEPTOR, 
+      useClass: CacheInterceptor,
     },
     JwtStrategy,
   ],

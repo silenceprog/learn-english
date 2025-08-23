@@ -1,19 +1,15 @@
 import {
   Controller,
   Get,
-  Post,
   Body,
   Patch,
-  Param,
-  Delete,
   Req,
 } from '@nestjs/common';
 import { SettingsService } from './settings.service';
 import { CreateSettingDto } from './dto/create-setting.dto';
 import { UpdateSettingDto } from './dto/update-setting.dto';
 import { ApiBearerAuth, ApiOperation, ApiResponse } from '@nestjs/swagger';
-import { Roles } from 'src/roles/roles.decorator';
-import { Role } from 'generated/prisma';
+import { NoCache } from 'src/no-cache.decorator';
 
 @ApiBearerAuth('access-token')
 @Controller('settings')
@@ -22,6 +18,7 @@ export class SettingsController {
 
   @ApiOperation({ summary: 'Отримання налаштувань користувача по айді' })
   @ApiResponse({ status: 200, type: CreateSettingDto })
+  @NoCache()
   @Get()
   findById(@Req() req) {
     const userId = req.user.id;
