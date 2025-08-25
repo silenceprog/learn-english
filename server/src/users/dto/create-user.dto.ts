@@ -21,11 +21,6 @@ export class CreateUserDto {
   @IsOptional()
   role?: Role;
 
-  @ApiProperty({ example: 'false',default:false })
-  @IsOptional()
-  @IsBoolean()
-  isEmailVerified?: boolean;
-
   @ApiProperty({default: "none"})
   @IsString()
   @IsOptional()

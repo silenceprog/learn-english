@@ -4,7 +4,7 @@ import { useAlertStore } from "@/states/alertStore";
 
 type States = {
   flashcards: Word[];
-  fetch: () => Promise<void>;
+  fetch: (skillType: skillType) => Promise<void>;
   markAsLearned: (skillType: skillType, IDs: number[]) => Promise<void>;
   clear: () => void;
 };
@@ -37,16 +37,16 @@ const { addAlert } = useAlertStore.getState();
 
 export const useGetFlashcards = create<States>((set) => ({
   flashcards: [],
-  fetch: async () => {
+  fetch: async (skillType) => {
     try {
-      const res = await secureFetch(
-        "https://learn-english-6ufl.onrender.com/api/flashcards?limit=10",
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-          },
-        },
-      );
+      const params = new URLSearchParams({
+        limit: "10",
+        taskType: skillType,
+      });
+
+      const url = `/api/flashcards?${params.toString()}`;
+
+      const res = await secureFetch(url);
       const json = await res.json().catch(() => null);
 
       if (!res.ok) {
@@ -80,23 +80,18 @@ export const useGetFlashcards = create<States>((set) => ({
   },
   markAsLearned: async (skillType, IDs) => {
     try {
-      const res = await secureFetch(
-        "https://learn-english-6ufl.onrender.com/api/words/mark-batch-learned",
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      const res = await secureFetch("/api/words/mark-batch-learned", {
+        method: "POST",
+        body: JSON.stringify({
+          wordIds: IDs,
+          progressData: {
+            correct: true,
+            timeSpent: 30,
+            taskType: skillType,
+            isPassed: true,
           },
-          body: JSON.stringify({
-            wordIds: IDs,
-            progressData: {
-              timeSpent: 30,
-              taskType: skillType,
-              isPassed: true,
-            },
-          }),
-        },
-      );
+        }),
+      });
       if (!res.ok) {
         const errorData = await res.json().catch(() => ({}));
         addAlert(

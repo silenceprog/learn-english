@@ -167,7 +167,7 @@ export default function AddNewWord() {
                         onClick={() => {
                           setForm((prevForm) => ({
                             ...prevForm,
-                            word: s,
+                            text: s,
                           }));
                           setSuppressSuggestions(true);
                           clearSuggestions();

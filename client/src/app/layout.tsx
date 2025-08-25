@@ -9,6 +9,7 @@ import DeleteWordModal from "@/modals/deleteWordModal";
 import { useLocaleStore } from "@/states/useLocaleStore";
 import { ReactNode, useEffect, useState } from "react";
 import { NextIntlClientProvider } from "next-intl";
+import Head from "next/head";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -37,9 +38,12 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const locale = "en"; // або отримати з params/headers
+  const locale = "en";
   return (
     <html lang={locale}>
+      <Head>
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+      </Head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

@@ -69,52 +69,52 @@ export class FlashCardService {
   }
 
   private async getWordsForNewTask(
-  userId: number,
-  taskType: TaskType,
-  where: any,
-  limit?: number,
-) {
-  const words = await this.databaseService.word.findMany({
-    where,
-    include: {
-      progresses: {
-        where: {
-          userId,
-          taskType,
-        },
-        select: {
-          nextReviewAt: true,
-          reviewInterval: true,
-          attempts: true,
-          correctCount: true,
-          isPassed: true,
-          taskType: true,
+    userId: number,
+    taskType: TaskType,
+    where: any,
+    limit?: number,
+  ) {
+    const words = await this.databaseService.word.findMany({
+      where,
+      include: {
+        progresses: {
+          where: {
+            userId,
+            taskType,
+          },
+          select: {
+            nextReviewAt: true,
+            reviewInterval: true,
+            attempts: true,
+            correctCount: true,
+            isPassed: true,
+            taskType: true,
+          },
         },
       },
-    },
-    orderBy: [
-      { isLearned: 'asc' },
-      { totalProgress: 'asc' },
-      { createdAt: 'desc' },
-    ],
-  });
+      orderBy: [
+        { isLearned: 'asc' },
+        { totalProgress: 'asc' },
+        { createdAt: 'desc' },
+      ],
+    });
 
-  return words
-    .filter(
-      (word) =>
-        word.progresses.length === 0 ||
-        !word.progresses.some((p) => p.isPassed && p.taskType === taskType),
-    )
-    .slice(0, limit)
-    .map((word) => ({
-      ...word,
-      nextReviewAt: word.progresses[0]?.nextReviewAt,
-      reviewInterval: word.progresses[0]?.reviewInterval || 1,
-      attempts: word.progresses[0]?.attempts || 0,
-      correctCount: word.progresses[0]?.correctCount || 0,
-      taskType,
-    }));
-}
+    return words
+      .filter(
+        (word) =>
+          word.progresses.length === 0 ||
+          !word.progresses.some((p) => p.isPassed && p.taskType === taskType),
+      )
+      .slice(0, limit)
+      .map((word) => ({
+        ...word,
+        nextReviewAt: word.progresses[0]?.nextReviewAt,
+        reviewInterval: word.progresses[0]?.reviewInterval || 1,
+        attempts: word.progresses[0]?.attempts || 0,
+        correctCount: word.progresses[0]?.correctCount || 0,
+        taskType,
+      }));
+  }
 
   async checkAnswer(userId: number, answer: FlashcardAnswerDto) {
     const {

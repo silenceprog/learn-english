@@ -392,7 +392,6 @@ export class WordsService {
     },
   });
 
-  // Передаем tx в checkWordCompletion
   await this.checkWordCompletion(tx, wordId, userId);
 
   const xpGain = progressData.correct ? 10 : 5;

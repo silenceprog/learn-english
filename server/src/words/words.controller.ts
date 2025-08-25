@@ -7,7 +7,6 @@ import {
   Param,
   Delete,
   ParseIntPipe,
-  Req,
   Query,
   ValidationPipe,
 } from '@nestjs/common';
@@ -15,7 +14,6 @@ import { WordsService } from './words.service';
 import {
   ApiBearerAuth,
   ApiOperation,
-  ApiParam,
   ApiQuery,
   ApiResponse,
   ApiTags,
@@ -26,7 +24,6 @@ import { WordEntity } from './dto/word.entity';
 import { PaginationDto } from './dto/pagination.dto';
 import { UpdateProgressDto } from './dto/update-progress';
 import { GetCurrentUserId } from 'src/decorators/get-current-user-id.decorator';
-import { ProgressService } from 'src/progress/progress.service';
 import { CoreSkillType } from 'generated/prisma';
 import { MarkWordsLearnedDto } from './dto/mark-word.dto';
 
@@ -34,9 +31,7 @@ import { MarkWordsLearnedDto } from './dto/mark-word.dto';
 @ApiBearerAuth('access-token')
 @Controller('words')
 export class WordsController {
-  constructor(
-    private readonly wordsService: WordsService,
-  ) {}
+  constructor(private readonly wordsService: WordsService) {}
 
   @ApiOperation({ summary: 'Створення слова' })
   @ApiResponse({
@@ -143,7 +138,7 @@ export class WordsController {
     return this.wordsService.updateWord(id, userId, updateWordDTO);
   }
 
- @Post('mark-batch-learned')
+  @Post('mark-batch-learned')
   @ApiOperation({ summary: 'Позначити множину слів як вивчених' })
   @ApiResponse({ status: 200, description: 'Слова успішно оброблені' })
   async markWordsLearned(
@@ -151,9 +146,9 @@ export class WordsController {
     @Body(ValidationPipe) requestData: MarkWordsLearnedDto,
   ) {
     return this.wordsService.markWordsLearned(
-      userId, 
-      requestData.wordIds, 
-      requestData.progressData
+      userId,
+      requestData.wordIds,
+      requestData.progressData,
     );
   }
 

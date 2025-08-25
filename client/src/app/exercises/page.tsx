@@ -11,46 +11,59 @@ export default function Exercises() {
   const router = useRouter();
   const t = useTranslations();
   return (
-    <Section>
-      <p className="text-2xl font-bold text-blue-700 md:text-4xl mb-4">
-        Вправи зі словами
-      </p>
-      <div className="grid grid-cols-3 gap-6">
-        <CreateExercise
-          name={t("cards")}
-          icon={<BookOpen />}
-          text={t("cardsDescription")}
-          href="/exercises/flashcards"
-          difficulty="Easy"
-          handleClick={async () => {
-            await fetch();
-            if (flashcards.length >= 10) {
-              router.push("/exercises/flashcards");
-            }
-          }}
-        />
-        <CreateExercise
-          name={t("reverseCards")}
-          icon={<BookOpen />}
-          text={t("reverseCardsDescription")}
-          href="/exercises/reverseFlashCards"
-          difficulty="Hard"
-          handleClick={async () => {
-            await fetch();
-            if (flashcards.length >= 10) {
-              router.push("/exercises/reverseFlashCards");
-            }
-          }}
-        />
-        <CreateExercise
-          name={t("matching")}
-          icon={<BookOpen />}
-          text={t("matchingDescription")}
-          href="/exercises/reverseFlashCards"
-          difficulty="Hard"
-          handleClick={() => router.push("/exercises/matching")}
-        />
-      </div>
-    </Section>
+    <section>
+      <Section>
+        <p className="text-2xl font-bold text-blue-700 md:text-4xl mb-4">
+          {t("exercisesWithWords")}
+        </p>
+        <div className="grid grid-cols-3 gap-6">
+          <CreateExercise
+            name={t("cards")}
+            icon={<BookOpen />}
+            text={t("cardsDescription")}
+            href="/exercises/flashcards"
+            difficulty="Easy"
+            handleClick={async () => {
+              await fetch("FLASHCARDS");
+              if (flashcards.length >= 10) {
+                router.push("/exercises/flashcards");
+              }
+            }}
+          />
+          <CreateExercise
+            name={t("reverseCards")}
+            icon={<BookOpen />}
+            text={t("reverseCardsDescription")}
+            href="/exercises/reverseFlashCards"
+            difficulty="Hard"
+            handleClick={async () => {
+              await fetch("REVERSE_FLASHCARDS");
+              if (flashcards.length >= 10) {
+                router.push("/exercises/reverseFlashCards");
+              }
+            }}
+          />
+          <CreateExercise
+            name={t("matching")}
+            icon={<BookOpen />}
+            text={t("matchingDescription")}
+            href="/exercises/reverseFlashCards"
+            difficulty="Hard"
+            handleClick={async () => {
+              await fetch("MATCHING");
+              if (flashcards.length >= 10) {
+                router.push("/exercises/matching");
+              }
+            }}
+          />
+        </div>
+      </Section>
+
+      <Section>
+        <p className="text-2xl font-bold text-blue-700 md:text-4xl mb-4">
+          {t("exercises")}
+        </p>
+      </Section>
+    </section>
   );
 }

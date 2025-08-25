@@ -76,24 +76,16 @@ export const useDictionaryStore = create<DictionaryStore>((set, get) => ({
 
   fetchWords: async () => {
     const { currentTab, wordsLimit, currentPage } = get();
-    const baseUrl =
-      "https://learn-english-6ufl.onrender.com/api/words/by-language";
     const params = new URLSearchParams({
       limit: wordsLimit.toString(),
       page: currentPage.toString(),
       type: currentTab.toString(),
     });
 
-    const url = `${baseUrl}?${params.toString()}`;
+    const url = `/api/words/by-language?${params.toString()}`;
 
     try {
-      const response = await secureFetch(url, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        },
-      });
+      const response = await secureFetch(url);
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
         throw new Error(errorData.message || `HTTP Error: ${response.status}`);

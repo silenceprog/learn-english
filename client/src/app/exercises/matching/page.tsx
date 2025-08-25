@@ -6,15 +6,18 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { ArrowLeft, Check, RefreshCw, Shuffle, Trophy, X } from "lucide-react";
 import Link from "next/link";
+import { useGetFlashcards } from "@/states/requests/useGetFlashcards";
+import { useTranslations } from "next-intl";
 
 interface MatchItem {
   id: string;
   content: string;
   type: "word" | "translation";
-  matchId: string;
+  matchId: number;
 }
 
 export default function MatchingPage() {
+  const { flashcards, markAsLearned } = useGetFlashcards();
   const [leftItems, setLeftItems] = useState<MatchItem[]>([]);
   const [rightItems, setRightItems] = useState<MatchItem[]>([]);
   const [selectedLeft, setSelectedLeft] = useState<string | null>(null);
@@ -23,18 +26,7 @@ export default function MatchingPage() {
   const [correctMatches, setCorrectMatches] = useState<string[]>([]);
   const [incorrectMatches, setIncorrectMatches] = useState<string[]>([]);
   const [isCompleted, setIsCompleted] = useState(false);
-
-  const wordPairs = [
-    { id: "1", word: "accomplish", translation: "достигать, выполнять" },
-    { id: "2", word: "brilliant", translation: "блестящий, яркий" },
-    { id: "3", word: "challenge", translation: "вызов, испытание" },
-    { id: "4", word: "determine", translation: "определять, решать" },
-    { id: "5", word: "essential", translation: "существенный, важный" },
-    { id: "6", word: "flexible", translation: "гибкий, податливый" },
-    { id: "7", word: "generate", translation: "создавать, производить" },
-    { id: "8", word: "implement", translation: "внедрять, осуществлять" },
-  ];
-
+  const [correctIds, setCorrectIDs] = useState<number[]>([]);
   const shuffleArray = <T,>(array: T[]): T[] => {
     const shuffled = [...array];
     for (let i = shuffled.length - 1; i > 0; i--) {
@@ -45,17 +37,17 @@ export default function MatchingPage() {
   };
 
   const initializeGame = () => {
-    const left: MatchItem[] = wordPairs.map((pair) => ({
+    const left: MatchItem[] = flashcards.map((pair) => ({
       id: `word-${pair.id}`,
-      content: pair.word,
+      content: pair.text,
       type: "word" as const,
       matchId: pair.id,
     }));
 
     const right: MatchItem[] = shuffleArray(
-      wordPairs.map((pair) => ({
+      flashcards.map((pair) => ({
         id: `translation-${pair.id}`,
-        content: pair.translation,
+        content: pair.translate.toString(),
         type: "translation" as const,
         matchId: pair.id,
       })),
@@ -95,6 +87,7 @@ export default function MatchingPage() {
 
         if (leftItem.matchId === rightItem.matchId) {
           setCorrectMatches([...correctMatches, selectedLeft]);
+          setCorrectIDs([...correctIds, leftItem.matchId]);
         } else {
           setIncorrectMatches([...incorrectMatches, selectedLeft]);
         }
@@ -103,7 +96,7 @@ export default function MatchingPage() {
         setSelectedRight(null);
 
         // Проверяем завершение игры
-        if (Object.keys(newMatches).length === wordPairs.length) {
+        if (Object.keys(newMatches).length === flashcards.length) {
           setTimeout(() => setIsCompleted(true), 500);
         }
       }
@@ -148,11 +141,15 @@ export default function MatchingPage() {
   };
 
   const correctCount = correctMatches.length;
-  const progress = (correctCount / wordPairs.length) * 100;
+  const progress = (correctCount / flashcards.length) * 100;
+
+  const t = useTranslations();
 
   if (isCompleted) {
-    const score = Math.round((correctCount / wordPairs.length) * 100);
-
+    const score = Math.round((correctCount / flashcards.length) * 100);
+    if (correctIds) {
+      markAsLearned("MATCHING", correctIds);
+    }
     return (
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-2xl mx-auto text-center">
@@ -160,9 +157,11 @@ export default function MatchingPage() {
             <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <Trophy className="h-10 w-10 text-green-600" />
             </div>
-            <h1 className="text-3xl font-bold text-blue-700 mb-2">Отлично!</h1>
+            <h1 className="text-3xl font-bold text-blue-700 mb-2">
+              {t("excellent")}
+            </h1>
             <p className="text-lg text-muted-foreground">
-              Вы завершили упражнение на соответствие
+              {t("cardsCompleted")}
             </p>
           </div>
 
@@ -173,18 +172,23 @@ export default function MatchingPage() {
                   {score}%
                 </p>
                 <p className="text-lg text-muted-foreground">
-                  {correctCount} из {wordPairs.length} правильных соответствий
+                  {correctCount} {t("from")} {flashcards.length}{" "}
+                  {t("correct_matches")}
                 </p>
               </div>
 
               <div className="grid grid-cols-2 gap-4 text-sm">
                 <div className="flex items-center justify-center gap-2">
                   <Check className="h-4 w-4 text-green-600" />
-                  <span>Правильно: {correctCount}</span>
+                  <span>
+                    {t("correct")} {correctCount}
+                  </span>
                 </div>
                 <div className="flex items-center justify-center gap-2">
                   <X className="h-4 w-4 text-red-600" />
-                  <span>Неправильно: {wordPairs.length - correctCount}</span>
+                  <span>
+                    {t("incorrect")} {flashcards.length - correctCount}
+                  </span>
                 </div>
               </div>
             </CardContent>
@@ -196,11 +200,11 @@ export default function MatchingPage() {
               className="w-full bg-blue-600 hover:bg-blue-700"
             >
               <RefreshCw className="h-4 w-4 mr-2" />
-              Играть заново
+              {t("play_again")}
             </Button>
             <Link href="/exercises">
               <Button variant="outline" className="w-full bg-transparent">
-                Вернуться к упражнениям
+                {t("backToExercises")}
               </Button>
             </Link>
           </div>
@@ -217,23 +221,23 @@ export default function MatchingPage() {
           className="inline-flex items-center gap-1 text-blue-600 hover:text-blue-800 mb-4"
         >
           <ArrowLeft className="h-4 w-4" />
-          <span>Назад к упражнениям</span>
+          <span>{t("return_to_exercises")}</span>
         </Link>
 
         <div className="flex justify-between items-center mb-4">
           <h1 className="text-2xl font-bold text-blue-700">
-            Упражнение на соответствие
+            {t("matching_exercise")}
           </h1>
           <div className="flex items-center gap-2">
             <Shuffle className="h-5 w-5 text-blue-600" />
             <span className="text-sm font-medium">
-              Правильно: {correctCount}/{wordPairs.length}
+              {t("correct")} {correctCount}/{flashcards.length}
             </span>
           </div>
         </div>
 
         <div className="flex justify-between items-center mb-2">
-          <span className="text-sm font-medium">Прогресс</span>
+          <span className="text-sm font-medium">{t("progress")}</span>
           <span className="text-sm text-muted-foreground">
             {Math.round(progress)}%
           </span>
@@ -245,10 +249,10 @@ export default function MatchingPage() {
         <Card className="border-2 border-blue-100 mb-6">
           <CardHeader>
             <CardTitle className="text-center text-blue-700">
-              Соедините слова с их переводами
+              {t("match_words_with_translations")}
             </CardTitle>
             <p className="text-center text-muted-foreground">
-              Нажмите на слово слева, затем на его перевод справа
+              {t("click_word_then_translation")}
             </p>
           </CardHeader>
           <CardContent>
@@ -256,7 +260,7 @@ export default function MatchingPage() {
               {/* Левая колонка - слова */}
               <div className="space-y-3">
                 <h3 className="text-lg font-semibold text-center text-blue-700 mb-4">
-                  Английские слова
+                  {t("english_words")}
                 </h3>
                 {leftItems.map((item) => {
                   const status = getItemStatus(item.id, "left");
@@ -283,7 +287,7 @@ export default function MatchingPage() {
               {/* Правая колонка - переводы */}
               <div className="space-y-3">
                 <h3 className="text-lg font-semibold text-center text-blue-700 mb-4">
-                  Переводы
+                  {t("translations")}
                 </h3>
                 {rightItems.map((item) => {
                   const status = getItemStatus(item.id, "right");
@@ -317,7 +321,7 @@ export default function MatchingPage() {
             className="gap-2 bg-transparent cursor-pointer"
           >
             <RefreshCw className="h-4 w-4" />
-            Перемешать заново
+            {t("shuffle_again")}
           </Button>
         </div>
       </div>
