@@ -1,4 +1,5 @@
 import { create } from "zustand/react";
+import { secureFetch } from "@/lib/secureFetch";
 
 type Suggestions = {
   inputtedChars: string;
@@ -21,20 +22,12 @@ export const useGetSuggestions = create<Suggestions>((set, get) => ({
   },
   fetch: async () => {
     const { inputtedChars } = get();
-    const baseUrl =
-      "https://learn-english-6ufl.onrender.com/api/translate/suggestions";
     const params = new URLSearchParams({
       query: inputtedChars,
     });
-    const url = `${baseUrl}?${params}`;
+    const url = `/api/translate/suggestions/?${params}`;
     try {
-      const response = await fetch(url, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        },
-      });
+      const response = await secureFetch(url);
       const data = await response.json();
       set({ suggestions: data.suggestions });
     } catch (error) {

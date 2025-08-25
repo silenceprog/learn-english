@@ -79,5 +79,19 @@
   "from": "з",
   "flip": "Перевернути",
   "forward": "Вперед",
-  "back": "Назад"
+  "back": "Назад",
+  "completed_matching_exercise": "Ви завершили вправу на відповідність",
+  "out_of": "з",
+  "correct_matches": "правильних відповідностей",
+  "correct": "Правильно:",
+  "incorrect": "Неправильно:",
+  "play_again": "Грати знову",
+  "return_to_exercises": "Повернутися до вправ",
+  "back_to_exercises": "Назад до вправ",
+  "matching_exercise": "Вправа на відповідність",
+  "match_words_with_translations": "З'єднайте слова з їх перекладами",
+  "click_word_then_translation": "Натисніть на слово зліва, потім на його переклад справа",
+  "english_words": "Англійські слова",
+  "translations": "Переклади",
+  "shuffle_again": "Перемішати знову"
 }

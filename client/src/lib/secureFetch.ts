@@ -11,7 +11,11 @@ export async function secureFetch(input: RequestInfo, init: RequestInit = {}) {
   if (!isAuthenticated) {
     throw new Error("Not authenticated");
   }
-  let res = await fetch(input, { ...init, headers: baseHeaders });
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+  let res = await fetch(`${baseUrl}${input}`, {
+    ...init,
+    headers: baseHeaders,
+  });
 
   if (res.status === 401) {
     const newToken = await refresh();

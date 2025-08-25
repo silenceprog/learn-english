@@ -22,14 +22,7 @@ export const useUserSettingsStore = create<SettingsStore>((set) => ({
   },
   fetchSettings: async () => {
     try {
-      const res = await secureFetch(
-        "https://learn-english-6ufl.onrender.com/api/settings",
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-          },
-        },
-      );
+      const res = await secureFetch("/api/settings");
       if (!res.ok) {
         const errorData = await res.json().catch(() => ({}));
         throw new Error(

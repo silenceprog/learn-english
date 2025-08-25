@@ -79,6 +79,19 @@
   "from": "from",
   "flip": "Flip",
   "forward": "Forward",
-  "back": "Back"
-
+  "back": "Back",
+  "completed_matching_exercise": "You have completed the matching exercise",
+  "out_of": "out of",
+  "correct_matches": "correct matches",
+  "correct": "Correct:",
+  "incorrect": "Incorrect:",
+  "play_again": "Play again",
+  "return_to_exercises": "Return to exercises",
+  "back_to_exercises": "Back to exercises",
+  "matching_exercise": "Matching exercise",
+  "match_words_with_translations": "Match the words with their translations",
+  "click_word_then_translation": "Click on the word on the left, then on its translation on the right",
+  "english_words": "English words",
+  "translations": "Translations",
+  "shuffle_again": "Shuffle again"
 }

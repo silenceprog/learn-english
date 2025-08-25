@@ -39,19 +39,14 @@ export const useGetFlashcards = create<States>((set) => ({
   flashcards: [],
   fetch: async (skillType) => {
     try {
-      const baseUrl = "https://learn-english-6ufl.onrender.com/api/flashcards";
       const params = new URLSearchParams({
         limit: "10",
         taskType: skillType,
       });
 
-      const url = `${baseUrl}?${params.toString()}`;
+      const url = `/api/flashcards?${params.toString()}`;
 
-      const res = await secureFetch(url, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        },
-      });
+      const res = await secureFetch(url);
       const json = await res.json().catch(() => null);
 
       if (!res.ok) {
@@ -85,24 +80,18 @@ export const useGetFlashcards = create<States>((set) => ({
   },
   markAsLearned: async (skillType, IDs) => {
     try {
-      const res = await secureFetch(
-        "https://learn-english-6ufl.onrender.com/api/words/mark-batch-learned",
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      const res = await secureFetch("/api/words/mark-batch-learned", {
+        method: "POST",
+        body: JSON.stringify({
+          wordIds: IDs,
+          progressData: {
+            correct: true,
+            timeSpent: 30,
+            taskType: skillType,
+            isPassed: true,
           },
-          body: JSON.stringify({
-            wordIds: IDs,
-            progressData: {
-              correct: true,
-              timeSpent: 30,
-              taskType: skillType,
-              isPassed: true,
-            },
-          }),
-        },
-      );
+        }),
+      });
       if (!res.ok) {
         const errorData = await res.json().catch(() => ({}));
         addAlert(
