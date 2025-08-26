@@ -25,7 +25,7 @@ export default function Registration() {
 
     try {
       const response = await fetch(
-        "https://learn-english-6ufl.onrender.com/api/auth/registration",
+        "http://localhost:3001/api/auth/registration",
         {
           method: "POST",
           headers: {

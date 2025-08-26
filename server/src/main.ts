@@ -8,6 +8,7 @@ import helmet from 'helmet';
 import { WinstonModule } from 'nest-winston';
 import { transports, format } from 'winston';
 import 'winston-daily-rotate-file'; 
+import { setupSwagger } from './swagger.config'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule,{
@@ -49,29 +50,12 @@ async function bootstrap() {
   app.use(helmet());
   app.setGlobalPrefix('api')
 
-  const config = new DocumentBuilder()
-      .setTitle('English Learn App')
-      .setDescription('Документація RestAPI')
-      .setVersion('1.0.0')
-      .addBearerAuth( 
-        {
-          type: 'http',
-          scheme: 'bearer',
-          bearerFormat: 'JWT',
-          name: 'Authorization',
-          description: 'Введіть JWT токен, отриманий після входу',
-          in: 'header',
-        },
-        'access-token', 
-      )
-      .build()
-  const document = SwaggerModule.createDocument(app,config);
-  SwaggerModule.setup('/api/docs',app,document)
+  setupSwagger(app);
   app.useGlobalPipes(new ValidationPipe({
     whitelist: true, 
     forbidNonWhitelisted: true, 
     transform: true, 
   }),);
-  await app.listen(process.env.PORT ?? 3001);
+  await app.listen(process.env.PORT ?? 3001, '0.0.0.0');
 }
 bootstrap();

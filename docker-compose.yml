@@ -63,6 +63,11 @@ services:
     networks:
       - fullstack_network
     command: npm run start:dev
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:${PORT:-3001}/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
   frontend:
     build:
@@ -70,13 +75,12 @@ services:
       dockerfile: Dockerfile
       target: ${NODE_ENV:-development}
       args:
-        - NEXT_PUBLIC_API_URL=http://backend:3001
+        - NEXT_PUBLIC_API_URL=http://localhost:3001
     container_name: fullstack_frontend
     restart: unless-stopped
     environment:
       NODE_ENV: ${NODE_ENV:-development}
       NEXT_PUBLIC_API_URL: http://backend:3001
-      CHOKIDAR_USEPOLLING: "true"
     ports:
       - "3000:3000"
     volumes:

@@ -2,7 +2,6 @@
 FROM node:20-alpine AS base
 WORKDIR /app
 COPY package*.json ./
-RUN apk add --no-cache libc6-compat
 
 # ---- Development ----
 FROM base AS development
@@ -21,7 +20,6 @@ RUN npm prune --production
 # ---- Production ----
 FROM node:20-alpine AS production
 WORKDIR /app
-RUN apk add --no-cache libc6-compat
 
 # security: non-root user
 RUN addgroup --system --gid 1001 nodejs

@@ -26,7 +26,7 @@ export default function Login() {
     setIsLoading(true);
     try {
       const response = await fetch(
-        "https://learn-english-6ufl.onrender.com/api/auth/login",
+        "http://localhost:3001/api/auth/login",
         {
           method: "POST",
           headers: {
